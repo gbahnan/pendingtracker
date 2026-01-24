@@ -50,4 +50,54 @@ export default function ActivityFeed() {
       const btcItems = Array.isArray(data.btc) ? data.btc : [];
       const ethItems = Array.isArray(data.eth) ? data.eth : [];
 
-      s
+      setBtc(btcItems.slice(0, 8));
+      setEth(ethItems.slice(0, 8));
+    } catch {
+      // ignore transient network errors
+    }
+  }
+
+  useEffect(() => {
+    load();
+    const id = setInterval(load, 10_000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="grid">
+      <div className="card">
+        <div className="badge">Live BTC activity</div>
+        <div style={{ height: 10 }} />
+        {btc.length === 0 ? (
+          <div className="small">Loading…</div>
+        ) : (
+          btc.map((t) => (
+            <div key={t.hash} className="kv" style={{ alignItems: "baseline" }}>
+              <div className="k">
+                <Link href={`/btc/${t.hash}`}>{shortHash(t.hash)}</Link>
+              </div>
+              <div className="small">{t.feeRateSatVb ? `${t.feeRateSatVb} sat/vB` : "—"}</div>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div className="card">
+        <div className="badge">Live ETH activity</div>
+        <div style={{ height: 10 }} />
+        {eth.length === 0 ? (
+          <div className="small">Loading…</div>
+        ) : (
+          eth.map((t) => (
+            <div key={t.hash} className="kv" style={{ alignItems: "baseline" }}>
+              <div className="k">
+                <Link href={`/eth/${t.hash}`}>{shortHash(t.hash)}</Link>
+              </div>
+              <div className="small">{weiToEth(t.valueWei)} ETH</div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
