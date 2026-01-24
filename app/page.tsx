@@ -54,7 +54,7 @@ export default function Page() {
           spellCheck={false}
         />
         <button className="button" onClick={lookup} disabled={!canSubmit || loading}>
-          {loading ? "Checking…" : "Explain"}
+          {loading ? "Checking…" : "Track"}
         </button>
       </div>
 
