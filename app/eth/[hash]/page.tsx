@@ -11,7 +11,6 @@ function shortHash(h: string) {
   return h.length > 18 ? `${h.slice(0, 10)}…${h.slice(-6)}` : h;
 }
 
-// No BigInt needed
 function weiToEth(wei: string) {
   const raw = (wei || "0").toString().replace(/[^\d]/g, "");
   const s = raw.replace(/^0+/, "") || "0";
@@ -66,7 +65,7 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
       <div className="card">
         <div className="badge">Invalid ETH hash</div>
         <div style={{ height: 8 }} />
-        <div className="small">An ETH hash looks like 0x + 64 hex characters.</div>
+        <div className="small">An ETH transaction hash looks like 0x + 64 hex characters.</div>
       </div>
     );
   }
@@ -75,53 +74,31 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
 
   return (
     <>
-      <div className="h1">ETH Transaction</div>
-      <div className="small">
-        Auto-refreshing every ~15 seconds.{" "}
+      <div className="h1">Ethereum Transaction</div>
+      <p className="p">
+        This page auto-refreshes every ~15 seconds.{" "}
         <button className="button" style={{ padding: "6px 10px" }} onClick={load} disabled={loading}>
           {loading ? "Refreshing…" : "Refresh now"}
         </button>
-      </div>
+      </p>
 
-      <div style={{ height: 12 }} />
-
-      {error && (
-        <div className="card">
-          <div className="badge">Error</div>
-          <div style={{ height: 8 }} />
-          <div>{error}</div>
+      <div className="card">
+        <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+          <div className="badge">Status</div>
+          <div className="badge">{confirmed ? "Confirmed" : "Pending"}</div>
         </div>
-      )}
 
-      {data && (
-        <div className="grid">
-          <div className="card">
-            <div className="badge">Plain-English</div>
-            <div style={{ height: 10 }} />
-            <div style={{ fontWeight: 800 }}>{confirmed ? "Confirmed on Ethereum" : "Pending on Ethereum"}</div>
-
-            <div style={{ height: 8 }} />
-            <ul>
-              <li>Ethereum transactions can wait if the network is busy and the fee is low.</li>
-              <li>Many wallets have “Speed Up” or “Cancel” options.</li>
-              <li>If confirmed, you may still wait for extra confirmations if needed.</li>
-            </ul>
-
-            <div style={{ height: 12 }} />
-            <div className="small">Educational only. No custody, no execution, no financial advice.</div>
-          </div>
-
-          <div className="card">
-            <div className="badge">Numbers (for reference)</div>
-            <div style={{ height: 12 }} />
-            <div className="kv"><div className="k">hash</div><div><code>{shortHash(hash)}</code></div></div>
-            <div className="kv"><div className="k">from</div><div className="small">{shortHash(String(data.from ?? ""))}</div></div>
-            <div className="kv"><div className="k">to</div><div className="small">{shortHash(String(data.to ?? ""))}</div></div>
-            <div className="kv"><div className="k">value</div><div>{weiToEth(String(data.value ?? "0"))} ETH</div></div>
-            <div className="kv"><div className="k">confirmations</div><div>{String(data.confirmations ?? (confirmed ? 1 : 0))}</div></div>
-          </div>
+        <div style={{ height: 10 }} />
+        <div className="small">
+          Hash: <code>{hash}</code>
         </div>
-      )}
-    </>
-  );
-}
+
+        <div style={{ height: 10 }} />
+        <div className="small">
+          Explorer:{" "}
+          <a href={`https://eth.blockscout.com/tx/${hash}`} target="_blank" rel="noreferrer">
+            Blockscout
+          </a>{" "}
+          ·{" "}
+          <a href={`https://etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">
+            Etherscan
