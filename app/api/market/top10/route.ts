@@ -3,12 +3,10 @@ import { NextResponse } from "next/server";
 export const runtime = "edge";
 
 export async function GET() {
-  // If you add a CoinGecko demo key in Vercel env vars, put it here:
-  // Settings → Environment Variables → COINGECKO_DEMO_KEY
   const cgKey = process.env.COINGECKO_DEMO_KEY;
 
   try {
-    // --- Attempt CoinGecko ---
+    // --- CoinGecko (optional key) ---
     if (cgKey) {
       const url = new URL("https://api.coingecko.com/api/v3/coins/markets");
       url.searchParams.set("vs_currency", "usd");
@@ -19,10 +17,8 @@ export async function GET() {
       url.searchParams.set("price_change_percentage", "24h");
 
       const res = await fetch(url.toString(), {
-        headers: {
-          accept: "application/json",
-          "x-cg-demo-api-key": cgKey,
-        },
+        headers: { accept: "application/json", "x-cg-demo-api-key": cgKey },
+        cache: "no-store",
       });
 
       if (res.ok) {
@@ -32,8 +28,8 @@ export async function GET() {
               rank: c.market_cap_rank,
               name: c.name,
               symbol: String(c.symbol ?? "").toUpperCase(),
-              priceUsd: c.current_price,
-              change24hPct: c.price_change_percentage_24h,
+              priceUsd: c.current_price ?? null,
+              change24hPct: c.price_change_percentage_24h ?? null,
             }))
           : [];
 
@@ -46,14 +42,13 @@ export async function GET() {
       }
     }
 
-    // --- Fallback: CoinPaprika (no key needed, but heavier response) ---
-    const papRes = await fetch("https://api.coinpaprika.com/v1/tickers?quotes=USD");
+    // --- Fallback: CoinPaprika (no key) ---
+    const papRes = await fetch("https://api.coinpaprika.com/v1/tickers?quotes=USD", { cache: "no-store" });
     if (!papRes.ok) throw new Error("CoinPaprika failed");
     const pap = await papRes.json();
 
     const coins = Array.isArray(pap)
       ? pap
-          .slice(0, 2000)
           .sort((a: any, b: any) => (a.rank ?? 999999) - (b.rank ?? 999999))
           .slice(0, 10)
           .map((c: any) => ({
@@ -75,4 +70,3 @@ export async function GET() {
     return NextResponse.json({ error: "Price lookup failed." }, { status: 502 });
   }
 }
-
