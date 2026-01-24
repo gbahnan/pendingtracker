@@ -20,13 +20,11 @@ function shortHash(h: string) {
   return h.length > 18 ? `${h.slice(0, 10)}…${h.slice(-6)}` : h;
 }
 
-// Converts a wei string to a short ETH string WITHOUT BigInt.
-// Example: "1230000000000000000" -> "1.2300"
+// Converts wei string to ETH string WITHOUT BigInt
 function weiToEth(wei: string) {
   const raw = (wei || "0").toString().replace(/[^\d]/g, "");
   const s = raw.replace(/^0+/, "") || "0";
 
-  // 1 ETH = 10^18 wei
   if (s.length <= 18) {
     const frac = s.padStart(18, "0").slice(0, 4);
     return `0.${frac}`;
@@ -46,14 +44,10 @@ export default function ActivityFeed() {
       const res = await fetch("/api/feed", { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
-
-      const btcItems = Array.isArray(data.btc) ? data.btc : [];
-      const ethItems = Array.isArray(data.eth) ? data.eth : [];
-
-      setBtc(btcItems.slice(0, 8));
-      setEth(ethItems.slice(0, 8));
+      setBtc((Array.isArray(data.btc) ? data.btc : []).slice(0, 8));
+      setEth((Array.isArray(data.eth) ? data.eth : []).slice(0, 8));
     } catch {
-      // ignore transient network errors
+      // ignore transient errors
     }
   }
 
