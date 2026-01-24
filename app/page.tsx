@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { isLikelyTxid } from "@/lib/btc/validate";
 
-// NOTE: Use absolute imports so paths are consistent.
 import PriceStrip from "@/app/components/price-strip";
 import ActivityFeed from "@/app/components/activity-feed";
 
@@ -25,7 +24,7 @@ export default function Page() {
 
   function go() {
     if (!canSubmit) {
-      setError("Paste a BTC txid (64 hex) or an ETH hash (0x + 64 hex).");
+      setError("Paste a BTC txid (64 hex) or an ETH tx hash (0x + 64 hex).");
       return;
     }
     setError(null);
