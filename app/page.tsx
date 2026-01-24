@@ -2,7 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { isLikelyTxid } from "@/lib/btc/validate";
-import { isLikelyEthTxHash } from "@/lib/eth/validate";
+
+function isLikelyEthTxHash(s: string): boolean {
+  return /^0x[a-fA-F0-9]{64}$/.test((s || "").trim());
+}
 
 export default function Page() {
   const [q, setQ] = useState("");
@@ -21,7 +24,7 @@ export default function Page() {
   return (
     <>
       <div className="h1">Pending Tracker</div>
-      <p className="p">Paste a BTC txid or an ETH transaction hash. We’ll explain what’s happening in plain English.</p>
+      <p className="p">Paste a Bitcoin txid or an Ethereum transaction hash. We’ll explain what’s happening in plain English.</p>
 
       <div className="row">
         <input
