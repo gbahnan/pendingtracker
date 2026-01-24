@@ -2,39 +2,49 @@
 
 import { useMemo, useState } from "react";
 import { isLikelyTxid } from "@/lib/btc/validate";
+import { isLikelyEthTxHash } from "@/lib/eth/validate";
 
 export default function Page() {
-  const [txid, setTxid] = useState("");
+  const [q, setQ] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const canSubmit = useMemo(() => isLikelyTxid(txid), [txid]);
+  const clean = q.trim();
+  const isBtc = useMemo(() => isLikelyTxid(clean), [clean]);
+  const isEth = useMemo(() => isLikelyEthTxHash(clean), [clean]);
 
   function go() {
-    const clean = txid.trim();
-    if (!isLikelyTxid(clean)) {
-      setError("That doesn’t look like a Bitcoin transaction ID (txid). It should be 64 characters (letters/numbers).");
-      return;
-    }
-    setError(null);
-    window.location.href = `/btc/${clean}`;
-  }
-
-  async function paste() {
-    try {
-      const t = await navigator.clipboard.readText();
-      setTxid(t || "");
-      setError(null);
-    } catch {
-      setError("Paste didn’t work. Click the box and paste manually (⌘V).");
-    }
-  }
-
-  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") go();
+    if (isEth) return (window.location.href = `/eth/${clean}`);
+    if (isBtc) return (window.location.href = `/btc/${clean}`);
+    setError("Paste a BTC txid (64 chars) or an ETH tx hash (starts with 0x, 66 chars).");
   }
 
   return (
     <>
       <div className="h1">Pending Tracker</div>
-      <p className="p">
-        Paste a Bitcoin tra
+      <p className="p">Paste a BTC txid or an ETH transaction hash. We’ll explain what’s happening in plain English.</p>
+
+      <div className="row">
+        <input
+          className="input"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="BTC txid (64 chars) OR ETH tx hash (0x…)"
+          spellCheck={false}
+          onKeyDown={(e) => e.key === "Enter" && go()}
+        />
+        <button className="button" onClick={go} disabled={!clean}>
+          Explain
+        </button>
+      </div>
+
+      <div style={{ height: 12 }} />
+      {error && (
+        <div className="card">
+          <div className="badge">Error</div>
+          <div style={{ height: 8 }} />
+          <div>{error}</div>
+        </div>
+      )}
+    </>
+  );
+}
