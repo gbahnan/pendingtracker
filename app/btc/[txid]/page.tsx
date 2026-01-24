@@ -1,42 +1,67 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
+import type { BtcMvpResult } from "@/lib/btc/types";
+import { isLikelyTxid } from "@/lib/btc/validate";
 
-export default function BtcResultPage() {
+function fmtNum(n: number | null | undefined): string {
+  if (n === null || n === undefined) return "—";
+  return new Intl.NumberFormat().format(n);
+}
+
+export default function BtcTxPage() {
   const params = useParams<{ txid: string }>();
-  const txid = (params?.txid || "").toString();
+  const routeTxid = (params?.txid || "").toString();
 
+  const [txid, setTxid] = useState(routeTxid);
   const [loading, setLoading] = useState(true);
+  const [result, setResult] = useState<BtcMvpResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<any>(null);
+
+  const canSubmit = useMemo(() => isLikelyTxid(txid), [txid]);
+
+  useEffect(() => {
+    setTxid(routeTxid);
+  }, [routeTxid]);
 
   useEffect(() => {
     async function run() {
       try {
         setLoading(true);
         setError(null);
+        setResult(null);
 
-        const res = await fetch(`/api/btc/tx/${txid}`);
-        const data = await res.json();
-
-        if (!res.ok) {
-          setError(data?.error || "Could not load that transaction.");
-          setResult(null);
+        if (!isLikelyTxid(routeTxid)) {
+          setError("Invalid txid. Expected 64 hex characters.");
           return;
         }
 
-        setResult(data);
+        const res = await fetch(`/api/btc/tx/${routeTxid}`);
+        const data = await res.json();
+        if (!res.ok) {
+          setError(data?.error || "Request failed.");
+          return;
+        }
+        setResult(data as BtcMvpResult);
       } catch (e: any) {
         setError(e?.message || "Network error.");
-        setResult(null);
       } finally {
         setLoading(false);
       }
     }
 
-    if (txid) run();
-  }, [txid]);
+    if (routeTxid) run();
+  }, [routeTxid]);
+
+  function go() {
+    const clean = txid.trim();
+    if (!isLikelyTxid(clean)) {
+      setError("That doesn’t look like a Bitcoin txid (64 characters).");
+      return;
+    }
+    window.location.href = `/btc/${clean}`;
+  }
 
   async function copyLink() {
     await navigator.clipboard.writeText(window.location.href);
@@ -45,28 +70,27 @@ export default function BtcResultPage() {
 
   return (
     <>
-      <div className="card">
-        <div className="badge">Bitcoin transaction result</div>
-        <div style={{ height: 10 }} />
+      <div className="h1">Pending Tracker — Bitcoin</div>
+      <p className="p">Paste a Bitcoin transaction ID (txid) and get a plain-English explanation + next steps.</p>
 
-        <div style={{ fontWeight: 900, fontSize: 18 }}>TXID</div>
-        <div style={{ marginTop: 6, wordBreak: "break-word" }}>
-          <code>{txid}</code>
-        </div>
-
-        <div style={{ height: 12 }} />
-        <div className="row">
-          <button className="button" onClick={copyLink}>Copy link</button>
-          <a
-            className="button"
-            style={{ textDecoration: "none" }}
-            href={`https://mempool.space/tx/${txid}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open in explorer
-          </a>
-        </div>
+      <div className="row">
+        <input
+          className="input"
+          value={txid}
+          onChange={(e) => setTxid(e.target.value)}
+          placeholder="Bitcoin transaction id (64 hex characters)…"
+          spellCheck={false}
+          onKeyDown={(e) => e.key === "Enter" && go()}
+        />
+        <button className="button" onClick={go} disabled={!canSubmit}>
+          Explain
+        </button>
+        <button className="button" onClick={copyLink}>
+          Copy link
+        </button>
+        <a className="button" href={`https://mempool.space/tx/${routeTxid}`} target="_blank" rel="noreferrer">
+          Open in explorer
+        </a>
       </div>
 
       <div style={{ height: 14 }} />
@@ -90,55 +114,27 @@ export default function BtcResultPage() {
       {result && (
         <div className="grid">
           <div className="card">
-            <div className="badge">Explanation</div>
-            <div style={{ height: 10 }} />
-            <div style={{ fontSize: 20, fontWeight: 900 }}>
-              {result?.diagnosis?.title || "Result"}
+            <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+              <div className="badge">Diagnosis</div>
+              <div className="badge">Provider: {result.provider}</div>
             </div>
+
+            <div style={{ height: 10 }} />
+            <div style={{ fontSize: 20, fontWeight: 800 }}>{result.diagnosis.title}</div>
             <div style={{ height: 8 }} />
-            <div className="p" style={{ margin: 0 }}>
-              {result?.diagnosis?.summary}
-            </div>
+            <div className="p" style={{ margin: 0 }}>{result.diagnosis.summary}</div>
 
-            <div style={{ height: 12 }} />
-            <div style={{ fontWeight: 900 }}>What you can do next</div>
-            <ul>
-              {(result?.diagnosis?.actions || []).map((a: any, i: number) => (
-                <li key={i}>
-                  <b>{a.label}:</b> {a.detail}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="card">
-            <div className="badge">Key facts</div>
-
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">Confirmed</div>
-              <div>{String(result?.status?.confirmed ?? result?.tx?.status?.confirmed ?? false)}</div>
-            </div>
-
-            <div className="kv">
-              <div className="k">Fee</div>
-              <div>{result?.tx?.fee ?? "—"} sats</div>
-            </div>
-
-            <div className="kv">
-              <div className="k">Fee rate</div>
-              <div>{result?.feerateSatVb ?? "—"} sat/vB</div>
-            </div>
-
-            <div style={{ height: 12 }} />
-            <div style={{ fontWeight: 900 }}>Recommended fees</div>
-            <div className="kv"><div className="k">Fastest</div><div>{result?.fees?.fastestFee ?? "—"}</div></div>
-            <div className="kv"><div className="k">~30 min</div><div>{result?.fees?.halfHourFee ?? "—"}</div></div>
-            <div className="kv"><div className="k">~1 hour</div><div>{result?.fees?.hourFee ?? "—"}</div></div>
-            <div className="kv"><div className="k">Economy</div><div>{result?.fees?.economyFee ?? "—"}</div></div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
+            {result.diagnosis.eta && (
+              <>
+                <div style={{ height: 10 }} />
+                <div className="kv">
+                  <div className="k">ETA</div>
+                  <div>
+                    {result.diagnosis.eta.minMinutes === 0 && result.diagnosis.eta.maxMinutes === 0
+                      ? "Already confirmed"
+                      : `${result.diagnosis.eta.minMinutes}–${result.diagnosis.eta.maxMinutes} minutes`}
+                    {result.diagnosis.eta.note ? <div className="small">{result.diagnosis.eta.note}</div> : null}
+                  </div>
+                </div>
+              </>
+            )}
