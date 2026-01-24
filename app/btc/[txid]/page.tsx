@@ -1,140 +1,131 @@
-"use client";
-
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "next/navigation";
+import Link from "next/link";
+import { headers } from "next/headers";
+import CopyLinkButton from "./copy-link-button";
 import type { BtcMvpResult } from "@/lib/btc/types";
 import { isLikelyTxid } from "@/lib/btc/validate";
+
+export const dynamic = "force-dynamic";
 
 function fmtNum(n: number | null | undefined): string {
   if (n === null || n === undefined) return "—";
   return new Intl.NumberFormat().format(n);
 }
 
-export default function BtcTxPage() {
-  const params = useParams<{ txid: string }>();
-  const routeTxid = (params?.txid || "").toString();
+async function getBaseUrl() {
+  const h = headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host");
+  const proto = h.get("x-forwarded-proto") ?? "https";
+  if (host) return `${proto}://${host}`;
+  // fallback (rare)
+  return "https://pendingtracker.com";
+}
 
-  const [txid, setTxid] = useState(routeTxid);
-  const [loading, setLoading] = useState(true);
-  const [result, setResult] = useState<BtcMvpResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
+export default async function BtcTxPage({ params }: { params: { txid: string } }) {
+  const txid = (params?.txid || "").trim();
 
-  const canSubmit = useMemo(() => isLikelyTxid(txid), [txid]);
-
-  useEffect(() => {
-    setTxid(routeTxid);
-  }, [routeTxid]);
-
-  useEffect(() => {
-    async function run() {
-      try {
-        setLoading(true);
-        setError(null);
-        setResult(null);
-
-        if (!isLikelyTxid(routeTxid)) {
-          setError("Invalid txid. Expected 64 hex characters.");
-          return;
-        }
-
-        const res = await fetch(`/api/btc/tx/${routeTxid}`);
-        const data = await res.json();
-        if (!res.ok) {
-          setError(data?.error || "Request failed.");
-          return;
-        }
-        setResult(data as BtcMvpResult);
-      } catch (e: any) {
-        setError(e?.message || "Network error.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (routeTxid) run();
-  }, [routeTxid]);
-
-  function go() {
-    const clean = txid.trim();
-    if (!isLikelyTxid(clean)) {
-      setError("That doesn’t look like a Bitcoin txid (64 characters).");
-      return;
-    }
-    window.location.href = `/btc/${clean}`;
+  if (!isLikelyTxid(txid)) {
+    return (
+      <div className="card">
+        <div className="badge">Error</div>
+        <div style={{ height: 8 }} />
+        <div>That doesn’t look like a Bitcoin txid (it should be 64 characters).</div>
+        <div style={{ height: 12 }} />
+        <Link className="button secondary" href="/">Go back</Link>
+      </div>
+    );
   }
 
-  async function copyLink() {
-    await navigator.clipboard.writeText(window.location.href);
-    alert("Link copied!");
+  const base = await getBaseUrl();
+  const res = await fetch(`${base}/api/btc/tx/${txid}`, { cache: "no-store" });
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    return (
+      <div className="card">
+        <div className="badge">Error</div>
+        <div style={{ height: 8 }} />
+        <div>{data?.error || `Request failed (${res.status}).`}</div>
+        <div style={{ height: 12 }} />
+        <div className="row">
+          <Link className="button secondary" href="/">Try another</Link>
+          <a className="button secondary" href={`https://mempool.space/tx/${txid}`} target="_blank" rel="noreferrer">
+            Open in explorer
+          </a>
+        </div>
+      </div>
+    );
   }
+
+  const result = data as BtcMvpResult;
 
   return (
     <>
       <div className="h1">Pending Tracker — Bitcoin</div>
-      <p className="p">Paste a Bitcoin transaction ID (txid) and get a plain-English explanation + next steps.</p>
+      <p className="p">This page is shareable. Send this link to anyone.</p>
 
       <div className="row">
-        <input
-          className="input"
-          value={txid}
-          onChange={(e) => setTxid(e.target.value)}
-          placeholder="Bitcoin transaction id (64 hex characters)…"
-          spellCheck={false}
-          onKeyDown={(e) => e.key === "Enter" && go()}
-        />
-        <button className="button" onClick={go} disabled={!canSubmit}>
-          Explain
-        </button>
-        <button className="button" onClick={copyLink}>
-          Copy link
-        </button>
-        <a className="button" href={`https://mempool.space/tx/${routeTxid}`} target="_blank" rel="noreferrer">
+        <Link className="button secondary" href="/">Search another</Link>
+        <CopyLinkButton />
+        <a className="button secondary" href={`https://mempool.space/tx/${txid}`} target="_blank" rel="noreferrer">
           Open in explorer
         </a>
       </div>
 
       <div style={{ height: 14 }} />
 
-      {loading && (
+      <div className="grid">
         <div className="card">
-          <div className="badge">Loading…</div>
+          <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+            <div className="badge">Diagnosis</div>
+            <div className="badge">Provider: {result.provider}</div>
+          </div>
+
+          <div style={{ height: 10 }} />
+          <div style={{ fontSize: 20, fontWeight: 800 }}>{result.diagnosis.title}</div>
           <div style={{ height: 8 }} />
-          <div>Checking the network…</div>
-        </div>
-      )}
+          <div className="p" style={{ margin: 0 }}>{result.diagnosis.summary}</div>
 
-      {error && (
-        <div className="card">
-          <div className="badge">Error</div>
-          <div style={{ height: 8 }} />
-          <div>{error}</div>
-        </div>
-      )}
-
-      {result && (
-        <div className="grid">
-          <div className="card">
-            <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-              <div className="badge">Diagnosis</div>
-              <div className="badge">Provider: {result.provider}</div>
-            </div>
-
-            <div style={{ height: 10 }} />
-            <div style={{ fontSize: 20, fontWeight: 800 }}>{result.diagnosis.title}</div>
-            <div style={{ height: 8 }} />
-            <div className="p" style={{ margin: 0 }}>{result.diagnosis.summary}</div>
-
-            {result.diagnosis.eta && (
-              <>
-                <div style={{ height: 10 }} />
-                <div className="kv">
-                  <div className="k">ETA</div>
-                  <div>
-                    {result.diagnosis.eta.minMinutes === 0 && result.diagnosis.eta.maxMinutes === 0
-                      ? "Already confirmed"
-                      : `${result.diagnosis.eta.minMinutes}–${result.diagnosis.eta.maxMinutes} minutes`}
-                    {result.diagnosis.eta.note ? <div className="small">{result.diagnosis.eta.note}</div> : null}
-                  </div>
+          {result.diagnosis.eta && (
+            <>
+              <div style={{ height: 10 }} />
+              <div className="kv">
+                <div className="k">ETA</div>
+                <div>
+                  {result.diagnosis.eta.minMinutes === 0 && result.diagnosis.eta.maxMinutes === 0
+                    ? "Already confirmed"
+                    : `${result.diagnosis.eta.minMinutes}–${result.diagnosis.eta.maxMinutes} minutes`}
+                  {result.diagnosis.eta.note ? <div className="small">{result.diagnosis.eta.note}</div> : null}
                 </div>
-              </>
-            )}
+              </div>
+            </>
+          )}
+
+          <div style={{ height: 10 }} />
+          <div className="kv">
+            <div className="k">Confidence</div>
+            <div>{result.diagnosis.confidence}</div>
+          </div>
+
+          <div style={{ height: 10 }} />
+          <div style={{ fontWeight: 800 }}>Next steps</div>
+          <ul>
+            {result.diagnosis.actions.map((a, i) => (
+              <li key={i}><b>{a.label}:</b> {a.detail}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="card">
+          <div className="badge">On-chain facts</div>
+
+          <div style={{ height: 12 }} />
+          <div className="kv"><div className="k">txid</div><div><code>{result.txid}</code></div></div>
+          <div className="kv"><div className="k">Confirmed</div><div>{String(result.status?.confirmed ?? result.tx?.status?.confirmed ?? false)}</div></div>
+          <div className="kv"><div className="k">Fee</div><div>{fmtNum(result.tx?.fee)} sats</div></div>
+          <div className="kv"><div className="k">vsize</div><div>{fmtNum(result.tx?.vsize)} vB</div></div>
+          <div className="kv"><div className="k">Fee rate</div><div>{result.feerateSatVb ?? "—"} sat/vB</div></div>
+        </div>
+      </div>
+    </>
+  );
+}
