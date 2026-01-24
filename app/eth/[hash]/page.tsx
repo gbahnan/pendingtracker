@@ -3,50 +3,27 @@
 import { useEffect, useMemo, useState } from "react";
 
 function isLikelyEthHash(s: string) {
-  return /^0x[a-fA-F0-9]{64}$/.test(s.trim());
+  return /^0x[a-fA-F0-9]{64}$/.test((s || "").trim());
 }
 
 function shortHash(h: string) {
+  if (!h) return "—";
   return h.length > 18 ? `${h.slice(0, 10)}…${h.slice(-6)}` : h;
 }
 
+// No BigInt needed
 function weiToEth(wei: string) {
-  try {
-    const w = BigInt(wei || "0");
-    const whole = w / 10n ** 18n;
-    const frac = w % 10n ** 18n;
-    const fracStr = frac.toString().padStart(18, "0").slice(0, 4);
-    return `${whole.toString()}.${fracStr}`;
-  } catch {
-    return "0.0000";
+  const raw = (wei || "0").toString().replace(/[^\d]/g, "");
+  const s = raw.replace(/^0+/, "") || "0";
+
+  if (s.length <= 18) {
+    const frac = s.padStart(18, "0").slice(0, 4);
+    return `0.${frac}`;
   }
-}
 
-function Progress({ confirmed }: { confirmed: boolean }) {
-  const stepStyle = (on: boolean) => ({
-    width: 12,
-    height: 12,
-    borderRadius: 999,
-    background: on ? "white" : "rgba(255,255,255,0.25)",
-    border: "1px solid rgba(255,255,255,0.35)",
-  });
-
-  return (
-    <div className="card" style={{ padding: 12 }}>
-      <div className="badge">Where it is (ETH)</div>
-      <div style={{ height: 10 }} />
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={stepStyle(true)} />
-        <div className="small">Broadcasted</div>
-        <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.15)" }} />
-        <div style={stepStyle(!confirmed)} />
-        <div className="small">Pending</div>
-        <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.15)" }} />
-        <div style={stepStyle(confirmed)} />
-        <div className="small">Confirmed</div>
-      </div>
-    </div>
-  );
+  const whole = s.slice(0, -18);
+  const frac = s.slice(-18).padEnd(18, "0").slice(0, 4);
+  return `${whole}.${frac}`;
 }
 
 export default function EthTxPage({ params }: { params: { hash: string } }) {
@@ -107,8 +84,6 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
       </div>
 
       <div style={{ height: 12 }} />
-      <Progress confirmed={confirmed} />
-      <div style={{ height: 12 }} />
 
       {error && (
         <div className="card">
@@ -123,22 +98,13 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
           <div className="card">
             <div className="badge">Plain-English</div>
             <div style={{ height: 10 }} />
-            <div style={{ fontWeight: 800 }}>
-              {confirmed ? "Confirmed on Ethereum" : "Pending on Ethereum"}
-            </div>
+            <div style={{ fontWeight: 800 }}>{confirmed ? "Confirmed on Ethereum" : "Pending on Ethereum"}</div>
 
             <div style={{ height: 8 }} />
             <ul>
-              <li>
-                Ethereum is also a “fee market.” If your fee settings are low when the network is busy, your transaction
-                can wait.
-              </li>
-              <li>
-                Most wallets have a button called <b>Speed Up</b> (replace with higher fee) or <b>Cancel</b>.
-              </li>
-              <li>
-                If it’s confirmed, you generally just wait for more confirmations if you need extra certainty.
-              </li>
+              <li>Ethereum transactions can wait if the network is busy and the fee is low.</li>
+              <li>Many wallets have “Speed Up” or “Cancel” options.</li>
+              <li>If confirmed, you may still wait for extra confirmations if needed.</li>
             </ul>
 
             <div style={{ height: 12 }} />
@@ -148,41 +114,11 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
           <div className="card">
             <div className="badge">Numbers (for reference)</div>
             <div style={{ height: 12 }} />
-            <div className="kv">
-              <div className="k">hash</div>
-              <div>
-                <code>{shortHash(hash)}</code>
-              </div>
-            </div>
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">from</div>
-              <div className="small">{shortHash(String(data.from ?? ""))}</div>
-            </div>
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">to</div>
-              <div className="small">{shortHash(String(data.to ?? ""))}</div>
-            </div>
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">value</div>
-              <div>{weiToEth(String(data.value ?? "0"))} ETH</div>
-            </div>
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">confirmations</div>
-              <div>{String(data.confirmations ?? (confirmed ? 1 : 0))}</div>
-            </div>
-
-            <div style={{ height: 14 }} />
-            <details>
-              <summary className="badge" style={{ cursor: "pointer" }}>
-                Raw JSON
-              </summary>
-              <div style={{ height: 10 }} />
-              <pre className="small">{JSON.stringify(data, null, 2)}</pre>
-            </details>
+            <div className="kv"><div className="k">hash</div><div><code>{shortHash(hash)}</code></div></div>
+            <div className="kv"><div className="k">from</div><div className="small">{shortHash(String(data.from ?? ""))}</div></div>
+            <div className="kv"><div className="k">to</div><div className="small">{shortHash(String(data.to ?? ""))}</div></div>
+            <div className="kv"><div className="k">value</div><div>{weiToEth(String(data.value ?? "0"))} ETH</div></div>
+            <div className="kv"><div className="k">confirmations</div><div>{String(data.confirmations ?? (confirmed ? 1 : 0))}</div></div>
           </div>
         </div>
       )}
