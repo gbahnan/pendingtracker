@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import type { EthMvpResult } from "@/lib/eth/types";
 
-export default function EthResultPage() {
+export default function EthTxPage() {
   const params = useParams<{ txhash: string }>();
   const txhash = (params?.txhash || "").toString();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<EthMvpResult | null>(null);
+  const [result, setResult] = useState<any>(null);
 
   useEffect(() => {
     async function run() {
@@ -25,13 +24,14 @@ export default function EthResultPage() {
           setError(data?.error || "Request failed.");
           return;
         }
-        setResult(data as EthMvpResult);
+        setResult(data);
       } catch (e: any) {
         setError(e?.message || "Network error.");
       } finally {
         setLoading(false);
       }
     }
+
     if (txhash) run();
   }, [txhash]);
 
@@ -42,16 +42,18 @@ export default function EthResultPage() {
 
   return (
     <>
+      <div className="h1">Pending Tracker — Ethereum</div>
+      <p className="p">Shareable link: this page is the result for that transaction.</p>
+
       <div className="card">
-        <div className="badge">Ethereum transaction</div>
-        <div style={{ height: 10 }} />
-        <div style={{ fontWeight: 900 }}>Hash</div>
-        <div style={{ wordBreak: "break-word" }}><code>{txhash}</code></div>
+        <div className="badge">TX HASH</div>
+        <div style={{ height: 8 }} />
+        <code style={{ wordBreak: "break-word" }}>{txhash}</code>
 
         <div style={{ height: 12 }} />
         <div className="row">
           <button className="button" onClick={copyLink}>Copy link</button>
-          <a className="button secondary" href={`https://eth.blockscout.com/tx/${txhash}`} target="_blank" rel="noreferrer">
+          <a className="button" href={`https://eth.blockscout.com/tx/${txhash}`} target="_blank" rel="noreferrer">
             Open in explorer
           </a>
         </div>
@@ -60,6 +62,7 @@ export default function EthResultPage() {
       <div style={{ height: 14 }} />
 
       {loading && <div className="card"><div className="badge">Loading…</div></div>}
+
       {error && (
         <div className="card">
           <div className="badge">Error</div>
@@ -73,30 +76,28 @@ export default function EthResultPage() {
           <div className="card">
             <div className="badge">Explanation</div>
             <div style={{ height: 10 }} />
-            <div style={{ fontSize: 20, fontWeight: 900 }}>{result.diagnosis.title}</div>
+            <div style={{ fontSize: 20, fontWeight: 800 }}>{result?.diagnosis?.title}</div>
             <div style={{ height: 8 }} />
-            <div className="p" style={{ margin: 0 }}>{result.diagnosis.summary}</div>
+            <div className="p" style={{ margin: 0 }}>{result?.diagnosis?.summary}</div>
 
             <div style={{ height: 10 }} />
-            <div style={{ fontWeight: 900 }}>What you can do next</div>
+            <div style={{ fontWeight: 800 }}>Next steps</div>
             <ul>
-              {result.diagnosis.actions.map((a, i) => (
+              {(result?.diagnosis?.actions || []).map((a: any, i: number) => (
                 <li key={i}><b>{a.label}:</b> {a.detail}</li>
               ))}
             </ul>
           </div>
 
           <div className="card">
-            <div className="badge">Key facts</div>
-            <div className="kv"><div className="k">Confirmed</div><div>{String(result.confirmed)}</div></div>
-            <div className="kv"><div className="k">Block</div><div>{result.blockNumber ?? "—"}</div></div>
-            <div className="kv"><div className="k">From</div><div className="small">{result.from ?? "—"}</div></div>
-            <div className="kv"><div className="k">To</div><div className="small">{result.to ?? "—"}</div></div>
-            <div className="kv"><div className="k">Value</div><div className="small">{result.valueWei ?? "—"} wei</div></div>
-
+            <div className="badge">Details</div>
             <div style={{ height: 10 }} />
+            <div className="kv"><div className="k">Provider</div><div>{result.provider}</div></div>
+            <div className="kv"><div className="k">Confirmed</div><div>{String(result.confirmed)}</div></div>
+
+            <div style={{ height: 12 }} />
             <details>
-              <summary className="badge" style={{ cursor: "pointer" }}>Raw data</summary>
+              <summary className="badge" style={{ cursor: "pointer" }}>Raw JSON</summary>
               <div style={{ height: 10 }} />
               <pre className="small">{JSON.stringify(result.raw, null, 2)}</pre>
             </details>
