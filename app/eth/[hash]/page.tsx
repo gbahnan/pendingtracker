@@ -102,3 +102,71 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
           ·{" "}
           <a href={`https://etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">
             Etherscan
+          </a>
+        </div>
+      </div>
+
+      <div style={{ height: 12 }} />
+
+      {error && (
+        <div className="card">
+          <div className="badge">Error</div>
+          <div style={{ height: 8 }} />
+          <div>{error}</div>
+        </div>
+      )}
+
+      {data && (
+        <div className="grid">
+          <div className="card">
+            <div className="badge">Plain-English</div>
+            <div style={{ height: 10 }} />
+            <div style={{ fontWeight: 800 }}>{confirmed ? "It’s confirmed." : "It’s waiting to be confirmed."}</div>
+            <div style={{ height: 8 }} />
+            <ul>
+              <li>
+                Think of Ethereum like a line at a busy store. Transactions paying higher fees usually get processed
+                sooner.
+              </li>
+              <li>If it’s pending, your wallet may have a “Speed Up” option.</li>
+              <li>If it’s confirmed, you may just be waiting for more confirmations.</li>
+            </ul>
+
+            <div style={{ height: 10 }} />
+            <div className="small">Educational only. No custody, no execution, no financial advice.</div>
+          </div>
+
+          <div className="card">
+            <div className="badge">Details</div>
+            <div style={{ height: 10 }} />
+            <div className="kv">
+              <div className="k">from</div>
+              <div className="small">{shortHash(String(data.from ?? ""))}</div>
+            </div>
+            <div className="kv">
+              <div className="k">to</div>
+              <div className="small">{shortHash(String(data.to ?? ""))}</div>
+            </div>
+            <div className="kv">
+              <div className="k">value</div>
+              <div>{weiToEth(String(data.valueWei ?? data.value ?? "0"))} ETH</div>
+            </div>
+            <div className="kv">
+              <div className="k">confirmations</div>
+              <div>{String(data.confirmations ?? (confirmed ? 1 : 0))}</div>
+            </div>
+
+            <div style={{ height: 12 }} />
+            <details>
+              <summary className="badge" style={{ cursor: "pointer" }}>
+                Raw JSON
+              </summary>
+              <div style={{ height: 10 }} />
+              <pre className="small">{JSON.stringify(data, null, 2)}</pre>
+            </details>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
