@@ -16,6 +16,7 @@ export default function Page() {
   const isEth = useMemo(() => isLikelyEthTxHash(clean), [clean]);
 
   function go() {
+    setError(null);
     if (isEth) return (window.location.href = `/eth/${clean}`);
     if (isBtc) return (window.location.href = `/btc/${clean}`);
     setError("Paste a BTC txid (64 chars) or an ETH tx hash (starts with 0x, 66 chars).");
@@ -31,13 +32,11 @@ export default function Page() {
           className="input"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="BTC txid (64 chars) OR ETH tx hash (0x…)"
+          placeholder="BTC txid (64 chars) OR ETH tx hash (0x...)"
           spellCheck={false}
           onKeyDown={(e) => e.key === "Enter" && go()}
         />
-        <button className="button" onClick={go} disabled={!clean}>
-          Explain
-        </button>
+        <button className="button" onClick={go} disabled={!clean}>Explain</button>
       </div>
 
       <div style={{ height: 12 }} />
