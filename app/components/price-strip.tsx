@@ -26,36 +26,7 @@ export default function PriceStrip() {
   const [provider, setProvider] = useState<string>("");
 
   async function load() {
-    const res = await fetch("/api/market/top10", { cache: "no-store" });
-    if (!res.ok) return;
-    const data = await res.json();
-    setCoins(data.coins ?? []);
-    setProvider(data.provider ?? "");
-  }
-
-  useEffect(() => {
-    load();
-    const id = setInterval(load, 30_000);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <div className="card" style={{ padding: 12 }}>
-      <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-        <div className="badge">Live prices (Top 10)</div>
-        <div className="small">Source: {provider || "—"}</div>
-      </div>
-
-      <div style={{ height: 10 }} />
-
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        {coins.map((c) => (
-          <div key={c.symbol} className="badge" style={{ padding: "8px 10px" }}>
-            <b>{c.symbol}</b> {fmtMoney(c.priceUsd)} · {fmtPct(c.change24hPct)}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
+    try {
+      const res = await fetch("/api/market/top10", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await
