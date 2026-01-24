@@ -33,7 +33,7 @@ export default function PriceStrip() {
       setCoins(Array.isArray(data.coins) ? data.coins : []);
       setProvider(typeof data.provider === "string" ? data.provider : "");
     } catch {
-      // ignore transient network errors
+      // ignore transient errors
     }
   }
 
