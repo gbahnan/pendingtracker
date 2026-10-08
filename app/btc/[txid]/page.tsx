@@ -78,3 +78,5 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   </>}
   <p className="pt-tx-footnote">Updates every 15 seconds · Public blockchain data · No wallet connection required · Estimates are not guarantees.</p>
  </main>;
+
+}
