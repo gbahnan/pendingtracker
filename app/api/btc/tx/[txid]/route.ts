@@ -33,6 +33,18 @@ export async function GET(
     if (txRes.status === "fulfilled") tx = txRes.value;
     if (stRes.status === "fulfilled") status = stRes.value;
 
+    // Treat provider failures differently from genuine not-found responses.
+    if (!tx && !status) {
+      const txError = txRes.status === "rejected" ? String(txRes.reason?.message ?? txRes.reason) : "";
+      const statusError = stRes.status === "rejected" ? String(stRes.reason?.message ?? stRes.reason) : "";
+      if (!(txError.includes("HTTP 404") && statusError.includes("HTTP 404"))) {
+        return NextResponse.json({
+          error: "Bitcoin transaction data is temporarily unavailable. We cannot verify its status right now.",
+          provider: "mempool.space"
+        }, { status: 502 });
+      }
+    }
+
     const feerateSatVb = computeFeerateSatVb(tx);
     const diagnosis = diagnoseBtcTx({ txid, tx, status, fees, feerateSatVb });
 
