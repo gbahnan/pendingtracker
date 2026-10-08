@@ -188,6 +188,25 @@ export default function Page() {
         </section>
         <div className="pt-insight pt-insight-compact pt-clean-insight"><div className="pt-insight-icon">✦</div><div><h3>What this means right now</h3><p>{btc?.explanation ?? "Waiting for live Bitcoin data."}</p></div></div>
       </> : <>
+        <section className="pt-compact-fees pt-fee-explorer pt-eth-explorer">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE ETHEREUM BLOCKS</div><h3>Ethereum, block by block</h3></div><span className="pt-live">● Live network data</span></div>
+          <p className="pt-timeline-intro">Ethereum usually adds a block about every 12 seconds. These are the latest blocks already added—not predictions of future transactions.</p>
+          <div className="pt-fee-heading"><div><h4>Latest blocks <span>· confirmed on the network</span></h4><p>See how many transactions each block contains.</p></div><span className="pt-fee-live-tag">LIVE BLOCKS</span></div>
+          <div className="pt-projected-grid">
+            {(eth?.recentBlocks?.length?eth.recentBlocks.slice(0,5):[0,1,2,3,4].map(()=>({height:null,hash:null,timestamp:null,transactionsCount:null}))).map((block,index)=><a className="pt-projected-card pt-eth-block" key={block.hash??index} href={block.hash?"https://eth.blockscout.com/block/"+block.hash:"https://eth.blockscout.com/blocks"} target="_blank" rel="noopener noreferrer">
+              <div className="pt-projected-top"><span>{index===0?"LATEST BLOCK":"RECENT BLOCK"}</span></div>
+              <div className="pt-block-time">{block.timestamp&&Number.isFinite(new Date(block.timestamp).getTime())?Math.max(0,Math.floor((Date.now()-new Date(block.timestamp).getTime())/1000))+"s ago":"Added"} </div>
+              <div className="pt-block-art" aria-hidden="true">{Array.from({length:20},(_,i)=><i key={i} style={{opacity:block.transactionsCount==null?.2:(i<Math.max(2,Math.min(20,Math.round(block.transactionsCount/12)))?1:.17)}}/>)}</div>
+              <strong className="pt-block-fee">#{block.height??"—"}</strong>
+              <small className="pt-block-tx-count">{block.transactionsCount==null?"Awaiting transactions":format(block.transactionsCount)+" transactions"}</small>
+              <span className="pt-projected-foot">View block ↗</span>
+            </a>)}
+          </div>
+          <p className="pt-sleek-note">These squares are a visual illustration of transaction volume, not individual transactions. Times show how long ago blocks were added.</p>
+          <div className="pt-simple-fee-head"><div><h4>Ethereum network fee</h4><p>See the current gas price before you send.</p></div></div>
+          <div className="pt-eth-gas-summary"><div><span>Current gas price</span><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" Gwei"}</strong></div><p>Gas is what you pay to use Ethereum. Your total fee depends on what your transaction does, not just this rate.</p></div>
+          <p className="pt-simple-source">Live blocks and gas information from Blockscout. A recent block does not predict when your transaction will confirm. Search your transaction ID above to check its status.</p>
+        </section>
         <section className="pt-activity-panel pt-compact-activity pt-clean-activity">
           <div className="pt-activity-head"><div><div className="pt-eyebrow">HAPPENING ON ETHEREUM</div><h3>Latest activity</h3><p className="pt-activity-intro">Recent Ethereum transactions and blocks, explained simply.</p></div><span className="pt-live">● Live updates</span></div>
           <div className="pt-activity-list">
