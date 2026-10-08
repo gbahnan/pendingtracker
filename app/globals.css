@@ -254,3 +254,24 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .pt-confirm-dot { width:8px; height:8px; border-radius:50%; background:#79d6a4; flex-shrink:0; }
 .pt-estimate-summary { border:1px solid #7961ae; border-radius:12px; background:#30234d; padding:15px; color:#e4d6ff; font-size:14px; line-height:1.6; margin-bottom:15px; }
 @media(max-width:760px) { .pt-confirm-grid { grid-template-columns:1fr; } }
+
+/* Focused explorer: compact fee timing and unified activity */
+.pt-compact-fees { margin-top:18px; padding:22px; border:1px solid #55427b; border-radius:17px; background:linear-gradient(135deg,#241c40,#131126); }
+.pt-compact-fees h3 { margin:9px 0 0; font-size:22px; }
+.pt-time-tiers { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:20px 0 10px; }
+.pt-time-tier { display:flex; flex-direction:column; gap:6px; border:1px solid #4a3a6b; border-radius:13px; background:#1a1730; padding:16px; }
+.pt-time-tier small { color:#bdb3d7; font-size:12px; }
+.pt-time-tier strong { font-size:clamp(20px,2.8vw,29px); color:#e6d7ff; }
+.pt-time-tier b { font-size:13px; color:#d6c5f6; }
+.pt-compact-fees .pt-queue-controls { margin:18px 0 13px; }
+.pt-mini-blocks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin-bottom:14px; }
+.pt-mini-block { display:flex; flex-direction:column; gap:5px; padding:12px; border-radius:11px; background:#201a38; border:1px solid #46365f; }
+.pt-mini-block strong { font-size:19px; }
+.pt-mini-block span,.pt-mini-block small { font-size:11px; color:#bdb4d5; }
+.pt-compact-fees .pt-estimate-summary { margin:12px 0; padding:12px; font-size:13px; }
+.pt-compact-activity { padding:20px 22px; }
+.pt-compact-activity .pt-activity-list { gap:3px; margin:13px 0; }
+.pt-compact-activity .pt-activity-row { padding:9px 12px; font-size:12px; }
+.pt-status-pending { color:#f3d18c; font-weight:700; }
+.pt-status-confirmed { color:#9de3bb; font-weight:700; }
+@media(max-width:650px) { .pt-compact-fees,.pt-compact-activity { padding:16px 12px; } .pt-time-tiers { gap:6px; } .pt-time-tier { padding:11px 8px; } .pt-time-tier b { font-size:11px; } .pt-mini-blocks { gap:5px; } .pt-mini-block { padding:9px 7px; } .pt-mini-block strong { font-size:16px; } .pt-compact-activity .pt-activity-row { grid-template-columns:minmax(0,1fr) auto auto; } .pt-compact-activity .pt-activity-row span:nth-child(2) { display:none; } }
