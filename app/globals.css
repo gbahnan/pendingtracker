@@ -170,3 +170,20 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 /* Keep a consistent dark palette regardless of operating-system appearance. */
 :root { color-scheme:dark; --bg:#080817; --card:rgba(255,255,255,.045); --text:#f4f1ff; --muted:#aaa4c3; --border:rgba(185,151,255,.18); --shadow:0 10px 30px rgba(0,0,0,.3); }
 @media (prefers-color-scheme:light) { :root { color-scheme:dark; --bg:#080817; --card:rgba(255,255,255,.045); --text:#f4f1ff; --muted:#aaa4c3; --border:rgba(185,151,255,.18); --shadow:0 10px 30px rgba(0,0,0,.3); } }
+
+/* Clearer onboarding and transaction detail pages */
+.pt-steps { grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:22px; }
+.pt-steps .pt-metric { min-height:170px; }
+.pt-steps .pt-metric strong { font-size:21px; }
+.pt-steps .pt-metric small { line-height:1.65; font-size:13px; }
+.card { overflow-wrap:anywhere; }
+.card code { overflow-wrap:anywhere; word-break:break-all; }
+.card a:not(.button) { color:#c8b2ff; text-decoration:underline; text-underline-offset:3px; }
+.card a:hover { color:#fff; }
+.card ul { padding-left:20px; line-height:1.75; color:#d4cfe5; }
+.card li + li { margin-top:8px; }
+.card .kv { align-items:start; }
+.card pre { overflow-x:auto; max-height:430px; padding:12px; border-radius:10px; background:rgba(5,5,15,.45); }
+.button:focus-visible,.pt-searchrow button:focus-visible,.pt-tabs button:focus-visible,.pt-term summary:focus-visible { outline:3px solid #bca6ff; outline-offset:3px; }
+@media(max-width:760px) { .pt-steps { grid-template-columns:1fr; } .pt-steps .pt-metric { min-height:0; } .card .kv { grid-template-columns:100px 1fr; } }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition-duration:.01ms!important; animation-duration:.01ms!important; } }
