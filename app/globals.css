@@ -483,3 +483,9 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-fee-explorer .pt-projected-card small { font-size:clamp(15px,1.6vw,20px); font-weight:800; line-height:1.25; letter-spacing:-.025em; color:#f2d49b; overflow-wrap:anywhere; }
 .pt-fee-explorer .pt-projected-top b { color:#e9c78c; }
 @media(max-width:650px) { .pt-fee-explorer .pt-projected-card small { font-size:15px; } }
+
+
+/* Block metric hierarchy: fee first, live transaction count second */
+.pt-fee-explorer .pt-projected-card .pt-block-fee { display:block; margin:5px 0 6px; font-size:clamp(16px,1.65vw,21px); font-weight:800; line-height:1.25; letter-spacing:-.035em; color:#f2d49b; overflow-wrap:anywhere; }
+.pt-fee-explorer .pt-projected-card .pt-block-tx-count { display:block; margin:0; font-size:11px; font-weight:500; line-height:1.4; letter-spacing:0; color:#b8c5cb; }
+@media(max-width:650px) { .pt-fee-explorer .pt-projected-card .pt-block-fee { font-size:16px; } }
