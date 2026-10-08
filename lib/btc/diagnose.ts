@@ -72,7 +72,7 @@ export function diagnoseBtcTx(args: {
     return {
       code: "NOT_SEEN",
       title: "Transaction not found (yet)",
-      summary: "This txid is not currently returned by the data provider. That usually means it hasn’t propagated widely, was never broadcast, was replaced, or was dropped.",
+      summary: "Our data provider cannot find this transaction. It may not have been broadcast, may not have propagated to this provider, or may have been replaced or dropped. We cannot determine which explanation applies from this result.",
       confidence: "low",
       actions: [
         { label: "Double-check the txid", detail: "Make sure the transaction ID is 64 hex characters (no spaces)." },
@@ -118,7 +118,7 @@ export function diagnoseBtcTx(args: {
   }
 
   const cls = classifyFeerate(fr, fees);
-  const eta = cls === "unknown" ? undefined : etaFromClass(cls);
+  // Fee-tier heuristics are not a reliable transaction-specific ETA.\n  // Do not display precise minutes without ancestor/package and mempool position analysis.\n  const eta = undefined;
 
   const minFee = fees?.minimumFee ?? null;
   const economy = fees?.economyFee ?? null;
@@ -152,7 +152,7 @@ export function diagnoseBtcTx(args: {
       code: rbf ? "RBF_AVAILABLE" : "VERY_LOW_FEE",
       title: "Very low fee for current conditions",
       summary: `Your fee rate (${fr} sat/vB) is below current low-priority levels. It may take many hours (or longer) if the mempool stays busy.`,
-      eta: eta ?? { minMinutes: 360, maxMinutes: 2880 },
+      eta,
       confidence: "medium",
       actions,
       debug: { fr, fees, rbf }
@@ -174,7 +174,7 @@ export function diagnoseBtcTx(args: {
   return {
     code: "PENDING_OK",
     title: "Pending, with a competitive fee",
-    summary: `Your fee rate (${fr} sat/vB) is in the current recommended range. If there are no unconfirmed parents, it should confirm relatively soon.`,
+    summary: `Your fee rate (${fr} sat/vB) is within current recommended levels, but this does not guarantee when it will confirm. Unconfirmed parent transactions, competing transactions and changes in miner demand can affect timing.`,
     eta,
     confidence: "medium",
     actions,
