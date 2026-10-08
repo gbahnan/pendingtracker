@@ -697,3 +697,5 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-tx-io-row span{overflow-wrap:anywhere;line-height:1.6}
 .pt-tx-io-row strong{white-space:normal;text-align:right}
 @media(max-width:650px){.pt-tx-story{grid-template-columns:1fr}.pt-tx-story-step:last-child{grid-column:auto}.pt-tx-story-step{padding:15px}.pt-tx-detail-v2 .pt-tx-arrow-only span{font-size:31px}}
+
+.footer .founder-credit{margin-top:12px;text-align:center;color:#d9c6a1;font-size:12px;font-weight:600;letter-spacing:.035em}
