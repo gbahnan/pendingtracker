@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Overview = {
-  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
+  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
   eth: { available: boolean; gasGwei: number | null; latestBlock: string | number | null; explanation: string };
   updatedAt: string;
 };
@@ -83,6 +83,16 @@ export default function Page() {
           <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Estimated competitive fee rate; not a guarantee</small></div>
           <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
         </div>
+        <section className="pt-activity-panel">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE BITCOIN EXPLORER</div><h3>New transactions entering the mempool</h3><p>Recently observed unconfirmed Bitcoin transactions. Updates every minute.</p></div><span className="pt-live">● Recent activity</span></div>
+          <div className="pt-activity-list">{btc?.recentTransactions?.length ? btc.recentTransactions.map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}>
+            <span className="pt-activity-hash">{tx.id.slice(0,12)}…{tx.id.slice(-8)}</span>
+            <span>{tx.fee!=null&&tx.vsize ? (tx.fee/tx.vsize).toFixed(1)+" sat/vB" : "Fee unavailable"}</span>
+            <span>{tx.value==null ? "Value unavailable" : (tx.value/100000000).toFixed(5)+" BTC"}</span>
+            <span className="pt-activity-arrow">Inspect ↗</span>
+          </a>) : <p className="pt-activity-empty">Waiting for recent Bitcoin transactions from the network.</p>}</div>
+          <p className="pt-fee-disclaimer">Recently observed mempool activity, not guaranteed distinct payments. Transactions may confirm or be replaced between updates.</p>
+        </section>
         <section className="pt-queue-panel" aria-label="Bitcoin pending fee position explorer">
           <div className="pt-eyebrow">BITCOIN PENDING-TIME EXPLORER</div>
           <h3>At your fee rate, where might you land?</h3>
