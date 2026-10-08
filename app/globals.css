@@ -458,34 +458,3 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-fee-result { grid-column:1/-1; border-top:1px solid #365365; padding-top:14px; color:#d6e5ed; font-size:13px; line-height:1.7; }
 @media(max-width:950px) { .pt-projected-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media(max-width:650px) { .pt-fee-explorer { padding:18px 13px; } .pt-projected-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .pt-fee-choices { grid-template-columns:1fr; } .pt-fee-choice { padding:15px; } .pt-fee-checker { grid-template-columns:1fr 1fr; } .pt-fee-checker>div:first-child { grid-column:1/-1; } .pt-fee-heading { align-items:flex-start; } }
-
-
-/* Compact, calm Bitcoin confirmation visual */
-.pt-fee-sleek { padding:25px 27px; }
-.pt-fee-sleek .pt-timeline-intro { margin:10px 0 20px; }
-.pt-sleek-blocks { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
-.pt-sleek-block { min-width:0; text-align:center; padding:15px 10px 14px; border:1px solid #365568; background:#1a3343; border-radius:13px; }
-.pt-sleek-block-time { display:block; font-size:12px; color:#d9c6a1; font-weight:750; }
-.pt-sleek-block-shape { width:70px; max-width:90%; height:53px; margin:13px auto 12px; border-radius:9px; display:grid; place-items:center; background:linear-gradient(145deg,#456d82,#29485b); border:1px solid #7396a7; box-shadow:inset 0 1px rgba(255,255,255,.12); }
-.pt-sleek-block-shape span { color:#d6e6ed; font-size:20px; font-weight:800; }
-.pt-sleek-block strong { display:block; font-size:clamp(15px,1.8vw,21px); color:#f3f7fa; }
-.pt-sleek-block small { display:block; margin-top:5px; font-size:11px; color:#9eb7c5; }
-.pt-sleek-note { margin:12px 0 20px; font-size:12px; color:#a9bdc9; line-height:1.6; }
-.pt-sleek-fees { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:18px 0; border-top:1px solid #365365; }
-.pt-sleek-fees h4 { margin:0 0 4px; font-size:16px; }
-.pt-sleek-fees p { margin:0; font-size:12px; color:#a6bcc9; }
-.pt-sleek-options { display:grid; grid-template-columns:repeat(3,minmax(95px,1fr)); gap:8px; }
-.pt-sleek-options button { padding:11px 13px; border-radius:10px; border:1px solid #3d6073; background:#203b4c; color:#f2f6f8; cursor:pointer; text-align:left; }
-.pt-sleek-options button.selected,.pt-sleek-options button:hover { border-color:#d9c6a1; background:#2b4a5a; }
-.pt-sleek-options button:disabled { opacity:.55; cursor:default; }
-.pt-sleek-options span { display:block; font-size:11px; color:#adc5d2; }
-.pt-sleek-options strong { display:block; font-size:14px; margin-top:5px; }
-.pt-sleek-check { border-top:1px solid #365365; padding:15px 0 0; }
-.pt-sleek-check summary { display:flex; justify-content:space-between; list-style:none; cursor:pointer; color:#d9c6a1; font-size:13px; font-weight:700; }
-.pt-sleek-check summary::-webkit-details-marker { display:none; }
-.pt-sleek-check-body { display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding-top:15px; }
-.pt-sleek-check-body label { font-size:12px; color:#c8d7e0; }
-.pt-sleek-check-body input { width:125px; padding:10px; border-radius:8px; border:1px solid #678ca0; background:#102737; color:#fff; }
-.pt-sleek-check-body p { width:100%; margin:0; font-size:12px; line-height:1.6; color:#c7d9e2; }
-@media(max-width:720px) { .pt-fee-sleek { padding:18px 14px; } .pt-sleek-fees { align-items:stretch; flex-direction:column; } .pt-sleek-options { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-@media(max-width:430px) { .pt-sleek-blocks { gap:6px; } .pt-sleek-block { padding:12px 4px; } .pt-sleek-block-shape { height:40px; } .pt-sleek-block strong { font-size:12px; } .pt-sleek-block-time { font-size:11px; } .pt-sleek-block small { font-size:10px; } .pt-sleek-options button { padding:10px 7px; } .pt-sleek-options strong { font-size:12px; } }
