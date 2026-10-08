@@ -79,6 +79,13 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
         </button>
       </p>
 
+      {data && <section className="pt-tx-quick">
+        <div className="pt-eyebrow">YOUR ETHEREUM TRANSACTION · QUICK SUMMARY</div>
+        <div className="pt-tx-quick-head"><strong>{failed?"Transaction failed":confirmed?"Transaction confirmed":"Waiting for confirmation"}</strong><span className={confirmed&&!failed?"pt-status-confirmed":"pt-status-pending"}>{failed?"● Failed":confirmed?"● Confirmed":"● Pending"}</span></div>
+        <p>{failed?"Ethereum processed this transaction, but the requested operation failed. Gas may still have been charged.":diagnosis?.summary??"We're checking what the Ethereum network reports about this transaction."}</p>
+        <div className="pt-tx-quick-stats"><div><small>Amount</small><b>{weiToEth(String(data.valueWei??data.value??"0"))} ETH</b></div><div><small>Confirmations</small><b>{String(data.confirmations??(confirmed?1:0))}</b></div><div><small>Next step</small><b>{failed?"Review failure details":confirmed?"Review receipt":"Check pending status"}</b></div></div>
+        <small>Based on available blockchain records and transparent explanation rules, not generative AI.</small>
+      </section>}
       <div className="card">
         <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
           <div className="badge">Status</div>
