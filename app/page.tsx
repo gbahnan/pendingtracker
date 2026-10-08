@@ -105,16 +105,19 @@ export default function Page() {
   const btc = overview?.btc, eth = overview?.eth;
   return <main className="pt-shell">
     <div className="pt-hero">
-      <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, EXPLAINED</div>
-      <h1>Crypto moves fast.<br/><span>Understanding it shouldn't be hard.</span></h1>
-      <p className="pt-lead">Confused by blocks, fees, and hashes? Follow live blockchain activity, or let us translate your transaction into plain English.</p>
+      <div className="pt-hero-intro">
+        <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, MADE SIMPLE</div>
+        <h1>Your blockchain explorer.<br/><span>Without the confusion.</span></h1>
+        <p className="pt-lead">Explore live Bitcoin and Ethereum activity, track any transaction, and understand what the technical details actually mean. We turn complicated blockchain data into clear, everyday language.</p>
+        <div className="pt-hero-trust"><span>◇ Live blockchain data</span><span>◇ Plain-English explanations</span><span>◇ No account needed</span></div>
+      </div>
       <div className="pt-searchbox">
-        <div className="pt-search-label">WHERE’S MY TRANSACTION?</div><p className="pt-search-explain">Paste a Bitcoin TXID or Ethereum transaction hash. We’ll decode the blockchain jargon into a quick, human-friendly summary: what happened, what your fees mean, and what to do next.</p>
+        <div className="pt-search-top"><div><div className="pt-search-label">TRANSACTION EXPLAINER</div><h2>Wondering where your crypto went?</h2><p className="pt-search-explain">Paste your Bitcoin transaction ID or Ethereum transaction hash. We'll check the blockchain and give you an easy-to-read breakdown of <strong>whether it's pending or confirmed, what the fees mean, why it might be taking longer, and what you can do next.</strong> No technical knowledge needed.</p></div><div className="pt-search-symbol" aria-hidden="true">↗</div></div>
         <div className="pt-searchrow">
-          <input aria-label="Transaction hash" placeholder="Paste your Bitcoin TXID or Ethereum transaction hash…" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
-          <button onClick={search}>Explain my transaction →</button>
+          <input aria-label="Transaction hash" placeholder="Paste a Bitcoin TXID, Ethereum hash, or explorer link" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
+          <button onClick={search}>Explain my transaction <span aria-hidden="true">→</span></button>
         </div>
-        {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">No wallet connection or signup. You can also paste an explorer transaction link. Never share a seed phrase or private key.</p>}
+        {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">Free to explore · No wallet connection or signup · Never enter a seed phrase or private key.</p>}
       </div>
     </div>
 
