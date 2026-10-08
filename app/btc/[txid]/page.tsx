@@ -72,7 +72,7 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
     try {
       const response = await fetch("/api/ai/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chain:"btc",status:confirmed?"confirmed":"pending",facts:{feeSats:result.tx?.fee??null,feeRateSatVb:result.feerateSatVb??null,confirmed,summary:result.diagnosis.summary}})});
       const body = await response.json();
-      setAiSummary(response.ok&&typeof body.summary==="string"?body.summary:"AI explanations aren't configured yet. The verified blockchain summary above is still available.");
+      setAiSummary(response.ok&&typeof body.summary==="string"?body.summary:`AI request failed (${response.status}): ${typeof body.error==="string"?body.error:"Please try again."} The verified blockchain summary above is still available.`);
     } catch {setAiSummary("AI is temporarily unavailable. Your blockchain status and fee data are still shown above.");}
     finally {setAiLoading(false);}
   }
