@@ -275,3 +275,16 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .pt-status-pending { color:#f3d18c; font-weight:700; }
 .pt-status-confirmed { color:#9de3bb; font-weight:700; }
 @media(max-width:650px) { .pt-compact-fees,.pt-compact-activity { padding:16px 12px; } .pt-time-tiers { gap:6px; } .pt-time-tier { padding:11px 8px; } .pt-time-tier b { font-size:11px; } .pt-mini-blocks { gap:5px; } .pt-mini-block { padding:9px 7px; } .pt-mini-block strong { font-size:16px; } .pt-compact-activity .pt-activity-row { grid-template-columns:minmax(0,1fr) auto auto; } .pt-compact-activity .pt-activity-row span:nth-child(2) { display:none; } }
+
+/* Compact Bitcoin fee-time timeline */
+.pt-timeline-intro { color:#bdb4d5; font-size:13px; margin:12px 0 18px; }
+.pt-fee-timeline { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin:22px 0 17px; position:relative; gap:0; }
+.pt-fee-timeline:before { content:""; position:absolute; height:3px; background:linear-gradient(90deg,#9d77f5,#6750b6); top:14px; left:12%; right:12%; border-radius:5px; }
+.pt-timeline-stop { display:flex; align-items:center; flex-direction:column; text-align:center; gap:6px; position:relative; padding:0 5px; }
+.pt-timeline-node { display:grid; place-items:center; height:30px; width:30px; border-radius:50%; background:#9e79f6; color:#170e31; border:4px solid #2a2045; font-size:11px; font-weight:800; z-index:1; }
+.pt-timeline-stop strong { font-size:clamp(17px,2.8vw,27px); color:#f1e9ff; font-variant-numeric:tabular-nums; }
+.pt-timeline-stop small { font-size:12px; color:#c0b4d7; }
+.pt-timeline-stop b { font-size:12px; padding:6px 8px; border-radius:7px; background:#352750; color:#dfcaff; white-space:nowrap; }
+.pt-compact-fees .pt-fee-disclaimer { margin:12px 0; }
+.pt-metric small { line-height:1.5; }
+@media(max-width:570px) { .pt-fee-timeline { gap:3px; } .pt-timeline-stop strong { font-size:17px; } .pt-timeline-stop small { font-size:10px; } .pt-timeline-stop b { font-size:10px; padding:5px 3px; white-space:normal; } }
