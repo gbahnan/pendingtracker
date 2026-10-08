@@ -387,3 +387,17 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-overview-next { margin-top:14px; padding-top:13px; border-top:1px solid #486577; font-size:13px; line-height:1.6; color:#aebfcb; }
 .pt-overview-next a { color:#d9c6a1; font-weight:700; }
 @media(max-width:520px) { .pt-overview-card { min-height:225px; } .pt-overview-card strong { font-size:23px; } .pt-overview-card small { font-size:12px; } .pt-overview-explainer { padding:17px; } }
+
+
+/* Bitcoin metric cards: plain-language guidance and optional examples */
+.pt-overview-card .pt-card-why { margin:15px 0 0; padding-top:13px; border-top:1px solid #3a5669; color:#c5d8e3; font-size:12px; line-height:1.65; }
+.pt-overview-card .pt-card-why b { color:#e0cda7; font-weight:750; }
+.pt-overview-card .pt-card-more { margin-top:14px; padding-top:12px; border-top:1px solid #3a5669; }
+.pt-overview-card .pt-card-more summary { display:flex; justify-content:space-between; gap:10px; cursor:pointer; list-style:none; font-size:12px; font-weight:750; color:#d9c6a1; }
+.pt-overview-card .pt-card-more summary::-webkit-details-marker { display:none; }
+.pt-overview-card .pt-card-more summary span { color:#9abfd0; }
+.pt-overview-card .pt-card-more[open] summary span { transform:rotate(45deg); }
+.pt-overview-card .pt-card-more p { margin:12px 0 0; padding:12px; border-radius:9px; background:#112635; color:#c5d8e3; font-size:12px; line-height:1.7; }
+.pt-overview-card .pt-card-more summary:focus-visible { outline:2px solid #9abfd0; outline-offset:4px; }
+.pt-overview-card { min-height:0; }
+.pt-overview-card small { margin-top:0; }
