@@ -122,25 +122,30 @@ export default function Page() {
     </div>
 
     <section className="pt-section" id="network">
-      <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE NETWORK INTELLIGENCE</div><h2>What's happening on the blockchain?</h2><p>Live data with the technical jargon translated for you.</p></div><span className="pt-live">{loading ? "Loading live data…" : overview ? "● Live · checks every 5 seconds" : "Network data temporarily unavailable"}</span></div>
+      <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE BLOCKCHAIN EXPLORER</div><h2>{network==="btc"?"The Bitcoin Network, Live.":"The Ethereum Network, Live."}</h2><p>See what's happening on the network right now—and understand what it means for your transactions.</p></div><span className="pt-live" role="status">{loading?"Loading live data…":overview?"● Live data · refreshed every 5 seconds":"Network data temporarily unavailable"}</span></div>
       <div className="pt-tabs" role="tablist" aria-label="Choose blockchain">
         <button role="tab" aria-selected={network==="btc"} className={network==="btc"?"selected":""} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button>
         <button role="tab" aria-selected={network==="eth"} className={network==="eth"?"selected":""} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button>
       </div>
       {newestEvents[network] ? <div className="pt-new-block" role="status">✦ {newestEvents[network]} · {network==="btc"?"Bitcoin":"Ethereum"} network</div> : null}
-      <div className="pt-network-brief" aria-live="polite">
-        <div><div className="pt-eyebrow">{network==="btc"?"BITCOIN AT A GLANCE":"ETHEREUM AT A GLANCE"}</div>
-        <strong>{network==="btc" ? btc?.pending==null?"Checking Bitcoin network…":format(btc.pending)+" transactions waiting" : eth?.gasGwei==null?"Checking Ethereum network…":eth.gasGwei+" Gwei average gas"}</strong>
-        <p>{network==="btc" ? "Bitcoin transactions wait in the mempool until miners include them in a block. Fees and network demand influence how long they wait." : "Ethereum validators include transactions in blocks. Gas fees change with network demand and transaction complexity."}</p></div>
-        <div className="pt-brief-side"><small>{network==="btc"?"Priority fee estimate":"Latest observed block"}</small><b>{network==="btc"?(btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"):(eth?.latestBlock??"—")}</b><span>{network==="btc"?"Higher fee rates generally receive more priority.":"Ethereum blocks are proposed about every 12 seconds."}</span></div>
+      <div className="pt-overview" aria-live="polite">
+        <div className="pt-overview-heading"><div><div className="pt-eyebrow">{network==="btc"?"BITCOIN AT A GLANCE":"ETHEREUM AT A GLANCE"}</div><h3>{network==="btc"?"Understand Bitcoin in real time":"Understand Ethereum in real time"}</h3><p>{network==="btc"?"How busy is Bitcoin, what might confirmations cost, and when was the last block mined?":"See current gas prices, the latest block, and recent activity on Ethereum."}</p></div><span className="pt-overview-mark" aria-hidden="true">{network==="btc"?"₿":"◆"}</span></div>
+        <div className="pt-overview-cards">
+          {network==="btc" ? <>
+            <div className="pt-overview-card"><span>Network traffic</span><strong>{btc?.congestion??"—"}</strong><small>{btc?.congestion==="Busy"?"A larger queue may mean longer waits for lower-fee payments.":btc?.congestion==="Moderate"?"Some payments are waiting; fees can affect their priority.":btc?.congestion==="Light"?"The waiting queue is relatively light.":"How busy Bitcoin's waiting queue is right now."}</small></div>
+            <div className="pt-overview-card"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>Payments waiting to be added to a Bitcoin block.</small></div>
+            <div className="pt-overview-card"><span>Priority fee estimate</span><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong><small>A suggested fee rate for higher priority, not a guarantee.</small></div>
+            <div className="pt-overview-card"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock?"Mined about "+btc.latestBlock.ageMinutes+" min ago. ":""}A block confirms a batch of transactions.</small></div>
+          </> : <>
+            <div className="pt-overview-card"><span>Current gas estimate</span><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" Gwei"}</strong><small>Gas price per unit of work; total transaction cost varies.</small></div>
+            <div className="pt-overview-card"><span>Latest block</span><strong>{eth?.latestBlock??"—"}</strong><small>The most recently observed Ethereum block.</small></div>
+            <div className="pt-overview-card"><span>Recent transactions</span><strong>{eth?.recentTransactions?.length==null?"—":format(eth.recentTransactions.length)}</strong><small>Transactions in the latest sample shown below—not the network total.</small></div>
+            <div className="pt-overview-card"><span>Network</span><strong>Ethereum</strong><small>Live Ethereum mainnet activity, not a test network.</small></div>
+          </>}
+        </div>
+        <div className="pt-overview-explainer"><span className="pt-overview-spark" aria-hidden="true">✦</span><div><h4>What does this mean for you?</h4><p>{network==="btc"?(btc?.congestion==="Busy"?"Bitcoin is busy right now. Lower-fee transactions may take longer to confirm; the fee estimate above can help you understand current demand.":btc?.congestion==="Moderate"?"Bitcoin has some transactions waiting. Confirmation times vary, and a higher fee rate may improve priority.":btc?.congestion==="Light"?"Bitcoin's waiting queue is relatively light. Your transaction still needs to be included in a block before it's confirmed.":"We're checking Bitcoin's live network conditions. The numbers above will update when data arrives."):(eth?.gasGwei!=null?"Ethereum gas prices change as demand changes. The gas estimate above is a price per unit of work, not the total fee for your specific transaction.":"We're checking Ethereum's latest gas and block information.")}</p></div></div>
       </div>
       {network==="btc" ? <>
-        <div className="pt-metrics">
-          <div className="pt-metric"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>Unconfirmed payments waiting for a miner to include them in a block.</small></div>
-          <div className="pt-metric"><span>Network traffic</span><strong>{btc?.congestion ?? "—"}</strong><small>{btc?.congestion==="Busy"?"Heavy backlog; lower-fee transactions may wait longer.":btc?.congestion==="Moderate"?"Some transactions are waiting; fees affect priority.":btc?.congestion==="Light"?"Relatively few transactions are waiting.":"Traffic level based on the pending queue."}</small></div>
-          <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>sat/vB = satoshis paid per unit of transaction size. Higher fees often get priority.</small></div>
-          <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined ~${btc.latestBlock.ageMinutes} min ago. ` : ""}A block is a batch of confirmed transactions.</small></div>
-        </div>
         <section className="pt-compact-fees">
           <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN FEE ESTIMATES</div><h3>Estimated Bitcoin confirmation times</h3></div><span className="pt-live">● Network estimates</span></div>
           <p className="pt-timeline-intro">Live fee recommendations and projected blocks, shown as an easy-to-read timeline.</p>
@@ -173,12 +178,6 @@ export default function Page() {
         </section>
         <div className="pt-insight pt-insight-compact"><div className="pt-insight-icon">✦</div><div><h3>In plain English</h3><p>{btc?.explanation ?? "We're waiting for live Bitcoin data. Try refreshing shortly."}</p><p className="pt-note">Fee estimates change constantly. Confirmation timing depends on more than transaction count.</p></div></div>
       </> : <>
-        <div className="pt-metrics">
-          <div className="pt-metric"><span>Average gas estimate</span><strong>{eth?.gasGwei == null ? "—" : eth.gasGwei + " Gwei"}</strong><small>Gwei measures the gas price per unit of computation on Ethereum.</small></div>
-          <div className="pt-metric"><span>Latest block</span><strong>{eth?.latestBlock ?? "—"}</strong><small>A block groups transactions proposed by Ethereum validators.</small></div>
-          <div className="pt-metric"><span>Network</span><strong>Ethereum</strong><small>The public Ethereum blockchain, not a test network.</small></div>
-          <div className="pt-metric"><span>Transaction fee</span><strong>Variable</strong><small>Total cost depends on gas consumed and the fee paid per gas unit.</small></div>
-        </div>
         <section className="pt-activity-panel pt-compact-activity">
           <div className="pt-activity-head"><div><div className="pt-eyebrow">ETHEREUM ACTIVITY</div><h3>Recent blocks & transactions</h3></div><span className="pt-live">● Checks every 5s</span></div>
           <div className="pt-activity-list">
