@@ -1,223 +1,80 @@
 "use client";
+import {useEffect,useMemo,useState} from "react";
+import type {BtcMvpResult} from "@/lib/btc/types";
+import {isLikelyTxid} from "@/lib/btc/validate";
 
-import { useEffect, useMemo, useState } from "react";
-import type { BtcMvpResult } from "@/lib/btc/types";
-import { isLikelyTxid } from "@/lib/btc/validate";
+type ProjectedBlock={position:number;transactionCount:number|null;feeRange:number[]|null};
+type NetworkOverview={btc?:{projectedBlocks?:ProjectedBlock[];height?:number|null}};
+const fmt=(n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat().format(n);
 
-function fmtNum(n: number | null | undefined): string {
-  if (n === null || n === undefined) return "—";
-  return new Intl.NumberFormat().format(n);
-}
-
-function Progress({ confirmed }: { confirmed: boolean }) {
-  const stepStyle = (on: boolean) => ({
-    width: 12,
-    height: 12,
-    borderRadius: 999,
-    background: on ? "white" : "rgba(255,255,255,0.25)",
-    border: "1px solid rgba(255,255,255,0.35)",
-  });
-
-  return (
-    <div className="card" style={{ padding: 12 }}>
-      <div className="badge">Where it is (BTC)</div>
-      <div style={{ height: 10 }} />
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={stepStyle(true)} />
-        <div className="small">Broadcasted</div>
-        <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.15)" }} />
-        <div style={stepStyle(!confirmed)} />
-        <div className="small">In mempool</div>
-        <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.15)" }} />
-        <div style={stepStyle(confirmed)} />
-        <div className="small">Confirmed</div>
-      </div>
+export default function BtcTxPage({params}:{params:{txid:string}}){
+ const txid=params.txid??"";
+ const valid=useMemo(()=>isLikelyTxid(txid),[txid]);
+ const [result,setResult]=useState<BtcMvpResult|null>(null);
+ const [overview,setOverview]=useState<NetworkOverview|null>(null);
+ const [loading,setLoading]=useState(true);
+ const [error,setError]=useState<string|null>(null);
+ const [aiSummary,setAiSummary]=useState<string|null>(null);
+ const [aiLoading,setAiLoading]=useState(false);
+ async function refresh(){
+  if(!valid)return;
+  try{
+   const [txRes,netRes]=await Promise.all([fetch("/api/btc/tx/"+txid,{cache:"no-store"}),fetch("/api/network",{cache:"no-store"})]);
+   const tx=await txRes.json();
+   if(!txRes.ok)throw new Error(tx?.error??"Could not load this transaction.");
+   setResult(tx as BtcMvpResult);
+   if(netRes.ok)setOverview(await netRes.json());
+   setError(null);
+  }catch(e){setError(e instanceof Error?e.message:"Network data unavailable.");}
+  finally{setLoading(false);}
+ }
+ useEffect(()=>{refresh();const id=setInterval(refresh,15000);return()=>clearInterval(id);},[txid,valid]);
+ const confirmed=Boolean(result?.status?.confirmed??result?.tx?.status?.confirmed);
+ const observed=Boolean(result?.tx||result?.status);
+ const feeRate=result?.feerateSatVb;
+ const blocks=overview?.btc?.projectedBlocks?.slice(0,5)??[];
+ const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
+ const firstMatch=matching[0]?.position;
+ const highPriority=feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1];
+ const statusTitle=!observed?"Not found on the network":confirmed?"Your Bitcoin transaction is confirmed":"Your Bitcoin transaction is waiting";
+ const summary=!observed?"We haven't found this transaction on the Bitcoin network yet. Double-check the transaction ID and try again.":confirmed?"Your transaction has been included in a Bitcoin block. It has at least one confirmation, and newer blocks add more. Some wallets or exchanges may wait for additional confirmations.":`Your transaction is waiting to be included in a Bitcoin block. It offers ${feeRate==null?"an unavailable fee rate":feeRate+" sat/vB"}.`+(firstMatch?` That fee overlaps the range currently shown in projected block ${firstMatch}, but its exact position cannot be determined from fee alone.`:highPriority?" Its fee is above the first projected block's displayed range, which may help it get picked sooner.":" Confirmation time depends on network demand and miner selection.")+" These estimates can change at any moment.";
+ async function explain(){
+  if(!result||aiLoading)return;
+  setAiLoading(true);
+  try{const r=await fetch("/api/ai/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chain:"btc",status:confirmed?"confirmed":"pending",facts:{feeSats:result.tx?.fee??null,feeRateSatVb:feeRate??null,confirmed,summary:result.diagnosis.summary}})});const j=await r.json();setAiSummary(r.ok&&typeof j.summary==="string"?j.summary:"Extra explanation is unavailable right now.");}
+  catch{setAiSummary("Extra explanation is unavailable right now.");}finally{setAiLoading(false);}
+ }
+ if(!valid)return <main className="pt-tx-page"><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID has 64 letters and numbers.</p><a href="/">← Search again</a></main>;
+ return <main className="pt-tx-page">
+  <div className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{statusTitle}</h1><p>See where your transaction stands, without the technical overload.</p></div><button onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div>
+  {error&&<div className="pt-tx-error" role="alert">{error}</div>}
+  {loading&&!result?<div className="pt-tx-loading">Checking the Bitcoin network and building your live view…</div>:null}
+  {result&&<>
+   <section className="pt-tx-stage">
+    <div className="pt-tx-stage-head"><div><span className="pt-eyebrow">WHERE IS MY TRANSACTION?</span><h2>{confirmed?"Included in a block":observed?"Waiting for a block":"Not seen yet"}</h2></div><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div>
+    <div className="pt-tx-block-track">
+     {!confirmed&&observed&&<div className="pt-tx-position"><span className="pt-tx-pointer">↓</span><strong>Your transaction</strong><small>{firstMatch?"Fee overlaps projected block "+firstMatch:highPriority?"Fee above first displayed range":"Position not yet known"}</small></div>}
+     <div className="pt-tx-block-grid">
+      {(blocks.length?blocks:[1,2,3,4,5].map(position=>({position,transactionCount:null,feeRange:null}))).map((block,index)=>{
+       const highlighted=!confirmed&&observed&&firstMatch===block.position;
+       return <div className={"pt-tx-block"+(highlighted?" highlighted":"")} key={block.position}>
+        <div className="pt-tx-block-label">{confirmed?"Projected":"BLOCK "+block.position}</div>
+        <div className="pt-tx-block-time">~{block.position*10} <span>min</span></div>
+        <div className="pt-tx-block-tiles" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{opacity:block.transactionCount==null?.25:i<Math.max(1,Math.min(15,Math.round(block.transactionCount/220)))?1:.16}}/>)}</div>
+        <strong>{block.feeRange?" "+block.feeRange[0].toFixed(1)+"–"+block.feeRange[1].toFixed(1):"—"} <span>sat/vB</span></strong>
+        <small>{block.transactionCount==null?"Live data loading":fmt(block.transactionCount)+" transactions"}</small>
+       </div>
+      })}
+     </div>
+     {confirmed?<div className="pt-tx-confirmed-banner">✓ Your transaction is already confirmed. The blocks above show the current network outlook, not the block containing your transaction.</div>:<p className="pt-tx-block-caveat">{firstMatch?"Highlighted block = matching fee range, not a verified queue position.":"A precise position cannot be calculated from the fee rate alone."} Times are approximate, not countdowns or guarantees.</p>}
     </div>
-  );
-}
-
-export default function BtcTxPage({ params }: { params: { txid: string } }) {
-  const txid = params.txid ?? "";
-  const ok = useMemo(() => isLikelyTxid(txid), [txid]);
-
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<BtcMvpResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [aiSummary, setAiSummary] = useState<string | null>(null);
-  const [aiLoading, setAiLoading] = useState(false);
-
-  async function load() {
-    if (!ok) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/btc/tx/${txid}`, { cache: "no-store" });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data?.error || "Request failed.");
-        setResult(null);
-      } else {
-        setResult(data as BtcMvpResult);
-      }
-    } catch (e: any) {
-      setError(e?.message || "Network error.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function explainWithAi() {
-    if (!result || aiLoading) return;
-    setAiLoading(true);
-    try {
-      const response = await fetch("/api/ai/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chain:"btc",status:confirmed?"confirmed":"pending",facts:{feeSats:result.tx?.fee??null,feeRateSatVb:result.feerateSatVb??null,confirmed,summary:result.diagnosis.summary}})});
-      const body = await response.json();
-      setAiSummary(response.ok&&typeof body.summary==="string"?body.summary:`AI request failed (${response.status}): ${typeof body.error==="string"?body.error:"Please try again."} The verified blockchain summary above is still available.`);
-    } catch {setAiSummary("AI is temporarily unavailable. Your blockchain status and fee data are still shown above.");}
-    finally {setAiLoading(false);}
-  }
-
-  useEffect(() => {
-    load();
-    const id = setInterval(load, 15_000);
-    return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txid, ok]);
-
-  if (!ok) {
-    return (
-      <div className="card">
-        <div className="badge">Invalid BTC txid</div>
-        <div style={{ height: 8 }} />
-        <div className="small">A BTC txid is 64 hex characters (no 0x).</div>
-      </div>
-    );
-  }
-
-  const confirmed = Boolean(result?.status?.confirmed ?? result?.tx?.status?.confirmed);
-  const observed = Boolean(result?.tx || result?.status);
-  const hasFeeComparison = result?.feerateSatVb != null && result?.fees?.hourFee != null;
-
-  return (
-    <>
-      <div className="h1">Bitcoin transaction explained</div>
-      <p className="p">Your transaction status, what the blockchain knows, and what to do next.</p>
-      <div className="small">
-        Auto-refreshing every ~15 seconds.{" "}
-        <button className="button" style={{ padding: "6px 10px" }} onClick={load} disabled={loading}>
-          {loading ? "Refreshing…" : "Refresh now"}
-        </button>
-      </div>
-
-      <div style={{ height: 12 }} />
-
-      {result && <section className="pt-tx-quick">
-        <div className="pt-eyebrow">YOUR BITCOIN TRANSACTION · QUICK SUMMARY</div>
-        <div className="pt-tx-quick-head"><strong>{!observed?"Not found yet":confirmed?"Confirmed on Bitcoin":"Waiting for confirmation"}</strong><span className={confirmed?"pt-status-confirmed":"pt-status-pending"}>{confirmed?"● Confirmed":observed?"● Pending":"● Unknown"}</span></div>
-        <p>{result.diagnosis.summary}</p>
-        <div className="pt-tx-quick-stats"><div><small>Transaction fee</small><b>{result.tx?.fee==null?"Unavailable":fmtNum(result.tx.fee)+" sats"}</b></div><div><small>Fee rate</small><b>{result.feerateSatVb==null?"Unavailable":result.feerateSatVb+" sat/vB"}</b></div><div><small>What happens next</small><b>{confirmed?"Check required confirmations":"Monitor the network"}</b></div></div>
-        <button className="button" onClick={explainWithAi} disabled={aiLoading}>{aiLoading?"Translating…":"✨ Translate this with AI"}</button>
-        {aiSummary&&<p role="status">{aiSummary}</p>}
-        <small>Based on observed Bitcoin data and transparent explanation rules. This is not a guaranteed confirmation-time prediction.</small>
-      </section>}
-      {observed && <Progress confirmed={confirmed} />}
-
-      <div style={{ height: 12 }} />
-
-      {loading && !result && <div className="card" role="status">Checking the Bitcoin network and preparing your explanation…</div>}
-      {error && (
-        <div className="card">
-          <div className="badge">Error</div>
-          <div style={{ height: 8 }} />
-          <div>{error}</div>
-        </div>
-      )}
-
-      {result && (
-        <div className="grid">
-          <div className="card">
-            <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-              <div className="badge">Your transaction explained</div>
-              <div className="badge">Source: {result.provider}</div>
-            </div>
-
-            <div style={{ height: 10 }} />
-            <div className="small">Explanation confidence: {result.diagnosis.confidence ?? "Not assessed"} · Based on available blockchain evidence</div>
-            <div style={{ height: 10 }} />
-            <div style={{ fontSize: 20, fontWeight: 800 }}>{result.diagnosis.title}</div>
-            <div style={{ height: 8 }} />
-            <div className="p" style={{ margin: 0 }}>
-              {result.diagnosis.summary}
-            </div>
-
-            <div style={{ height: 12 }} />
-            <div style={{ fontWeight: 800 }}>What the numbers mean</div>
-            <p className="p" style={{ marginTop: 10 }}>{confirmed ? "A miner included this transaction in a Bitcoin block. The receiving service may require additional confirmations." : !observed ? "Our provider has not observed this transaction, so we cannot yet tell whether it was broadcast." : hasFeeComparison ? `This transaction pays ${result.feerateSatVb} sat/vB, compared with a current roughly one-hour fee recommendation of ${result.fees!.hourFee} sat/vB. That is a network estimate, not a promise of confirmation time.` : "Bitcoin miners usually prioritize transactions by fee rate, but current fee comparison data is incomplete."}</p>
-
-            <div style={{ height: 10 }} />
-            <div style={{ fontWeight: 800 }}>Next steps</div>
-            <ul>
-              {result.diagnosis.actions.map((a, i) => (
-                <li key={i}>
-                  <b>{a.label}:</b> {a.detail}
-                </li>
-              ))}
-            </ul>
-
-            <div style={{ height: 12 }} />
-            <button className="button" onClick={()=>navigator.clipboard?.writeText(`Bitcoin transaction: ${txid}\n${result.diagnosis.title}\n${result.diagnosis.summary}\nVerify: https://mempool.space/tx/${txid}`)}>Copy explanation</button>
-            <div style={{ height: 12 }} />
-            <div className="small">Educational only. No custody, no execution, no financial advice.</div>
-          </div>
-
-          <div className="card">
-            <div className="badge">Blockchain evidence</div>
-            <div style={{ height: 12 }} />
-            <div className="kv">
-              <div className="k">Transaction ID</div>
-              <div>
-                <code>{result.txid}</code>
-                <button className="button" style={{marginLeft:8,padding:"5px 9px"}} onClick={()=>navigator.clipboard?.writeText(result.txid)}>Copy</button>
-              </div>
-            </div>
-
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">Confirmed</div>
-              <div>{observed ? (confirmed ? "Yes" : "Not yet") : "Unknown"}</div>
-            </div>
-
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">Fee</div>
-              <div>{fmtNum(result.tx?.fee)} sats</div>
-            </div>
-
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">vsize</div>
-              <div>{fmtNum(result.tx?.vsize)} vB</div>
-            </div>
-
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">Fee rate</div>
-              <div>{result.feerateSatVb ?? "—"} sat/vB</div>
-            </div>
-
-            <div style={{ height: 14 }} />
-            <a href={`https://mempool.space/tx/${txid}`} target="_blank" rel="noopener noreferrer">Verify on mempool.space ↗</a>
-            <div style={{ height: 14 }} />
-            <details>
-              <summary className="badge" style={{ cursor: "pointer" }}>
-                Raw JSON
-              </summary>
-              <div style={{ height: 10 }} />
-              <pre className="small">{JSON.stringify(result, null, 2)}</pre>
-            </details>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
+   </section>
+   <section className="pt-tx-summary"><div className="pt-eyebrow">THE SHORT ANSWER</div><h2>{confirmed?"Good news—it's confirmed.":observed?"Here's what's happening.":"Here's what we know."}</h2><p>{summary}</p><div className="pt-tx-summary-actions"><button onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain more with AI"}</button><a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">Verify on mempool.space ↗</a></div>{aiSummary&&<p className="pt-tx-ai" role="status">{aiSummary}</p>}</section>
+   <section className="pt-tx-details"><div className="pt-eyebrow">IF YOU WANT THE DETAILS</div><h2>Your transaction at a glance</h2><div className="pt-tx-facts">
+    <div><span>Current status</span><strong>{confirmed?"Confirmed":observed?"Pending":"Not observed"}</strong><small>Whether the network has included it in a block</small></div>
+    <div><span>Your fee rate</span><strong>{feeRate==null?"Unavailable":feeRate+" sat/vB"}</strong><small>Higher rates are generally more competitive</small></div>
+    <div><span>Total transaction fee</span><strong>{result.tx?.fee==null?"Unavailable":fmt(result.tx.fee)+" sats"}</strong><small>The fee offered for processing this transaction</small></div>
+   </div><details className="pt-tx-more"><summary>More technical information <span>＋</span></summary><div><p><b>Transaction ID:</b> <code>{txid}</code></p><p><b>Virtual size:</b> {fmt(result.tx?.vsize)} vB</p><p><b>Data source:</b> {result.provider}</p><p><b>What can I do?</b> {result.diagnosis.actions.map(x=>x.label+": "+x.detail).join(" ")}</p><button onClick={()=>navigator.clipboard?.writeText(txid)}>Copy transaction ID</button><details><summary>Raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details></div></details></section>
+  </>}
+  <p className="pt-tx-footnote">Updates every 15 seconds · Public blockchain data · No wallet connection required · Estimates are not guarantees.</p>
+ </main>;
