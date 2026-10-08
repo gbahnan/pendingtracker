@@ -372,3 +372,18 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-overview-explainer p { font-size:14px; line-height:1.7; margin:0; color:#c4d4de; }
 @media(max-width:900px) { .pt-overview-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:520px) { .pt-overview { padding:18px 13px; } .pt-overview-mark { display:none; } .pt-overview-cards { gap:9px; } .pt-overview-card { padding:16px 12px; } .pt-overview-card strong { font-size:21px; } .pt-overview-explainer { padding:16px 13px; } }
+
+
+/* Clearer network explanation and hierarchy */
+.pt-overview-heading { padding-bottom:20px; border-bottom:1px solid #365064; }
+.pt-overview-heading h3 { font-size:clamp(27px,3.4vw,38px); }
+.pt-overview-card { position:relative; min-height:210px; display:flex; flex-direction:column; }
+.pt-overview-card span { color:#a9cbdc; font-size:10px; letter-spacing:.09em; font-weight:800; text-transform:uppercase; }
+.pt-overview-card strong { font-size:clamp(24px,2.5vw,33px); margin:20px 0 12px; }
+.pt-overview-card small { margin-top:auto; font-size:13px; line-height:1.65; color:#c0d0da; }
+.pt-overview-explainer { margin-top:18px; padding:25px; background:linear-gradient(110deg,#254354,#182f3f); border-color:#597587; }
+.pt-overview-explainer h4 { font-size:19px; letter-spacing:-.02em; }
+.pt-overview-explainer p { color:#d6e2e8; font-size:14px; }
+.pt-overview-next { margin-top:14px; padding-top:13px; border-top:1px solid #486577; font-size:13px; line-height:1.6; color:#aebfcb; }
+.pt-overview-next a { color:#d9c6a1; font-weight:700; }
+@media(max-width:520px) { .pt-overview-card { min-height:225px; } .pt-overview-card strong { font-size:23px; } .pt-overview-card small { font-size:12px; } .pt-overview-explainer { padding:17px; } }
