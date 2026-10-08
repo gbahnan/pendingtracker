@@ -187,3 +187,11 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .button:focus-visible,.pt-searchrow button:focus-visible,.pt-tabs button:focus-visible,.pt-term summary:focus-visible { outline:3px solid #bca6ff; outline-offset:3px; }
 @media(max-width:760px) { .pt-steps { grid-template-columns:1fr; } .pt-steps .pt-metric { min-height:0; } .card .kv { grid-template-columns:100px 1fr; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition-duration:.01ms!important; animation-duration:.01ms!important; } }
+
+/* Live Bitcoin numbers translated into approachable context */
+.pt-explainer-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:18px; }
+.pt-explainer { min-width:0; padding:24px 21px; border:1px solid #40335f; border-radius:16px; background:linear-gradient(145deg,rgba(39,29,72,.9),rgba(17,17,36,.95)); }
+.pt-explainer h3 { font-size:19px; letter-spacing:-.02em; margin:13px 0 12px; }
+.pt-explainer p { color:#cbc4e0; font-size:14px; line-height:1.7; margin:0 0 13px; }
+.pt-explainer a { color:#d7c4ff; text-decoration:underline; text-underline-offset:3px; font-size:13px; }
+@media(max-width:850px) { .pt-explainer-grid { grid-template-columns:1fr; } }
