@@ -71,7 +71,7 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
   }
 
   const confirmed = Boolean(data?.confirmed ?? (Number(data?.confirmations ?? 0) > 0));
-  const failed = Boolean(confirmed && (data?.raw?.result === "error" || data?.raw?.status === "error" || data?.raw?.tx?.status === "0x0" || data?.raw?.receipt?.status === "0x0"));
+  const failed = Boolean(data?.failed);
   const diagnosis = data?.diagnosis;
 
   return (
