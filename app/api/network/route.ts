@@ -25,6 +25,7 @@ export async function GET() {
   const get = (result: PromiseSettledResult<any>) => result.status === "fulfilled" ? result.value : null;
   const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks), projected = get(projectedBlocks), txs = get(recentTransactions), etxs = get(ethTransactions);
   const tip = Array.isArray(recent) ? recent[0] : null;
+  const confirmedIds = typeof tip?.id === "string" && /^[a-f0-9]{64}$/i.test(tip.id) ? await json("https://mempool.space/api/block/" + tip.id + "/txids").catch(() => null) : null;
   const tipTimestamp = Number(tip?.timestamp);
   const tipTxCount = Number(tip?.tx_count);
   const poolVsize = p?.vsize == null ? NaN : Number(p.vsize);
@@ -52,6 +53,7 @@ export async function GET() {
     } : null,
     mempoolVsizeMB: Number.isFinite(poolVsize) ? Math.round(poolVsize / 10000) / 100 : null,
     mempoolFeesBTC: Number.isFinite(poolFees) ? Math.round(poolFees / 1000000) / 100 : null,
+    confirmedTransactions: Array.isArray(confirmedIds) ? confirmedIds.slice(0, 8).filter((id: unknown) => typeof id === "string" && /^[a-f0-9]{64}$/i.test(id)) : [],
     recentTransactions: Array.isArray(txs) ? txs.slice(0, 12).filter((tx: any) => typeof tx?.txid === "string" && /^[a-f0-9]{64}$/i.test(tx.txid)).map((tx: any) => ({ id: tx.txid, fee: Number.isFinite(Number(tx.fee)) ? Number(tx.fee) : null, vsize: Number.isFinite(Number(tx.vsize)) ? Number(tx.vsize) : null, value: Number.isFinite(Number(tx.value)) ? Number(tx.value) : null })) : [],
     projectedBlocks: Array.isArray(projected) ? projected.slice(0, 6).map((block: any, index: number) => ({
       position: index + 1,
