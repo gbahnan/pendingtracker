@@ -34,7 +34,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   finally{setLoading(false);}
  },[txid,valid]);
  useEffect(()=>{refresh();const id=setInterval(refresh,15000);return()=>clearInterval(id);},[refresh]);
- const tx=result?.tx;
+ const tx=result?.tx as (NonNullable<BtcMvpResult["tx"]> & {vout?:Array<{value?:number;scriptpubkey_address?:string}>;vin?:Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}> ;size?:number;version?:number;locktime?:number})|null|undefined;
  const confirmed=Boolean(result?.status?.confirmed??tx?.status?.confirmed);
  const observed=Boolean(tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
  const feeRate=result?.feerateSatVb??null;
