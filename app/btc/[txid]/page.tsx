@@ -35,9 +35,11 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const blocks=overview?.btc?.projectedBlocks?.slice(0,5)??[];
  const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
  const firstMatch=matching[0]?.position;
+ const selectedPosition=firstMatch??(feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1]?1:null);
+ const estimatedWindow=confirmed?"Already confirmed":!observed?"Not available":selectedPosition?`About ${selectedPosition*10} minutes, estimated`:"Not available yet";
  const highPriority=feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1];
  const statusTitle=!observed?"Not found on the network":confirmed?"Your Bitcoin transaction is confirmed":"Your Bitcoin transaction is waiting";
- const summary=!observed?"We haven't found this transaction on the Bitcoin network yet. Double-check the transaction ID and try again.":confirmed?"Your transaction has been included in a Bitcoin block. It has at least one confirmation, and newer blocks add more. Some wallets or exchanges may wait for additional confirmations.":`Your transaction is waiting to be included in a Bitcoin block. It offers ${feeRate==null?"an unavailable fee rate":feeRate+" sat/vB"}.`+(firstMatch?` That fee overlaps the range currently shown in projected block ${firstMatch}, but its exact position cannot be determined from fee alone.`:highPriority?" Its fee is above the first projected block's displayed range, which may help it get picked sooner.":" Confirmation time depends on network demand and miner selection.")+" These estimates can change at any moment.";
+ const summary=!observed?"This transaction has not appeared on the Bitcoin network yet. Check the transaction ID and make sure it was broadcast. We will keep checking for updates.":confirmed?"Your transaction has been included in a Bitcoin block. It now has at least one confirmation, and newer blocks add more. Some wallets and exchanges require additional confirmations.":selectedPosition?`Your transaction is pending with a fee rate of ${feeRate} sat/vB. Current fee ranges suggest it could fit around projected block ${selectedPosition}, or about ${selectedPosition*10} minutes on average. This estimate changes with network traffic and is not guaranteed.`:`Your transaction is pending with ${feeRate==null?"an unavailable fee rate":feeRate+" sat/vB"}. Current block projections cannot reliably estimate its confirmation time. We will update the outlook as network conditions change.`;
  async function explain(){
   if(!result||aiLoading)return;
   setAiLoading(true);
@@ -46,17 +48,17 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  }
  if(!valid)return <main className="pt-tx-page"><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID has 64 letters and numbers.</p><a href="/">← Search again</a></main>;
  return <main className="pt-tx-page">
-  <div className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{statusTitle}</h1><p>See where your transaction stands, without the technical overload.</p></div><button onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div>
+  <div className="pt-tx-back"><a href="/">← Back to explorer</a></div><div className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{statusTitle}</h1><p>See where your transaction stands, without the technical overload.</p></div><button onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div>
   {error&&<div className="pt-tx-error" role="alert">{error}</div>}
   {loading&&!result?<div className="pt-tx-loading">Checking the Bitcoin network and building your live view…</div>:null}
   {result&&<>
    <section className="pt-tx-stage">
     <div className="pt-tx-stage-head"><div><span className="pt-eyebrow">WHERE IS MY TRANSACTION?</span><h2>{confirmed?"Included in a block":observed?"Waiting for a block":"Not seen yet"}</h2></div><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div>
-    <div className="pt-tx-block-track">
-     {!confirmed&&observed&&<div className="pt-tx-position"><span className="pt-tx-pointer">↓</span><strong>Your transaction</strong><small>{firstMatch?"Fee overlaps projected block "+firstMatch:highPriority?"Fee above first displayed range":"Position not yet known"}</small></div>}
+    <div className="pt-tx-estimate"><span>YOUR FEE RATE</span><strong>{feeRate==null?"Unavailable":feeRate+" sat/vB"}</strong><span>ESTIMATED TIME</span><strong>{estimatedWindow}</strong></div><div className="pt-tx-block-track">
+     {!confirmed&&observed&&<div className="pt-tx-position-row"><div className="pt-tx-position" style={{gridColumn:selectedPosition?String(selectedPosition):"1 / -1"}}><strong>↓ Your transaction</strong><small>{selectedPosition?"Projected block "+selectedPosition:"Position unknown"}</small></div></div>}
      <div className="pt-tx-block-grid">
       {(blocks.length?blocks:[1,2,3,4,5].map(position=>({position,transactionCount:null,feeRange:null}))).map((block,index)=>{
-       const highlighted=!confirmed&&observed&&firstMatch===block.position;
+       const highlighted=!confirmed&&observed&&selectedPosition===block.position;
        return <div className={"pt-tx-block"+(highlighted?" highlighted":"")} key={block.position}>
         <div className="pt-tx-block-label">{confirmed?"Projected":"BLOCK "+block.position}</div>
         <div className="pt-tx-block-time">~{block.position*10} <span>min</span></div>
