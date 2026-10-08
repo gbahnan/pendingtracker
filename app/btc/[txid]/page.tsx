@@ -49,7 +49,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const outputs: Array<{value?:number;scriptpubkey_address?:string}>=(tx?.vout??[]) as Array<{value?:number;scriptpubkey_address?:string}>;
  const inputTotal=inputs.length>0&&inputs.every(i=>i.prevout?.value!=null)?inputs.reduce((sum,i)=>sum+(i.prevout?.value??0),0):null;
  const outputTotal=outputs.length>0&&outputs.every(o=>o.value!=null)?outputs.reduce((sum,o)=>sum+(o.value??0),0):null;
- const rbf=tx?.rbf===true||inputs.some(i=>i.sequence!=null&&i.sequence<0xfffffffe);
+ const rbf=inputs.some(i=>i.sequence!=null&&i.sequence<0xfffffffe);
  const summary=!observed
   ?"We cannot see this transaction on the Bitcoin network right now. Check that the ID is correct and that your wallet has broadcast it. A missing transaction does not necessarily mean the funds were lost."
   :confirmed
