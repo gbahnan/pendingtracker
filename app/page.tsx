@@ -158,8 +158,8 @@ export default function Page() {
               return <div className={"pt-projected-card"+(matches?" pt-projected-match":"")} key={block.position}>
                 <div className="pt-projected-top"><span>BLOCK {block.position}</span><b>~{block.position*10} min</b></div>
                 <div className="pt-block-art" aria-hidden="true">{Array.from({length:20},(_,i)=><i key={i} style={{opacity:block.transactionCount==null?.2:(i<Math.max(2,Math.min(20,Math.round(block.transactionCount/160)))?1:.17)}}/>)}</div>
-                <strong>{block.transactionCount==null?"Awaiting data":format(block.transactionCount)+" payments"}</strong>
-                <small>{low==null||high==null?"Fee range unavailable":low.toFixed(1)+"–"+high.toFixed(1)+" sat/vB"}</small>
+                <strong className="pt-block-fee">{low==null||high==null?"Fee unavailable":low.toFixed(1)+"–"+high.toFixed(1)+" sat/vB"}</strong>
+                <small className="pt-block-tx-count">{block.transactionCount==null?"Awaiting transactions":format(block.transactionCount)+" transactions"}</small>
                 {matches?<em>↗ Your rate overlaps</em>:<span className="pt-projected-foot">Estimated arrival</span>}
               </div>;
             })}
