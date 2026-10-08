@@ -126,8 +126,8 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
                 Think of Ethereum like a line at a busy store. Transactions paying higher fees usually get processed
                 sooner.
               </li>
-              <li>If it’s pending, your wallet may have a “Speed Up” option.</li>
-              <li>If it’s confirmed, you may just be waiting for more confirmations.</li>
+              <li>{confirmed ? "The transaction has been included in a block." : "If your wallet supports it, you may be able to increase the fee on a pending transaction."}</li>
+              <li>{failed ? "A failed transaction may still cost gas." : confirmed ? "Some receiving services wait for additional confirmations." : "Never send a second payment until you know whether the original was replaced or canceled."}</li>
             </ul>
 
             <div style={{ height: 10 }} />
