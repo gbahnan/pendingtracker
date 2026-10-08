@@ -3,6 +3,24 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "nodejs";
 const recent = new Map<string, number[]>();
 
+export async function GET() {
+  const key = process.env.GROQ_API_KEY;
+  if (!key) return NextResponse.json({ configured: false, reason: "missing_server_key" }, { status: 503 });
+  try {
+    const response = await fetch("https://api.groq.com/openai/v1/models", {
+      headers: { Authorization: "Bearer " + key },
+      cache: "no-store", signal: AbortSignal.timeout(8000)
+    });
+    return NextResponse.json({
+      configured: response.ok,
+      providerStatus: response.status,
+      reason: response.ok ? "ready" : response.status === 401 || response.status === 403 ? "invalid_key" : "provider_error"
+    }, { status: response.ok ? 200 : 503, headers: { "Cache-Control": "no-store" } });
+  } catch {
+    return NextResponse.json({ configured: false, reason: "provider_unreachable" }, { status: 503 });
+  }
+}
+
 export async function POST(request: NextRequest) {
   const key = process.env.GROQ_API_KEY;
   if (!key) return NextResponse.json({ error: "AI explanations are not configured" }, { status: 503 });
