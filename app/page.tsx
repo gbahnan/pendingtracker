@@ -107,14 +107,14 @@ export default function Page() {
     <div className="pt-hero">
       <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, EXPLAINED</div>
       <h1>Crypto moves fast.<br/><span>Understanding it shouldn't be hard.</span></h1>
-      <p className="pt-lead">Explore what's happening on Bitcoin and Ethereum, or find out exactly what's happening with your transaction. Real blockchain data, translated into plain English.</p>
+      <p className="pt-lead">Follow live Bitcoin or Ethereum activity, or check a specific transaction and understand what its status means.</p>
       <div className="pt-searchbox">
-        <div className="pt-search-label">UNDERSTAND YOUR TRANSACTION</div>
+        <div className="pt-search-label">WHERE’S MY TRANSACTION?</div><p className="pt-search-explain">Paste a transaction ID (TXID) or hash. We’ll check its status, explain the fees and confirmations in everyday language, and show useful next steps.</p>
         <div className="pt-searchrow">
-          <input aria-label="Transaction hash" placeholder="Paste a Bitcoin or Ethereum transaction hash…" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
+          <input aria-label="Transaction hash" placeholder="Paste your Bitcoin TXID or Ethereum transaction hash…" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
           <button onClick={search}>Explain my transaction →</button>
         </div>
-        {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">No wallet connection required. Paste a transaction ID or explorer link. Never share private keys or seed phrases.</p>}
+        {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">No wallet connection or signup. You can also paste an explorer transaction link. Never share a seed phrase or private key.</p>}
       </div>
     </div>
 
@@ -125,6 +125,12 @@ export default function Page() {
         <button role="tab" aria-selected={network==="eth"} className={network==="eth"?"selected":""} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button>
       </div>
       {newestEvents[network] ? <div className="pt-new-block" role="status">✦ {newestEvents[network]} · {network==="btc"?"Bitcoin":"Ethereum"} network</div> : null}
+      <div className="pt-network-brief" aria-live="polite">
+        <div><div className="pt-eyebrow">{network==="btc"?"BITCOIN AT A GLANCE":"ETHEREUM AT A GLANCE"}</div>
+        <strong>{network==="btc" ? btc?.pending==null?"Checking Bitcoin network…":format(btc.pending)+" transactions waiting" : eth?.gasGwei==null?"Checking Ethereum network…":eth.gasGwei+" Gwei average gas"}</strong>
+        <p>{network==="btc" ? "Bitcoin transactions wait in the mempool until miners include them in a block. Fees and network demand influence how long they wait." : "Ethereum validators include transactions in blocks. Gas fees change with network demand and transaction complexity."}</p></div>
+        <div className="pt-brief-side"><small>{network==="btc"?"Priority fee estimate":"Latest observed block"}</small><b>{network==="btc"?(btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"):(eth?.latestBlock??"—")}</b><span>{network==="btc"?"Higher fee rates generally receive more priority.":"Ethereum blocks are proposed about every 12 seconds."}</span></div>
+      </div>
       {network==="btc" ? <>
         <div className="pt-metrics">
           <div className="pt-metric"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>Unconfirmed payments waiting for a miner to include them in a block.</small></div>
