@@ -337,3 +337,19 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
   .pt-search-symbol { display:none; }
   .pt-search-explain { font-size:13px; }
 }
+
+
+/* Premium color polish */
+.pt-searchbox { background:linear-gradient(145deg,#1b3040,#132534); border-color:#426073; }
+.pt-searchrow input { background:#0c1b29; border-color:#3b5869; }
+.pt-searchrow input:focus-visible { outline:2px solid #9abfd0; outline-offset:2px; }
+.pt-searchrow button { background:linear-gradient(115deg,#dfcfb0,#c5ad7e); color:#10202d; }
+.pt-shell .pt-metric,.pt-shell .pt-activity-panel,.pt-shell .pt-compact-fees,.pt-shell .pt-insight,.pt-shell .pt-term,.pt-shell .pt-network-brief { background:linear-gradient(145deg,#1a3040,#132533); border-color:#355064; }
+.pt-shell .pt-activity-row { background:#152a39; border-color:#345062; }
+.pt-shell .pt-activity-row:hover { background:#203b4c; border-color:#9abfd0; }
+.pt-shell .pt-tabs button.selected { background:#294657; border-color:#c9b58b; }
+.pt-shell .pt-activity-arrow,.pt-shell .pt-term summary span { color:#9abfd0; }
+.pt-shell .pt-timeline-node { background:#8db8ca; border-color:#203a4a; color:#10202d; }
+.pt-shell .pt-fee-timeline:before { background:linear-gradient(90deg,#a7cbd9,#527e93); }
+.pt-shell .pt-timeline-stop b { background:#243f50; color:#c5e0ec; }
+.pt-shell .pt-estimate-summary { background:#203b4c; border-color:#62869a; color:#e3f0f5; }
