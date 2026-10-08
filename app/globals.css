@@ -521,3 +521,27 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-simple-custom-body p { width:100%; margin:0; color:#c9d9df; font-size:12px; line-height:1.6; }
 .pt-simple-source { color:#9fb3c0; font-size:12px; line-height:1.6; margin:13px 0 0; }
 @media(max-width:650px) { .pt-fee-explorer .pt-block-time { font-size:23px; } .pt-simple-fee { padding:12px 9px; } .pt-simple-fee strong { font-size:16px; } .pt-simple-fee small { font-size:11px; } }
+
+
+/* Homepage clarity pass: quieter activity, guided next steps, concise answers */
+.pt-clean-activity { margin-top:22px; }
+.pt-clean-activity .pt-activity-head { margin-bottom:16px; }
+.pt-activity-intro { margin:7px 0 0; color:#afc3cf; font-size:13px; line-height:1.5; }
+.pt-clean-activity .pt-activity-row { min-height:52px; }
+.pt-clean-activity .pt-activity-meta { font-size:12px; color:#abc0cd; }
+.pt-activity-bottom { margin:13px 0 0; color:#9eb6c4; font-size:12px; }
+.pt-clean-insight { margin-top:15px; padding:19px 21px; }
+.pt-clean-insight h3 { margin-bottom:5px; font-size:16px; }
+.pt-clean-insight p { line-height:1.65; }
+.pt-journey .pt-section-sub,.pt-learn-simple .pt-section-sub { margin:8px 0 23px; }
+.pt-journey-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; }
+.pt-journey-step { padding:22px; border:1px solid #3b5666; border-radius:14px; background:linear-gradient(155deg,#1b3342,#132632); }
+.pt-journey-step>span { display:inline-block; color:#e4c78f; font-size:12px; letter-spacing:.12em; font-weight:800; margin-bottom:20px; }
+.pt-journey-step h3 { margin:0 0 9px; font-size:18px; line-height:1.3; color:#f0f6f9; }
+.pt-journey-step p { margin:0; color:#b2c5d0; font-size:13px; line-height:1.65; }
+.pt-learn-simple .pt-glossary { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+.pt-learn-simple .pt-term { min-width:0; }
+.pt-learn-simple .pt-glossary-inner { display:grid; gap:7px; margin-top:12px; }
+.pt-learn-simple .pt-glossary-inner .pt-term { background:#132a38; }
+.pt-cta-simple { padding-top:35px; padding-bottom:35px; }
+@media(max-width:700px) { .pt-journey-grid { grid-template-columns:1fr; } .pt-journey-step { padding:17px; } .pt-journey-step>span { margin-bottom:10px; } .pt-learn-simple .pt-glossary { grid-template-columns:1fr; } .pt-clean-activity .pt-activity-row { gap:7px; } .pt-clean-activity .pt-activity-meta { font-size:11px; } }
