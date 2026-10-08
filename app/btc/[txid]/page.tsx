@@ -43,6 +43,8 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<BtcMvpResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [aiSummary, setAiSummary] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   async function load() {
     if (!ok) return;
@@ -62,6 +64,17 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function explainWithAi() {
+    if (!result || aiLoading) return;
+    setAiLoading(true);
+    try {
+      const response = await fetch("/api/ai/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chain:"btc",status:confirmed?"confirmed":"pending",facts:{feeSats:result.tx?.fee??null,feeRateSatVb:result.feerateSatVb??null,confirmed,summary:result.diagnosis.summary}})});
+      const body = await response.json();
+      setAiSummary(response.ok&&typeof body.summary==="string"?body.summary:"AI explanations aren't configured yet. The verified blockchain summary above is still available.");
+    } catch {setAiSummary("AI is temporarily unavailable. Your blockchain status and fee data are still shown above.");}
+    finally {setAiLoading(false);}
   }
 
   useEffect(() => {
@@ -103,6 +116,8 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
         <div className="pt-tx-quick-head"><strong>{!observed?"Not found yet":confirmed?"Confirmed on Bitcoin":"Waiting for confirmation"}</strong><span className={confirmed?"pt-status-confirmed":"pt-status-pending"}>{confirmed?"● Confirmed":observed?"● Pending":"● Unknown"}</span></div>
         <p>{result.diagnosis.summary}</p>
         <div className="pt-tx-quick-stats"><div><small>Transaction fee</small><b>{result.tx?.fee==null?"Unavailable":fmtNum(result.tx.fee)+" sats"}</b></div><div><small>Fee rate</small><b>{result.feerateSatVb==null?"Unavailable":result.feerateSatVb+" sat/vB"}</b></div><div><small>What happens next</small><b>{confirmed?"Check required confirmations":"Monitor the network"}</b></div></div>
+        <button className="button" onClick={explainWithAi} disabled={aiLoading}>{aiLoading?"Translating…":"✨ Translate this with AI"}</button>
+        {aiSummary&&<p role="status">{aiSummary}</p>}
         <small>Based on observed Bitcoin data and transparent explanation rules. This is not a guaranteed confirmation-time prediction.</small>
       </section>}
       {observed && <Progress confirmed={confirmed} />}
