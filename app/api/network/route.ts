@@ -27,8 +27,8 @@ export async function GET() {
     available: !!(f || p),
     pending: Number.isFinite(txCount) ? txCount : null,
     congestion,
-    fastestFee: Number.isFinite(Number(f?.fastestFee)) ? Number(f.fastestFee) : null,
-    hourFee: Number.isFinite(Number(f?.hourFee)) ? Number(f.hourFee) : null,
+    fastestFee: f?.fastestFee != null && Number.isFinite(Number(f.fastestFee)) ? Number(f.fastestFee) : null,
+    hourFee: f?.hourFee != null && Number.isFinite(Number(f.hourFee)) ? Number(f.hourFee) : null,
     minimumFee: Number.isFinite(Number(f?.minimumFee)) ? Number(f.minimumFee) : null,
     height: b != null && Number.isFinite(Number(b)) ? Number(b) : null,
     explanation: !p ? "Bitcoin network data is temporarily unavailable." : congestion === "Busy"
