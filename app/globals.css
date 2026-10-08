@@ -414,3 +414,47 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-overview-card .pt-card-more { align-self:end; margin-top:15px; }
 @media(max-width:900px) { .pt-overview-card { grid-template-rows:auto minmax(45px,auto) minmax(125px,1fr) minmax(96px,auto) auto; } }
 @media(max-width:520px) { .pt-overview-card { padding:17px 12px; grid-template-rows:auto minmax(50px,auto) minmax(175px,1fr) minmax(125px,auto) auto; } .pt-overview-card small { font-size:12px; } }
+
+
+/* Bitcoin confirmation outlook: visual projected block queue */
+.pt-fee-explorer { padding:29px; background:linear-gradient(150deg,#162c3b,#0f202e); }
+.pt-fee-explorer .pt-activity-head h3 { font-size:clamp(23px,2.7vw,31px); }
+.pt-fee-explorer .pt-timeline-intro { color:#bdced9; max-width:790px; font-size:14px; line-height:1.7; }
+.pt-fee-intro { display:flex; gap:15px; padding:18px 20px; border:1px solid #456477; border-radius:13px; background:#1c3646; }
+.pt-fee-intro-icon { flex:0 0 38px; height:38px; display:grid; place-items:center; border-radius:10px; background:#2d4b5d; color:#d9c6a1; font-size:21px; }
+.pt-fee-intro b { display:block; font-size:14px; color:#f3f6f8; }
+.pt-fee-intro p { margin:6px 0 0; font-size:13px; line-height:1.65; color:#bdced8; }
+.pt-fee-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:28px 0 15px; }
+.pt-fee-heading h4 { margin:0 0 6px; font-size:18px; color:#f4f7fa; }
+.pt-fee-heading h4 span { color:#90aabb; font-size:12px; font-weight:500; }
+.pt-fee-heading p { margin:0; font-size:12px; color:#a8bdcb; }
+.pt-fee-live-tag { flex-shrink:0; color:#b6e0d4; font-size:10px; letter-spacing:.11em; font-weight:800; }
+.pt-projected-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+.pt-projected-card { min-width:0; padding:15px 12px; border:1px solid #3d5c70; border-radius:13px; background:linear-gradient(150deg,#213e50,#152b3a); }
+.pt-projected-card.pt-projected-match { border-color:#d9c6a1; box-shadow:0 0 0 1px rgba(217,198,161,.25); }
+.pt-projected-top { display:flex; justify-content:space-between; gap:4px; align-items:center; font-size:10px; color:#a7c4d5; font-weight:800; letter-spacing:.06em; }
+.pt-projected-top b { font-size:11px; color:#e3d3b1; letter-spacing:0; }
+.pt-block-art { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:4px; padding:15px 0; }
+.pt-block-art i { height:13px; border-radius:3px; background:#90bfd1; }
+.pt-projected-card strong { display:block; color:#f1f6f9; font-size:14px; margin:2px 0 7px; overflow-wrap:anywhere; }
+.pt-projected-card small { display:block; color:#bdd1dd; font-size:11px; }
+.pt-projected-foot,.pt-projected-card em { display:block; font-size:10px; margin-top:12px; font-style:normal; color:#88a6b9; }
+.pt-projected-card em { color:#e4cfa4; font-weight:750; }
+.pt-fee-explorer .pt-fee-disclaimer { margin:15px 0; font-size:12px; line-height:1.65; color:#9fb4c2; }
+.pt-fee-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:11px; }
+.pt-fee-choice { text-align:left; display:flex; flex-direction:column; align-items:flex-start; gap:9px; border:1px solid #426074; border-radius:13px; background:#1b3445; padding:19px; color:#edf4f7; cursor:pointer; }
+.pt-fee-choice:hover,.pt-fee-choice.active { border-color:#d9c6a1; background:#294658; }
+.pt-fee-choice:disabled { opacity:.55; cursor:default; }
+.pt-fee-choice span { color:#cdbb95; font-size:10px; letter-spacing:.12em; font-weight:800; }
+.pt-fee-choice strong { font-size:clamp(19px,2.2vw,28px); color:#f8f9fa; }
+.pt-fee-choice b { font-size:13px; }
+.pt-fee-choice small { color:#b7cbd7; font-size:12px; line-height:1.5; }
+.pt-fee-checker { display:grid; grid-template-columns:minmax(0,1fr) 100px 140px; align-items:center; gap:13px; margin-top:23px; padding:20px; border:1px solid #456679; border-radius:14px; background:#102634; }
+.pt-fee-checker h4 { margin:0 0 5px; font-size:16px; }
+.pt-fee-checker p { margin:0; color:#a9bfcd; font-size:12px; }
+.pt-fee-checker label { font-size:12px; color:#c6d5de; }
+.pt-fee-checker label span { display:block; color:#91acbc; }
+.pt-fee-checker input { min-width:0; width:100%; border:1px solid #6d92a6; background:#1b384a; color:#fff; border-radius:9px; padding:13px; font-size:16px; }
+.pt-fee-result { grid-column:1/-1; border-top:1px solid #365365; padding-top:14px; color:#d6e5ed; font-size:13px; line-height:1.7; }
+@media(max-width:950px) { .pt-projected-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:650px) { .pt-fee-explorer { padding:18px 13px; } .pt-projected-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .pt-fee-choices { grid-template-columns:1fr; } .pt-fee-choice { padding:15px; } .pt-fee-checker { grid-template-columns:1fr 1fr; } .pt-fee-checker>div:first-child { grid-column:1/-1; } .pt-fee-heading { align-items:flex-start; } }
