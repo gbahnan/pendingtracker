@@ -353,3 +353,22 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-shell .pt-fee-timeline:before { background:linear-gradient(90deg,#a7cbd9,#527e93); }
 .pt-shell .pt-timeline-stop b { background:#243f50; color:#c5e0ec; }
 .pt-shell .pt-estimate-summary { background:#203b4c; border-color:#62869a; color:#e3f0f5; }
+
+
+/* Redesigned live network overview */
+.pt-overview { margin:20px 0 24px; border:1px solid #365165; border-radius:22px; padding:28px; background:linear-gradient(145deg,#142839,#0d1c29); box-shadow:0 20px 50px rgba(0,0,0,.12); }
+.pt-overview-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:23px; }
+.pt-overview-heading h3 { font-size:clamp(23px,3vw,32px); letter-spacing:-.04em; margin:9px 0; }
+.pt-overview-heading p { margin:0; font-size:14px; line-height:1.6; color:#b0c2ce; }
+.pt-overview-mark { display:grid; place-items:center; flex:0 0 60px; height:60px; border-radius:17px; background:#243e4f; border:1px solid #476378; color:#d9c6a1; font-size:30px; }
+.pt-overview-cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.pt-overview-card { padding:22px 17px; min-width:0; border:1px solid #3a5669; border-radius:15px; background:linear-gradient(155deg,#203849,#172c3b); }
+.pt-overview-card span { display:block; font-size:12px; font-weight:650; color:#b4c7d2; }
+.pt-overview-card strong { display:block; font-size:clamp(19px,2.4vw,28px); line-height:1.2; margin:17px 0 12px; color:#f6f8fa; letter-spacing:-.04em; overflow-wrap:anywhere; }
+.pt-overview-card small { display:block; font-size:12px; line-height:1.6; color:#a8becb; }
+.pt-overview-explainer { display:flex; gap:15px; margin-top:14px; padding:20px 22px; background:#1b3545; border:1px solid #3a596b; border-radius:14px; }
+.pt-overview-spark { color:#d9c6a1; font-size:23px; }
+.pt-overview-explainer h4 { font-size:15px; margin:0 0 8px; color:#f4f7f8; }
+.pt-overview-explainer p { font-size:14px; line-height:1.7; margin:0; color:#c4d4de; }
+@media(max-width:900px) { .pt-overview-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:520px) { .pt-overview { padding:18px 13px; } .pt-overview-mark { display:none; } .pt-overview-cards { gap:9px; } .pt-overview-card { padding:16px 12px; } .pt-overview-card strong { font-size:21px; } .pt-overview-explainer { padding:16px 13px; } }
