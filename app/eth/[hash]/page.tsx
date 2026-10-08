@@ -28,3 +28,5 @@ export default function EthTxPage({params}:{params:{hash:string}}){
   </>}
   <p className="pt-tx-footnote">Updates every 15 seconds · Public blockchain data · No wallet connection required.</p>
  </main>;
+
+}
