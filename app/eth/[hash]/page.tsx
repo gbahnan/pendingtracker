@@ -15,14 +15,9 @@ function weiToEth(wei: string) {
   const raw = (wei || "0").toString().replace(/[^\d]/g, "");
   const s = raw.replace(/^0+/, "") || "0";
 
-  if (s.length <= 18) {
-    const frac = s.padStart(18, "0").slice(0, 4);
-    return `0.${frac}`;
-  }
-
-  const whole = s.slice(0, -18);
-  const frac = s.slice(-18).padEnd(18, "0").slice(0, 4);
-  return `${whole}.${frac}`;
+  const whole = s.length > 18 ? s.slice(0, -18) : "0";
+  const fraction = s.slice(-18).padStart(18, "0").slice(0, 8).replace(/0+$/, "");
+  return fraction ? `${whole}.${fraction}` : whole;
 }
 
 export default function EthTxPage({ params }: { params: { hash: string } }) {
@@ -76,7 +71,7 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
 
   return (
     <>
-      <div className="h1">Ethereum Transaction</div>
+      <div className="h1">Ethereum transaction explained</div>
       <p className="p">
         This page auto-refreshes every ~15 seconds.{" "}
         <button className="button" style={{ padding: "6px 10px" }} onClick={load} disabled={loading}>
@@ -121,7 +116,7 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
       {data && (
         <div className="grid">
           <div className="card">
-            <div className="badge">Plain-English</div>
+            <div className="badge">Your transaction explained</div>
             <div style={{ height: 10 }} />
             <div style={{ fontWeight: 800 }}>{failed ? "The transaction was included but failed." : diagnosis?.title ?? (confirmed ? "It’s confirmed." : "It’s waiting to be confirmed.")}</div>
             <p className="p" style={{marginTop:10}}>{failed ? "Ethereum processed this transaction, but the operation did not succeed. Network fees may still have been charged." : diagnosis?.summary ?? "We could not generate a specific explanation from the available data."}</p>
