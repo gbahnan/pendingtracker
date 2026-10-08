@@ -24,10 +24,10 @@ export async function GET() {
   const tip = Array.isArray(recent) ? recent[0] : null;
   const tipTimestamp = Number(tip?.timestamp);
   const tipTxCount = Number(tip?.tx_count);
-  const poolVsize = Number(p?.vsize);
-  const poolFees = Number(p?.total_fee);
+  const poolVsize = p?.vsize == null ? NaN : Number(p.vsize);
+  const poolFees = p?.total_fee == null ? NaN : Number(p.total_fee);
   const nowSeconds = Math.floor(Date.now() / 1000);
-  const txCount = Number(p?.count);
+  const txCount = p?.count == null ? NaN : Number(p.count);
   const gasGwei = e?.gas_prices?.average == null ? NaN : Number(e.gas_prices.average);
   const congestion = !Number.isFinite(txCount) ? "Unavailable" : txCount > 100000 ? "Busy" : txCount > 25000 ? "Moderate" : "Light";
   const btc = {
@@ -36,8 +36,10 @@ export async function GET() {
     congestion,
     fastestFee: f?.fastestFee != null && Number.isFinite(Number(f.fastestFee)) ? Number(f.fastestFee) : null,
     hourFee: f?.hourFee != null && Number.isFinite(Number(f.hourFee)) ? Number(f.hourFee) : null,
+    halfHourFee: f?.halfHourFee != null && Number.isFinite(Number(f.halfHourFee)) ? Number(f.halfHourFee) : null,
+    economyFee: f?.economyFee != null && Number.isFinite(Number(f.economyFee)) ? Number(f.economyFee) : null,
     minimumFee: f?.minimumFee != null && Number.isFinite(Number(f.minimumFee)) ? Number(f.minimumFee) : null,
-    height: b != null && Number.isFinite(Number(b)) ? Number(b) : (Number.isFinite(Number(tip?.height)) ? Number(tip.height) : null),
+    height: b != null && Number.isFinite(Number(b)) ? Number(b) : (tip?.height != null && Number.isFinite(Number(tip.height)) ? Number(tip.height) : null),
     latestBlock: tip && Number.isFinite(tipTimestamp) && tipTimestamp > 0 ? {
       height: Number.isFinite(Number(tip.height)) ? Number(tip.height) : null,
       timestamp: new Date(tipTimestamp * 1000).toISOString(),
