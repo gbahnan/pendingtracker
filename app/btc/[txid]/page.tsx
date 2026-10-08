@@ -82,10 +82,13 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
   }
 
   const confirmed = Boolean(result?.status?.confirmed ?? result?.tx?.status?.confirmed);
+  const observed = Boolean(result?.tx || result?.status);
+  const hasFeeComparison = result?.feerateSatVb != null && result?.fees?.hourFee != null;
 
   return (
     <>
-      <div className="h1">BTC Transaction</div>
+      <div className="h1">Bitcoin transaction explained</div>
+      <p className="p">Your transaction status, what the blockchain knows, and what to do next.</p>
       <div className="small">
         Auto-refreshing every ~15 seconds.{" "}
         <button className="button" style={{ padding: "6px 10px" }} onClick={load} disabled={loading}>
@@ -95,10 +98,11 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
 
       <div style={{ height: 12 }} />
 
-      <Progress confirmed={confirmed} />
+      {observed && <Progress confirmed={confirmed} />}
 
       <div style={{ height: 12 }} />
 
+      {loading && !result && <div className="card" role="status">Checking the Bitcoin network and preparing your explanation…</div>}
       {error && (
         <div className="card">
           <div className="badge">Error</div>
@@ -111,7 +115,7 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
         <div className="grid">
           <div className="card">
             <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-              <div className="badge">Plain-English</div>
+              <div className="badge">Your transaction explained</div>
               <div className="badge">Provider: {result.provider}</div>
             </div>
 
@@ -123,20 +127,8 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
             </div>
 
             <div style={{ height: 12 }} />
-            <div style={{ fontWeight: 800 }}>What this means (simple)</div>
-            <ul>
-              <li>
-                Your transaction is like a package in a shipping queue. Miners usually pick the packages that pay the
-                best “shipping fee” first.
-              </li>
-              <li>
-                Your fee rate is <b>{result.feerateSatVb ?? "—"} sat/vB</b>. Suggested fees right now are around{" "}
-                <b>{fmtNum(result.fees?.hourFee)}</b> sat/vB for ~1 hour.
-              </li>
-              <li>
-                If your fee rate is lower than what most people are paying, it can sit pending longer. That’s normal.
-              </li>
-            </ul>
+            <div style={{ fontWeight: 800 }}>What the numbers mean</div>
+            <p className="p" style={{ marginTop: 10 }}>{confirmed ? "A miner included this transaction in a Bitcoin block. The receiving service may require additional confirmations." : !observed ? "Our provider has not observed this transaction, so we cannot yet tell whether it was broadcast." : hasFeeComparison ? `This transaction pays ${result.feerateSatVb} sat/vB, compared with a current roughly one-hour fee recommendation of ${result.fees!.hourFee} sat/vB. That is a network estimate, not a promise of confirmation time.` : "Bitcoin miners usually prioritize transactions by fee rate, but current fee comparison data is incomplete."}</p>
 
             <div style={{ height: 10 }} />
             <div style={{ fontWeight: 800 }}>Next steps</div>
@@ -153,19 +145,20 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
           </div>
 
           <div className="card">
-            <div className="badge">Numbers (for reference)</div>
+            <div className="badge">Blockchain evidence</div>
             <div style={{ height: 12 }} />
             <div className="kv">
-              <div className="k">txid</div>
+              <div className="k">Transaction ID</div>
               <div>
                 <code>{result.txid}</code>
+                <button className="button" style={{marginLeft:8,padding:"5px 9px"}} onClick={()=>navigator.clipboard?.writeText(result.txid)}>Copy</button>
               </div>
             </div>
 
             <div style={{ height: 10 }} />
             <div className="kv">
               <div className="k">Confirmed</div>
-              <div>{String(confirmed)}</div>
+              <div>{observed ? (confirmed ? "Yes" : "Not yet") : "Unknown"}</div>
             </div>
 
             <div style={{ height: 10 }} />
@@ -186,6 +179,8 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
               <div>{result.feerateSatVb ?? "—"} sat/vB</div>
             </div>
 
+            <div style={{ height: 14 }} />
+            <a href={`https://mempool.space/tx/${txid}`} target="_blank" rel="noopener noreferrer">Verify on mempool.space ↗</a>
             <div style={{ height: 14 }} />
             <details>
               <summary className="badge" style={{ cursor: "pointer" }}>
