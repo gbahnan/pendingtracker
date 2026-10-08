@@ -679,3 +679,21 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 @media(max-width:850px){.pt-tx-position-row{gap:5px}.pt-tx-position-cell .pt-tx-position strong{font-size:10px}}
 @media(max-width:650px){.pt-tx-detail-v2 .pt-tx-facts{grid-template-columns:repeat(2,minmax(0,1fr))}.pt-tx-money-totals{grid-template-columns:1fr}.pt-tx-io-grid{grid-template-columns:1fr}.pt-tx-idbar{align-items:flex-start;flex-direction:column}.pt-tx-idbar button{align-self:flex-end}.pt-tx-tech-grid{grid-template-columns:1fr}.pt-tx-position-row{min-height:54px}.pt-tx-position-cell .pt-tx-position{padding:4px 1px;min-height:54px}.pt-tx-position-cell .pt-tx-position small{font-size:8px}}
 @media(max-width:390px){.pt-tx-detail-v2 .pt-tx-facts{grid-template-columns:1fr}}
+
+
+/* Plain-language transaction story and minimal tracking arrow */
+.pt-tx-detail-v2 .pt-tx-arrow-only{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:0;color:#f0cb8a}
+.pt-tx-detail-v2 .pt-tx-arrow-only strong{font-size:11px!important;letter-spacing:.09em;color:#f5d69e}
+.pt-tx-detail-v2 .pt-tx-arrow-only span{font-size:39px;line-height:.92;font-weight:900;color:#f5c976;filter:drop-shadow(0 2px 8px rgba(237,189,110,.3))}
+.pt-tx-detail-v2 .pt-tx-block.highlighted:before{display:none}
+.pt-tx-story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:24px 0}
+.pt-tx-story-step{padding:19px 20px;border:1px solid #4c6571;border-radius:12px;background:#162d3b}
+.pt-tx-story-step:last-child{grid-column:1/-1;border-color:#917a54;background:linear-gradient(110deg,#233b48,#263b42)}
+.pt-tx-story-step h3{font-size:16px;color:#f1d29c;line-height:1.35;margin:0 0 11px}
+.pt-tx-story-step p{font-size:14px;color:#d0e0e7;line-height:1.75;margin:0}
+.pt-tx-summary .pt-tx-summary-lead{font-size:16px;line-height:1.8;color:#e2e9ed}
+.pt-tx-io-column{max-height:520px;overflow-y:auto}
+.pt-tx-io-row{align-items:flex-start}
+.pt-tx-io-row span{overflow-wrap:anywhere;line-height:1.6}
+.pt-tx-io-row strong{white-space:normal;text-align:right}
+@media(max-width:650px){.pt-tx-story{grid-template-columns:1fr}.pt-tx-story-step:last-child{grid-column:auto}.pt-tx-story-step{padding:15px}.pt-tx-detail-v2 .pt-tx-arrow-only span{font-size:31px}}
