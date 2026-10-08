@@ -41,10 +41,10 @@ export default function Page() {
   }, []);
 
   function search() {
-    const q = query.trim();
+    const q = query.trim().replace(/^https?:\/\/[^/]+\/tx\//i, "").split(/[?#]/)[0].replace(/\/$/, "");
     if (/^0x[a-f\d]{64}$/i.test(q)) return router.push("/eth/" + q);
     if (/^[a-f\d]{64}$/i.test(q)) return router.push("/btc/" + q);
-    setError("Enter a Bitcoin transaction ID (64 letters/numbers) or Ethereum transaction hash (0x followed by 64 letters/numbers).");
+    setError("Paste a Bitcoin transaction ID or Ethereum transaction hash. You can also paste a transaction link from a blockchain explorer.");
   }
 
   const btc = overview?.btc, eth = overview?.eth;
@@ -59,7 +59,7 @@ export default function Page() {
           <input aria-label="Transaction hash" placeholder="Paste a Bitcoin or Ethereum transaction hash…" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
           <button onClick={search}>Explain my transaction →</button>
         </div>
-        {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">No wallet connection required. We never ask for private keys or seed phrases.</p>}
+        {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">No wallet connection required. Paste a transaction ID or explorer link. Never share private keys or seed phrases.</p>}
       </div>
     </div>
 
@@ -86,7 +86,7 @@ export default function Page() {
         </div>
         <div className="pt-insight"><div className="pt-insight-icon">✦</div><div><h3>In plain English</h3><p>{eth?.explanation ?? "We're waiting for live Ethereum data. Try refreshing shortly."}</p><p className="pt-note">Gas prices alone do not determine the final cost of a transaction.</p></div></div>
       </>}
-      <p className="pt-source">Sources: mempool.space and Blockscout · {overview ? "Updated " + new Date(overview.updatedAt).toLocaleTimeString() : "Awaiting data"} · Estimates are informational, not guarantees.</p>
+      <p className="pt-source">Explanations are generated from live blockchain data using transparent rules, not a generative AI model. Sources: mempool.space and Blockscout · {overview ? "Updated " + new Date(overview.updatedAt).toLocaleTimeString() : "Awaiting data"} · Estimates are informational, not guarantees.</p>
     </section>
 
     <section className="pt-section" id="learn">
