@@ -1,205 +1,30 @@
 "use client";
-
-import { useEffect, useMemo, useState } from "react";
-
-function isLikelyEthHash(s: string) {
-  return /^0x[a-fA-F0-9]{64}$/.test((s || "").trim());
-}
-
-function shortHash(h: string) {
-  if (!h) return "—";
-  return h.length > 18 ? `${h.slice(0, 10)}…${h.slice(-6)}` : h;
-}
-
-function weiToEth(wei: string) {
-  const raw = (wei || "0").toString().replace(/[^\d]/g, "");
-  const s = raw.replace(/^0+/, "") || "0";
-
-  const whole = s.length > 18 ? s.slice(0, -18) : "0";
-  const fraction = s.slice(-18).padStart(18, "0").slice(0, 8).replace(/0+$/, "");
-  return fraction ? `${whole}.${fraction}` : whole;
-}
-
-export default function EthTxPage({ params }: { params: { hash: string } }) {
-  const hash = params.hash ?? "";
-  const ok = useMemo(() => isLikelyEthHash(hash), [hash]);
-
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [aiSummary, setAiSummary] = useState<string | null>(null);
-  const [aiLoading, setAiLoading] = useState(false);
-
-  async function load() {
-    if (!ok) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/eth/tx/${hash}`, { cache: "no-store" });
-      const j = await res.json();
-      if (!res.ok) {
-        setError(j?.error || "Request failed.");
-        setData(null);
-      } else {
-        setData(j);
-      }
-    } catch (e: any) {
-      setError(e?.message || "Network error.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function explainWithAi() {
-    if (!data || aiLoading) return;
-    setAiLoading(true);
-    try {
-      const response = await fetch("/api/ai/explain", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chain: "eth", facts: {
-          confirmed: Boolean(data.confirmed ?? (Number(data.confirmations ?? 0) > 0)),
-          failed: Boolean(data.failed),
-          confirmations: Number(data.confirmations ?? 0),
-          valueEth: weiToEth(String(data.valueWei ?? data.value ?? "0")),
-          summary: data.diagnosis?.summary ?? null
-        } })
-      });
-      const result = await response.json();
-      setAiSummary(response.ok && typeof result.summary === "string" ? result.summary : "AI is temporarily unavailable. The blockchain summary above still works.");
-    } catch { setAiSummary("AI is temporarily unavailable. The blockchain summary above still works."); }
-    finally { setAiLoading(false); }
-  }
-
-  useEffect(() => {
-    load();
-    const id = setInterval(load, 15_000);
-    return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hash, ok]);
-
-  if (!ok) {
-    return (
-      <div className="card">
-        <div className="badge">Invalid ETH hash</div>
-        <div style={{ height: 8 }} />
-        <div className="small">An ETH transaction hash looks like 0x + 64 hex characters.</div>
-      </div>
-    );
-  }
-
-  const confirmed = Boolean(data?.confirmed ?? (Number(data?.confirmations ?? 0) > 0));
-  const failed = Boolean(data?.failed);
-  const diagnosis = data?.diagnosis;
-
-  return (
-    <>
-      <div className="h1">Ethereum transaction explained</div>
-      <p className="p">
-        This page auto-refreshes every ~15 seconds.{" "}
-        <button className="button" style={{ padding: "6px 10px" }} onClick={load} disabled={loading}>
-          {loading ? "Refreshing…" : "Refresh now"}
-        </button>
-      </p>
-
-      {data && <section className="pt-tx-quick">
-        <div className="pt-eyebrow">YOUR ETHEREUM TRANSACTION · QUICK SUMMARY</div>
-        <div className="pt-tx-quick-head"><strong>{failed?"Transaction failed":confirmed?"Transaction confirmed":"Waiting for confirmation"}</strong><span className={confirmed&&!failed?"pt-status-confirmed":"pt-status-pending"}>{failed?"● Failed":confirmed?"● Confirmed":"● Pending"}</span></div>
-        <p>{failed?"Ethereum processed this transaction, but the requested operation failed. Gas may still have been charged.":diagnosis?.summary??"We're checking what the Ethereum network reports about this transaction."}</p>
-        <div className="pt-tx-quick-stats"><div><small>Amount</small><b>{weiToEth(String(data.valueWei??data.value??"0"))} ETH</b></div><div><small>Confirmations</small><b>{String(data.confirmations??(confirmed?1:0))}</b></div><div><small>Next step</small><b>{failed?"Review failure details":confirmed?"Review receipt":"Check pending status"}</b></div></div>
-        <div style={{height:12}} />
-        <button className="button" disabled={aiLoading} onClick={explainWithAi}>{aiLoading?"Translating…":"✨ Translate this with AI"}</button>
-        {aiSummary && <p role="status">{aiSummary}</p>}
-        <div style={{height:10}} />
-        <small>Based on available blockchain records and transparent explanation rules, not generative AI.</small>
-      </section>}
-      <div className="card">
-        <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-          <div className="badge">Status</div>
-          <div className="badge">{failed ? "Failed" : confirmed ? "Confirmed" : "Pending"}</div>
-        </div>
-
-        <div style={{ height: 10 }} />
-        <div className="small">
-          Hash: <code>{hash}</code>
-        </div>
-
-        <div style={{ height: 10 }} />
-        <div className="small">
-          Explorer:{" "}
-          <a href={`https://eth.blockscout.com/tx/${hash}`} target="_blank" rel="noreferrer">
-            Blockscout
-          </a>{" "}
-          ·{" "}
-          <a href={`https://etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer">
-            Etherscan
-          </a>
-        </div>
-      </div>
-
-      <div style={{ height: 12 }} />
-
-      {error && (
-        <div className="card">
-          <div className="badge">Error</div>
-          <div style={{ height: 8 }} />
-          <div>{error}</div>
-        </div>
-      )}
-
-      {data && (
-        <div className="grid">
-          <div className="card">
-            <div className="badge">Your transaction explained</div>
-            <div style={{ height: 10 }} />
-            <div style={{ fontWeight: 800 }}>{failed ? "The transaction was included but failed." : diagnosis?.title ?? (confirmed ? "It’s confirmed." : "It’s waiting to be confirmed.")}</div>
-            <p className="p" style={{marginTop:10}}>{failed ? "Ethereum processed this transaction, but the operation did not succeed. Network fees may still have been charged." : diagnosis?.summary ?? "We could not generate a specific explanation from the available data."}</p>
-            <div style={{ height: 8 }} />
-            <ul>
-              <li>
-                Think of Ethereum like a line at a busy store. Transactions paying higher fees usually get processed
-                sooner.
-              </li>
-              <li>{confirmed ? "The transaction has been included in a block." : "If your wallet supports it, you may be able to increase the fee on a pending transaction."}</li>
-              <li>{failed ? "A failed transaction may still cost gas." : confirmed ? "Some receiving services wait for additional confirmations." : "Never send a second payment until you know whether the original was replaced or canceled."}</li>
-            </ul>
-
-            <div style={{ height: 10 }} />
-            <button className="button" onClick={()=>navigator.clipboard?.writeText(`Ethereum transaction: ${hash}\n${diagnosis?.title ?? "Transaction status"}\n${diagnosis?.summary ?? ""}\nVerify: https://eth.blockscout.com/tx/${hash}`)}>Copy explanation</button>
-            <div style={{ height: 10 }} />
-            <div className="small">Explanations are based on blockchain records and transparent rules. Educational only; not financial advice.</div>
-          </div>
-
-          <div className="card">
-            <div className="badge">Details</div>
-            <div style={{ height: 10 }} />
-            <div className="kv">
-              <div className="k">from</div>
-              <div className="small">{shortHash(String(data.from ?? ""))}</div>
-            </div>
-            <div className="kv">
-              <div className="k">to</div>
-              <div className="small">{shortHash(String(data.to ?? ""))}</div>
-            </div>
-            <div className="kv">
-              <div className="k">value</div>
-              <div>{weiToEth(String(data.valueWei ?? data.value ?? "0"))} ETH</div>
-            </div>
-            <div className="kv">
-              <div className="k">confirmations</div>
-              <div>{String(data.confirmations ?? (confirmed ? 1 : 0))}</div>
-            </div>
-
-            <div style={{ height: 12 }} />
-            <details>
-              <summary className="badge" style={{ cursor: "pointer" }}>
-                Raw JSON
-              </summary>
-              <div style={{ height: 10 }} />
-              <pre className="small">{JSON.stringify(data, null, 2)}</pre>
-            </details>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
+import {useEffect,useMemo,useState} from "react";
+const short=(s:string)=>s.length>22?s.slice(0,12)+"…"+s.slice(-8):s;
+function weiToEth(value:string){const raw=String(value||"0").replace(/[^\d]/g,"").replace(/^0+/,"")||"0";const whole=raw.length>18?raw.slice(0,-18):"0";const decimal=raw.slice(-18).padStart(18,"0").slice(0,7).replace(/0+$/,"");return whole+(decimal?"."+decimal:"");}
+export default function EthTxPage({params}:{params:{hash:string}}){
+ const hash=params.hash??"";const valid=useMemo(()=>/^0x[a-f\d]{64}$/i.test(hash),[hash]);
+ const [data,setData]=useState<any>(null);const [network,setNetwork]=useState<any>(null);const [loading,setLoading]=useState(true);const [error,setError]=useState<string|null>(null);const [ai,setAi]=useState<string|null>(null);const [aiLoading,setAiLoading]=useState(false);
+ async function refresh(){if(!valid)return;try{const [a,b]=await Promise.all([fetch("/api/eth/tx/"+hash,{cache:"no-store"}),fetch("/api/network",{cache:"no-store"})]);const j=await a.json();if(!a.ok)throw new Error(j?.error??"Could not load transaction");setData(j);if(b.ok)setNetwork(await b.json());setError(null);}catch(e){setError(e instanceof Error?e.message:"Network unavailable");}finally{setLoading(false);}}
+ useEffect(()=>{refresh();const id=setInterval(refresh,15000);return()=>clearInterval(id);},[hash,valid]);
+ const confirmed=Boolean(data?.confirmed??(Number(data?.confirmations??0)>0));const failed=Boolean(data?.failed);const blocks=(network?.eth?.recentBlocks??[]).slice(0,5);
+ const summary=failed?"Ethereum included your transaction in a block, but the requested operation failed. Network fees may still have been charged. Review the details before trying again.":confirmed?"Your transaction has been included in an Ethereum block. It has "+String(data?.confirmations??"at least one")+" confirmation(s). Some services wait for additional confirmations before showing your funds.":"Your transaction has not been confirmed yet. Ethereum usually adds blocks about every 12 seconds, but your transaction may take longer depending on its fee settings and earlier pending transactions. Keep checking its status before trying to send again.";
+ async function explain(){if(!data||aiLoading)return;setAiLoading(true);try{const r=await fetch("/api/ai/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chain:"eth",facts:{confirmed,failed,confirmations:Number(data.confirmations??0),valueEth:weiToEth(String(data.valueWei??data.value??"0")),summary:data.diagnosis?.summary??null}})});const j=await r.json();setAi(r.ok&&typeof j.summary==="string"?j.summary:"Extra explanation is unavailable.");}catch{setAi("Extra explanation is unavailable.");}finally{setAiLoading(false);}}
+ if(!valid)return <main className="pt-tx-page"><h1>Check your Ethereum transaction hash</h1><p>An Ethereum transaction hash begins with 0x and contains 64 hexadecimal characters after it.</p><a href="/">← Search again</a></main>;
+ return <main className="pt-tx-page pt-tx-eth">
+  <div className="pt-tx-top"><div><div className="pt-eyebrow">ETHEREUM TRANSACTION TRACKER</div><h1>{failed?"Your Ethereum transaction failed":confirmed?"Your Ethereum transaction is confirmed":"Your Ethereum transaction is waiting"}</h1><p>See what the blockchain says in plain English.</p></div><button onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div>
+  {error&&<div className="pt-tx-error" role="alert">{error}</div>}
+  {loading&&!data&&<div className="pt-tx-loading">Checking the Ethereum network…</div>}
+  {data&&<>
+   <section className="pt-tx-stage"><div className="pt-tx-stage-head"><div><span className="pt-eyebrow">WHERE IS MY TRANSACTION?</span><h2>{failed?"Included, but failed":confirmed?"Included in a block":"Waiting for a block"}</h2></div><span className={confirmed&&!failed?"pt-tx-state good":"pt-tx-state"}>{failed?"● Failed":confirmed?"● Confirmed":"● Pending"}</span></div>
+    <div className="pt-tx-block-track">
+     {!confirmed&&!failed&&<div className="pt-tx-position"><span className="pt-tx-pointer">↓</span><strong>Your transaction is waiting</strong><small>Exact block unknown</small></div>}
+     <div className="pt-tx-block-grid">{(blocks.length?blocks:[0,1,2,3,4].map(()=>({height:null,transactionsCount:null,timestamp:null}))).map((block:any,index:number)=><div className="pt-tx-block" key={block.hash??index}><div className="pt-tx-block-label">{index===0?"LATEST BLOCK":"RECENT BLOCK"}</div><div className="pt-tx-block-time">{block.timestamp?"Added":"—"} <span>{block.timestamp?new Date(block.timestamp).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}</span></div><div className="pt-tx-block-tiles" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{opacity:block.transactionsCount==null?.25:i<Math.max(1,Math.min(15,Math.round(Number(block.transactionsCount)/15)))?1:.16}}/>)}</div><strong>#{block.height??"—"}</strong><small>{block.transactionsCount==null?"Live data loading":Number(block.transactionsCount).toLocaleString()+" transactions"}</small></div>)}</div>
+     <p className="pt-tx-block-caveat">These are recently added Ethereum blocks, not predictions. Pending transactions cannot be placed into an exact future block reliably.</p>
+    </div>
+   </section>
+   <section className="pt-tx-summary"><div className="pt-eyebrow">THE SHORT ANSWER</div><h2>{failed?"What happened?":confirmed?"Good news—it's confirmed.":"Here's what's happening."}</h2><p>{summary}</p><div className="pt-tx-summary-actions"><button onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain more with AI"}</button><a href={"https://eth.blockscout.com/tx/"+hash} target="_blank" rel="noopener noreferrer">Verify on Blockscout ↗</a></div>{ai&&<p className="pt-tx-ai" role="status">{ai}</p>}</section>
+   <section className="pt-tx-details"><div className="pt-eyebrow">IF YOU WANT THE DETAILS</div><h2>Your transaction at a glance</h2><div className="pt-tx-facts"><div><span>Current status</span><strong>{failed?"Failed":confirmed?"Confirmed":"Pending"}</strong><small>What the Ethereum network reports</small></div><div><span>Amount</span><strong>{weiToEth(String(data.valueWei??data.value??"0"))} ETH</strong><small>Amount sent directly in this transaction</small></div><div><span>Confirmations</span><strong>{String(data.confirmations??(confirmed?1:0))}</strong><small>Blocks confirming this transaction</small></div></div><details className="pt-tx-more"><summary>More technical information <span>＋</span></summary><div><p><b>Transaction hash:</b> <code>{hash}</code></p><p><b>From:</b> {short(String(data.from??"—"))}</p><p><b>To:</b> {short(String(data.to??"—"))}</p><p><b>Current gas estimate:</b> {network?.eth?.gasGwei??"—"} Gwei (not the transaction's total fee)</p><button onClick={()=>navigator.clipboard?.writeText(hash)}>Copy transaction hash</button><details><summary>Raw blockchain data</summary><pre>{JSON.stringify(data,null,2)}</pre></details></div></details></section>
+  </>}
+  <p className="pt-tx-footnote">Updates every 15 seconds · Public blockchain data · No wallet connection required.</p>
+ </main>;
