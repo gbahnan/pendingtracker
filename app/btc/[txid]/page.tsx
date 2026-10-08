@@ -45,8 +45,8 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const feeEstimate=!observed?"Not available":confirmed?"Already confirmed":selectedPosition?"~"+selectedPosition*10+" min*":"Not enough data";
  const blockHeight=result?.status?.block_height??tx?.status?.block_height;
  const confirmations=confirmed&&blockHeight!=null&&overview?.btc?.height!=null?Math.max(1,overview.btc.height-blockHeight+1):confirmed?1:0;
- const inputs=tx?.vin??[];
- const outputs=tx?.vout??[];
+ const inputs: Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}>=(tx?.vin??[]) as Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}>;
+ const outputs: Array<{value?:number;scriptpubkey_address?:string}>=(tx?.vout??[]) as Array<{value?:number;scriptpubkey_address?:string}>;
  const inputTotal=inputs.length>0&&inputs.every(i=>i.prevout?.value!=null)?inputs.reduce((sum,i)=>sum+(i.prevout?.value??0),0):null;
  const outputTotal=outputs.length>0&&outputs.every(o=>o.value!=null)?outputs.reduce((sum,o)=>sum+(o.value??0),0):null;
  const rbf=tx?.rbf===true||inputs.some(i=>i.sequence!=null&&i.sequence<0xfffffffe);
