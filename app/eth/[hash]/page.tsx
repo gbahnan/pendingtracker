@@ -27,6 +27,8 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [aiSummary, setAiSummary] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   async function load() {
     if (!ok) return;
@@ -46,6 +48,26 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function explainWithAi() {
+    if (!data || aiLoading) return;
+    setAiLoading(true);
+    try {
+      const response = await fetch("/api/ai/explain", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chain: "eth", facts: {
+          confirmed: Boolean(data.confirmed ?? (Number(data.confirmations ?? 0) > 0)),
+          failed: Boolean(data.failed),
+          confirmations: Number(data.confirmations ?? 0),
+          valueEth: weiToEth(String(data.valueWei ?? data.value ?? "0")),
+          summary: data.diagnosis?.summary ?? null
+        } })
+      });
+      const result = await response.json();
+      setAiSummary(response.ok && typeof result.summary === "string" ? result.summary : "AI is temporarily unavailable. The blockchain summary above still works.");
+    } catch { setAiSummary("AI is temporarily unavailable. The blockchain summary above still works."); }
+    finally { setAiLoading(false); }
   }
 
   useEffect(() => {
@@ -84,6 +106,10 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
         <div className="pt-tx-quick-head"><strong>{failed?"Transaction failed":confirmed?"Transaction confirmed":"Waiting for confirmation"}</strong><span className={confirmed&&!failed?"pt-status-confirmed":"pt-status-pending"}>{failed?"● Failed":confirmed?"● Confirmed":"● Pending"}</span></div>
         <p>{failed?"Ethereum processed this transaction, but the requested operation failed. Gas may still have been charged.":diagnosis?.summary??"We're checking what the Ethereum network reports about this transaction."}</p>
         <div className="pt-tx-quick-stats"><div><small>Amount</small><b>{weiToEth(String(data.valueWei??data.value??"0"))} ETH</b></div><div><small>Confirmations</small><b>{String(data.confirmations??(confirmed?1:0))}</b></div><div><small>Next step</small><b>{failed?"Review failure details":confirmed?"Review receipt":"Check pending status"}</b></div></div>
+        <div style={{height:12}} />
+        <button className="button" disabled={aiLoading} onClick={explainWithAi}>{aiLoading?"Translating…":"✨ Translate this with AI"}</button>
+        {aiSummary && <p role="status">{aiSummary}</p>}
+        <div style={{height:10}} />
         <small>Based on available blockchain records and transparent explanation rules, not generative AI.</small>
       </section>}
       <div className="card">
