@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Overview = {
-  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; height: number | null; explanation: string };
+  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
   eth: { available: boolean; gasGwei: number | null; latestBlock: string | number | null; explanation: string };
   updatedAt: string;
 };
 const format = (n: number | null | undefined) => n == null ? "—" : new Intl.NumberFormat("en-US").format(n);
 const terms: Record<string, string> = {
+  "Sats": "Satoshis are the smallest units of Bitcoin. There are 100 million sats in one bitcoin.",
+  "Priority fee": "An estimate of a competitive Bitcoin fee rate. It does not guarantee confirmation.",
   "Mempool": "Bitcoin's waiting area. Transactions sit here before miners include them in a block.",
   "Gas": "The fee paid to execute a transaction on Ethereum. More complex actions generally use more gas.",
   "sat/vB": "Satoshis per virtual byte: Bitcoin's fee rate. A higher rate can make a transaction more attractive to miners.",
@@ -77,8 +79,8 @@ export default function Page() {
         <div className="pt-metrics">
           <div className="pt-metric"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>In the Bitcoin mempool</small></div>
           <div className="pt-metric"><span>Network traffic</span><strong>{btc?.congestion ?? "—"}</strong><small>Based on pending transaction count</small></div>
-          <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Current high-priority fee estimate</small></div>
-          <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>Most recently mined height</small></div>
+          <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Estimated competitive fee rate; not a guarantee</small></div>
+          <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
         </div>
         <div className="pt-insight"><div className="pt-insight-icon">✦</div><div><h3>In plain English</h3><p>{btc?.explanation ?? "We're waiting for live Bitcoin data. Try refreshing shortly."}</p><p className="pt-note">Fee estimates change constantly. Confirmation timing depends on more than transaction count.</p></div></div>
       </> : <>
