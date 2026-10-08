@@ -107,9 +107,9 @@ export default function Page() {
     <div className="pt-hero">
       <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, EXPLAINED</div>
       <h1>Crypto moves fast.<br/><span>Understanding it shouldn't be hard.</span></h1>
-      <p className="pt-lead">Follow live Bitcoin or Ethereum activity, or check a specific transaction and understand what its status means.</p>
+      <p className="pt-lead">Confused by blocks, fees, and hashes? Follow live blockchain activity, or let us translate your transaction into plain English.</p>
       <div className="pt-searchbox">
-        <div className="pt-search-label">WHERE’S MY TRANSACTION?</div><p className="pt-search-explain">Paste a transaction ID (TXID) or hash. We’ll check its status, explain the fees and confirmations in everyday language, and show useful next steps.</p>
+        <div className="pt-search-label">WHERE’S MY TRANSACTION?</div><p className="pt-search-explain">Paste a Bitcoin TXID or Ethereum transaction hash. We’ll decode the blockchain jargon into a quick, human-friendly summary: what happened, what your fees mean, and what to do next.</p>
         <div className="pt-searchrow">
           <input aria-label="Transaction hash" placeholder="Paste your Bitcoin TXID or Ethereum transaction hash…" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
           <button onClick={search}>Explain my transaction →</button>
