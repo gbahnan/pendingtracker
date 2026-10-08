@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Overview = {
-  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
+  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; confirmedTransactions: string[]; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
   eth: { available: boolean; gasGwei: number | null; latestBlock: string | number | null; recentBlocks: {height:number|string|null;hash:string|null;timestamp:string|null;transactionsCount:number|null}[]; recentTransactions: {hash:string;status:string|null;timestamp:string|null;block:number|null}[]; explanation: string };
   updatedAt: string;
 };
@@ -85,6 +85,12 @@ export default function Page() {
           <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Estimated competitive fee rate; not a guarantee</small></div>
           <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
         </div>
+        <section className="pt-confirm-panel">
+          <div className="pt-eyebrow">NEWLY CONFIRMED ON BITCOIN</div>
+          <h3>Transactions in the latest block</h3>
+          <p>These transaction IDs are included in the latest observed Bitcoin block. Open any one to inspect its confirmations and fees.</p>
+          <div className="pt-confirm-grid">{btc?.confirmedTransactions?.length ? btc.confirmedTransactions.map(id=><a key={id} href={"/btc/"+id} className="pt-confirm-item"><span className="pt-confirm-dot"/> <span className="pt-activity-hash">{id.slice(0,13)}…{id.slice(-9)}</span><b>Confirmed ↗</b></a>) : <p>Waiting for confirmed transaction data.</p>}</div>
+        </section>
         <section className="pt-activity-panel">
           <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE BITCOIN EXPLORER</div><h3>New transactions entering the mempool</h3><p>Recently observed unconfirmed Bitcoin transactions. Checks every 10 seconds.</p></div><span className="pt-live">● Recent activity</span></div>
           <div className="pt-activity-list">{btc?.recentTransactions?.length ? btc.recentTransactions.map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}>
@@ -107,7 +113,7 @@ export default function Page() {
               const below=high!=null&&selectedSatRate<high;
               return <div className={"pt-queue-block "+(above?"pt-queue-match":"")} key={block.position}>
                 <span>Projected block {block.position}</span>
-                <strong>{block.position===1?"Next block":"~"+block.position*10+" min average"}</strong>
+                <strong>{"≈"+block.position*10+" min average"}</strong>
                 <small>{low==null||high==null?"Fee range unavailable":low.toFixed(1)+"–"+high.toFixed(1)+" sat/vB"}</small>
                 <small>{block.transactionCount==null?"":format(block.transactionCount)+" transactions"}</small>
                 <div className="pt-queue-indicator">{low==null?"Data unavailable":above&&!below?"Your rate is above this block's displayed fee range":above?"Your rate overlaps this block's fee range":"Your rate is below this block's displayed fee range"}</div>
@@ -115,6 +121,11 @@ export default function Page() {
             })}
             {!btc?.projectedBlocks?.length&&<p>Projected block information is temporarily unavailable. Fee recommendations above may still be available.</p>}
           </div>
+          <div className="pt-estimate-summary" role="status">{(()=>{
+            const blocks=btc?.projectedBlocks ?? [];
+            const match=blocks.find(block=>block.feeRange?.[0]!=null && selectedSatRate>=block.feeRange[0]);
+            return match ? "At "+selectedSatRate+" sat/vB, your fee rate reaches the displayed range of projected block "+match.position+" (roughly "+match.position*10+" minutes on average). This is a comparison, not a confirmation promise." : blocks.length ? "At "+selectedSatRate+" sat/vB, your rate is below the displayed fee ranges of these projected blocks. Waiting time is uncertain and may exceed an hour." : "Waiting for projected-block data to estimate your fee position.";
+          })()}</div>
           <p className="pt-fee-disclaimer">These are mempool.space projected blocks, not scheduled confirmations. The time labels use Bitcoin's long-run ~10-minute average per block, not a prediction. Fee ranges overlap, transaction dependencies affect placement, and a rate inside a range does not guarantee inclusion. This is a fee comparison—not a forecast for your specific transaction.</p>
         </section>
         <div className="pt-fee-panel">
