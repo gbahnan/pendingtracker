@@ -131,7 +131,9 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
             </ul>
 
             <div style={{ height: 10 }} />
-            <div className="small">Educational only. No custody, no execution, no financial advice.</div>
+            <button className="button" onClick={()=>navigator.clipboard?.writeText(`Ethereum transaction: ${hash}\n${diagnosis?.title ?? "Transaction status"}\n${diagnosis?.summary ?? ""}\nVerify: https://eth.blockscout.com/tx/${hash}`)}>Copy explanation</button>
+            <div style={{ height: 10 }} />
+            <div className="small">Explanations are based on blockchain records and transparent rules. Educational only; not financial advice.</div>
           </div>
 
           <div className="card">
