@@ -127,20 +127,25 @@ export default function Page() {
       {newestEvents[network] ? <div className="pt-new-block" role="status">✦ {newestEvents[network]} · {network==="btc"?"Bitcoin":"Ethereum"} network</div> : null}
       {network==="btc" ? <>
         <div className="pt-metrics">
-          <div className="pt-metric"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>In the Bitcoin mempool</small></div>
-          <div className="pt-metric"><span>Network traffic</span><strong>{btc?.congestion ?? "—"}</strong><small>Based on pending transaction count</small></div>
-          <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Estimated competitive fee rate; not a guarantee</small></div>
-          <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
+          <div className="pt-metric"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>Unconfirmed payments waiting for a miner to include them in a block.</small></div>
+          <div className="pt-metric"><span>Network traffic</span><strong>{btc?.congestion ?? "—"}</strong><small>{btc?.congestion==="Busy"?"Heavy backlog; lower-fee transactions may wait longer.":btc?.congestion==="Moderate"?"Some transactions are waiting; fees affect priority.":btc?.congestion==="Light"?"Relatively few transactions are waiting.":"Traffic level based on the pending queue."}</small></div>
+          <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>sat/vB = satoshis paid per unit of transaction size. Higher fees often get priority.</small></div>
+          <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined ~${btc.latestBlock.ageMinutes} min ago. ` : ""}A block is a batch of confirmed transactions.</small></div>
         </div>
         <section className="pt-compact-fees">
-          <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN FEE ESTIMATES</div><h3>How long might confirmation take?</h3></div><span className="pt-live">● Network estimates</span></div>
-          <div className="pt-time-tiers">{([
-            {label:"Priority",time:"~10 min",fee:btc?.fastestFee},
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN FEE ESTIMATES</div><h3>Estimated Bitcoin confirmation times</h3></div><span className="pt-live">● Network estimates</span></div>
+          <p className="pt-timeline-intro">Live fee recommendations and projected blocks, shown as an easy-to-read timeline.</p>
+          <div className="pt-fee-timeline" aria-label="Bitcoin estimated fee and confirmation timeline">{([
+            {label:"Next block",time:"~10 min",fee:btc?.fastestFee},
+            {label:"Soon",time:"~20 min",fee:btc?.projectedBlocks?.[1]?.feeRange?.[0]??null},
             {label:"Standard",time:"~30 min",fee:btc?.halfHourFee},
             {label:"Patient",time:"~60 min",fee:btc?.hourFee},
-          ] as {label:string;time:string;fee:number|null|undefined}[]).map(t=><div className="pt-time-tier" key={t.label}><small>{t.label}</small><strong>{t.time}</strong><b>{t.fee==null?"—":t.fee+" sat/vB"}</b></div>)}</div>
+          ] as {label:string;time:string;fee:number|null|undefined}[]).map((tier,index)=><div className="pt-timeline-stop" key={tier.label}>
+            <div className="pt-timeline-node"><span>{index+1}</span></div>
+            <strong>{tier.time}</strong><small>{tier.label}</small><b>{tier.fee==null?"Fee unavailable":Number(tier.fee).toFixed(1)+" sat/vB"}</b>
+          </div>)}</div>
+          <p className="pt-fee-disclaimer">A sat is one hundred-millionth of a Bitcoin. sat/vB measures the fee rate, not the amount being sent. The 20-minute figure uses the second projected block's displayed lower fee boundary; other rates are provider recommendations.</p>
           <div className="pt-queue-controls"><label htmlFor="sat-rate">Check your fee rate</label><input id="sat-rate" type="number" min="0.1" max="100000" step="0.1" value={selectedSatRate} onChange={e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>=0.1&&v<=100000)setSelectedSatRate(v);}}/><strong>sat/vB</strong></div>
-          <div className="pt-mini-blocks">{(btc?.projectedBlocks??[]).slice(0,3).map(block=><div className="pt-mini-block" key={block.position}><strong>~{block.position*10} min</strong><span>Projected block {block.position}</span><small>{block.feeRange?.length===2?block.feeRange[0].toFixed(1)+"–"+block.feeRange[1].toFixed(1)+" sat/vB":"Fee range unavailable"}</small></div>)}</div>
           <div className="pt-estimate-summary">{(()=>{
             const blocks=btc?.projectedBlocks??[];
             const match=blocks.find(b=>b.feeRange?.[0]!=null&&selectedSatRate>=b.feeRange[0]);
@@ -160,10 +165,10 @@ export default function Page() {
         <div className="pt-insight pt-insight-compact"><div className="pt-insight-icon">✦</div><div><h3>In plain English</h3><p>{btc?.explanation ?? "We're waiting for live Bitcoin data. Try refreshing shortly."}</p><p className="pt-note">Fee estimates change constantly. Confirmation timing depends on more than transaction count.</p></div></div>
       </> : <>
         <div className="pt-metrics">
-          <div className="pt-metric"><span>Average gas estimate</span><strong>{eth?.gasGwei == null ? "—" : eth.gasGwei + " Gwei"}</strong><small>As reported by our data provider</small></div>
-          <div className="pt-metric"><span>Latest block</span><strong>{eth?.latestBlock ?? "—"}</strong><small>Most recent observed block</small></div>
-          <div className="pt-metric"><span>Network</span><strong>Ethereum</strong><small>Mainnet</small></div>
-          <div className="pt-metric"><span>Transaction fee</span><strong>Variable</strong><small>Depends on gas used and fee rate</small></div>
+          <div className="pt-metric"><span>Average gas estimate</span><strong>{eth?.gasGwei == null ? "—" : eth.gasGwei + " Gwei"}</strong><small>Gwei measures the gas price per unit of computation on Ethereum.</small></div>
+          <div className="pt-metric"><span>Latest block</span><strong>{eth?.latestBlock ?? "—"}</strong><small>A block groups transactions proposed by Ethereum validators.</small></div>
+          <div className="pt-metric"><span>Network</span><strong>Ethereum</strong><small>The public Ethereum blockchain, not a test network.</small></div>
+          <div className="pt-metric"><span>Transaction fee</span><strong>Variable</strong><small>Total cost depends on gas consumed and the fee paid per gas unit.</small></div>
         </div>
         <section className="pt-activity-panel pt-compact-activity">
           <div className="pt-activity-head"><div><div className="pt-eyebrow">ETHEREUM ACTIVITY</div><h3>Recent blocks & transactions</h3></div><span className="pt-live">● Checks every 5s</span></div>
