@@ -32,6 +32,8 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [newestEvents, setNewestEvents] = useState<{btc:string;eth:string}>({btc:"",eth:""});
   const [selectedSatRate, setSelectedSatRate] = useState(5);
+  const [liveBtcTransactions, setLiveBtcTransactions] = useState<{id:string;fee:number|null;vsize:number|null}[]>([]);
+  const [btcStreamOnline, setBtcStreamOnline] = useState(false);
   useEffect(() => {
     let active = true;
     const load = async () => {
@@ -46,6 +48,52 @@ export default function Page() {
     load();
     const interval = setInterval(load, 5000);
     return () => { active = false; clearInterval(interval); };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    let socket: WebSocket | null = null;
+    let reconnect: ReturnType<typeof setTimeout> | undefined;
+    let lastRefresh = 0;
+    const connect = () => {
+      if (!active || document.visibilityState === "hidden") return;
+      try {
+        socket = new WebSocket("wss://mempool.space/api/v1/ws");
+        socket.onopen = () => {
+          if (!active) return;
+          setBtcStreamOnline(true);
+          socket?.send(JSON.stringify({action:"want",data:["blocks","mempool-blocks","live-2h-chart","stats"]}));
+          socket?.send(JSON.stringify({"track-mempool-txids":true}));
+        };
+        socket.onmessage = event => {
+          if (!active) return;
+          try {
+            const msg = JSON.parse(event.data);
+            const tx = msg["mempool-tx"] ?? msg.tx;
+            if (tx && typeof tx.txid === "string" && /^[a-f0-9]{64}$/i.test(tx.txid)) {
+              setLiveBtcTransactions(prev => [{id:tx.txid,fee:Number.isFinite(Number(tx.fee))?Number(tx.fee):null,vsize:Number.isFinite(Number(tx.vsize))?Number(tx.vsize):null},...prev.filter(t=>t.id!==tx.txid)].slice(0,12));
+            }
+            if ((msg.block || msg["mempool-blocks"]) && Date.now()-lastRefresh>3000) {
+              lastRefresh=Date.now();
+              fetch("/api/network",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(active&&j)setOverview(j);}).catch(()=>{});
+            }
+          } catch {}
+        };
+        socket.onclose = () => {
+          if (!active) return;
+          setBtcStreamOnline(false);
+          reconnect = setTimeout(connect, 5000);
+        };
+        socket.onerror = () => socket?.close();
+      } catch { setBtcStreamOnline(false); reconnect=setTimeout(connect,5000); }
+    };
+    const visibility = () => {
+      if (document.visibilityState === "hidden") { socket?.close(); if(reconnect)clearTimeout(reconnect); }
+      else if (!socket || socket.readyState===WebSocket.CLOSED) connect();
+    };
+    connect();
+    document.addEventListener("visibilitychange",visibility);
+    return () => { active=false; if(reconnect)clearTimeout(reconnect); document.removeEventListener("visibilitychange",visibility); socket?.close(); };
   }, []);
 
   function search() {
@@ -102,9 +150,9 @@ export default function Page() {
           <p className="pt-fee-disclaimer">Estimates use mempool.space fee recommendations and projected blocks. Bitcoin blocks average ~10 minutes but can arrive sooner or later. These are not guarantees for any transaction.</p>
         </section>
         <section className="pt-activity-panel pt-compact-activity">
-          <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN ACTIVITY</div><h3>Live transaction activity</h3></div><span className="pt-live">● Checks every 5s</span></div>
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN ACTIVITY</div><h3>Live transaction activity</h3></div><span className="pt-live">{btcStreamOnline?"● Bitcoin stream connected":"● Refreshes every 5s"}</span></div>
           <div className="pt-activity-list">
-            {btc?.recentTransactions?.slice(0,5).map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}><span className="pt-activity-hash">{tx.id.slice(0,12)}…{tx.id.slice(-7)}</span><span>{tx.fee!=null&&tx.vsize?(tx.fee/tx.vsize).toFixed(1)+" sat/vB":"Pending"}</span><span className="pt-status-pending">Pending</span><span className="pt-activity-arrow">↗</span></a>)}
+            {[...liveBtcTransactions.map(tx=>({...tx,value:null})),...(btc?.recentTransactions??[]).filter(tx=>!liveBtcTransactions.some(l=>l.id===tx.id))].slice(0,5).map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}><span className="pt-activity-hash">{tx.id.slice(0,12)}…{tx.id.slice(-7)}</span><span>{tx.fee!=null&&tx.vsize?(tx.fee/tx.vsize).toFixed(1)+" sat/vB":"Pending"}</span><span className="pt-status-pending">Pending</span><span className="pt-activity-arrow">↗</span></a>)}
             {btc?.confirmedTransactions?.slice(0,5).map(id=><a className="pt-activity-row" href={"/btc/"+id} key={id}><span className="pt-activity-hash">{id.slice(0,12)}…{id.slice(-7)}</span><span>Block #{format(btc?.height)}</span><span className="pt-status-confirmed">Confirmed</span><span className="pt-activity-arrow">↗</span></a>)}
             {!btc?.recentTransactions?.length&&!btc?.confirmedTransactions?.length?<p className="pt-activity-empty">Waiting for Bitcoin network activity.</p>:null}
           </div>
