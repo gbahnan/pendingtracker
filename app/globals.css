@@ -195,3 +195,19 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .pt-explainer p { color:#cbc4e0; font-size:14px; line-height:1.7; margin:0 0 13px; }
 .pt-explainer a { color:#d7c4ff; text-decoration:underline; text-underline-offset:3px; font-size:13px; }
 @media(max-width:850px) { .pt-explainer-grid { grid-template-columns:1fr; } }
+
+/* Fee-rate comparison: illustrative queue priority, never a countdown */
+.pt-fee-panel { margin-top:20px; padding:25px; border:1px solid #55417f; border-radius:19px; background:linear-gradient(145deg,#241b42,#131125); }
+.pt-fee-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+.pt-fee-heading h3 { font-size:23px; margin:12px 0 8px; }
+.pt-fee-heading p,.pt-fee-disclaimer { font-size:13px; line-height:1.7; color:#bfb7d5; }
+.pt-fee-bars { display:grid; gap:15px; margin:25px 0; }
+.pt-fee-row { display:grid; grid-template-columns:150px minmax(0,1fr) 110px; gap:16px; align-items:center; }
+.pt-fee-label b,.pt-fee-label small { display:block; }
+.pt-fee-label b { font-size:14px; }
+.pt-fee-label small { font-size:11px; color:#b2a9cd; margin-top:4px; }
+.pt-fee-track { height:15px; background:#332a4d; border-radius:100px; overflow:hidden; }
+.pt-fee-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,#6e4de3,#c5a2ff); transition:width .35s ease; }
+.pt-fee-row strong { text-align:right; font-size:13px; font-variant-numeric:tabular-nums; }
+.pt-fee-disclaimer { margin:0; }
+@media(max-width:700px) { .pt-fee-heading { display:block; } .pt-fee-row { grid-template-columns:100px minmax(0,1fr) 85px; gap:9px; } .pt-fee-row strong { font-size:11px; } .pt-fee-label b { font-size:12px; } .pt-fee-panel { padding:17px 13px; } }
