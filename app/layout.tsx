@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pending Tracker — BTC",
-  description: "Paste a Bitcoin transaction ID and get a simple explanation + what to do next.",
+  title: "Pending Tracker | The Blockchain Explorer That Explains Everything",
+  description: "Understand Bitcoin and Ethereum in plain English. Explore live network conditions, gas fees, the mempool, and your own blockchain transactions.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,11 +14,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="container">
           <div className="header">
             <div className="brand">
-              <div className="logo" />
+              <div className="logo" aria-hidden="true" />
               <div>Pending Tracker</div>
             </div>
             <div className="nav">
-              <Link href="/">Home</Link>
+              <Link href="/">Explore</Link>
               <Link href="/faq">FAQ</Link>
             </div>
           </div>
