@@ -211,3 +211,21 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .pt-fee-row strong { text-align:right; font-size:13px; font-variant-numeric:tabular-nums; }
 .pt-fee-disclaimer { margin:0; }
 @media(max-width:700px) { .pt-fee-heading { display:block; } .pt-fee-row { grid-template-columns:100px minmax(0,1fr) 85px; gap:9px; } .pt-fee-row strong { font-size:11px; } .pt-fee-label b { font-size:12px; } .pt-fee-panel { padding:17px 13px; } }
+
+/* Bitcoin projected-block queue: independent original visualization */
+.pt-queue-panel { margin-top:22px; padding:26px; border:1px solid #594587; border-radius:20px; background:linear-gradient(135deg,#251c46,#121125); }
+.pt-queue-panel h3 { margin:12px 0 7px; font-size:clamp(21px,3vw,29px); }
+.pt-queue-panel>p { color:#bfb8d5; line-height:1.6; font-size:14px; }
+.pt-queue-controls { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:24px 0; }
+.pt-queue-controls label { font-weight:700; margin-right:7px; }
+.pt-queue-controls input { width:120px; background:#100d22; color:#fff; border:1px solid #8970c8; border-radius:10px; padding:12px; font-size:19px; font-weight:750; }
+.pt-queue-controls input:focus-visible { outline:3px solid #c6a6ff; outline-offset:2px; }
+.pt-queue-blocks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:20px; }
+.pt-queue-block { display:flex; flex-direction:column; gap:8px; min-width:0; border:1px solid #403456; border-radius:15px; background:#18152b; padding:18px; }
+.pt-queue-block span { font-size:12px; color:#bcaee1; font-weight:700; }
+.pt-queue-block strong { font-size:20px; }
+.pt-queue-block small { color:#bdb5d2; }
+.pt-queue-match { border-color:#a484f4; background:linear-gradient(145deg,#352451,#201b39); }
+.pt-queue-indicator { font-size:11px; line-height:1.5; border-top:1px solid #4b3c66; padding-top:10px; margin-top:auto; color:#d5c7f8; }
+@media(max-width:850px) { .pt-queue-blocks { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:490px) { .pt-queue-panel { padding:18px 13px; } .pt-queue-blocks { grid-template-columns:1fr; } .pt-queue-controls { align-items:flex-start; } }
