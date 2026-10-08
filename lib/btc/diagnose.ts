@@ -117,9 +117,6 @@ export function diagnoseBtcTx(args: {
     };
   }
 
-  const cls = classifyFeerate(fr, fees);
-  // Fee-tier heuristics are not a reliable transaction-specific ETA.\n  // Do not display precise minutes without ancestor/package and mempool position analysis.\n  const eta = undefined;
-
   const minFee = fees?.minimumFee ?? null;
   const economy = fees?.economyFee ?? null;
   const hour = fees?.hourFee ?? null;
@@ -152,7 +149,6 @@ export function diagnoseBtcTx(args: {
       code: rbf ? "RBF_AVAILABLE" : "VERY_LOW_FEE",
       title: "Very low fee for current conditions",
       summary: `Your fee rate (${fr} sat/vB) is below current low-priority levels. It may take many hours (or longer) if the mempool stays busy.`,
-      eta,
       confidence: "medium",
       actions,
       debug: { fr, fees, rbf }
@@ -164,7 +160,6 @@ export function diagnoseBtcTx(args: {
       code: rbf ? "RBF_AVAILABLE" : "LOW_FEE",
       title: "Fee is a bit low right now",
       summary: `Your fee rate (${fr} sat/vB) is below the rates typically used for ~1 hour confirmation. It can still confirm, but timing is uncertain.`,
-      eta,
       confidence: "medium",
       actions,
       debug: { fr, fees, rbf }
@@ -175,7 +170,6 @@ export function diagnoseBtcTx(args: {
     code: "PENDING_OK",
     title: "Pending, with a competitive fee",
     summary: `Your fee rate (${fr} sat/vB) is within current recommended levels, but this does not guarantee when it will confirm. Unconfirmed parent transactions, competing transactions and changes in miner demand can affect timing.`,
-    eta,
     confidence: "medium",
     actions,
     debug: { fr, fees, rbf }
