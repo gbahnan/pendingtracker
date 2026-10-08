@@ -1,84 +1,120 @@
 "use client";
-import {useEffect,useMemo,useState} from "react";
+import {useCallback,useEffect,useMemo,useState} from "react";
 import type {BtcMvpResult} from "@/lib/btc/types";
 import {isLikelyTxid} from "@/lib/btc/validate";
 
 type ProjectedBlock={position:number;transactionCount:number|null;feeRange:number[]|null};
-type NetworkOverview={btc?:{projectedBlocks?:ProjectedBlock[];height?:number|null}};
-const fmt=(n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat().format(n);
+type Overview={btc?:{projectedBlocks?:ProjectedBlock[];height?:number|null}};
+const number=(n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(n);
+const btc=(sats:number|null|undefined)=>sats==null?"—":(sats/100000000).toLocaleString("en-US",{maximumFractionDigits:8})+" BTC";
+const short=(value:string)=>value.length>27?value.slice(0,14)+"…"+value.slice(-10):value;
+const rate=(n:number|null|undefined)=>n==null?"—":number(n)+" sat/vB";
+function Fact({label,value,help}:{label:string;value:string;help:string}){return <div className="pt-tx-fact"><span>{label}</span><strong>{value}</strong><small>{help}</small></div>}
 
 export default function BtcTxPage({params}:{params:{txid:string}}){
  const txid=params.txid??"";
  const valid=useMemo(()=>isLikelyTxid(txid),[txid]);
  const [result,setResult]=useState<BtcMvpResult|null>(null);
- const [overview,setOverview]=useState<NetworkOverview|null>(null);
+ const [overview,setOverview]=useState<Overview|null>(null);
  const [loading,setLoading]=useState(true);
  const [error,setError]=useState<string|null>(null);
  const [aiSummary,setAiSummary]=useState<string|null>(null);
  const [aiLoading,setAiLoading]=useState(false);
- async function refresh(){
+ const [copied,setCopied]=useState(false);
+ const refresh=useCallback(async()=>{
   if(!valid)return;
   try{
    const [txRes,netRes]=await Promise.all([fetch("/api/btc/tx/"+txid,{cache:"no-store"}),fetch("/api/network",{cache:"no-store"})]);
    const tx=await txRes.json();
-   if(!txRes.ok)throw new Error(tx?.error??"Could not load this transaction.");
+   if(!txRes.ok)throw new Error(tx?.error??"Unable to check this transaction right now.");
    setResult(tx as BtcMvpResult);
    if(netRes.ok)setOverview(await netRes.json());
    setError(null);
-  }catch(e){setError(e instanceof Error?e.message:"Network data unavailable.");}
+  }catch(e){setError(e instanceof Error?e.message:"Live network data is unavailable.");}
   finally{setLoading(false);}
- }
- useEffect(()=>{refresh();const id=setInterval(refresh,15000);return()=>clearInterval(id);},[txid,valid]);
- const confirmed=Boolean(result?.status?.confirmed??result?.tx?.status?.confirmed);
- const observed=Boolean(result?.tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
- const feeRate=result?.feerateSatVb;
+ },[txid,valid]);
+ useEffect(()=>{refresh();const id=setInterval(refresh,15000);return()=>clearInterval(id);},[refresh]);
+ const tx=result?.tx;
+ const confirmed=Boolean(result?.status?.confirmed??tx?.status?.confirmed);
+ const observed=Boolean(tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
+ const feeRate=result?.feerateSatVb??null;
  const blocks=overview?.btc?.projectedBlocks?.slice(0,5)??[];
  const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
  const firstMatch=matching[0]?.position;
  const selectedPosition=firstMatch??(feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1]?1:null);
- const estimatedWindow=confirmed?"Already confirmed":!observed?"Not available":selectedPosition?`Around ${selectedPosition*10} min*`:"Unknown right now";
-
- const statusTitle=!observed?"Not found on the network":confirmed?"Your Bitcoin transaction is confirmed":"Your Bitcoin transaction is waiting";
- const summary=!observed?"This transaction has not appeared on the Bitcoin network yet. Check the transaction ID and make sure it was broadcast. We will keep checking for updates.":confirmed?"Your transaction has been included in a Bitcoin block. New blocks add further confirmations. Some wallets and exchanges require several confirmations before crediting funds.":selectedPosition?`Your transaction is pending with a fee rate of ${feeRate} sat/vB. Based on current fee ranges, it may be competitive for projected block ${selectedPosition}, roughly ${selectedPosition*10} minutes away on average. This estimate changes with network traffic and is not guaranteed.`:`Your transaction is pending with ${feeRate==null?"an unavailable fee rate":feeRate+" sat/vB"}. Current block projections cannot reliably estimate its confirmation time. We will update the outlook as network conditions change.`;
+ const feeEstimate=!observed?"Not available":confirmed?"Already confirmed":selectedPosition?"~"+selectedPosition*10+" min*":"Not enough data";
+ const blockHeight=result?.status?.block_height??tx?.status?.block_height;
+ const confirmations=confirmed&&blockHeight!=null&&overview?.btc?.height!=null?Math.max(1,overview.btc.height-blockHeight+1):confirmed?1:0;
+ const inputs=tx?.vin??[];
+ const outputs=tx?.vout??[];
+ const inputTotal=inputs.length>0&&inputs.every(i=>i.prevout?.value!=null)?inputs.reduce((sum,i)=>sum+(i.prevout?.value??0),0):null;
+ const outputTotal=outputs.length>0&&outputs.every(o=>o.value!=null)?outputs.reduce((sum,o)=>sum+(o.value??0),0):null;
+ const rbf=tx?.rbf===true||inputs.some(i=>i.sequence!=null&&i.sequence<0xfffffffe);
+ const summary=!observed
+  ?"We cannot see this transaction on the Bitcoin network right now. Check that the ID is correct and that your wallet has broadcast it. A missing transaction does not necessarily mean the funds were lost."
+  :confirmed
+  ?"This transaction is recorded in Bitcoin block "+(blockHeight==null?"on the blockchain":number(blockHeight))+" and currently has "+number(confirmations)+" confirmation"+(confirmations===1?"":"s")+". It paid "+(tx?.fee==null?"an unavailable network fee":number(tx.fee)+" sats in network fees")+" at "+rate(feeRate)+". It is confirmed, although some wallets and exchanges may wait for more confirmations."
+  :selectedPosition
+  ?"Your transaction is waiting in Bitcoin's mempool with a fee rate of "+rate(feeRate)+". Its fee overlaps the current range for projected block "+selectedPosition+", which suggests roughly "+selectedPosition*10+" minutes on average if conditions stay similar. This is a fee-based estimate, not a verified position or guaranteed arrival time."
+  :"Your transaction is waiting in Bitcoin's mempool with a fee rate of "+rate(feeRate)+". Its fee does not clearly match the currently displayed projected blocks, so we cannot give a dependable confirmation estimate. Network traffic and miner selection can change how long it takes.";
  async function explain(){
   if(!result||aiLoading)return;
   setAiLoading(true);
-  try{const r=await fetch("/api/ai/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chain:"btc",status:confirmed?"confirmed":"pending",facts:{feeSats:result.tx?.fee??null,feeRateSatVb:feeRate??null,confirmed,summary:result.diagnosis.summary}})});const j=await r.json();setAiSummary(r.ok&&typeof j.summary==="string"?j.summary:"Extra explanation is unavailable right now.");}
-  catch{setAiSummary("Extra explanation is unavailable right now.");}finally{setAiLoading(false);}
+  try{
+   const response=await fetch("/api/ai/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chain:"btc",status:confirmed?"confirmed":"pending",facts:{feeSats:tx?.fee??null,feeRateSatVb:feeRate,confirmed,blockHeight,confirmations,inputs:inputs.length,outputs:outputs.length,summary:result.diagnosis.summary}})});
+   const body=await response.json();setAiSummary(response.ok&&typeof body.summary==="string"?body.summary:"Extra explanation is unavailable.");
+  }catch{setAiSummary("Extra explanation is unavailable.");}finally{setAiLoading(false);}
  }
- if(!valid)return <main className="pt-tx-page"><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID has 64 letters and numbers.</p><a href="/">← Search again</a></main>;
- return <main className="pt-tx-page">
-  <div className="pt-tx-back"><a href="/">← Back to explorer</a></div><div className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{statusTitle}</h1><p>See where your transaction stands, without the technical overload.</p></div><button onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div>
-  {error&&<div className="pt-tx-error" role="alert">{error}</div>}
-  {loading&&!result?<div className="pt-tx-loading">Checking the Bitcoin network and building your live view…</div>:null}
+ function copy(){if(typeof navigator!=="undefined"&&navigator.clipboard){navigator.clipboard.writeText(txid).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),1800);}).catch(()=>{});}}
+ if(!valid)return <main className="pt-tx-page"><a href="/">← Back to explorer</a><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID is 64 hexadecimal characters.</p></main>;
+ return <main className="pt-tx-page pt-tx-detail-v2">
+  <div className="pt-tx-back"><a href="/">← Back to explorer</a></div>
+  <header className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Your transaction is pending"}</h1><p>Follow the live status, understand the numbers, and see what happens next.</p></div><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></header>
+  <div className="pt-tx-idbar"><div><span>TRANSACTION ID (TXID)</span><code title={txid}>{txid}</code></div><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div>
+  {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
+  {loading&&!result&&<div className="pt-tx-loading">Checking the Bitcoin network…</div>}
   {result&&<>
    <section className="pt-tx-stage">
-    <div className="pt-tx-stage-head"><div><span className="pt-eyebrow">WHERE IS MY TRANSACTION?</span><h2>{confirmed?"Included in a block":observed?"Waiting for a block":"Not seen yet"}</h2></div><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div>
-    <div className="pt-tx-estimate"><span>YOUR FEE RATE</span><strong>{feeRate==null?"Unavailable":feeRate+" sat/vB"}</strong><span>ESTIMATED TIME</span><strong>{estimatedWindow}</strong></div><div className="pt-tx-block-track">
-     {!confirmed&&observed&&<div className="pt-tx-position-row"><div className="pt-tx-position" style={{gridColumn:selectedPosition?String(Math.max(1,Math.min(5,selectedPosition))):"1 / -1"}}><strong>↓ Your transaction</strong><small>{selectedPosition?"Possible block "+selectedPosition:"Placement unknown"}</small></div></div>}
-     <div className="pt-tx-block-grid">
-      {(blocks.length?blocks:[1,2,3,4,5].map(position=>({position,transactionCount:null,feeRange:null}))).map((block,index)=>{
-       const highlighted=!confirmed&&observed&&selectedPosition===block.position;
-       return <div className={"pt-tx-block"+(highlighted?" highlighted":"")} key={block.position}>
-        <div className="pt-tx-block-label">{confirmed?"Projected":"BLOCK "+block.position}</div>
-        <div className="pt-tx-block-time">~{block.position*10} <span>min</span></div>
-        <div className="pt-tx-block-tiles" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{opacity:block.transactionCount==null?.25:i<Math.max(1,Math.min(15,Math.round(block.transactionCount/220)))?1:.16}}/>)}</div>
-        <strong>{block.feeRange?" "+block.feeRange[0].toFixed(1)+"–"+block.feeRange[1].toFixed(1):"—"} <span>sat/vB</span></strong>
-        <small>{block.transactionCount==null?"Live data loading":fmt(block.transactionCount)+" transactions"}</small>
-       </div>
-      })}
-     </div>
-     {confirmed?<div className="pt-tx-confirmed-banner">✓ Your transaction is already confirmed. The blocks above show the current network outlook, not the block containing your transaction.</div>:<p className="pt-tx-block-caveat">{firstMatch?"Highlighted block = matching fee range, not a verified queue position.":"A precise position cannot be calculated from the fee rate alone."} *Times are approximate, not countdowns or guarantees.</p>}
+    <div className="pt-tx-stage-head"><div><div className="pt-eyebrow">LIVE TRANSACTION OUTLOOK</div><h2>{confirmed?"Confirmed in block #"+(blockHeight??"—"):observed?"Where could it confirm?":"Waiting for network data"}</h2></div><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div>
+    <div className="pt-tx-estimate"><span>YOUR TRANSACTION FEE RATE</span><strong>{rate(feeRate)}</strong><span>{confirmed?"CONFIRMATIONS":"POSSIBLE CONFIRMATION TIME"}</span><strong>{confirmed?number(confirmations):feeEstimate}</strong></div>
+    {!confirmed&&observed&&<div className="pt-tx-position-guide">{selectedPosition?"Your arrow follows the current fee estimate as the network changes.":"Your transaction is pending, but we cannot estimate a block yet."}</div>}
+    <div className="pt-tx-block-track">
+     {!confirmed&&observed&&<div className="pt-tx-position-row">{Array.from({length:5},(_,i)=><div key={i} className="pt-tx-position-cell">{selectedPosition===i+1&&<div className="pt-tx-position"><strong>↓ YOUR TX</strong><small>Fee match</small></div>}</div>)}{!selectedPosition&&<div className="pt-tx-position-unknown">Your block is unknown</div>}</div>}
+     <div className="pt-tx-block-grid">{(blocks.length?blocks:[1,2,3,4,5].map(position=>({position,transactionCount:null,feeRange:null}))).map(block=><div className={"pt-tx-block"+(!confirmed&&selectedPosition===block.position?" highlighted":"")} key={block.position}>
+      <div className="pt-tx-block-label">PROJECTED BLOCK {block.position}</div>
+      <div className="pt-tx-block-time">~{block.position*10} <span>min</span></div>
+      <div className="pt-tx-block-tiles" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{opacity:block.transactionCount==null?.22:i<Math.max(1,Math.min(15,Math.round(block.transactionCount/220)))?1:.17}}/>)}</div>
+      <strong>{block.feeRange?number(block.feeRange[0])+"–"+number(block.feeRange[1]):"—"} <span>sat/vB</span></strong>
+      <small>{block.transactionCount==null?"Loading live data":number(block.transactionCount)+" transactions"}</small>
+     </div>)}</div>
+     <p className="pt-tx-block-caveat">{confirmed?"These are upcoming projected blocks, not the block that confirmed your transaction.":observed?"*The arrow indicates a fee-range match, not a confirmed place in line. Block times average around 10 minutes and can vary.":"Projected blocks describe network activity, not a transaction we can currently locate."}</p>
     </div>
    </section>
-   <section className="pt-tx-summary"><div className="pt-eyebrow">THE SHORT ANSWER</div><h2>{confirmed?"Good news—it's confirmed.":observed?"Here's what's happening.":"Here's what we know."}</h2><p>{summary}</p><div className="pt-tx-summary-actions"><button onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain more with AI"}</button><a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">Verify on mempool.space ↗</a></div>{aiSummary&&<p className="pt-tx-ai" role="status">{aiSummary}</p>}</section>
-   <section className="pt-tx-details"><div className="pt-eyebrow">IF YOU WANT THE DETAILS</div><h2>Your transaction at a glance</h2><div className="pt-tx-facts">
-    <div><span>Current status</span><strong>{confirmed?"Confirmed":observed?"Pending":"Not observed"}</strong><small>Whether the network has included it in a block</small></div>
-    <div><span>Your fee rate</span><strong>{feeRate==null?"Unavailable":feeRate+" sat/vB"}</strong><small>Higher rates are generally more competitive</small></div>
-    <div><span>Total transaction fee</span><strong>{result.tx?.fee==null?"Unavailable":fmt(result.tx.fee)+" sats"}</strong><small>The fee offered for processing this transaction</small></div>
-   </div><details className="pt-tx-more"><summary>More technical information <span>＋</span></summary><div><p><b>Transaction ID:</b> <code>{txid}</code></p><p><b>Virtual size:</b> {fmt(result.tx?.vsize)} vB</p><p><b>Data source:</b> {result.provider}</p><p><b>What can I do?</b> {result.diagnosis.actions.map(x=>x.label+": "+x.detail).join(" ")}</p><button onClick={()=>navigator.clipboard?.writeText(txid)}>Copy transaction ID</button><details><summary>Raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details></div></details></section>
+   <section className="pt-tx-summary"><div className="pt-eyebrow">WHAT'S HAPPENING WITH YOUR TRANSACTION?</div><h2>{confirmed?"Confirmed and recorded":observed?"Waiting for confirmation":"Not visible yet"}</h2><p>{summary}</p><div className="pt-tx-summary-actions"><button type="button" onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain this further"}</button><a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">View on mempool.space ↗</a></div>{aiSummary&&<p className="pt-tx-ai" role="status">{aiSummary}</p>}</section>
+   <section className="pt-tx-details">
+    <div className="pt-eyebrow">THE DATA BEHIND YOUR SUMMARY</div><h2>Your transaction, explained</h2>
+    <p className="pt-tx-details-intro">These are the actual numbers behind the explanation above—not generic network averages.</p>
+    <div className="pt-tx-facts">
+     <Fact label="Status" value={confirmed?"Confirmed":observed?"Pending":"Not found"} help={confirmed?"Recorded in a Bitcoin block.":"Pending means miners have not included it in a block yet."}/>
+     <Fact label="Fee rate" value={rate(feeRate)} help="Sats paid per unit of transaction size. Higher rates often get priority."/>
+     <Fact label="Total network fee" value={tx?.fee==null?"Unavailable":number(tx.fee)+" sats"} help="What this transaction pays miners—not the amount of Bitcoin sent."/>
+     <Fact label="Confirmations" value={confirmed?number(confirmations):"0"} help="How many blocks have been added since this transaction was included."/>
+     <Fact label="Transaction size" value={tx?.vsize==null?"Unavailable":number(tx.vsize)+" vB"} help="A larger transaction usually costs more at the same fee rate."/>
+     <Fact label="Fee replacement (RBF)" value={rbf?"Signaled":observed?"Not signaled":"Unknown"} help="Whether the transaction signals it may be replaced with a higher-fee version."/>
+    </div>
+   </section>
+   <section className="pt-tx-details pt-tx-money">
+    <div className="pt-eyebrow">WHERE THE BITCOIN GOES</div><h2>Inputs & outputs</h2>
+    <p className="pt-tx-details-intro">Inputs show Bitcoin being spent. Outputs show where it is assigned, including possible change returned to the sender. Outputs are not necessarily payments to different people.</p>
+    <div className="pt-tx-money-totals"><div><span>Total inputs</span><strong>{btc(inputTotal)}</strong></div><div><span>Total outputs</span><strong>{btc(outputTotal)}</strong></div><div><span>Network fee</span><strong>{btc(tx?.fee)}</strong></div></div>
+    <div className="pt-tx-io-grid">
+     <div className="pt-tx-io-column"><h3>↘ Inputs <small>({inputs.length})</small></h3>{inputs.length?inputs.slice(0,8).map((input,i)=><div className="pt-tx-io-row" key={i}><span title={input.prevout?.scriptpubkey_address??input.txid??""}>{short(input.prevout?.scriptpubkey_address??input.txid??"Unknown source")}</span><strong>{btc(input.prevout?.value)}</strong></div>):<p>Input details are unavailable.</p>}{inputs.length>8&&<small>Showing 8 of {number(inputs.length)} inputs.</small>}</div>
+     <div className="pt-tx-io-column"><h3>↗ Outputs <small>({outputs.length})</small></h3>{outputs.length?outputs.slice(0,8).map((output,i)=><div className="pt-tx-io-row" key={i}><span title={output.scriptpubkey_address??""}>{short(output.scriptpubkey_address??"Non-address output")}</span><strong>{btc(output.value)}</strong></div>):<p>Output details are unavailable.</p>}{outputs.length>8&&<small>Showing 8 of {number(outputs.length)} outputs.</small>}</div>
+    </div>
+    <details className="pt-tx-more"><summary>What do inputs, outputs, and change mean? <span>＋</span></summary><div>Bitcoin transactions spend earlier outputs as inputs and create new outputs. An output may pay someone or return change to the sender. You cannot reliably tell which output is change from addresses alone.</div></details>
+   </section>
+   <section className="pt-tx-details pt-tx-tech"><details className="pt-tx-more"><summary>More transaction details <span>＋</span></summary><div className="pt-tx-tech-grid"><p><b>Transaction ID:</b> <code>{txid}</code></p><p><b>Block height:</b> {blockHeight==null?"Not confirmed":number(blockHeight)}</p><p><b>Raw size:</b> {tx?.size==null?"Unavailable":number(tx.size)+" bytes"}</p><p><b>Weight:</b> {tx?.weight==null?"Unavailable":number(tx.weight)+" WU"}</p><p><b>Version:</b> {tx?.version??"—"}</p><p><b>Locktime:</b> {tx?.locktime??"—"}</p><p><b>Data source:</b> {result.provider}</p><details><summary>Raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details></div></details></section>
   </>}
-  <p className="pt-tx-footnote">Updates every 15 seconds · Public blockchain data · No wallet connection required · Estimates are not guarantees.</p>
+  <p className="pt-tx-footnote">Live data refreshes every 15 seconds · No wallet connection needed · Fee estimates are not guarantees.</p>
  </main>;
-
 }
