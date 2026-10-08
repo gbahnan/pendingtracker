@@ -288,3 +288,52 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .pt-compact-fees .pt-fee-disclaimer { margin:12px 0; }
 .pt-metric small { line-height:1.5; }
 @media(max-width:570px) { .pt-fee-timeline { gap:3px; } .pt-timeline-stop strong { font-size:17px; } .pt-timeline-stop small { font-size:10px; } .pt-timeline-stop b { font-size:10px; padding:5px 3px; white-space:normal; } }
+
+
+/* Pending Tracker premium homepage — midnight navy, champagne and ice blue */
+body:has(.pt-shell) { background:radial-gradient(ellipse 65% 32% at 50% 0%,rgba(30,78,108,.20),transparent 75%),#080f18; color:#f5f7fa; }
+body:has(.pt-shell) .header { border-bottom:1px solid rgba(181,203,217,.10); }
+body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); box-shadow:0 4px 20px rgba(198,182,146,.15); }
+.pt-shell { max-width:1160px; padding:0 18px; }
+.pt-hero { text-align:left; padding:78px 0 70px; }
+.pt-hero-intro { max-width:1000px; margin:0 auto 40px; text-align:center; }
+.pt-hero .pt-eyebrow { color:#d4bf93; letter-spacing:.22em; }
+.pt-hero .pt-pulse { background:#b5e3dc; box-shadow:0 0 14px rgba(181,227,220,.6); }
+.pt-hero h1 { font-size:clamp(40px,5.8vw,76px); line-height:1.09; letter-spacing:-.062em; margin:24px 0 22px; font-weight:780; }
+.pt-hero h1 span { background:linear-gradient(95deg,#e5d7ba,#9abfd0); background-clip:text; color:transparent; }
+.pt-lead { max-width:780px; color:#aebbc8; font-size:clamp(16px,1.6vw,19px); line-height:1.7; margin:0 auto 22px; }
+.pt-hero-trust { display:flex; justify-content:center; gap:22px; flex-wrap:wrap; color:#aabdc8; font-size:12px; font-weight:650; letter-spacing:.025em; }
+.pt-searchbox { max-width:920px; padding:32px 36px 25px; background:linear-gradient(135deg,rgba(22,37,51,.98),rgba(13,25,38,.98)); border:1px solid rgba(165,193,205,.23); border-radius:19px; box-shadow:0 25px 75px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.05); }
+.pt-search-top { display:flex; justify-content:space-between; gap:24px; align-items:flex-start; }
+.pt-search-label { color:#d7c49c; font-size:11px; letter-spacing:.18em; margin:0 0 9px; }
+.pt-search-top h2 { font-size:clamp(22px,2.5vw,30px); letter-spacing:-.035em; margin:0 0 11px; color:#f3f5f7; }
+.pt-search-explain { font-size:14px; line-height:1.7; color:#b5c2cd; max-width:700px; margin:0 0 24px; }
+.pt-search-explain strong { color:#e7edf1; font-weight:600; }
+.pt-search-symbol { flex:0 0 52px; width:52px; height:52px; border:1px solid rgba(215,196,156,.25); border-radius:14px; display:grid; place-items:center; font-size:25px; color:#d7c49c; }
+.pt-searchrow { gap:10px; }
+.pt-searchrow input { padding:17px 18px; background:#091521; border:1px solid #334858; border-radius:10px; font-size:14px; }
+.pt-searchrow input:focus { border-color:#a9c9d7; box-shadow:0 0 0 3px rgba(169,201,215,.12); }
+.pt-searchrow button { background:linear-gradient(120deg,#d9c6a1,#bfa878); color:#14202b; border-radius:10px; padding:15px 20px; box-shadow:none; }
+.pt-searchrow button:hover { filter:brightness(1.07); }
+.pt-hint { color:#879ba9; }
+.pt-shell .pt-section { border-top:1px solid rgba(185,203,216,.10); }
+.pt-shell .pt-eyebrow { color:#cdb98f; }
+.pt-shell .pt-section-head p,.pt-shell .pt-section-sub { color:#9aafbd; }
+.pt-shell .pt-metric,.pt-shell .pt-activity-panel,.pt-shell .pt-compact-fees,.pt-shell .pt-insight,.pt-shell .pt-term,.pt-shell .pt-network-brief { background:linear-gradient(145deg,#142330,#0e1b27); border-color:#2c4150; }
+.pt-shell .pt-tabs button { background:#111f2c; border-color:#314553; color:#b3c4cd; }
+.pt-shell .pt-tabs button.selected { background:#233c4c; border-color:#bca77c; color:#f4f6f8; }
+.pt-shell .pt-metric span,.pt-shell .pt-metric small,.pt-shell .pt-fee-disclaimer { color:#a7b9c5; }
+.pt-shell .pt-activity-row { background:#101e2b; border-color:#2c4050; }
+.pt-shell .pt-activity-row:hover { background:#1c3544; border-color:#9cbac9; }
+.pt-shell .pt-insight-icon,.pt-shell .pt-activity-arrow { color:#d4bd8d; }
+.pt-shell .pt-cta { background:radial-gradient(ellipse at 50% 0%,#243e4d,#0d1b27 80%); border-color:#425b67; }
+.pt-shell .pt-cta a { background:linear-gradient(120deg,#d9c6a1,#bfa878); color:#14202b; }
+@media(max-width:760px) {
+  .pt-shell { padding:0 15px; }
+  .pt-hero { padding:48px 0 45px; }
+  .pt-hero-intro { margin-bottom:30px; }
+  .pt-hero-trust { gap:9px 15px; font-size:11px; }
+  .pt-searchbox { padding:24px 18px 19px; }
+  .pt-search-symbol { display:none; }
+  .pt-search-explain { font-size:13px; }
+}
