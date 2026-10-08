@@ -10,17 +10,18 @@ async function json(url: string) {
 }
 
 export async function GET() {
-  const [fees, pool, blocks, gas, ethBlock, recentBlocks] = await Promise.allSettled([
+  const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks] = await Promise.allSettled([
     json("https://mempool.space/api/v1/fees/recommended"),
     json("https://mempool.space/api/mempool"),
     fetch("https://mempool.space/api/blocks/tip/height", { next: { revalidate: 30 }, signal: AbortSignal.timeout(7000) }).then(async r => { if (!r.ok) throw new Error("Block height unavailable"); return Number(await r.text()); }),
     json("https://eth.blockscout.com/api/v2/stats"),
     json("https://eth.blockscout.com/api/v2/blocks?type=block"),
     json("https://mempool.space/api/blocks"),
+    json("https://mempool.space/api/v1/fees/mempool-blocks"),
   ]);
 
   const get = (result: PromiseSettledResult<any>) => result.status === "fulfilled" ? result.value : null;
-  const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks);
+  const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks), projected = get(projectedBlocks);
   const tip = Array.isArray(recent) ? recent[0] : null;
   const tipTimestamp = Number(tip?.timestamp);
   const tipTxCount = Number(tip?.tx_count);
@@ -49,6 +50,12 @@ export async function GET() {
     } : null,
     mempoolVsizeMB: Number.isFinite(poolVsize) ? Math.round(poolVsize / 10000) / 100 : null,
     mempoolFeesBTC: Number.isFinite(poolFees) ? Math.round(poolFees / 1000000) / 100 : null,
+    projectedBlocks: Array.isArray(projected) ? projected.slice(0, 6).map((block: any, index: number) => ({
+      position: index + 1,
+      transactionCount: block?.nTx != null && Number.isFinite(Number(block.nTx)) ? Number(block.nTx) : null,
+      medianFee: block?.medianFee != null && Number.isFinite(Number(block.medianFee)) ? Math.round(Number(block.medianFee) * 10) / 10 : null,
+      feeRange: Array.isArray(block?.feeRange) && block.feeRange.length > 0 ? [Math.min(...block.feeRange.map(Number).filter(Number.isFinite)), Math.max(...block.feeRange.map(Number).filter(Number.isFinite))] : null
+    })) : [],
     explanation: !p ? "Bitcoin network data is temporarily unavailable." : congestion === "Busy"
       ? "Bitcoin's waiting area is crowded. Transactions offering lower fees may wait longer."
       : congestion === "Moderate"
