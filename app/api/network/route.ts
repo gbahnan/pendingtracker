@@ -1,28 +1,29 @@
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
-export const revalidate = 30;
+export const revalidate = 10;
 
 async function json(url: string) {
-  const response = await fetch(url, { next: { revalidate: 30 }, signal: AbortSignal.timeout(7000) });
+  const response = await fetch(url, { next: { revalidate: 10 }, signal: AbortSignal.timeout(7000) });
   if (!response.ok) throw new Error("Data provider unavailable");
   return response.json();
 }
 
 export async function GET() {
-  const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks, recentTransactions] = await Promise.allSettled([
+  const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks, recentTransactions, ethTransactions] = await Promise.allSettled([
     json("https://mempool.space/api/v1/fees/recommended"),
     json("https://mempool.space/api/mempool"),
-    fetch("https://mempool.space/api/blocks/tip/height", { next: { revalidate: 30 }, signal: AbortSignal.timeout(7000) }).then(async r => { if (!r.ok) throw new Error("Block height unavailable"); return Number(await r.text()); }),
+    fetch("https://mempool.space/api/blocks/tip/height", { next: { revalidate: 10 }, signal: AbortSignal.timeout(7000) }).then(async r => { if (!r.ok) throw new Error("Block height unavailable"); return Number(await r.text()); }),
     json("https://eth.blockscout.com/api/v2/stats"),
     json("https://eth.blockscout.com/api/v2/blocks?type=block"),
     json("https://mempool.space/api/blocks"),
     json("https://mempool.space/api/v1/fees/mempool-blocks"),
     json("https://mempool.space/api/mempool/recent"),
+    json("https://eth.blockscout.com/api/v2/transactions?filter=validated"),
   ]);
 
   const get = (result: PromiseSettledResult<any>) => result.status === "fulfilled" ? result.value : null;
-  const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks), projected = get(projectedBlocks), txs = get(recentTransactions);
+  const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks), projected = get(projectedBlocks), txs = get(recentTransactions), etxs = get(ethTransactions);
   const tip = Array.isArray(recent) ? recent[0] : null;
   const tipTimestamp = Number(tip?.timestamp);
   const tipTxCount = Number(tip?.tx_count);
@@ -69,10 +70,12 @@ export async function GET() {
     gasGwei: Number.isFinite(gasGwei) ? gasGwei : null,
     latestBlock: eb?.items?.[0]?.height ?? null,
     totalTransactions: e?.total_transactions ?? null,
+    recentBlocks: Array.isArray(eb?.items) ? eb.items.slice(0, 6).map((block: any) => ({ height: block.height ?? null, hash: block.hash ?? null, timestamp: block.timestamp ?? null, transactionsCount: block.tx_count ?? block.transactions_count ?? null })) : [],
+    recentTransactions: Array.isArray(etxs?.items) ? etxs.items.slice(0, 10).filter((tx: any) => /^0x[a-f0-9]{64}$/i.test(tx.hash ?? "")).map((tx: any) => ({ hash: tx.hash, status: tx.status ?? null, timestamp: tx.timestamp ?? null, block: tx.block ?? null })) : [],
     explanation: !e ? "Ethereum network data is temporarily unavailable."
       : "Ethereum gas is the cost of processing transactions. It changes with demand and the work a transaction requires. A transaction can also wait because of its fee settings or an earlier pending transaction from the same wallet."
   };
   return NextResponse.json({ btc, eth, updatedAt: new Date().toISOString(), sources: ["mempool.space", "Blockscout"] }, {
-    headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60" }
+    headers: { "Cache-Control": "public, s-maxage=10, stale-while-revalidate=10" }
   });
 }
