@@ -156,7 +156,7 @@ export default function Page() {
               const low=block.feeRange?.[0],high=block.feeRange?.[1];
               const matches=low!=null&&high!=null&&selectedSatRate>=low&&selectedSatRate<=high;
               return <div className={"pt-projected-card"+(matches?" pt-projected-match":"")} key={block.position}>
-                <div className="pt-projected-top"><span>BLOCK {block.position}</span><b>~{block.position*10} min</b></div>
+                <div className="pt-projected-top"><span>BLOCK {block.position}</span></div><div className="pt-block-time">~{block.position*10} <span>min</span></div>
                 <div className="pt-block-art" aria-hidden="true">{Array.from({length:20},(_,i)=><i key={i} style={{opacity:block.transactionCount==null?.2:(i<Math.max(2,Math.min(20,Math.round(block.transactionCount/160)))?1:.17)}}/>)}</div>
                 <strong className="pt-block-fee">{low==null||high==null?"Fee unavailable":low.toFixed(1)+"–"+high.toFixed(1)+" sat/vB"}</strong>
                 <small className="pt-block-tx-count">{block.transactionCount==null?"Awaiting transactions":format(block.transactionCount)+" transactions"}</small>
@@ -165,20 +165,17 @@ export default function Page() {
             })}
           </div>
           <p className="pt-fee-disclaimer">Block positions are estimates, not countdowns. Fee ranges can overlap between blocks, and miners may choose transactions differently. The tiles show a visual approximation of each block's transaction count, not individual transactions.</p>
-          <div className="pt-fee-heading pt-fee-heading-secondary"><div><h4>What fee should I choose?</h4><p>Live fee-rate suggestions for a new Bitcoin transaction.</p></div></div>
-          <div className="pt-fee-choices">
-            {([{title:"Higher priority",value:btc?.fastestFee,note:"A more competitive fee for earlier blocks",tag:"FASTER"},{title:"Balanced",value:btc?.halfHourFee,note:"A middle-ground option if you can wait",tag:"STANDARD"},{title:"Patient",value:btc?.hourFee,note:"For payments that are not urgent",tag:"LOWER PRIORITY"}] as {title:string;value:number|null|undefined;note:string;tag:string}[]).map(choice=><button type="button" className={"pt-fee-choice"+(choice.value!=null&&selectedSatRate===choice.value?" active":"")} key={choice.title} onClick={()=>{if(choice.value!=null)setSelectedSatRate(choice.value);}} disabled={choice.value==null}><span>{choice.tag}</span><strong>{choice.value==null?"—":choice.value+" sat/vB"}</strong><b>{choice.title}</b><small>{choice.note}</small></button>)}
+          <div className="pt-simple-fee-head"><div><h4>Choose your fee</h4><p>Higher fees usually get priority. Pick what works for you.</p></div></div>
+          <div className="pt-simple-fees">
+            {([{title:"Fast",value:btc?.fastestFee,detail:"Higher priority"},{title:"Balanced",value:btc?.halfHourFee,detail:"Middle ground"},{title:"Save",value:btc?.hourFee,detail:"Less urgent"}] as {title:string;value:number|null|undefined;detail:string}[]).map(choice=><button type="button" className={"pt-simple-fee"+(choice.value!=null&&selectedSatRate===choice.value?" active":"")} key={choice.title} onClick={()=>{if(choice.value!=null)setSelectedSatRate(choice.value)}} disabled={choice.value==null}><span>{choice.title}</span><strong>{choice.value==null?"—":choice.value+" sat/vB"}</strong><small>{choice.detail}</small></button>)}
           </div>
-          <div className="pt-fee-checker"><div><h4>Check a Bitcoin fee rate</h4><p>Enter the fee rate shown in your wallet—or tap a suggestion above.</p></div><label htmlFor="sat-rate">Your fee rate <span>(sat/vB)</span></label><input id="sat-rate" type="number" min="0.1" max="100000" step="0.1" value={selectedSatRate} onChange={e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>=0.1&&v<=100000)setSelectedSatRate(v);}}/><div className="pt-fee-result" role="status">{(()=>{
-            const blocks=btc?.projectedBlocks??[];
-            if(!blocks.length)return "Waiting for live projected blocks. Try again shortly.";
-            const overlaps=blocks.filter(block=>block.feeRange&&selectedSatRate>=block.feeRange[0]&&selectedSatRate<=block.feeRange[1]);
-            const above=blocks[0]?.feeRange&&selectedSatRate>blocks[0].feeRange[1];
-            if(overlaps.length)return "Your "+selectedSatRate+" sat/vB rate overlaps the fees seen in projected block"+(overlaps.length>1?"s ":" ")+overlaps.map(x=>x.position).join(", ")+". That is a rough guide, not a prediction of your exact place in line.";
-            if(above)return "Your "+selectedSatRate+" sat/vB rate is above the displayed fee range of the first projected block. That may be competitive, but confirmation is not guaranteed.";
-            return "Your "+selectedSatRate+" sat/vB rate does not overlap the displayed projected block fee ranges. Your payment could wait longer, but the fee rate alone cannot tell us exactly when.";
-          })()}</div></div>
-          <p className="pt-fee-disclaimer"><b>Important:</b> These are network-wide estimates for new transactions, not a tracking result for an existing payment. Your transaction's size, dependencies, and miner selection can affect its confirmation. For an existing transaction, paste its ID in the search at the top of the page. Source: mempool.space projected blocks and recommended fees.</p>
+          <details className="pt-simple-custom">
+            <summary>Already sent Bitcoin? Compare your fee rate <span>＋</span></summary>
+            <div className="pt-simple-custom-body"><label htmlFor="sat-rate">Fee rate from your wallet (sat/vB)</label><input id="sat-rate" type="number" min="0.1" max="100000" step="0.1" value={selectedSatRate} onChange={e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>=0.1&&v<=100000)setSelectedSatRate(v)}}/>
+              <p role="status">{(()=>{const blocks=btc?.projectedBlocks??[];if(!blocks.length)return "Waiting for live estimates.";const matches=blocks.filter(block=>block.feeRange&&selectedSatRate>=block.feeRange[0]&&selectedSatRate<=block.feeRange[1]);if(matches.length)return "Your fee is within the current range for projected block "+matches[0].position+". This is an estimate, not a guarantee.";if(blocks[0]?.feeRange&&selectedSatRate>blocks[0].feeRange[1])return "Your fee is above the first projected block's current range. It may be competitive.";return "Your fee is outside the displayed projected ranges. It may take longer to confirm."})()}</p>
+            </div>
+          </details>
+          <p className="pt-simple-source">Live estimates from mempool.space. Actual confirmation times vary. To track a specific transaction, search its ID above.</p>
         </section>
         <section className="pt-activity-panel pt-compact-activity">
           <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN ACTIVITY</div><h3>Live transaction activity</h3></div><span className="pt-live">{btcStreamOnline?"● Bitcoin stream connected":"● Refreshes every 5s"}</span></div>
