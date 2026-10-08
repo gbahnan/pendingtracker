@@ -98,6 +98,13 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
 
       <div style={{ height: 12 }} />
 
+      {result && <section className="pt-tx-quick">
+        <div className="pt-eyebrow">YOUR BITCOIN TRANSACTION · QUICK SUMMARY</div>
+        <div className="pt-tx-quick-head"><strong>{!observed?"Not found yet":confirmed?"Confirmed on Bitcoin":"Waiting for confirmation"}</strong><span className={confirmed?"pt-status-confirmed":"pt-status-pending"}>{confirmed?"● Confirmed":observed?"● Pending":"● Unknown"}</span></div>
+        <p>{result.diagnosis.summary}</p>
+        <div className="pt-tx-quick-stats"><div><small>Transaction fee</small><b>{result.tx?.fee==null?"Unavailable":fmtNum(result.tx.fee)+" sats"}</b></div><div><small>Fee rate</small><b>{result.feerateSatVb==null?"Unavailable":result.feerateSatVb+" sat/vB"}</b></div><div><small>What happens next</small><b>{confirmed?"Check required confirmations":"Monitor the network"}</b></div></div>
+        <small>Based on observed Bitcoin data and transparent explanation rules. This is not a guaranteed confirmation-time prediction.</small>
+      </section>}
       {observed && <Progress confirmed={confirmed} />}
 
       <div style={{ height: 12 }} />
