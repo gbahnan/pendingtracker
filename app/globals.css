@@ -621,3 +621,24 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 @media(max-width:850px){.pt-tx-block-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.pt-tx-page{margin:15px auto 45px}.pt-tx-top{align-items:flex-start}.pt-tx-top button{font-size:12px;padding:8px}.pt-tx-stage,.pt-tx-summary,.pt-tx-details{padding:17px}.pt-tx-block-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pt-tx-block{padding:13px 10px}.pt-tx-facts{grid-template-columns:1fr}.pt-tx-position{margin-left:0}.pt-tx-stage-head{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.pt-tx-block-tiles i{animation:none}}
+
+
+/* Transaction tracker: movable live pointer, clear top-line estimate, easy return */
+.pt-tx-back{margin:0 0 18px}
+.pt-tx-back a{display:inline-flex;align-items:center;gap:8px;color:#e8ce9e;text-decoration:none;font-size:14px;font-weight:750;padding:9px 13px;border:1px solid #526476;border-radius:9px;background:#1a303e}
+.pt-tx-back a:hover{border-color:#d9c6a1;background:#263f4d}
+.pt-tx-estimate{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:5px 22px;margin-top:18px;padding:18px 20px;background:#142a37;border:1px solid #496779;border-radius:12px}
+.pt-tx-estimate span{font-size:11px;letter-spacing:.09em;font-weight:800;color:#b0c4cf}
+.pt-tx-estimate strong{font-size:clamp(18px,2.3vw,27px);line-height:1.35;color:#f1d09b;overflow-wrap:anywhere}
+.pt-tx-estimate span:first-child{grid-column:1;grid-row:1}
+.pt-tx-estimate strong:nth-child(2){grid-column:1;grid-row:2}
+.pt-tx-estimate span:nth-child(3){grid-column:2;grid-row:1}
+.pt-tx-estimate strong:nth-child(4){grid-column:2;grid-row:2}
+.pt-tx-position-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;margin-bottom:12px}
+.pt-tx-position-row .pt-tx-position{min-width:0;width:100%;margin:0;padding:10px 5px;transition:background .3s,border-color .3s}
+.pt-tx-position-row .pt-tx-position strong{font-size:12px}
+.pt-tx-position-row .pt-tx-position small{font-size:10px}
+.pt-tx-block.highlighted{position:relative}
+.pt-tx-block.highlighted:before{content:"YOUR FEE RANGE";position:absolute;top:-9px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:9px;font-weight:850;letter-spacing:.05em;background:#e8c587;color:#1d2a33;padding:3px 6px;border-radius:4px}
+@media(max-width:850px){.pt-tx-position-row{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.pt-tx-position-row .pt-tx-position strong{font-size:10px}}
+@media(max-width:600px){.pt-tx-estimate{padding:13px;gap:5px 12px}.pt-tx-estimate strong{font-size:17px}.pt-tx-position-row .pt-tx-position{padding:8px 2px}.pt-tx-position-row .pt-tx-position small{font-size:9px}.pt-tx-block.highlighted:before{font-size:8px}}
