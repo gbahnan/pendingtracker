@@ -71,6 +71,8 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
   }
 
   const confirmed = Boolean(data?.confirmed ?? (Number(data?.confirmations ?? 0) > 0));
+  const failed = Boolean(confirmed && (data?.raw?.result === "error" || data?.raw?.status === "error" || data?.raw?.tx?.status === "0x0" || data?.raw?.receipt?.status === "0x0"));
+  const diagnosis = data?.diagnosis;
 
   return (
     <>
@@ -85,7 +87,7 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
       <div className="card">
         <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
           <div className="badge">Status</div>
-          <div className="badge">{confirmed ? "Confirmed" : "Pending"}</div>
+          <div className="badge">{failed ? "Failed" : confirmed ? "Confirmed" : "Pending"}</div>
         </div>
 
         <div style={{ height: 10 }} />
@@ -121,7 +123,8 @@ export default function EthTxPage({ params }: { params: { hash: string } }) {
           <div className="card">
             <div className="badge">Plain-English</div>
             <div style={{ height: 10 }} />
-            <div style={{ fontWeight: 800 }}>{confirmed ? "It’s confirmed." : "It’s waiting to be confirmed."}</div>
+            <div style={{ fontWeight: 800 }}>{failed ? "The transaction was included but failed." : diagnosis?.title ?? (confirmed ? "It’s confirmed." : "It’s waiting to be confirmed.")}</div>
+            <p className="p" style={{marginTop:10}}>{failed ? "Ethereum processed this transaction, but the operation did not succeed. Network fees may still have been charged." : diagnosis?.summary ?? "We could not generate a specific explanation from the available data."}</p>
             <div style={{ height: 8 }} />
             <ul>
               <li>
