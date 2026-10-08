@@ -13,10 +13,10 @@ export type TxStatus = {
   block_time?: number; // unix seconds
 };
 
-export type Vin = {
+export type TxOutput = { scriptpubkey_address?: string; value?: number; scriptpubkey_type?: string; };\n\nexport type Vin = {
   txid?: string;
   vout?: number;
-  sequence?: number;
+  sequence?: number;\n  prevout?: TxOutput;\n  is_coinbase?: boolean;
 };
 
 export type MempoolTx = {
@@ -25,7 +25,7 @@ export type MempoolTx = {
   vsize?: number;   // vbytes
   weight?: number;  // weight units
   status?: TxStatus;
-  vin?: Vin[];
+  vin?: Vin[];\n  vout?: TxOutput[];\n  size?: number;\n  version?: number;\n  locktime?: number;
   // mempool.space often includes an "rbf" boolean; we treat it as optional to keep compatibility.
   rbf?: boolean;
 };
