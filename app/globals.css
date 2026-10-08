@@ -401,3 +401,16 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-overview-card .pt-card-more summary:focus-visible { outline:2px solid #9abfd0; outline-offset:4px; }
 .pt-overview-card { min-height:0; }
 .pt-overview-card small { margin-top:0; }
+
+
+/* Consistent Bitcoin explainer card alignment */
+.pt-overview-cards { align-items:stretch; }
+.pt-overview-card { display:grid; grid-template-rows:auto minmax(45px,auto) minmax(125px,1fr) minmax(96px,auto) auto; align-content:stretch; gap:0; }
+.pt-overview-card strong { margin:15px 0 15px; align-self:start; }
+.pt-overview-card small { font-size:13px; line-height:1.65; }
+.pt-overview-card small b { display:block; color:#e7edf2; font-size:12px; margin-bottom:7px; }
+.pt-overview-card .pt-card-why { margin:15px 0 0; padding:15px 0 0; }
+.pt-overview-card .pt-card-why b { display:block; margin-bottom:6px; }
+.pt-overview-card .pt-card-more { align-self:end; margin-top:15px; }
+@media(max-width:900px) { .pt-overview-card { grid-template-rows:auto minmax(45px,auto) minmax(125px,1fr) minmax(96px,auto) auto; } }
+@media(max-width:520px) { .pt-overview-card { padding:17px 12px; grid-template-rows:auto minmax(50px,auto) minmax(175px,1fr) minmax(125px,auto) auto; } .pt-overview-card small { font-size:12px; } }
