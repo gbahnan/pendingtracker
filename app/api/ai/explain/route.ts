@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       }),
       signal: AbortSignal.timeout(9000)
     });
-    if (!response.ok) return NextResponse.json({ error: "AI is busy. Use the blockchain summary instead." }, { status: 503 });
+    if (!response.ok) return NextResponse.json({ error: response.status === 401 || response.status === 403 ? "Groq rejected the API key. Check the key in Vercel." : response.status === 429 ? "Groq free-tier rate limit reached. Try again later." : `Groq returned HTTP ${response.status}. Try again shortly.` }, { status: 503 });
     const json = await response.json();
     const summary = json?.choices?.[0]?.message?.content;
     if (typeof summary !== "string" || !summary.trim()) return NextResponse.json({ error: "No explanation returned" }, { status: 503 });
