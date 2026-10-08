@@ -496,3 +496,28 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-fee-explorer .pt-projected-top span { font-size:10px; padding-top:5px; }
 .pt-fee-explorer .pt-projected-top b { font-size:clamp(17px,1.75vw,23px); font-weight:850; letter-spacing:-.045em; line-height:1.12; color:#f4d49b; white-space:nowrap; }
 @media(max-width:650px) { .pt-fee-explorer .pt-projected-top { flex-direction:column; gap:4px; } .pt-fee-explorer .pt-projected-top span { padding-top:0; } .pt-fee-explorer .pt-projected-top b { font-size:20px; } }
+
+
+/* Clear hierarchy and compact fee choice controls */
+.pt-fee-explorer .pt-block-time { font-size:clamp(23px,2.2vw,30px); font-weight:850; line-height:1.15; letter-spacing:-.05em; color:#f3d29a; margin:8px 0 2px; }
+.pt-fee-explorer .pt-block-time span { font-size:.58em; font-weight:700; letter-spacing:0; }
+.pt-fee-explorer .pt-block-art { padding:12px 0; }
+.pt-simple-fee-head { margin:22px 0 12px; }
+.pt-simple-fee-head h4 { font-size:18px; margin:0 0 5px; color:#f2f6f9; }
+.pt-simple-fee-head p { margin:0; font-size:13px; color:#a8bdca; }
+.pt-simple-fees { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.pt-simple-fee { display:flex; flex-direction:column; gap:5px; text-align:left; padding:16px 18px; border:1px solid #476072; border-radius:12px; background:#203543; color:#f2f6f8; cursor:pointer; }
+.pt-simple-fee.active,.pt-simple-fee:hover { border-color:#d9c6a1; background:#2b414b; }
+.pt-simple-fee:disabled { opacity:.55; cursor:default; }
+.pt-simple-fee span { color:#e5c58e; font-size:13px; font-weight:800; }
+.pt-simple-fee strong { font-size:clamp(19px,2vw,25px); letter-spacing:-.03em; }
+.pt-simple-fee small { color:#aebec7; font-size:12px; }
+.pt-simple-custom { margin-top:16px; padding:14px 0; border-top:1px solid #3a5363; border-bottom:1px solid #3a5363; }
+.pt-simple-custom summary { display:flex; justify-content:space-between; gap:10px; list-style:none; cursor:pointer; font-size:13px; font-weight:700; color:#e5c58e; }
+.pt-simple-custom summary::-webkit-details-marker { display:none; }
+.pt-simple-custom-body { display:flex; flex-wrap:wrap; gap:12px; align-items:center; padding-top:15px; }
+.pt-simple-custom-body label { color:#c3d3dd; font-size:12px; }
+.pt-simple-custom-body input { width:115px; border:1px solid #7390a1; border-radius:8px; padding:9px; background:#152b38; color:#fff; }
+.pt-simple-custom-body p { width:100%; margin:0; color:#c9d9df; font-size:12px; line-height:1.6; }
+.pt-simple-source { color:#9fb3c0; font-size:12px; line-height:1.6; margin:13px 0 0; }
+@media(max-width:650px) { .pt-fee-explorer .pt-block-time { font-size:23px; } .pt-simple-fee { padding:12px 9px; } .pt-simple-fee strong { font-size:16px; } .pt-simple-fee small { font-size:11px; } }
