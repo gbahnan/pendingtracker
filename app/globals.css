@@ -166,3 +166,7 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .pt-cta a { display:inline-block; }
 @media(max-width:760px) { .pt-hero{padding:52px 0;} .pt-searchrow{flex-direction:column;} .pt-searchrow button{width:100%;} .pt-metrics{grid-template-columns:repeat(2,minmax(0,1fr));} .pt-glossary{grid-template-columns:1fr;} .pt-section{padding:25px 0 45px;} }
 @media(max-width:430px) { .pt-metrics{grid-template-columns:1fr 1fr;gap:9px;} .pt-metric{padding:16px 12px;} .pt-metric strong{font-size:19px;} .pt-searchbox{padding:14px;} }
+
+/* Keep a consistent dark palette regardless of operating-system appearance. */
+:root { color-scheme:dark; --bg:#080817; --card:rgba(255,255,255,.045); --text:#f4f1ff; --muted:#aaa4c3; --border:rgba(185,151,255,.18); --shadow:0 10px 30px rgba(0,0,0,.3); }
+@media (prefers-color-scheme:light) { :root { color-scheme:dark; --bg:#080817; --card:rgba(255,255,255,.045); --text:#f4f1ff; --muted:#aaa4c3; --border:rgba(185,151,255,.18); --shadow:0 10px 30px rgba(0,0,0,.3); } }
