@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Overview = {
-  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
+  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
   eth: { available: boolean; gasGwei: number | null; latestBlock: string | number | null; explanation: string };
   updatedAt: string;
 };
@@ -81,6 +81,20 @@ export default function Page() {
           <div className="pt-metric"><span>Network traffic</span><strong>{btc?.congestion ?? "—"}</strong><small>Based on pending transaction count</small></div>
           <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Estimated competitive fee rate; not a guarantee</small></div>
           <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
+        </div>
+        <div className="pt-fee-panel">
+          <div className="pt-fee-heading"><div><div className="pt-eyebrow">LIVE BITCOIN FEE GUIDE</div><h3>How fees affect your place in line</h3><p>Compare current fee-rate estimates. Longer bars mean higher fees, not a guaranteed shorter wait.</p></div><span className="pt-live">Updated with network data</span></div>
+          <div className="pt-fee-bars">{([
+            {name:"High priority",hint:"Next-block target",value:btc?.fastestFee},
+            {name:"Standard",hint:"Around 30 minutes",value:btc?.halfHourFee},
+            {name:"Patient",hint:"Around 1 hour",value:btc?.hourFee},
+            {name:"Economy",hint:"May take longer",value:btc?.economyFee}
+          ] as {name:string;hint:string;value:number|null|undefined}[]).map(tier=><div className="pt-fee-row" key={tier.name}>
+            <div className="pt-fee-label"><b>{tier.name}</b><small>{tier.hint}</small></div>
+            <div className="pt-fee-track" role="img" aria-label={tier.value == null ? tier.name + ": unavailable" : tier.name + ": " + tier.value + " sats per virtual byte"}><div className="pt-fee-fill" style={{width:tier.value == null || !btc?.fastestFee ? "0%" : Math.max(3,Math.min(100,tier.value / btc.fastestFee * 100)) + "%"}} /></div>
+            <strong>{tier.value == null ? "—" : tier.value + " sat/vB"}</strong>
+          </div>)}</div>
+          <p className="pt-fee-disclaimer">A sat is 1/100,000,000 of a BTC. These are network fee-rate recommendations from mempool.space, not transaction-specific predictions. Blocks arrive unpredictably, and actual confirmation time can differ substantially. Paste your transaction above for its own fee comparison.</p>
         </div>
         <div className="pt-explainer-grid">
           <article className="pt-explainer"><div className="pt-eyebrow">MEMPOOL EXPLAINED</div><h3>Bitcoin's waiting room</h3><p>{btc?.pending == null ? "Waiting for live mempool data." : "There are " + format(btc.pending) + " transactions waiting to be included in a block. The queue grows when people send Bitcoin and shrinks when miners confirm transactions."}</p><a href="https://mempool.space" target="_blank" rel="noopener noreferrer">View the live mempool ↗</a></article>
