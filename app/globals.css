@@ -489,3 +489,10 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-fee-explorer .pt-projected-card .pt-block-fee { display:block; margin:5px 0 6px; font-size:clamp(16px,1.65vw,21px); font-weight:800; line-height:1.25; letter-spacing:-.035em; color:#f2d49b; overflow-wrap:anywhere; }
 .pt-fee-explorer .pt-projected-card .pt-block-tx-count { display:block; margin:0; font-size:11px; font-weight:500; line-height:1.4; letter-spacing:0; color:#b8c5cb; }
 @media(max-width:650px) { .pt-fee-explorer .pt-projected-card .pt-block-fee { font-size:16px; } }
+
+
+/* Make estimated block arrival time the primary visual cue */
+.pt-fee-explorer .pt-projected-top { align-items:flex-start; gap:5px; }
+.pt-fee-explorer .pt-projected-top span { font-size:10px; padding-top:5px; }
+.pt-fee-explorer .pt-projected-top b { font-size:clamp(17px,1.75vw,23px); font-weight:850; letter-spacing:-.045em; line-height:1.12; color:#f4d49b; white-space:nowrap; }
+@media(max-width:650px) { .pt-fee-explorer .pt-projected-top { flex-direction:column; gap:4px; } .pt-fee-explorer .pt-projected-top span { padding-top:0; } .pt-fee-explorer .pt-projected-top b { font-size:20px; } }
