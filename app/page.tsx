@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 type Overview = {
   btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
-  eth: { available: boolean; gasGwei: number | null; latestBlock: string | number | null; explanation: string };
+  eth: { available: boolean; gasGwei: number | null; latestBlock: string | number | null; recentBlocks: {height:number|string|null;hash:string|null;timestamp:string|null;transactionsCount:number|null}[]; recentTransactions: {hash:string;status:string|null;timestamp:string|null;block:number|null}[]; explanation: string };
   updatedAt: string;
 };
 const format = (n: number | null | undefined) => n == null ? "—" : new Intl.NumberFormat("en-US").format(n);
@@ -30,20 +30,21 @@ export default function Page() {
   const [error, setError] = useState("");
   const [overview, setOverview] = useState<Overview | null>(null);
   const [loading, setLoading] = useState(true);
+  const [newestEvent, setNewestEvent] = useState("");
   const [selectedSatRate, setSelectedSatRate] = useState(5);
   useEffect(() => {
     let active = true;
     const load = async () => {
       try {
-        const r = await fetch("/api/network");
+        const r = await fetch("/api/network", {cache:"no-store"});
         if (!r.ok) throw new Error("Network data unavailable");
         const j = await r.json();
-        if (active) setOverview(j);
+        if (active) setOverview(previous => { if(previous?.btc?.height != null && j.btc?.height > previous.btc.height) setNewestEvent("New Bitcoin block confirmed: #" + j.btc.height); else if(previous?.eth?.latestBlock != null && Number(j.eth?.latestBlock) > Number(previous.eth.latestBlock)) setNewestEvent("New Ethereum block observed: #" + j.eth.latestBlock); return j; });
       } catch { if (active) setOverview(null); }
       finally { if (active) setLoading(false); }
     };
     load();
-    const interval = setInterval(load, 60000);
+    const interval = setInterval(load, 10000);
     return () => { active = false; clearInterval(interval); };
   }, []);
 
@@ -71,11 +72,12 @@ export default function Page() {
     </div>
 
     <section className="pt-section" id="network">
-      <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE NETWORK INTELLIGENCE</div><h2>What's happening on the blockchain?</h2><p>Live data with the technical jargon translated for you.</p></div><span className="pt-live">{loading ? "Loading live data…" : overview ? "● Live · updates every minute" : "Network data temporarily unavailable"}</span></div>
+      <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE NETWORK INTELLIGENCE</div><h2>What's happening on the blockchain?</h2><p>Live data with the technical jargon translated for you.</p></div><span className="pt-live">{loading ? "Loading live data…" : overview ? "● Live · checks every 10 seconds" : "Network data temporarily unavailable"}</span></div>
       <div className="pt-tabs" role="tablist" aria-label="Choose blockchain">
         <button role="tab" aria-selected={network==="btc"} className={network==="btc"?"selected":""} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button>
         <button role="tab" aria-selected={network==="eth"} className={network==="eth"?"selected":""} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button>
       </div>
+      {newestEvent ? <div className="pt-new-block" role="status">✦ {newestEvent} · Live network update</div> : null}
       {network==="btc" ? <>
         <div className="pt-metrics">
           <div className="pt-metric"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>In the Bitcoin mempool</small></div>
@@ -84,7 +86,7 @@ export default function Page() {
           <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
         </div>
         <section className="pt-activity-panel">
-          <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE BITCOIN EXPLORER</div><h3>New transactions entering the mempool</h3><p>Recently observed unconfirmed Bitcoin transactions. Updates every minute.</p></div><span className="pt-live">● Recent activity</span></div>
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE BITCOIN EXPLORER</div><h3>New transactions entering the mempool</h3><p>Recently observed unconfirmed Bitcoin transactions. Checks every 10 seconds.</p></div><span className="pt-live">● Recent activity</span></div>
           <div className="pt-activity-list">{btc?.recentTransactions?.length ? btc.recentTransactions.map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}>
             <span className="pt-activity-hash">{tx.id.slice(0,12)}…{tx.id.slice(-8)}</span>
             <span>{tx.fee!=null&&tx.vsize ? (tx.fee/tx.vsize).toFixed(1)+" sat/vB" : "Fee unavailable"}</span>
@@ -142,6 +144,14 @@ export default function Page() {
           <div className="pt-metric"><span>Network</span><strong>Ethereum</strong><small>Mainnet</small></div>
           <div className="pt-metric"><span>Transaction fee</span><strong>Variable</strong><small>Depends on gas used and fee rate</small></div>
         </div>
+        <section className="pt-activity-panel">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE ETHEREUM EXPLORER</div><h3>Recent confirmed Ethereum activity</h3><p>New blocks and validated transactions observed from Blockscout. Checks every 10 seconds.</p></div><span className="pt-live">● Recent activity</span></div>
+          <div className="pt-activity-list">
+            {eth?.recentBlocks?.map(block=><a key={"block-"+block.height} className="pt-activity-row" href={block.hash ? "https://eth.blockscout.com/block/"+block.hash : "https://eth.blockscout.com/blocks"} target="_blank" rel="noopener noreferrer"><span>Block #{block.height}</span><span>{block.transactionsCount == null ? "Confirmed block" : format(block.transactionsCount)+" transactions"}</span><span>{block.timestamp ? new Date(block.timestamp).toLocaleTimeString() : "Recently observed"}</span><span className="pt-activity-arrow">View ↗</span></a>)}
+            {eth?.recentTransactions?.map(tx=><a key={tx.hash} className="pt-activity-row" href={"/eth/"+tx.hash}><span className="pt-activity-hash">{tx.hash.slice(0,14)}…{tx.hash.slice(-8)}</span><span>{tx.status ?? "Validated"}</span><span>{tx.block == null ? "Confirmed transaction" : "Block "+tx.block}</span><span className="pt-activity-arrow">Inspect ↗</span></a>)}
+            {!eth?.recentBlocks?.length && !eth?.recentTransactions?.length ? <p className="pt-activity-empty">Waiting for Ethereum explorer activity.</p> : null}
+          </div>
+        </section>
         <div className="pt-explainer-grid">
           <article className="pt-explainer"><div className="pt-eyebrow">ETHEREUM GAS</div><h3>What does Gwei mean?</h3><p>One Gwei is one billionth of an ETH. Ethereum gas prices are quoted in Gwei per unit of gas used, not as a fixed transfer fee.</p><p>{eth?.gasGwei == null ? "Live gas information is unavailable." : "The current provider estimate is " + eth.gasGwei + " Gwei. At that rate, a simple 21,000-gas ETH transfer would cost about " + (eth.gasGwei * 21000 / 1000000000).toFixed(6) + " ETH, if that rate applied to the whole transaction."}</p></article>
           <article className="pt-explainer"><div className="pt-eyebrow">LATEST ETHEREUM BLOCK</div><h3>Another batch of activity</h3><p>{eth?.latestBlock == null ? "Waiting for Ethereum block data." : "The latest observed Ethereum block is #" + eth.latestBlock + ". It contains network activity recorded by validators."}</p><p>Ethereum normally proposes blocks roughly every 12 seconds. Inclusion and finality are different milestones.</p><a href="https://eth.blockscout.com/blocks" target="_blank" rel="noopener noreferrer">Explore Ethereum blocks ↗</a></article>
