@@ -26,7 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
 
           <div className="footer">
-            Educational tool only. Not financial advice. We never custody funds or submit transactions for you.
+            <div>Educational tool only. Not financial advice. We never custody funds or submit transactions for you.</div>
+            <div className="founder-credit">Founded &amp; Developed by Colin N. Goudas</div>
           </div>
         </div>
       </body>
