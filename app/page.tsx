@@ -62,14 +62,13 @@ export default function Page() {
         socket.onopen = () => {
           if (!active) return;
           setBtcStreamOnline(true);
-          socket?.send(JSON.stringify({action:"want",data:["blocks","mempool-blocks","live-2h-chart","stats"]}));
-          socket?.send(JSON.stringify({"track-mempool-txids":true}));
+          socket?.send(JSON.stringify({action:"want",data:["blocks","mempool-blocks","stats","mempool-transactions"]}));
         };
         socket.onmessage = event => {
           if (!active) return;
           try {
             const msg = JSON.parse(event.data);
-            const tx = msg["mempool-tx"] ?? msg.tx;
+            const tx = msg["mempool-tx"] ?? msg.tx ?? (Array.isArray(msg["mempool-transactions"]) ? msg["mempool-transactions"][0] : null);
             if (tx && typeof tx.txid === "string" && /^[a-f0-9]{64}$/i.test(tx.txid)) {
               setLiveBtcTransactions(prev => [{id:tx.txid,fee:Number.isFinite(Number(tx.fee))?Number(tx.fee):null,vsize:Number.isFinite(Number(tx.vsize))?Number(tx.vsize):null},...prev.filter(t=>t.id!==tx.txid)].slice(0,12));
             }
