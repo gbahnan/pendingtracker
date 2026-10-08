@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Overview = {
-  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
+  btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
   eth: { available: boolean; gasGwei: number | null; latestBlock: string | number | null; explanation: string };
   updatedAt: string;
 };
@@ -30,6 +30,7 @@ export default function Page() {
   const [error, setError] = useState("");
   const [overview, setOverview] = useState<Overview | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedSatRate, setSelectedSatRate] = useState(5);
   useEffect(() => {
     let active = true;
     const load = async () => {
@@ -82,6 +83,28 @@ export default function Page() {
           <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Estimated competitive fee rate; not a guarantee</small></div>
           <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
         </div>
+        <section className="pt-queue-panel" aria-label="Bitcoin pending fee position explorer">
+          <div className="pt-eyebrow">BITCOIN PENDING-TIME EXPLORER</div>
+          <h3>At your fee rate, where might you land?</h3>
+          <p>Explore the live waiting line. Change the sats per virtual byte to compare your fee with the projected next blocks.</p>
+          <div className="pt-queue-controls"><label htmlFor="sat-rate">Your Bitcoin fee rate</label><input id="sat-rate" type="number" min="0.1" max="100000" step="0.1" value={selectedSatRate} onChange={e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>=0.1&&v<=100000)setSelectedSatRate(v);}}/><strong>sat/vB</strong></div>
+          <div className="pt-queue-blocks">
+            {(btc?.projectedBlocks?.length ? btc.projectedBlocks : []).map(block=>{
+              const low=block.feeRange?.[0], high=block.feeRange?.[1];
+              const above=low!=null&&selectedSatRate>=low;
+              const below=high!=null&&selectedSatRate<high;
+              return <div className={"pt-queue-block "+(above?"pt-queue-match":"")} key={block.position}>
+                <span>Projected block {block.position}</span>
+                <strong>{block.position===1?"Next block":"~"+block.position*10+" min average"}</strong>
+                <small>{low==null||high==null?"Fee range unavailable":low.toFixed(1)+"–"+high.toFixed(1)+" sat/vB"}</small>
+                <small>{block.transactionCount==null?"":format(block.transactionCount)+" transactions"}</small>
+                <div className="pt-queue-indicator">{low==null?"Data unavailable":above&&!below?"Your rate is above this block's displayed fee range":above?"Your rate overlaps this block's fee range":"Your rate is below this block's displayed fee range"}</div>
+              </div>;
+            })}
+            {!btc?.projectedBlocks?.length&&<p>Projected block information is temporarily unavailable. Fee recommendations above may still be available.</p>}
+          </div>
+          <p className="pt-fee-disclaimer">These are mempool.space projected blocks, not scheduled confirmations. The time labels use Bitcoin's long-run ~10-minute average per block, not a prediction. Fee ranges overlap, transaction dependencies affect placement, and a rate inside a range does not guarantee inclusion. This is a fee comparison—not a forecast for your specific transaction.</p>
+        </section>
         <div className="pt-fee-panel">
           <div className="pt-fee-heading"><div><div className="pt-eyebrow">LIVE BITCOIN FEE GUIDE</div><h3>How fees affect your place in line</h3><p>Compare current fee-rate estimates. Longer bars mean higher fees, not a guaranteed shorter wait.</p></div><span className="pt-live">Updated with network data</span></div>
           <div className="pt-fee-bars">{([
