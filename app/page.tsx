@@ -30,7 +30,7 @@ export default function Page() {
   const [error, setError] = useState("");
   const [overview, setOverview] = useState<Overview | null>(null);
   const [loading, setLoading] = useState(true);
-  const [newestEvent, setNewestEvent] = useState("");
+  const [newestEvents, setNewestEvents] = useState<{btc:string;eth:string}>({btc:"",eth:""});
   const [selectedSatRate, setSelectedSatRate] = useState(5);
   useEffect(() => {
     let active = true;
@@ -39,12 +39,12 @@ export default function Page() {
         const r = await fetch("/api/network", {cache:"no-store"});
         if (!r.ok) throw new Error("Network data unavailable");
         const j = await r.json();
-        if (active) setOverview(previous => { if(previous?.btc?.height != null && j.btc?.height > previous.btc.height) setNewestEvent("New Bitcoin block confirmed: #" + j.btc.height); else if(previous?.eth?.latestBlock != null && Number(j.eth?.latestBlock) > Number(previous.eth.latestBlock)) setNewestEvent("New Ethereum block observed: #" + j.eth.latestBlock); return j; });
+        if (active) setOverview(previous => { if(previous?.btc?.height != null && j.btc?.height > previous.btc.height) setNewestEvents(v=>({...v,btc:"New block #"+j.btc.height+" confirmed"})); else if(previous?.eth?.latestBlock != null && Number(j.eth?.latestBlock) > Number(previous.eth.latestBlock)) setNewestEvents(v=>({...v,eth:"New block #"+j.eth.latestBlock+" observed"})); return j; });
       } catch { if (active) setOverview(null); }
       finally { if (active) setLoading(false); }
     };
     load();
-    const interval = setInterval(load, 10000);
+    const interval = setInterval(load, 5000);
     return () => { active = false; clearInterval(interval); };
   }, []);
 
@@ -72,12 +72,12 @@ export default function Page() {
     </div>
 
     <section className="pt-section" id="network">
-      <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE NETWORK INTELLIGENCE</div><h2>What's happening on the blockchain?</h2><p>Live data with the technical jargon translated for you.</p></div><span className="pt-live">{loading ? "Loading live data…" : overview ? "● Live · checks every 10 seconds" : "Network data temporarily unavailable"}</span></div>
+      <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE NETWORK INTELLIGENCE</div><h2>What's happening on the blockchain?</h2><p>Live data with the technical jargon translated for you.</p></div><span className="pt-live">{loading ? "Loading live data…" : overview ? "● Live · checks every 5 seconds" : "Network data temporarily unavailable"}</span></div>
       <div className="pt-tabs" role="tablist" aria-label="Choose blockchain">
         <button role="tab" aria-selected={network==="btc"} className={network==="btc"?"selected":""} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button>
         <button role="tab" aria-selected={network==="eth"} className={network==="eth"?"selected":""} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button>
       </div>
-      {newestEvent ? <div className="pt-new-block" role="status">✦ {newestEvent} · Live network update</div> : null}
+      {newestEvents[network] ? <div className="pt-new-block" role="status">✦ {newestEvents[network]} · {network==="btc"?"Bitcoin":"Ethereum"} network</div> : null}
       {network==="btc" ? <>
         <div className="pt-metrics">
           <div className="pt-metric"><span>Transactions waiting</span><strong>{format(btc?.pending)}</strong><small>In the Bitcoin mempool</small></div>
@@ -85,63 +85,31 @@ export default function Page() {
           <div className="pt-metric"><span>Priority fee</span><strong>{btc?.fastestFee == null ? "—" : btc.fastestFee + " sat/vB"}</strong><small>Estimated competitive fee rate; not a guarantee</small></div>
           <div className="pt-metric"><span>Latest block</span><strong>{format(btc?.height)}</strong><small>{btc?.latestBlock ? `Mined about ${btc.latestBlock.ageMinutes} min ago` : "Most recently mined height"}</small></div>
         </div>
-        <section className="pt-confirm-panel">
-          <div className="pt-eyebrow">NEWLY CONFIRMED ON BITCOIN</div>
-          <h3>Transactions in the latest block</h3>
-          <p>These transaction IDs are included in the latest observed Bitcoin block. Open any one to inspect its confirmations and fees.</p>
-          <div className="pt-confirm-grid">{btc?.confirmedTransactions?.length ? btc.confirmedTransactions.map(id=><a key={id} href={"/btc/"+id} className="pt-confirm-item"><span className="pt-confirm-dot"/> <span className="pt-activity-hash">{id.slice(0,13)}…{id.slice(-9)}</span><b>Confirmed ↗</b></a>) : <p>Waiting for confirmed transaction data.</p>}</div>
-        </section>
-        <section className="pt-activity-panel">
-          <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE BITCOIN EXPLORER</div><h3>New transactions entering the mempool</h3><p>Recently observed unconfirmed Bitcoin transactions. Checks every 10 seconds.</p></div><span className="pt-live">● Recent activity</span></div>
-          <div className="pt-activity-list">{btc?.recentTransactions?.length ? btc.recentTransactions.map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}>
-            <span className="pt-activity-hash">{tx.id.slice(0,12)}…{tx.id.slice(-8)}</span>
-            <span>{tx.fee!=null&&tx.vsize ? (tx.fee/tx.vsize).toFixed(1)+" sat/vB" : "Fee unavailable"}</span>
-            <span>{tx.value==null ? "Value unavailable" : (tx.value/100000000).toFixed(5)+" BTC"}</span>
-            <span className="pt-activity-arrow">Inspect ↗</span>
-          </a>) : <p className="pt-activity-empty">Waiting for recent Bitcoin transactions from the network.</p>}</div>
-          <p className="pt-fee-disclaimer">Recently observed mempool activity, not guaranteed distinct payments. Transactions may confirm or be replaced between updates.</p>
-        </section>
-        <section className="pt-queue-panel" aria-label="Bitcoin pending fee position explorer">
-          <div className="pt-eyebrow">BITCOIN PENDING-TIME EXPLORER</div>
-          <h3>At your fee rate, where might you land?</h3>
-          <p>Explore the live waiting line. Change the sats per virtual byte to compare your fee with the projected next blocks.</p>
-          <div className="pt-queue-controls"><label htmlFor="sat-rate">Your Bitcoin fee rate</label><input id="sat-rate" type="number" min="0.1" max="100000" step="0.1" value={selectedSatRate} onChange={e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>=0.1&&v<=100000)setSelectedSatRate(v);}}/><strong>sat/vB</strong></div>
-          <div className="pt-queue-blocks">
-            {(btc?.projectedBlocks?.length ? btc.projectedBlocks : []).map(block=>{
-              const low=block.feeRange?.[0], high=block.feeRange?.[1];
-              const above=low!=null&&selectedSatRate>=low;
-              const below=high!=null&&selectedSatRate<high;
-              return <div className={"pt-queue-block "+(above?"pt-queue-match":"")} key={block.position}>
-                <span>Projected block {block.position}</span>
-                <strong>{"≈"+block.position*10+" min average"}</strong>
-                <small>{low==null||high==null?"Fee range unavailable":low.toFixed(1)+"–"+high.toFixed(1)+" sat/vB"}</small>
-                <small>{block.transactionCount==null?"":format(block.transactionCount)+" transactions"}</small>
-                <div className="pt-queue-indicator">{low==null?"Data unavailable":above&&!below?"Your rate is above this block's displayed fee range":above?"Your rate overlaps this block's fee range":"Your rate is below this block's displayed fee range"}</div>
-              </div>;
-            })}
-            {!btc?.projectedBlocks?.length&&<p>Projected block information is temporarily unavailable. Fee recommendations above may still be available.</p>}
-          </div>
-          <div className="pt-estimate-summary" role="status">{(()=>{
-            const blocks=btc?.projectedBlocks ?? [];
-            const match=blocks.find(block=>block.feeRange?.[0]!=null && selectedSatRate>=block.feeRange[0]);
-            return match ? "At "+selectedSatRate+" sat/vB, your fee rate reaches the displayed range of projected block "+match.position+" (roughly "+match.position*10+" minutes on average). This is a comparison, not a confirmation promise." : blocks.length ? "At "+selectedSatRate+" sat/vB, your rate is below the displayed fee ranges of these projected blocks. Waiting time is uncertain and may exceed an hour." : "Waiting for projected-block data to estimate your fee position.";
+        <section className="pt-compact-fees">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN FEE ESTIMATES</div><h3>How long might confirmation take?</h3></div><span className="pt-live">● Network estimates</span></div>
+          <div className="pt-time-tiers">{([
+            {label:"Priority",time:"~10 min",fee:btc?.fastestFee},
+            {label:"Standard",time:"~30 min",fee:btc?.halfHourFee},
+            {label:"Patient",time:"~60 min",fee:btc?.hourFee},
+          ] as {label:string;time:string;fee:number|null|undefined}[]).map(t=><div className="pt-time-tier" key={t.label}><small>{t.label}</small><strong>{t.time}</strong><b>{t.fee==null?"—":t.fee+" sat/vB"}</b></div>)}</div>
+          <div className="pt-queue-controls"><label htmlFor="sat-rate">Check your fee rate</label><input id="sat-rate" type="number" min="0.1" max="100000" step="0.1" value={selectedSatRate} onChange={e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>=0.1&&v<=100000)setSelectedSatRate(v);}}/><strong>sat/vB</strong></div>
+          <div className="pt-mini-blocks">{(btc?.projectedBlocks??[]).slice(0,3).map(block=><div className="pt-mini-block" key={block.position}><strong>~{block.position*10} min</strong><span>Projected block {block.position}</span><small>{block.feeRange?.length===2?block.feeRange[0].toFixed(1)+"–"+block.feeRange[1].toFixed(1)+" sat/vB":"Fee range unavailable"}</small></div>)}</div>
+          <div className="pt-estimate-summary">{(()=>{
+            const blocks=btc?.projectedBlocks??[];
+            const match=blocks.find(b=>b.feeRange?.[0]!=null&&selectedSatRate>=b.feeRange[0]);
+            return match?"Your "+selectedSatRate+" sat/vB rate is within or above the fee range of projected block "+match.position+" (~"+match.position*10+" minutes on average).":blocks.length?"Your fee rate is below the displayed projected blocks; the wait may be longer.":"Waiting for live block projections.";
           })()}</div>
-          <p className="pt-fee-disclaimer">These are mempool.space projected blocks, not scheduled confirmations. The time labels use Bitcoin's long-run ~10-minute average per block, not a prediction. Fee ranges overlap, transaction dependencies affect placement, and a rate inside a range does not guarantee inclusion. This is a fee comparison—not a forecast for your specific transaction.</p>
+          <p className="pt-fee-disclaimer">Estimates use mempool.space fee recommendations and projected blocks. Bitcoin blocks average ~10 minutes but can arrive sooner or later. These are not guarantees for any transaction.</p>
         </section>
-        <div className="pt-fee-panel">
-          <div className="pt-fee-heading"><div><div className="pt-eyebrow">LIVE BITCOIN FEE GUIDE</div><h3>How fees affect your place in line</h3><p>Compare current fee-rate estimates. Longer bars mean higher fees, not a guaranteed shorter wait.</p></div><span className="pt-live">Updated with network data</span></div>
-          <div className="pt-fee-bars">{([
-            {name:"High priority",hint:"Next-block target",value:btc?.fastestFee},
-            {name:"Standard",hint:"Around 30 minutes",value:btc?.halfHourFee},
-            {name:"Patient",hint:"Around 1 hour",value:btc?.hourFee},
-            {name:"Economy",hint:"May take longer",value:btc?.economyFee}
-          ] as {name:string;hint:string;value:number|null|undefined}[]).map(tier=><div className="pt-fee-row" key={tier.name}>
-            <div className="pt-fee-label"><b>{tier.name}</b><small>{tier.hint}</small></div>
-            <div className="pt-fee-track" role="img" aria-label={tier.value == null ? tier.name + ": unavailable" : tier.name + ": " + tier.value + " sats per virtual byte"}><div className="pt-fee-fill" style={{width:tier.value == null || !btc?.fastestFee ? "0%" : Math.max(3,Math.min(100,tier.value / btc.fastestFee * 100)) + "%"}} /></div>
-            <strong>{tier.value == null ? "—" : tier.value + " sat/vB"}</strong>
-          </div>)}</div>
-          <p className="pt-fee-disclaimer">A sat is 1/100,000,000 of a BTC. These are network fee-rate recommendations from mempool.space, not transaction-specific predictions. Blocks arrive unpredictably, and actual confirmation time can differ substantially. Paste your transaction above for its own fee comparison.</p>
-        </div>
+        <section className="pt-activity-panel pt-compact-activity">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN ACTIVITY</div><h3>Live transaction activity</h3></div><span className="pt-live">● Checks every 5s</span></div>
+          <div className="pt-activity-list">
+            {btc?.recentTransactions?.slice(0,5).map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}><span className="pt-activity-hash">{tx.id.slice(0,12)}…{tx.id.slice(-7)}</span><span>{tx.fee!=null&&tx.vsize?(tx.fee/tx.vsize).toFixed(1)+" sat/vB":"Pending"}</span><span className="pt-status-pending">Pending</span><span className="pt-activity-arrow">↗</span></a>)}
+            {btc?.confirmedTransactions?.slice(0,5).map(id=><a className="pt-activity-row" href={"/btc/"+id} key={id}><span className="pt-activity-hash">{id.slice(0,12)}…{id.slice(-7)}</span><span>Block #{format(btc?.height)}</span><span className="pt-status-confirmed">Confirmed</span><span className="pt-activity-arrow">↗</span></a>)}
+            {!btc?.recentTransactions?.length&&!btc?.confirmedTransactions?.length?<p className="pt-activity-empty">Waiting for Bitcoin network activity.</p>:null}
+          </div>
+          <p className="pt-fee-disclaimer">Latest observed pending transactions and transactions included in the newest block. Confirmations update when new blocks are observed.</p>
+        </section>
         <div className="pt-explainer-grid">
           <article className="pt-explainer"><div className="pt-eyebrow">MEMPOOL EXPLAINED</div><h3>Bitcoin's waiting room</h3><p>{btc?.pending == null ? "Waiting for live mempool data." : "There are " + format(btc.pending) + " transactions waiting to be included in a block. The queue grows when people send Bitcoin and shrinks when miners confirm transactions."}</p><a href="https://mempool.space" target="_blank" rel="noopener noreferrer">View the live mempool ↗</a></article>
           <article className="pt-explainer"><div className="pt-eyebrow">FEES EXPLAINED</div><h3>What are sats and priority fees?</h3><p>One sat is 0.00000001 BTC. A fee rate in sat/vB tells you how many sats you pay for each virtual byte of transaction size, not how much Bitcoin you send.</p><p>{btc?.fastestFee == null ? "Fee estimates are temporarily unavailable." : "At " + btc.fastestFee + " sat/vB, a hypothetical 140-vB transaction would cost around " + format(Math.round(btc.fastestFee * 140)) + " sats. Your transaction may have a different size."}</p></article>
@@ -155,12 +123,12 @@ export default function Page() {
           <div className="pt-metric"><span>Network</span><strong>Ethereum</strong><small>Mainnet</small></div>
           <div className="pt-metric"><span>Transaction fee</span><strong>Variable</strong><small>Depends on gas used and fee rate</small></div>
         </div>
-        <section className="pt-activity-panel">
-          <div className="pt-activity-head"><div><div className="pt-eyebrow">LIVE ETHEREUM EXPLORER</div><h3>Recent confirmed Ethereum activity</h3><p>New blocks and validated transactions observed from Blockscout. Checks every 10 seconds.</p></div><span className="pt-live">● Recent activity</span></div>
+        <section className="pt-activity-panel pt-compact-activity">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">ETHEREUM ACTIVITY</div><h3>Recent blocks & transactions</h3></div><span className="pt-live">● Checks every 5s</span></div>
           <div className="pt-activity-list">
-            {eth?.recentBlocks?.map(block=><a key={"block-"+block.height} className="pt-activity-row" href={block.hash ? "https://eth.blockscout.com/block/"+block.hash : "https://eth.blockscout.com/blocks"} target="_blank" rel="noopener noreferrer"><span>Block #{block.height}</span><span>{block.transactionsCount == null ? "Confirmed block" : format(block.transactionsCount)+" transactions"}</span><span>{block.timestamp ? new Date(block.timestamp).toLocaleTimeString() : "Recently observed"}</span><span className="pt-activity-arrow">View ↗</span></a>)}
-            {eth?.recentTransactions?.map(tx=><a key={tx.hash} className="pt-activity-row" href={"/eth/"+tx.hash}><span className="pt-activity-hash">{tx.hash.slice(0,14)}…{tx.hash.slice(-8)}</span><span>{tx.status ?? "Validated"}</span><span>{tx.block == null ? "Confirmed transaction" : "Block "+tx.block}</span><span className="pt-activity-arrow">Inspect ↗</span></a>)}
-            {!eth?.recentBlocks?.length && !eth?.recentTransactions?.length ? <p className="pt-activity-empty">Waiting for Ethereum explorer activity.</p> : null}
+            {eth?.recentBlocks?.slice(0,3).map(block=><a key={"block-"+block.height} className="pt-activity-row" href={block.hash?"https://eth.blockscout.com/block/"+block.hash:"https://eth.blockscout.com/blocks"} target="_blank" rel="noopener noreferrer"><span>Block #{block.height}</span><span>{block.transactionsCount==null?"New block":format(block.transactionsCount)+" txs"}</span><span className="pt-status-confirmed">Observed</span><span className="pt-activity-arrow">↗</span></a>)}
+            {eth?.recentTransactions?.slice(0,7).map(tx=><a key={tx.hash} className="pt-activity-row" href={"/eth/"+tx.hash}><span className="pt-activity-hash">{tx.hash.slice(0,14)}…{tx.hash.slice(-7)}</span><span>{tx.block==null?"Ethereum tx":"Block "+tx.block}</span><span className="pt-status-confirmed">{tx.status??"Validated"}</span><span className="pt-activity-arrow">↗</span></a>)}
+            {!eth?.recentBlocks?.length&&!eth?.recentTransactions?.length?<p className="pt-activity-empty">Waiting for Ethereum network activity.</p>:null}
           </div>
         </section>
         <div className="pt-explainer-grid">
@@ -183,7 +151,7 @@ export default function Page() {
     </section>
     <section className="pt-section" id="learn">
       <div className="pt-eyebrow">CRYPTO WITHOUT THE CONFUSION</div><h2>Understand every number.</h2><p className="pt-section-sub">Tap a term to learn what it means. No technical background required.</p>
-      <div className="pt-glossary">{Object.entries(terms).map(([term,meaning])=><details className="pt-term" key={term}><summary>{term}<span>＋</span></summary><p>{meaning}</p></details>)}</div>
+      <div className="pt-glossary">{Object.entries(terms).filter(([term])=>network==="btc"? !["Gas","Nonce"].includes(term) : !["Sats","Priority fee","Mempool","sat/vB","RBF","CPFP"].includes(term)).map(([term,meaning])=><details className="pt-term" key={term}><summary>{term}<span>＋</span></summary><p>{meaning}</p></details>)}</div>
     </section>
     <section className="pt-cta"><div className="pt-eyebrow">BUILT FOR CLARITY</div><h2>Know what's happening. Know what comes next.</h2><p>From a network-wide view to your exact transaction, Pending Tracker helps you understand the blockchain without becoming an expert.</p><a href="#top" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});}}>Track a transaction ↑</a></section>
   </main>;
