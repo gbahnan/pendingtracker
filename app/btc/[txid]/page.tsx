@@ -116,9 +116,11 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
           <div className="card">
             <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
               <div className="badge">Your transaction explained</div>
-              <div className="badge">Provider: {result.provider}</div>
+              <div className="badge">Source: {result.provider}</div>
             </div>
 
+            <div style={{ height: 10 }} />
+            <div className="small">Explanation confidence: {result.diagnosis.confidence ?? "Not assessed"} · Based on available blockchain evidence</div>
             <div style={{ height: 10 }} />
             <div style={{ fontSize: 20, fontWeight: 800 }}>{result.diagnosis.title}</div>
             <div style={{ height: 8 }} />
@@ -140,6 +142,8 @@ export default function BtcTxPage({ params }: { params: { txid: string } }) {
               ))}
             </ul>
 
+            <div style={{ height: 12 }} />
+            <button className="button" onClick={()=>navigator.clipboard?.writeText(`Bitcoin transaction: ${txid}\n${result.diagnosis.title}\n${result.diagnosis.summary}\nVerify: https://mempool.space/tx/${txid}`)}>Copy explanation</button>
             <div style={{ height: 12 }} />
             <div className="small">Educational only. No custody, no execution, no financial advice.</div>
           </div>
