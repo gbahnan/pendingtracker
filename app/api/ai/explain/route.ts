@@ -11,11 +11,25 @@ export async function GET() {
       headers: { Authorization: "Bearer " + key },
       cache: "no-store", signal: AbortSignal.timeout(8000)
     });
+    if (!response.ok) return NextResponse.json({ configured: false, providerStatus: response.status, reason: "provider_error" }, { status: 503 });
+    const models = await response.json();
+    const ids = Array.isArray(models?.data) ? models.data.map((model: {id?: unknown}) => model.id).filter((id: unknown): id is string => typeof id === "string") : [];
+    const selectedModel = ids.includes("llama-3.3-70b-versatile") ? "llama-3.3-70b-versatile" : ids.includes("llama-3.1-8b-instant") ? "llama-3.1-8b-instant" : null;
+    if (!selectedModel) return NextResponse.json({ configured: true, providerStatus: 200, reason: "no_supported_model", availableModels: ids.slice(0, 20) }, { status: 503 });
+    const test = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" },
+      body: JSON.stringify({ model: selectedModel, max_tokens: 20, messages: [{role:"user",content:"Reply with the word ready."}] }),
+      signal: AbortSignal.timeout(9000)
+    });
+    const payload = await test.json().catch(() => null);
     return NextResponse.json({
-      configured: response.ok,
-      providerStatus: response.status,
-      reason: response.ok ? "ready" : response.status === 401 || response.status === 403 ? "invalid_key" : "provider_error"
-    }, { status: response.ok ? 200 : 503, headers: { "Cache-Control": "no-store" } });
+      configured: test.ok,
+      providerStatus: test.status,
+      reason: test.ok ? "completion_ready" : "completion_failed",
+      model: selectedModel,
+      detail: test.ok ? undefined : typeof payload?.error?.message === "string" ? payload.error.message.slice(0, 240) : undefined
+    }, { status: test.ok ? 200 : 503, headers: { "Cache-Control": "no-store" } });
   } catch {
     return NextResponse.json({ configured: false, reason: "provider_unreachable" }, { status: 503 });
   }
