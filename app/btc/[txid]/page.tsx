@@ -30,16 +30,16 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  }
  useEffect(()=>{refresh();const id=setInterval(refresh,15000);return()=>clearInterval(id);},[txid,valid]);
  const confirmed=Boolean(result?.status?.confirmed??result?.tx?.status?.confirmed);
- const observed=Boolean(result?.tx||result?.status);
+ const observed=Boolean(result?.tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
  const feeRate=result?.feerateSatVb;
  const blocks=overview?.btc?.projectedBlocks?.slice(0,5)??[];
  const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
  const firstMatch=matching[0]?.position;
  const selectedPosition=firstMatch??(feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1]?1:null);
- const estimatedWindow=confirmed?"Already confirmed":!observed?"Not available":selectedPosition?`About ${selectedPosition*10} minutes, estimated`:"Not available yet";
- const highPriority=feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1];
+ const estimatedWindow=confirmed?"Already confirmed":!observed?"Not available":selectedPosition?`Around ${selectedPosition*10} min*`:"Unknown right now";
+
  const statusTitle=!observed?"Not found on the network":confirmed?"Your Bitcoin transaction is confirmed":"Your Bitcoin transaction is waiting";
- const summary=!observed?"This transaction has not appeared on the Bitcoin network yet. Check the transaction ID and make sure it was broadcast. We will keep checking for updates.":confirmed?"Your transaction has been included in a Bitcoin block. It now has at least one confirmation, and newer blocks add more. Some wallets and exchanges require additional confirmations.":selectedPosition?`Your transaction is pending with a fee rate of ${feeRate} sat/vB. Current fee ranges suggest it could fit around projected block ${selectedPosition}, or about ${selectedPosition*10} minutes on average. This estimate changes with network traffic and is not guaranteed.`:`Your transaction is pending with ${feeRate==null?"an unavailable fee rate":feeRate+" sat/vB"}. Current block projections cannot reliably estimate its confirmation time. We will update the outlook as network conditions change.`;
+ const summary=!observed?"This transaction has not appeared on the Bitcoin network yet. Check the transaction ID and make sure it was broadcast. We will keep checking for updates.":confirmed?"Your transaction has been included in a Bitcoin block. New blocks add further confirmations. Some wallets and exchanges require several confirmations before crediting funds.":selectedPosition?`Your transaction is pending with a fee rate of ${feeRate} sat/vB. Based on current fee ranges, it may be competitive for projected block ${selectedPosition}, roughly ${selectedPosition*10} minutes away on average. This estimate changes with network traffic and is not guaranteed.`:`Your transaction is pending with ${feeRate==null?"an unavailable fee rate":feeRate+" sat/vB"}. Current block projections cannot reliably estimate its confirmation time. We will update the outlook as network conditions change.`;
  async function explain(){
   if(!result||aiLoading)return;
   setAiLoading(true);
@@ -55,7 +55,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    <section className="pt-tx-stage">
     <div className="pt-tx-stage-head"><div><span className="pt-eyebrow">WHERE IS MY TRANSACTION?</span><h2>{confirmed?"Included in a block":observed?"Waiting for a block":"Not seen yet"}</h2></div><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div>
     <div className="pt-tx-estimate"><span>YOUR FEE RATE</span><strong>{feeRate==null?"Unavailable":feeRate+" sat/vB"}</strong><span>ESTIMATED TIME</span><strong>{estimatedWindow}</strong></div><div className="pt-tx-block-track">
-     {!confirmed&&observed&&<div className="pt-tx-position-row"><div className="pt-tx-position" style={{gridColumn:selectedPosition?String(selectedPosition):"1 / -1"}}><strong>↓ Your transaction</strong><small>{selectedPosition?"Projected block "+selectedPosition:"Position unknown"}</small></div></div>}
+     {!confirmed&&observed&&<div className="pt-tx-position-row"><div className="pt-tx-position" style={{gridColumn:selectedPosition?String(Math.max(1,Math.min(5,selectedPosition))):"1 / -1"}}><strong>↓ Your transaction</strong><small>{selectedPosition?"Possible block "+selectedPosition:"Placement unknown"}</small></div></div>}
      <div className="pt-tx-block-grid">
       {(blocks.length?blocks:[1,2,3,4,5].map(position=>({position,transactionCount:null,feeRange:null}))).map((block,index)=>{
        const highlighted=!confirmed&&observed&&selectedPosition===block.position;
@@ -68,7 +68,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
        </div>
       })}
      </div>
-     {confirmed?<div className="pt-tx-confirmed-banner">✓ Your transaction is already confirmed. The blocks above show the current network outlook, not the block containing your transaction.</div>:<p className="pt-tx-block-caveat">{firstMatch?"Highlighted block = matching fee range, not a verified queue position.":"A precise position cannot be calculated from the fee rate alone."} Times are approximate, not countdowns or guarantees.</p>}
+     {confirmed?<div className="pt-tx-confirmed-banner">✓ Your transaction is already confirmed. The blocks above show the current network outlook, not the block containing your transaction.</div>:<p className="pt-tx-block-caveat">{firstMatch?"Highlighted block = matching fee range, not a verified queue position.":"A precise position cannot be calculated from the fee rate alone."} *Times are approximate, not countdowns or guarantees.</p>}
     </div>
    </section>
    <section className="pt-tx-summary"><div className="pt-eyebrow">THE SHORT ANSWER</div><h2>{confirmed?"Good news—it's confirmed.":observed?"Here's what's happening.":"Here's what we know."}</h2><p>{summary}</p><div className="pt-tx-summary-actions"><button onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain more with AI"}</button><a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">Verify on mempool.space ↗</a></div>{aiSummary&&<p className="pt-tx-ai" role="status">{aiSummary}</p>}</section>
