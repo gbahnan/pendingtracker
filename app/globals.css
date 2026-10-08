@@ -545,3 +545,19 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-learn-simple .pt-glossary-inner .pt-term { background:#132a38; }
 .pt-cta-simple { padding-top:35px; padding-bottom:35px; }
 @media(max-width:700px) { .pt-journey-grid { grid-template-columns:1fr; } .pt-journey-step { padding:17px; } .pt-journey-step>span { margin-bottom:10px; } .pt-learn-simple .pt-glossary { grid-template-columns:1fr; } .pt-clean-activity .pt-activity-row { gap:7px; } .pt-clean-activity .pt-activity-meta { font-size:11px; } }
+
+
+/* Ethereum uses the same block-card layout, with a distinct violet/champagne accent */
+.pt-eth-explorer .pt-eth-block { text-decoration:none; background:linear-gradient(155deg,#292c3b,#1c2936); border-color:#615d7c; transition:border-color .15s,transform .15s; }
+.pt-eth-explorer .pt-eth-block:hover { border-color:#c6b7e5; transform:translateY(-2px); }
+.pt-eth-explorer .pt-eth-block .pt-block-time { color:#d5c3f3; font-size:clamp(20px,1.9vw,27px); }
+.pt-eth-explorer .pt-eth-block .pt-block-fee { color:#eee3fa; font-size:clamp(15px,1.45vw,19px); }
+.pt-eth-explorer .pt-eth-block .pt-block-art i { background:linear-gradient(145deg,#c3a7e5,#8169ac); }
+.pt-eth-explorer .pt-eth-block .pt-block-art i:nth-child(4n+2) { background:linear-gradient(145deg,#e4c79b,#ae8864); }
+.pt-eth-explorer .pt-eth-block .pt-block-art i:nth-child(7n+3) { background:linear-gradient(145deg,#a7a3c8,#696a94); }
+.pt-eth-gas-summary { display:flex; align-items:center; gap:24px; border:1px solid #57556f; background:#222d3d; padding:18px 21px; border-radius:12px; }
+.pt-eth-gas-summary>div { flex:0 0 auto; }
+.pt-eth-gas-summary span { display:block; color:#bdb7d1; font-size:12px; margin-bottom:5px; }
+.pt-eth-gas-summary strong { display:block; font-size:clamp(24px,2.5vw,31px); color:#e2d2f7; }
+.pt-eth-gas-summary p { margin:0; color:#c2c8d4; font-size:13px; line-height:1.65; }
+@media(max-width:650px) { .pt-eth-gas-summary { flex-direction:column; align-items:flex-start; gap:9px; } .pt-eth-explorer .pt-eth-block .pt-block-time { font-size:20px; } }
