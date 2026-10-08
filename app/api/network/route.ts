@@ -21,7 +21,7 @@ export async function GET() {
   const get = (result: PromiseSettledResult<any>) => result.status === "fulfilled" ? result.value : null;
   const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock);
   const txCount = Number(p?.count);
-  const gasGwei = Number(e?.gas_prices?.average);
+  const gasGwei = e?.gas_prices?.average == null ? NaN : Number(e.gas_prices.average);
   const congestion = !Number.isFinite(txCount) ? "Unavailable" : txCount > 100000 ? "Busy" : txCount > 25000 ? "Moderate" : "Light";
   const btc = {
     available: !!(f || p),
@@ -30,7 +30,7 @@ export async function GET() {
     fastestFee: Number.isFinite(Number(f?.fastestFee)) ? Number(f.fastestFee) : null,
     hourFee: Number.isFinite(Number(f?.hourFee)) ? Number(f.hourFee) : null,
     minimumFee: Number.isFinite(Number(f?.minimumFee)) ? Number(f.minimumFee) : null,
-    height: Number.isFinite(Number(b)) ? Number(b) : null,
+    height: b != null && Number.isFinite(Number(b)) ? Number(b) : null,
     explanation: !p ? "Bitcoin network data is temporarily unavailable." : congestion === "Busy"
       ? "Bitcoin's waiting area is crowded. Transactions offering lower fees may wait longer."
       : congestion === "Moderate"
