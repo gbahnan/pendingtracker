@@ -229,3 +229,15 @@ body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%
 .pt-queue-indicator { font-size:11px; line-height:1.5; border-top:1px solid #4b3c66; padding-top:10px; margin-top:auto; color:#d5c7f8; }
 @media(max-width:850px) { .pt-queue-blocks { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:490px) { .pt-queue-panel { padding:18px 13px; } .pt-queue-blocks { grid-template-columns:1fr; } .pt-queue-controls { align-items:flex-start; } }
+
+/* Recently observed mempool activity */
+.pt-activity-panel { margin-top:20px; padding:24px; border:1px solid #433665; border-radius:18px; background:linear-gradient(135deg,#211936,#131126); }
+.pt-activity-head { display:flex; justify-content:space-between; gap:15px; align-items:flex-start; }
+.pt-activity-head h3 { margin:10px 0; font-size:22px; }
+.pt-activity-head p,.pt-activity-empty { font-size:13px; color:#bfb7d4; line-height:1.6; }
+.pt-activity-list { display:grid; gap:6px; margin:18px 0; }
+.pt-activity-row { display:grid; grid-template-columns:minmax(0,1.5fr) 1fr 1fr auto; align-items:center; gap:12px; padding:13px; border:1px solid #352d4f; border-radius:9px; background:#17142a; color:#dcd4ee; text-decoration:none; font-size:13px; }
+.pt-activity-row:hover,.pt-activity-row:focus-visible { border-color:#a18be8; background:#2a2045; }
+.pt-activity-hash { font-family:monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pt-activity-arrow { color:#c8adff; }
+@media(max-width:680px) { .pt-activity-head { display:block; } .pt-activity-row { grid-template-columns:minmax(0,1fr) auto; } .pt-activity-row span:nth-child(3) { display:none; } }
