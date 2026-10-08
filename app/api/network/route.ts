@@ -10,7 +10,7 @@ async function json(url: string) {
 }
 
 export async function GET() {
-  const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks] = await Promise.allSettled([
+  const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks, recentTransactions] = await Promise.allSettled([
     json("https://mempool.space/api/v1/fees/recommended"),
     json("https://mempool.space/api/mempool"),
     fetch("https://mempool.space/api/blocks/tip/height", { next: { revalidate: 30 }, signal: AbortSignal.timeout(7000) }).then(async r => { if (!r.ok) throw new Error("Block height unavailable"); return Number(await r.text()); }),
@@ -18,10 +18,11 @@ export async function GET() {
     json("https://eth.blockscout.com/api/v2/blocks?type=block"),
     json("https://mempool.space/api/blocks"),
     json("https://mempool.space/api/v1/fees/mempool-blocks"),
+    json("https://mempool.space/api/mempool/recent"),
   ]);
 
   const get = (result: PromiseSettledResult<any>) => result.status === "fulfilled" ? result.value : null;
-  const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks), projected = get(projectedBlocks);
+  const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks), projected = get(projectedBlocks), txs = get(recentTransactions);
   const tip = Array.isArray(recent) ? recent[0] : null;
   const tipTimestamp = Number(tip?.timestamp);
   const tipTxCount = Number(tip?.tx_count);
@@ -50,6 +51,7 @@ export async function GET() {
     } : null,
     mempoolVsizeMB: Number.isFinite(poolVsize) ? Math.round(poolVsize / 10000) / 100 : null,
     mempoolFeesBTC: Number.isFinite(poolFees) ? Math.round(poolFees / 1000000) / 100 : null,
+    recentTransactions: Array.isArray(txs) ? txs.slice(0, 12).filter((tx: any) => typeof tx?.txid === "string" && /^[a-f0-9]{64}$/i.test(tx.txid)).map((tx: any) => ({ id: tx.txid, fee: Number.isFinite(Number(tx.fee)) ? Number(tx.fee) : null, vsize: Number.isFinite(Number(tx.vsize)) ? Number(tx.vsize) : null, value: Number.isFinite(Number(tx.value)) ? Number(tx.value) : null })) : [],
     projectedBlocks: Array.isArray(projected) ? projected.slice(0, 6).map((block: any, index: number) => ({
       position: index + 1,
       transactionCount: block?.nTx != null && Number.isFinite(Number(block.nTx)) ? Number(block.nTx) : null,
