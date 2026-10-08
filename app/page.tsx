@@ -177,42 +177,51 @@ export default function Page() {
           </details>
           <p className="pt-simple-source">Live estimates from mempool.space. Actual confirmation times vary. To track a specific transaction, search its ID above.</p>
         </section>
-        <section className="pt-activity-panel pt-compact-activity">
-          <div className="pt-activity-head"><div><div className="pt-eyebrow">BITCOIN ACTIVITY</div><h3>Live transaction activity</h3></div><span className="pt-live">{btcStreamOnline?"● Bitcoin stream connected":"● Refreshes every 5s"}</span></div>
+        <section className="pt-activity-panel pt-compact-activity pt-clean-activity">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">HAPPENING ON BITCOIN</div><h3>Latest transactions</h3><p className="pt-activity-intro">See real transactions as they enter the network or get confirmed.</p></div><span className="pt-live">{btcStreamOnline?"● Live updates":"● Updating"}</span></div>
           <div className="pt-activity-list">
-            {[...liveBtcTransactions.map(tx=>({...tx,value:null})),...(btc?.recentTransactions??[]).filter(tx=>!liveBtcTransactions.some(l=>l.id===tx.id))].slice(0,5).map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}><span className="pt-activity-hash">{tx.id.slice(0,12)}…{tx.id.slice(-7)}</span><span>{tx.fee!=null&&tx.vsize?(tx.fee/tx.vsize).toFixed(1)+" sat/vB":"Pending"}</span><span className="pt-status-pending">Pending</span><span className="pt-activity-arrow">↗</span></a>)}
-            {btc?.confirmedTransactions?.slice(0,5).map(id=><a className="pt-activity-row" href={"/btc/"+id} key={id}><span className="pt-activity-hash">{id.slice(0,12)}…{id.slice(-7)}</span><span>Block #{format(btc?.height)}</span><span className="pt-status-confirmed">Confirmed</span><span className="pt-activity-arrow">↗</span></a>)}
-            {!btc?.recentTransactions?.length&&!btc?.confirmedTransactions?.length?<p className="pt-activity-empty">Waiting for Bitcoin network activity.</p>:null}
+            {[...liveBtcTransactions.map(tx=>({...tx,value:null})),...(btc?.recentTransactions??[]).filter(tx=>!liveBtcTransactions.some(l=>l.id===tx.id))].slice(0,4).map(tx=><a className="pt-activity-row" href={"/btc/"+tx.id} key={tx.id}><span className="pt-activity-hash">{tx.id.slice(0,10)}…{tx.id.slice(-6)}</span><span className="pt-activity-meta">{tx.fee!=null&&tx.vsize?(tx.fee/tx.vsize).toFixed(1)+" sat/vB":"Fee pending"}</span><span className="pt-status-pending">Waiting</span><span className="pt-activity-arrow">↗</span></a>)}
+            {btc?.confirmedTransactions?.slice(0,3).map(id=><a className="pt-activity-row" href={"/btc/"+id} key={id}><span className="pt-activity-hash">{id.slice(0,10)}…{id.slice(-6)}</span><span className="pt-activity-meta">Block #{format(btc?.height)}</span><span className="pt-status-confirmed">Confirmed</span><span className="pt-activity-arrow">↗</span></a>)}
+            {!btc?.recentTransactions?.length&&!btc?.confirmedTransactions?.length?<p className="pt-activity-empty">Waiting for live Bitcoin transactions.</p>:null}
           </div>
-          <p className="pt-fee-disclaimer">Latest observed pending transactions and transactions included in the newest block. Confirmations update when new blocks are observed.</p>
+          <p className="pt-activity-bottom">Select any transaction to see its details explained.</p>
         </section>
-        <div className="pt-insight pt-insight-compact"><div className="pt-insight-icon">✦</div><div><h3>In plain English</h3><p>{btc?.explanation ?? "We're waiting for live Bitcoin data. Try refreshing shortly."}</p><p className="pt-note">Fee estimates change constantly. Confirmation timing depends on more than transaction count.</p></div></div>
+        <div className="pt-insight pt-insight-compact pt-clean-insight"><div className="pt-insight-icon">✦</div><div><h3>What this means right now</h3><p>{btc?.explanation ?? "Waiting for live Bitcoin data."}</p></div></div>
       </> : <>
-        <section className="pt-activity-panel pt-compact-activity">
-          <div className="pt-activity-head"><div><div className="pt-eyebrow">ETHEREUM ACTIVITY</div><h3>Recent blocks & transactions</h3></div><span className="pt-live">● Checks every 5s</span></div>
+        <section className="pt-activity-panel pt-compact-activity pt-clean-activity">
+          <div className="pt-activity-head"><div><div className="pt-eyebrow">HAPPENING ON ETHEREUM</div><h3>Latest activity</h3><p className="pt-activity-intro">Recent Ethereum transactions and blocks, explained simply.</p></div><span className="pt-live">● Live updates</span></div>
           <div className="pt-activity-list">
-            {eth?.recentBlocks?.slice(0,3).map(block=><a key={"block-"+block.height} className="pt-activity-row" href={block.hash?"https://eth.blockscout.com/block/"+block.hash:"https://eth.blockscout.com/blocks"} target="_blank" rel="noopener noreferrer"><span>Block #{block.height}</span><span>{block.transactionsCount==null?"New block":format(block.transactionsCount)+" txs"}</span><span className="pt-status-confirmed">Observed</span><span className="pt-activity-arrow">↗</span></a>)}
-            {eth?.recentTransactions?.slice(0,7).map(tx=><a key={tx.hash} className="pt-activity-row" href={"/eth/"+tx.hash}><span className="pt-activity-hash">{tx.hash.slice(0,14)}…{tx.hash.slice(-7)}</span><span>{tx.block==null?"Ethereum tx":"Block "+tx.block}</span><span className="pt-status-confirmed">{tx.status??"Validated"}</span><span className="pt-activity-arrow">↗</span></a>)}
-            {!eth?.recentBlocks?.length&&!eth?.recentTransactions?.length?<p className="pt-activity-empty">Waiting for Ethereum network activity.</p>:null}
+            {eth?.recentTransactions?.slice(0,5).map(tx=><a key={tx.hash} className="pt-activity-row" href={"/eth/"+tx.hash}><span className="pt-activity-hash">{tx.hash.slice(0,12)}…{tx.hash.slice(-6)}</span><span className="pt-activity-meta">{tx.block==null?"Transaction":"Block "+tx.block}</span><span className="pt-status-confirmed">{tx.status??"Recorded"}</span><span className="pt-activity-arrow">↗</span></a>)}
+            {eth?.recentBlocks?.slice(0,2).map(block=><a key={"block-"+block.height} className="pt-activity-row" href={block.hash?"https://eth.blockscout.com/block/"+block.hash:"https://eth.blockscout.com/blocks"} target="_blank" rel="noopener noreferrer"><span>Block #{block.height}</span><span className="pt-activity-meta">{block.transactionsCount==null?"New block":format(block.transactionsCount)+" transactions"}</span><span className="pt-status-confirmed">Added</span><span className="pt-activity-arrow">↗</span></a>)}
+            {!eth?.recentBlocks?.length&&!eth?.recentTransactions?.length?<p className="pt-activity-empty">Waiting for live Ethereum activity.</p>:null}
           </div>
+          <p className="pt-activity-bottom">Select a transaction to see what happened.</p>
         </section>
-        <div className="pt-insight"><div className="pt-insight-icon">✦</div><div><h3>In plain English</h3><p>{eth?.explanation ?? "We're waiting for live Ethereum data. Try refreshing shortly."}</p><p className="pt-note">Gas prices alone do not determine the final cost of a transaction.</p></div></div>
+        <div className="pt-insight pt-clean-insight"><div className="pt-insight-icon">✦</div><div><h3>What this means right now</h3><p>{eth?.explanation ?? "Waiting for live Ethereum data."}</p></div></div>
       </>}
       <p className="pt-source">Explanations are generated from live blockchain data using transparent rules, not a generative AI model. Sources: mempool.space and Blockscout · {overview ? "Updated " + new Date(overview.updatedAt).toLocaleTimeString() : "Awaiting data"} · Estimates are informational, not guarantees.</p>
     </section>
 
-    <section className="pt-section" id="how-it-works">
-      <div className="pt-eyebrow">HOW IT WORKS</div><h2>From confusing to clear in seconds.</h2>
-      <div className="pt-metrics pt-steps">
-        <div className="pt-metric"><span>01 · FIND</span><strong>Paste a transaction</strong><small>Copy a transaction ID or link from your wallet or exchange. No signup or wallet connection.</small></div>
-        <div className="pt-metric"><span>02 · UNDERSTAND</span><strong>Read the explanation</strong><small>See whether it is pending, confirmed, failed, or not yet found—and what the evidence means.</small></div>
-        <div className="pt-metric"><span>03 · DECIDE</span><strong>Know your options</strong><small>Get practical next steps and verify the details with an independent blockchain explorer.</small></div>
+    <section className="pt-section pt-journey" id="how-it-works">
+      <div className="pt-eyebrow">TRACKING MADE SIMPLE</div><h2>Three steps. One clear answer.</h2>
+      <p className="pt-section-sub">No wallet connection. No signup. Just your transaction ID.</p>
+      <div className="pt-journey-grid">
+        <div className="pt-journey-step"><span>01</span><h3>Paste your transaction ID</h3><p>Find it in your wallet or exchange and paste it above.</p></div>
+        <div className="pt-journey-step"><span>02</span><h3>See what's happening</h3><p>Find out if it's waiting, confirmed, or not yet visible on the network.</p></div>
+        <div className="pt-journey-step"><span>03</span><h3>Know what comes next</h3><p>Understand the fees, confirmation status, and possible next steps.</p></div>
       </div>
     </section>
-    <section className="pt-section" id="learn">
-      <div className="pt-eyebrow">CRYPTO WITHOUT THE CONFUSION</div><h2>Understand every number.</h2><p className="pt-section-sub">Tap a term to learn what it means. No technical background required.</p>
-      <div className="pt-glossary">{Object.entries(terms).filter(([term])=>network==="btc"? !["Gas","Nonce"].includes(term) : !["Sats","Priority fee","Mempool","sat/vB","RBF","CPFP"].includes(term)).map(([term,meaning])=><details className="pt-term" key={term}><summary>{term}<span>＋</span></summary><p>{meaning}</p></details>)}</div>
+    <section className="pt-section pt-learn-simple" id="learn">
+      <div className="pt-eyebrow">QUICK ANSWERS</div><h2>New to blockchain? Start here.</h2>
+      <p className="pt-section-sub">Plain-English answers to the questions people ask most.</p>
+      <div className="pt-glossary">
+        <details className="pt-term"><summary>Why is my transaction still waiting?<span>＋</span></summary><p>It may be waiting for a block, offering a less competitive fee, or depending on an earlier transaction. Search your transaction ID above to see the available evidence.</p></details>
+        <details className="pt-term"><summary>How long does confirmation take?<span>＋</span></summary><p>Bitcoin blocks arrive about every 10 minutes on average, but individual waits vary. Ethereum generally produces blocks more frequently. No estimated time is a guarantee.</p></details>
+        <details className="pt-term"><summary>What does sat/vB mean?<span>＋</span></summary><p>It's Bitcoin's fee rate: how many tiny units of Bitcoin (sats) are offered for each unit of transaction size. A higher rate usually gives miners more reason to include a transaction sooner.</p></details>
+        <details className="pt-term"><summary>Is it safe to paste my transaction ID?<span>＋</span></summary><p>Transaction IDs are public tracking references. Never share your wallet recovery phrase, private key, or password.</p></details>
+        <details className="pt-term"><summary>Explore more blockchain terms<span>＋</span></summary><div className="pt-glossary-inner">{Object.entries(terms).filter(([term])=>network==="btc"?!["Gas","Nonce"].includes(term):!["Sats","Priority fee","Mempool","sat/vB","RBF","CPFP"].includes(term)).map(([term,meaning])=><details className="pt-term" key={term}><summary>{term}<span>＋</span></summary><p>{meaning}</p></details>)}</div></details>
+      </div>
     </section>
-    <section className="pt-cta"><div className="pt-eyebrow">BUILT FOR CLARITY</div><h2>Know what's happening. Know what comes next.</h2><p>From a network-wide view to your exact transaction, Pending Tracker helps you understand the blockchain without becoming an expert.</p><a href="#transaction-search" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});}}>Track a transaction ↑</a></section>
+    <section className="pt-cta pt-cta-simple"><div className="pt-eyebrow">READY TO CHECK?</div><h2>Get clarity on your transaction.</h2><p>Paste a public transaction ID. We'll explain what the blockchain shows.</p><a href="#transaction-search">Track a transaction ↑</a></section>
   </main>;
 }
