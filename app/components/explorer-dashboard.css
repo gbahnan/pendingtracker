@@ -369,3 +369,19 @@
 .pt-eth-pending-locator span{font-size:12px;font-weight:800;letter-spacing:.08em}
 .pt-eth-pending-locator strong{font-size:13px;color:#e4d1ad}
 .pt-eth-pending-locator small{font-size:11px;color:#a9bfca;max-width:560px;line-height:1.6}
+
+/* Thick charcoal / gunmetal perimeter on every large Bitcoin and Ethereum flow hexagon.
+   The inner honeycomb colors and animation remain unchanged. */
+.pt-chain-flow .pt-chain-flow-hex{
+ background:#59636d!important;
+}
+.pt-chain-flow .pt-chain-flow-hex::before{
+ inset:4px!important;
+ background:linear-gradient(145deg,#21394c,#102638 72%,#1b3446)!important;
+ z-index:0!important;
+}
+.pt-chain-flow .pt-chain-flow-hex::after{z-index:1!important}
+.pt-chain-flow .pt-chain-flow-hex>.pt-honeycomb-live{z-index:2!important}
+.pt-chain-flow .pt-chain-flow-hex>span,
+.pt-chain-flow .pt-chain-flow-hex>strong,
+.pt-chain-flow .pt-chain-flow-hex>small{position:relative;z-index:4!important}
