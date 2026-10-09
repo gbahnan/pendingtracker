@@ -2321,3 +2321,71 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-heading .pt-eyebrow{color:#ffc85f!important}
 .pt-chain-page:has(.pt-chain-ethereum) section.pt-dash-blocks{border-color:#6078c5!important}
 .pt-chain-page:has(.pt-chain-ethereum) .pt-dash-heading .pt-eyebrow{color:#a9bbff!important}
+
+/* FINAL UNIFORMITY PASS: the approved home reference uses dark navy for
+   information/transaction/explanation cards, not pale steel. Shared on BTC/ETH.
+   Preserve light steel only for the prominent search panel. Color properties only. */
+:root{
+ --pt-unified-bg:#03101b;
+ --pt-unified-panel:#0a2233;
+ --pt-unified-panel-deep:#061725;
+ --pt-unified-panel-border:#2b4e65;
+ --pt-unified-heading:#f8fbff;
+ --pt-unified-copy:#c4d8e6;
+ --pt-unified-link:#8edfff;
+}
+.pt-chain-page .pt-dash-summary,
+.pt-chain-page section.pt-dash-summary,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-summary,
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-summary,
+.pt-chain-page:has(.pt-chain-ethereum) .pt-dash-summary,
+.pt-chain-page .pt-chain-intro,
+.pt-chain-page section.pt-chain-intro,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro,
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-chain-intro,
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-intro,
+.pt-chain-page .pt-dash-recent,
+.pt-chain-page section.pt-dash-recent,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-recent,
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-recent,
+.pt-chain-page .pt-dash-fees,
+.pt-shell .pt-reference-table,
+.pt-shell .pt-home-live-panel{
+ background:linear-gradient(145deg,var(--pt-unified-panel),var(--pt-unified-panel-deep))!important;
+ border-color:var(--pt-unified-panel-border)!important;
+ color:var(--pt-unified-heading)!important;
+}
+.pt-chain-page .pt-dash-summary h3,
+.pt-chain-page .pt-dash-summary p,
+.pt-chain-page .pt-dash-summary summary,
+.pt-chain-page .pt-dash-summary strong,
+.pt-chain-page .pt-chain-intro h2,
+.pt-chain-page .pt-chain-intro summary,
+.pt-chain-page .pt-dash-recent h3,
+.pt-chain-page .pt-dash-recent .pt-dash-tx b{
+ color:var(--pt-unified-heading)!important;
+}
+.pt-chain-page .pt-dash-summary p,
+.pt-chain-page .pt-chain-intro p,
+.pt-chain-page .pt-dash-recent p,
+.pt-chain-page .pt-dash-recent small,
+.pt-chain-page .pt-dash-source,
+.pt-chain-page .pt-chain-foot{
+ color:var(--pt-unified-copy)!important;
+}
+.pt-chain-page .pt-chain-intro details,
+.pt-chain-page .pt-chain-intro summary,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro details,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro summary,
+.pt-chain-page .pt-dash-summary details,
+.pt-chain-page .pt-dash-summary summary{
+ background:#102e43!important;
+ border-color:#355a72!important;
+ color:#eaf6ff!important;
+}
+.pt-chain-page .pt-dash-recent a,
+.pt-chain-page .pt-dash-tx a,
+.pt-chain-page .pt-chain-foot a,
+.pt-shell .pt-reference-table a{color:var(--pt-unified-link)!important}
+.pt-chain-page .pt-dash-tx,
+.pt-shell .pt-reference-table-row{border-color:#27475c!important}
