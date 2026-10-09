@@ -197,3 +197,17 @@
 @keyframes pt-mined-color{0%,18%{background:linear-gradient(135deg,#e4c88e,#846a4d 55%,#4b6577)}80%,100%{background:linear-gradient(145deg,#e1e8ef,#7893a7 52%,#466276)}}
 @keyframes pt-mined-interior{0%,18%{background:#152b3e}80%,100%{background:#1a3548}}
 @media(prefers-reduced-motion:reduce){.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-unit,.pt-chain-flow-shapes.pt-chain-flow-shift .pt-chain-flow-mined,.pt-chain-flow-shapes.pt-chain-flow-shift .pt-chain-flow-mined:before{animation:none!important}}
+
+/* Dense living transaction mosaic, clipped to the original full-size hexagon */
+.pt-chain-flow-hex{overflow:hidden}
+.pt-chain-flow-mosaic{inset:4px;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));gap:2px;align-items:stretch;justify-items:stretch;clip-path:polygon(23% 0,77% 0,100% 50%,77% 100%,23% 100%,0 50%);z-index:0}
+.pt-chain-flow-mosaic i{position:relative!important;left:auto!important;top:auto!important;width:100%;height:100%;background:#e4c98b40;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);filter:none;animation:pt-mosaic-activity 3.4s ease-in-out infinite}
+.pt-chain-flow-mosaic i:after{content:"";position:absolute;inset:1.5px;clip-path:inherit;background:#1c3445;opacity:.9}
+@keyframes pt-mosaic-activity{0%,100%{opacity:.12;transform:translateY(3px) scale(.76)}35%{opacity:.85;transform:translateY(-2px) scale(1)}65%{opacity:.35;transform:translateY(-4px) scale(.85)}}
+.pt-chain-flow-shapes{position:relative}
+.pt-chain-flow-incoming{grid-column:7;grid-row:1;opacity:0;pointer-events:none}
+.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-incoming{animation:pt-new-queue-enter 1.55s cubic-bezier(.25,.75,.25,1) both}
+@keyframes pt-new-queue-enter{0%,18%{transform:translateX(55%);opacity:0}45%{opacity:.9}80%,100%{transform:translateX(calc(-100% - 9px));opacity:1}}
+.pt-chain-flow-shapes.pt-chain-flow-shift{isolation:isolate}
+.pt-chain-flow-hex-pending>span,.pt-chain-flow-hex-pending>strong,.pt-chain-flow-hex-pending>small{z-index:3}
+@media(prefers-reduced-motion:reduce){.pt-chain-flow-mosaic i,.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-incoming{animation:none!important}}
