@@ -1,4 +1,5 @@
 "use client";
+import ChainDashboard from "../../components/ChainDashboard";
 import {useEffect,useMemo,useState} from "react";
 const short=(s:string)=>s.length>22?s.slice(0,12)+"…"+s.slice(-8):s;
 function weiToEth(value:string){const raw=String(value||"0").replace(/[^\d]/g,"").replace(/^0+/,"")||"0";const whole=raw.length>18?raw.slice(0,-18):"0";const decimal=raw.slice(-18).padStart(18,"0").slice(0,7).replace(/0+$/,"");return whole+(decimal?"."+decimal:"");}
@@ -19,10 +20,10 @@ export default function EthTxPage({params}:{params:{hash:string}}){
   {loading&&!data&&<div className="pt-tx-loading">Checking the Ethereum network…</div>}
   {data&&<>
    <section className="pt-tx-stage"><div className="pt-tx-stage-head"><div><span className="pt-eyebrow">WHERE IS MY TRANSACTION?</span><h2>{failed?"Included, but failed":confirmed?"Included in a block":"Waiting for a block"}</h2></div><span className={confirmed&&!failed?"pt-tx-state good":"pt-tx-state"}>{failed?"● Failed":confirmed?"● Confirmed":"● Pending"}</span></div>
-    <div className="pt-tx-estimate"><span>TRANSACTION STATUS</span><strong>{failed?"Failed":confirmed?"Confirmed":"Pending"}</strong><span>EXPECTED WAIT</span><strong>{confirmed?"Already included":"Not predictable yet"}</strong></div><div className="pt-tx-block-track">
-     {!confirmed&&!failed&&<div className="pt-tx-position"><span className="pt-tx-pointer">↓</span><strong>Your transaction is waiting</strong><small>Exact block unknown</small></div>}
-     <div className="pt-tx-block-grid">{(blocks.length?blocks:[0,1,2,3,4].map(()=>({height:null,transactionsCount:null,timestamp:null}))).map((block:any,index:number)=><div className="pt-tx-block" key={block.hash??index}><div className="pt-tx-block-label">{index===0?"LATEST BLOCK":"RECENT BLOCK"}</div><div className="pt-tx-block-time">{block.timestamp?"Added":"—"} <span>{block.timestamp?new Date(block.timestamp).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}</span></div><div className="pt-tx-block-tiles" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{opacity:block.transactionsCount==null?.25:i<Math.max(1,Math.min(15,Math.round(Number(block.transactionsCount)/15)))?1:.16}}/>)}</div><strong>#{block.height??"—"}</strong><small>{block.transactionsCount==null?"Live data loading":Number(block.transactionsCount).toLocaleString()+" transactions"}</small></div>)}</div>
-     <p className="pt-tx-block-caveat">These are recently added Ethereum blocks, not predictions. Pending transactions cannot be placed into an exact future block reliably.</p>
+    <div className="pt-tx-estimate"><span>TRANSACTION STATUS</span><strong>{failed?"Failed":confirmed?"Confirmed":"Pending"}</strong><span>{confirmed?"CONFIRMATIONS":"EXPECTED WAIT"}</span><strong>{confirmed?String(data?.confirmations??"Confirmed"):"Not reliably predictable"}</strong></div>
+    <div className="pt-tx-block-track">
+     <ChainDashboard chain="ethereum" tracking trackedEthBlock={confirmed?Number(insights?.blockNumber??data?.blockNumber??data?.block_number??0)||null:null} ethPending={!confirmed&&!failed}/>
+     <p className="pt-tx-block-caveat">Ethereum blocks normally arrive about every 12 seconds. The arrow marks your confirmed block when it is among the recent blocks, or shows pending status separately. It does not predict an exact future block.</p>
     </div>
    </section>
    <section className="pt-tx-summary"><div className="pt-eyebrow">THE SHORT ANSWER</div><h2>{failed?"What happened?":confirmed?"Good news—it's confirmed.":"Here's what's happening."}</h2><p>{summary}</p><div className="pt-tx-summary-actions"><button onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain more with AI"}</button><a href={"https://eth.blockscout.com/tx/"+hash} target="_blank" rel="noopener noreferrer">Verify on Blockscout ↗</a></div>{ai&&<p className="pt-tx-ai" role="status">{ai}</p>}</section>
