@@ -16,7 +16,7 @@ function Honeycomb(){
      const from=Math.floor(Math.random()*120);
      const to=Math.max(0,Math.min(119,from+(Math.random()<.5?10:1)));
      setHidden(old=>old.includes(from)?old:[...old,from]);
-     if(Math.random()<.8){
+     if(Math.random()<.9){
        const id=++sequence.current;
        setMoving({from,to,id});
        timers.push(setTimeout(()=>setMoving(m=>m?.id===id?null:m),560));
