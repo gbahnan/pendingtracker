@@ -182,3 +182,18 @@
 .pt-chain-flow-hex-pending>span,.pt-chain-flow-hex-pending>strong,.pt-chain-flow-hex-pending>small{position:relative;z-index:2;text-shadow:0 1px 5px #0b2039}
 @keyframes pt-micro-drift{0%{transform:translate(-7px,13px) scale(.7);opacity:0}30%{opacity:.6}65%{opacity:.42}100%{transform:translate(9px,-19px) scale(1.1);opacity:0}}
 @media(prefers-reduced-motion:reduce){.pt-chain-flow-micro i{animation:none!important;opacity:.25}}
+
+/* Mined-block queue progression: old queue is held during the slide, then replaced by fresh live projections */
+.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-confirmed-unit{animation:pt-old-tip-exit 1.55s cubic-bezier(.25,.75,.25,1) both}
+.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-unit:not(.pt-chain-flow-confirmed-unit){animation:pt-real-queue-slide 1.55s cubic-bezier(.25,.75,.25,1) both;animation-delay:0s}
+.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-unit:nth-child(3),
+.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-unit:nth-child(4),
+.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-unit:nth-child(5){animation-delay:0s}
+.pt-chain-flow-shapes.pt-chain-flow-shift .pt-chain-flow-mined{animation:pt-mined-color 1.55s ease-in-out both}
+.pt-chain-flow-shapes.pt-chain-flow-shift .pt-chain-flow-mined:before{animation:pt-mined-interior 1.55s ease-in-out both}
+.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-confirmed-unit .pt-chain-flow-hex-confirmed{animation:none}
+@keyframes pt-old-tip-exit{0%,18%{transform:translateX(0);opacity:1}80%,100%{transform:translateX(-110%);opacity:0}}
+@keyframes pt-real-queue-slide{0%,18%{transform:translateX(0);opacity:1}80%,100%{transform:translateX(calc(-100% - 9px));opacity:1}}
+@keyframes pt-mined-color{0%,18%{background:linear-gradient(135deg,#e4c88e,#846a4d 55%,#4b6577)}80%,100%{background:linear-gradient(145deg,#e1e8ef,#7893a7 52%,#466276)}}
+@keyframes pt-mined-interior{0%,18%{background:#152b3e}80%,100%{background:#1a3548}}
+@media(prefers-reduced-motion:reduce){.pt-chain-flow-shapes.pt-chain-flow-shift>.pt-chain-flow-unit,.pt-chain-flow-shapes.pt-chain-flow-shift .pt-chain-flow-mined,.pt-chain-flow-shapes.pt-chain-flow-shift .pt-chain-flow-mined:before{animation:none!important}}
