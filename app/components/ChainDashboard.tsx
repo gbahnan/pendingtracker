@@ -72,7 +72,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{btc?.latestBlock?.transactionCount==null?"Confirmed":fmt(btc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
             {blocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
-              <div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
+              <div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><div className="pt-chain-flow-micro" aria-hidden="true">{Array.from({length:9},(_,n)=><i key={n} style={{left:(12+(n*23)%75)+"%",top:(12+(n*37)%72)+"%",animationDelay:(n*.47)+"s",animationDuration:(3.4+(n%4)*.65)+"s"}}/>)}</div><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
