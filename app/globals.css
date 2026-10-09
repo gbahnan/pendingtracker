@@ -1762,3 +1762,67 @@ body{background:#05111c!important}
  .pt-shell .pt-journey .pt-journey-step:last-child{border-bottom:0!important}
  .pt-shell .pt-reference-transactions{margin-left:auto!important;margin-right:auto!important}
 }
+
+/* Bitcoin explorer: align chrome and information surfaces with the approved
+   Midnight Network homepage. Never target the animated honeycomb or hexagon. */
+.pt-chain-page:has(.pt-chain-bitcoin){
+ --pt-btc-canvas:#07131e;
+ --pt-btc-panel:#0d2131;
+ --pt-btc-border:#29465a;
+ width:calc(100% - 2 * clamp(18px,3vw,32px))!important;
+ max-width:1150px!important;
+ margin:0 auto!important;
+ padding:28px 0 50px!important;
+ color:#f4f8fc!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-back{color:#9ddcf8!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-back a{color:#9ddcf8!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-eyebrow{color:#a4ddf7!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-hero h1{color:#f7fbff!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-hero p,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro p{color:#c3d7e5!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-symbol.pt-chain-bitcoin{
+ background:linear-gradient(145deg,#ffc85b,#ed9e23)!important;
+ border:1px solid #f8c36b!important;
+ color:#fff!important;
+ box-shadow:0 8px 26px #f2a62b30!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search{
+ background:linear-gradient(112deg,#8ca5b9,#708ca3 50%,#344e64)!important;
+ border:1px solid #9bb9cf!important;
+ box-shadow:0 15px 42px #0006!important;
+ border-radius:12px!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search h2{color:#081723!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search p{color:#0d2638!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search input{
+ background:#102333!important;border:1px solid #a0b9cb!important;color:#e9f6ff!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search input::placeholder{color:#abc1d2!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search button{
+ background:linear-gradient(100deg,#92e2ff,#57b8fa)!important;
+ border-color:#9de1fc!important;color:#081a29!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro{
+ background:linear-gradient(155deg,#0d2030,#091724)!important;
+ border:1px solid #284458!important;
+ box-shadow:inset 0 1px 0 #ffffff09!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro details,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-how,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search-first,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-fees,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-recent{
+ background:linear-gradient(150deg,#102434,#091927)!important;
+ border-color:#29465a!important;
+ box-shadow:inset 0 1px 0 #ffffff08!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat strong,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat b{color:#f5faff!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-source,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-foot{color:#a9c0d0!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-foot a{color:#91dfff!important}
+@media(max-width:640px){
+ .pt-chain-page:has(.pt-chain-bitcoin){padding-top:18px!important}
+}
