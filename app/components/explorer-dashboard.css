@@ -342,3 +342,13 @@
 
 /* Three to four simultaneous cell movements, each at roughly 60% previous speed. */
 .pt-honeycomb-traveler{animation-duration:1.6s!important}
+
+/* Calm, staggered transaction motion: travel and fade over full lifecycle. */
+.pt-honeycomb-cell-live{transition:opacity 1.9s cubic-bezier(.35,0,.25,1)!important}
+.pt-honeycomb-traveler{animation:pt-honeycomb-glide 2.3s cubic-bezier(.35,0,.25,1) both!important}
+@keyframes pt-honeycomb-glide{
+ 0%{transform:translate(0,0);opacity:.0}
+ 18%{opacity:.65}
+ 70%{opacity:.65}
+ 100%{transform:translate(var(--hop-x),var(--hop-y));opacity:0}
+}
