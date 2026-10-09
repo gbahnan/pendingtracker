@@ -1456,3 +1456,38 @@ body{
  border-radius:22px;
  overflow:hidden;
 }
+
+
+/* Homepage-only hierarchy: intentional contrast between task, data and learning.
+   Do not alter any geometry, animations, or chain explorer visuals. */
+.pt-shell .pt-searchbox{
+ background:linear-gradient(140deg,#485765 0%,#394956 58%,#303e4a 100%)!important;
+ border-color:#73899a!important;
+ box-shadow:0 18px 44px #00000038,inset 0 1px 0 #ffffff20!important;
+}
+.pt-shell .pt-chain-gateway-card{
+ background:linear-gradient(145deg,#343e48,#2b3540)!important;
+ border-color:#4d5c68!important;
+ box-shadow:0 9px 26px #00000025,inset 0 1px 0 #ffffff0c!important;
+}
+.pt-shell .pt-home-live-panel{
+ background:linear-gradient(145deg,#222e39,#1c2833)!important;
+ border-color:#394d5c!important;
+ box-shadow:0 10px 28px #00000024!important;
+}
+.pt-shell .pt-journey-step{
+ background:linear-gradient(150deg,#29333d,#222c36)!important;
+ border-color:#43515e!important;
+ border-top-color:#637f91!important;
+ box-shadow:none!important;
+}
+.pt-shell .pt-network-drawer{
+ background:linear-gradient(120deg,#425563,#344552)!important;
+ border-color:#657b8b!important;
+ box-shadow:0 12px 32px #00000029!important;
+}
+.pt-shell .pt-learn-simple .pt-term{
+ background:linear-gradient(140deg,#303d48,#283540)!important;
+ border-color:#465968!important;
+ box-shadow:none!important;
+}
