@@ -84,13 +84,17 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
             {flowBlocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
-              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><div className="pt-chain-flow-micro" aria-hidden="true">{Array.from({length:9},(_,n)=><i key={n} style={{left:(12+(n*23)%75)+"%",top:(12+(n*37)%72)+"%",animationDelay:(n*.47)+"s",animationDuration:(3.4+(n%4)*.65)+"s"}}/>)}</div><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
+              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><div className="pt-chain-flow-micro pt-chain-flow-mosaic" aria-hidden="true">{Array.from({length:72},(_,n)=><i key={n} style={{animationDelay:((n*17)%37)/10+"s",animationDuration:(2.5+(n%6)*.47)+"s",opacity:.2+((n*13)%7)/12}}/>)}</div><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
                 <span className="pt-chain-flow-tx">{b.count} projected</span>
               </div>
             </div>)}
+            {blockFlash&&<div className="pt-chain-flow-unit pt-chain-flow-incoming" aria-hidden="true">
+              <div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><div className="pt-chain-flow-micro pt-chain-flow-mosaic">{Array.from({length:72},(_,n)=><i key={n} style={{animationDelay:((n*11)%29)/10+"s"}}/>)}</div><span>NEW</span><strong>→</strong><small>pending</small></div>
+              <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">New projection</span></div>
+            </div>}
           </div>
         </div>
         <div className="pt-chain-flow-confirmed"><span className={blockFlash?"pt-chain-confirmed-flash":""}>● {blockFlash?"NEW BLOCK CONFIRMED":"LATEST CONFIRMED BLOCK"} {btc?.latestBlock?.height==null?"":("#"+fmt(btc.latestBlock.height))}</span><span>Queue advances when a new block is detected; projections are recalculated from the live mempool.</span></div>
