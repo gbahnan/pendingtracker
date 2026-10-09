@@ -891,6 +891,15 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#a8bac9,#7997aa); 
 @media(max-width:560px){.pt-dash-top{flex-direction:column}.pt-dash-stats{gap:9px}.pt-dash-stat{padding:15px 12px}.pt-dash-feegrid{grid-template-columns:1fr}.pt-dash-blocks,.pt-dash-fees,.pt-dash-recent,.pt-dash-summary{padding:17px}.pt-dash-tx{align-items:flex-start}.pt-dash-tx b{font-size:11px}.pt-dash-block{min-width:170px;flex-basis:170px}}
 
 
+/* Shared design tokens: one source for recurring visual colors. */
+:root{
+ --pt-accent:#a8c9df;
+ --pt-accent-bright:#89b8da;
+ --pt-text:#d4d6d9;
+ --pt-text-strong:#d7dce0;
+ --pt-border:#58636d;
+ --pt-eth-blue:#627eea;
+}
 /* Pending Tracker cohesive graphite + silver + icy-blue visual system.
    Presentation only: no markup, tracking, animations, or behavior changed. */
 :root{
@@ -898,7 +907,7 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#a8bac9,#7997aa); 
  --card:#14202c;
  --text:#cbd6e0;
  --muted:#96a9ba;
- --brand:#89b8da;
+ --brand:var(--pt-accent-bright);
  --brand2:#6c96b5;
  --border:#344556;
  --shadow:0 14px 32px #0003;
@@ -928,15 +937,15 @@ body{
 .pt-metric strong,.pt-dash-stat strong,.pt-dash-feecard strong,.pt-dash-block b,
 .pt-dash-block a,.pt-dash-tx>span,.pt-dash-summary summary,
 .pt-chain-how-steps span,.pt-chain-how summary,.pt-chain-back a,
-.pt-dash-block-index,.pt-chain-intro summary{color:#a8c9df}
+.pt-dash-block-index,.pt-chain-intro summary{color:var(--pt-accent)}
 .pt-insight p,.pt-chain-how-intro>p,.pt-dash-summary>p{color:#b8c9d6}
-.pt-dash-blocks-premium .pt-dash-block:hover{border-color:#89b8da}
+.pt-dash-blocks-premium .pt-dash-block:hover{border-color:var(--pt-accent-bright)}
 .pt-dash-summary{background:linear-gradient(145deg,#1b2d3a,#12212c)}
-.pt-dash-tx:hover b{color:#a8c9df}
-.pt-chain-back a:hover{background:#253b4d;border-color:#89b8da}
+.pt-dash-tx:hover b{color:var(--pt-accent)}
+.pt-chain-back a:hover{background:#253b4d;border-color:var(--pt-accent-bright)}
 .pt-dash-blocks .pt-dash-waiting-stop{border-color:#7a9cb5}
 .pt-dash-waiting-node{border-color:#8fb1c9;color:#c1d7e6}
-.pt-dash-waiting-time,.pt-dash-eth-index,.pt-dash-eth-block a{color:#a8c9df}
+.pt-dash-waiting-time,.pt-dash-eth-index,.pt-dash-eth-block a{color:var(--pt-accent)}
 
 
 /* Final visual balance: neutral graphite and silver lead, blue is an accent.
@@ -944,10 +953,10 @@ body{
 :root{
  --bg:#0b0e13;
  --card:#171b22;
- --text:#d4d6d9;
+ --text:var(--pt-text);
  --muted:#9da3ab;
  --border:#3a414a;
- --brand:#89b8da;
+ --brand:var(--pt-accent-bright);
  --brand2:#779ab4;
 }
 .pt-searchbox,.pt-chain-search-first,.pt-insight,.pt-chain-how{
@@ -963,13 +972,13 @@ body{
 .pt-dash-block b,.pt-dash-summary summary,
 .pt-chain-how-steps span,.pt-chain-how summary,
 .pt-dash-block-index,.pt-chain-intro summary{color:#d1d4d8}
-.pt-dash-block a,.pt-dash-tx>span,.pt-chain-back a{color:#a8c9df}
+.pt-dash-block a,.pt-dash-tx>span,.pt-chain-back a{color:var(--pt-accent)}
 .pt-dash-top h2,.pt-dash-heading h3,.pt-dash-summary h3,
 .pt-chain-how-intro h2{color:#d9dce0}
 .pt-eyebrow,.pt-search-label{color:#aeb6c0}
 .pt-lead,.pt-section-head p,.pt-section-sub,
 .pt-metric span,.pt-metric small{color:#a0a7af}
-.pt-tabs button.selected{background:#303c47;border-color:#89b8da;color:#dbe4ea}
+.pt-tabs button.selected{background:#303c47;border-color:var(--pt-accent-bright);color:#dbe4ea}
 .pt-chain-back a{background:#202830;border-color:#49525d}
 .pt-dash-live{color:#9ed0ba;background:#1a2c27;border-color:#3d6658}
 .pt-chain-bitcoin{
@@ -985,7 +994,7 @@ body{
 .pt-chain-gateway .pt-chain-gateway-card{
  background:linear-gradient(145deg,#252a31 0%,#1a2027 100%)!important;
  border-color:#4a515a!important;
- color:#d7dce0!important;
+ color:var(--pt-text-strong)!important;
 }
 .pt-chain-gateway .pt-chain-gateway-btc .pt-chain-gateway-icon{
  background:linear-gradient(145deg,#f9c35b 0%,#f0a925 56%,#d88a16 100%)!important;
@@ -998,7 +1007,7 @@ body{
 }
 .pt-chain-gateway .pt-chain-gateway-copy strong{color:#e0e3e7!important}
 .pt-chain-gateway .pt-chain-gateway-copy small{color:#a9b2bc!important}
-.pt-chain-gateway .pt-chain-gateway-copy em{color:#a8c9df!important}
+.pt-chain-gateway .pt-chain-gateway-copy em{color:var(--pt-accent)!important}
 .pt-home-live [class*="card"]{
  border-color:#414a53;
 }
@@ -1016,13 +1025,13 @@ body{
  color:#a2cbbb!important;
 }
 .pt-home-live .pt-home-live-row{border-top-color:#414a53!important}
-.pt-home-live .pt-home-live-row b{color:#d7dce0!important}
-.pt-home-live .pt-home-live-row:hover b{color:#a8c9df!important}
+.pt-home-live .pt-home-live-row b{color:var(--pt-text-strong)!important}
+.pt-home-live .pt-home-live-row:hover b{color:var(--pt-accent)!important}
 
 /* Ethereum brand blue: homepage and Ethereum explorer badge only. */
 .pt-chain-gateway .pt-chain-gateway-eth .pt-chain-gateway-icon,
 .pt-chain-ethereum{
- background:linear-gradient(145deg,#8198ef 0%,#627eea 55%,#4866c9 100%)!important;
+ background:linear-gradient(145deg,#8198ef 0%,var(--pt-eth-blue) 55%,#4866c9 100%)!important;
  color:#f8faff!important;
  border:1px solid #9aafff!important;
  box-shadow:inset 0 1px 0 #ffffff35,0 6px 18px #0004!important;
@@ -1120,7 +1129,7 @@ body{
 }
 .pt-chain-gateway .pt-chain-gateway-eth .pt-chain-gateway-icon,
 .pt-chain-ethereum{
- background:linear-gradient(145deg,#839af0,#627eea 60%,#4c65c6)!important;
+ background:linear-gradient(145deg,#839af0,var(--pt-eth-blue) 60%,#4c65c6)!important;
  color:#f8faff!important;
 }
 
@@ -1142,15 +1151,15 @@ body{
 }
 .pt-shell .pt-network-drawer>summary{color:#d9e0e6!important}
 .pt-shell .pt-network-drawer>summary small{color:#afbdc9!important}
-.pt-shell .pt-network-drawer>summary>span:last-child{color:#a8c9df!important}
+.pt-shell .pt-network-drawer>summary>span:last-child{color:var(--pt-accent)!important}
 .pt-shell .pt-learn-simple .pt-term,
 .pt-shell .pt-learn-simple .pt-glossary-inner .pt-term{
  background:linear-gradient(145deg,#30363e,#252c34)!important;
- border-color:#58636d!important;
+ border-color:var(--pt-border)!important;
  box-shadow:inset 0 1px 0 rgba(255,255,255,.045)!important;
 }
 .pt-shell .pt-learn-simple .pt-term summary{color:#e1e5e9!important}
-.pt-shell .pt-learn-simple .pt-term summary span{color:#a8c9df!important}
+.pt-shell .pt-learn-simple .pt-term summary span{color:var(--pt-accent)!important}
 .pt-shell .pt-learn-simple .pt-term p{color:#b8c4ce!important}
 
 
@@ -1196,7 +1205,7 @@ body{
 .pt-shell .pt-learn-simple .pt-term,
 .pt-shell .pt-learn-simple .pt-glossary-inner .pt-term{
  background:linear-gradient(145deg,#30363e,#252c34)!important;
- border-color:#58636d!important;
+ border-color:var(--pt-border)!important;
 }
 .pt-shell .pt-activity-row,.pt-shell .pt-confirm-item{color:#d3dce4!important}
 .pt-shell .pt-overview-mark,.pt-shell .pt-fee-intro-icon{
