@@ -5,7 +5,41 @@ import Link from "next/link";
 type Net={btc?:{pending?:number|null;fastestFee?:number|null;halfHourFee?:number|null;hourFee?:number|null;economyFee?:number|null;minimumFee?:number|null;projectedBlocks?:Array<{position:number;transactionCount:number|null;feeRange:number[]|null;medianFee:number|null}>;latestBlock?:{height:number|null;id:string|null;ageMinutes:number;transactionCount:number|null}|null;recentTransactions?:Array<{id:string;fee:number|null;vsize:number|null}>;congestion?:string;explanation?:string};eth?:{gasGwei?:number|null;latestBlock?:string|number|null;recentBlocks?:Array<{height:number|string|null;hash:string|null;transactionsCount:number|null;timestamp:string|null}>;recentTransactions?:Array<{hash:string;status:string|null;block:number|null}>;explanation?:string}};const fmt=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(v);
 export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
  const [data,setData]=useState<Net|null>(null);const [loading,setLoading]=useState(true);const [updated,setUpdated]=useState("");
- useEffect(()=>{let active=true;async function refresh(){try{const r=await fetch("/api/network",{cache:"no-store"});if(!r.ok)throw Error();const j=await r.json();if(active){setData(j);setUpdated(new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));}}catch{}finally{if(active)setLoading(false)}}refresh();const timer=setInterval(refresh,15000);return()=>{active=false;clearInterval(timer)}},[]);
+ const [liveConnected,setLiveConnected]=useState(false);
+ useEffect(()=>{
+   let active=true, inFlight=false, lastFetch=0;
+   let socket:WebSocket|null=null;
+   let reconnect:ReturnType<typeof setTimeout>|null=null;
+   let pendingRefresh:ReturnType<typeof setTimeout>|null=null;
+   let retry=0;
+   async function refresh(){
+     if(!active||inFlight)return;
+     inFlight=true;lastFetch=Date.now();
+     try{const r=await fetch("/api/network",{cache:"no-store"});if(!r.ok)throw Error();
+       const j=await r.json();if(active){setData(j);setUpdated(new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));}
+     }catch{}finally{inFlight=false;if(active)setLoading(false)}
+   }
+   function scheduleRefresh(){
+     if(!active||pendingRefresh)return;
+     pendingRefresh=setTimeout(()=>{pendingRefresh=null;void refresh()},Math.max(150,2500-(Date.now()-lastFetch)));
+   }
+   function connect(){
+     if(!active||chain!=="bitcoin")return;
+     try{
+       socket=new WebSocket("wss://mempool.space/api/v1/ws");
+       socket.onopen=()=>{if(!active)return;retry=0;setLiveConnected(true);socket?.send(JSON.stringify({action:"want",data:["blocks","mempool-blocks","stats"]}));scheduleRefresh()};
+       socket.onmessage=(event)=>{if(!active)return;try{
+         const message=JSON.parse(String(event.data));
+         if(message.block||message.blocks||message["mempool-blocks"]||message["mempool-blocks-transactions"]||message.mempoolInfo||message.fees||message.conversions)scheduleRefresh();
+       }catch{}};
+       socket.onclose=()=>{if(!active)return;setLiveConnected(false);retry=Math.min(retry+1,5);reconnect=setTimeout(connect,Math.min(30000,1000*Math.pow(2,retry)))};
+       socket.onerror=()=>socket?.close();
+     }catch{setLiveConnected(false);reconnect=setTimeout(connect,10000)}
+   }
+   void refresh();connect();
+   const fallback=setInterval(()=>{void refresh()},chain==="bitcoin"?8000:15000);
+   return()=>{active=false;setLiveConnected(false);clearInterval(fallback);if(reconnect)clearTimeout(reconnect);if(pendingRefresh)clearTimeout(pendingRefresh);if(socket){socket.onclose=null;socket.close()}};
+ },[chain]);
  const [blockFlash,setBlockFlash]=useState(false);
  const [shiftCount,setShiftCount]=useState(0);
 
@@ -29,7 +63,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
     {isBtc?<div>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,marginBottom:18,color:"#adc4d0",fontSize:11,letterSpacing:"0.08em",fontWeight:700}}><span>NOW · MEMPOOL</span><span>PROJECTED BLOCKS →</span></div>
       <div className="pt-chain-flow" aria-label="Animated illustration of transactions moving toward projected Bitcoin blocks">
-        <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> LIVE MEMPOOL FLOW</span><span>Animated flow · live projected fees and transactions</span></div>
+        <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> {liveConnected?"LIVE MEMPOOL FLOW":"LIVE DATA · RECONNECTING"}</span><span>Animated flow · live projected fees and transactions</span></div>
         <div className="pt-chain-flow-scene">
           <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
           <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} key={"chain-"+shiftCount}>
