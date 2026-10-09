@@ -1048,3 +1048,16 @@ body{
 .pt-home-live [class*="card"]:not(.pt-chain-flow-hex){
  background-color:#1b2229;
 }
+
+/* Home activity panels use pt-home-live-panel, not a generic card class. */
+.pt-home-live .pt-home-live-panel{
+ background:linear-gradient(145deg,#22282f,#171d24)!important;
+ border-color:#454e58!important;
+}
+.pt-home-live .pt-home-live-status{
+ background:#26322f!important;
+ color:#a2cbbb!important;
+}
+.pt-home-live .pt-home-live-row{border-top-color:#414a53!important}
+.pt-home-live .pt-home-live-row b{color:#d7dce0!important}
+.pt-home-live .pt-home-live-row:hover b{color:#a8c9df!important}
