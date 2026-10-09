@@ -42,7 +42,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
  const firstMatch=matching[0]?.position;
  const selectedPosition=firstMatch??(feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1]?1:null);
- const feeEstimate=!observed?"Not available":confirmed?"Already confirmed":selectedPosition?"~"+selectedPosition*10+" min*":"Not enough data";
+ const feeEstimate=!observed?"Not available":confirmed?"Already confirmed":selectedPosition?"Possible ~"+selectedPosition*10+" min*":"Not enough data";
  const blockHeight=result?.status?.block_height??tx?.status?.block_height;
  const confirmations=confirmed&&blockHeight!=null&&overview?.btc?.height!=null?Math.max(1,overview.btc.height-blockHeight+1):confirmed?1:0;
  const inputs: Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}>=(tx?.vin??[]) as Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}>;
@@ -86,16 +86,18 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    <section className="pt-tx-stage">
     <div className="pt-tx-stage-head"><div><div className="pt-eyebrow">LIVE TRANSACTION OUTLOOK</div><h2>{confirmed?"Confirmed in block #"+(blockHeight??"—"):observed?"Where could it confirm?":"Waiting for network data"}</h2></div><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div>
     <div className="pt-tx-estimate"><span>YOUR TRANSACTION FEE RATE</span><strong>{rate(feeRate)}</strong><span>{confirmed?"CONFIRMATIONS":"POSSIBLE CONFIRMATION TIME"}</span><strong>{confirmed?number(confirmations):feeEstimate}</strong></div>
-    {!confirmed&&observed&&<div className="pt-tx-position-guide">{selectedPosition?"Your arrow follows the current fee estimate as the network changes.":"Your transaction is pending, but we cannot estimate a block yet."}</div>}
+    {!confirmed&&observed&&<div className="pt-tx-position-guide">{selectedPosition?"The arrow highlights a projected block with a matching fee range, not your exact position in line.":"Your transaction is pending, but we cannot estimate a block yet."}</div>}
     <div className="pt-tx-block-track">
-     {!confirmed&&observed&&<div className="pt-tx-position-row">{Array.from({length:5},(_,i)=><div key={i} className="pt-tx-position-cell">{selectedPosition===i+1&&<div className="pt-tx-position pt-tx-arrow-only"><strong>YOUR TX</strong><span aria-hidden="true">↓</span></div>}</div>)}{!selectedPosition&&<div className="pt-tx-position-unknown">Your block is unknown</div>}</div>}
-     <div className="pt-tx-block-grid">{(blocks.length?blocks:[1,2,3,4,5].map(position=>({position,transactionCount:null,feeRange:null}))).map(block=><div className={"pt-tx-block"+(!confirmed&&selectedPosition===block.position?" highlighted":"")} key={block.position}>
+     {confirmed?<div className="pt-tx-confirmed-message">✓ Confirmed in Bitcoin block #{number(blockHeight)} · {number(confirmations)} confirmation(s). Your transaction is no longer waiting in the mempool.</div>:null}
+     {!confirmed&&observed&&!selectedPosition?<p className="pt-tx-position-unknown">No reliable projected block match is available yet.</p>:null}
+     {!confirmed&&<div className="pt-tx-block-grid">{(blocks.length?blocks:[1,2,3,4,5].map(position=>({position,transactionCount:null,feeRange:null}))).map(block=><div className={"pt-tx-block"+(!confirmed&&selectedPosition===block.position?" highlighted":"")} key={block.position}>
+      {observed&&selectedPosition===block.position?<div className="pt-tx-position pt-tx-arrow-only pt-tx-arrow-in-block"><strong>YOUR TX</strong><span aria-hidden="true">↓</span></div>:null}
       <div className="pt-tx-block-label">PROJECTED BLOCK {block.position}</div>
       <div className="pt-tx-block-time">~{block.position*10} <span>min</span></div>
       <div className="pt-tx-block-tiles" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{opacity:block.transactionCount==null?.22:i<Math.max(1,Math.min(15,Math.round(block.transactionCount/220)))?1:.17}}/>)}</div>
       <strong>{block.feeRange?number(block.feeRange[0])+"–"+number(block.feeRange[1]):"—"} <span>sat/vB</span></strong>
       <small>{block.transactionCount==null?"Loading live data":number(block.transactionCount)+" transactions"}</small>
-     </div>)}</div>
+     </div>)}</div>}
      <p className="pt-tx-block-caveat">{confirmed?"These are upcoming projected blocks, not the block that confirmed your transaction.":observed?"*The arrow indicates a fee-range match, not a confirmed place in line. Block times average around 10 minutes and can vary.":"Projected blocks describe network activity, not a transaction we can currently locate."}</p>
     </div>
    </section>
