@@ -2506,3 +2506,21 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 }
 .pt-chain-flow.pt-eth-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>span{color:#b9cbff!important}
 .pt-chain-flow.pt-eth-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>strong{color:#fff!important;text-shadow:0 1px 6px #060e24!important}
+
+/* Chain-specific colors also apply when viewing an individual transaction.
+   Use flow identity instead of relying on the explorer page wrapper. */
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-pending{
+ border-color:#d89a25!important;
+ filter:drop-shadow(0 0 5px #ffb42b45)!important;
+}
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-pending::before,
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-pending::after{border-color:#dba02f!important}
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-cell-live{stroke:#e5a32f!important;fill:#392b16!important}
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-traveler{stroke:#ffd367!important;fill:#ffb73f!important}
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-pending>span{color:#ffce66!important}
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-confirmed{
+ border-color:#ffb63b!important;
+ background:linear-gradient(155deg,#493418,#1b1e21)!important;
+ filter:drop-shadow(0 0 12px #ffb63b55)!important;
+}
+.pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-confirmed>span{color:#ffd16b!important}
