@@ -1,0 +1,17 @@
+import Link from "next/link";
+export const metadata={title:"Explore Bitcoin & Ethereum | Pending Tracker",description:"Explore live Bitcoin and Ethereum blocks, transactions and network activity with clear explanations."};
+async function get(url:string){try{const r=await fetch(url,{next:{revalidate:20},signal:AbortSignal.timeout(7000)});return r.ok?await r.json():null}catch{return null}}
+const n=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US").format(v);
+export default async function Explore(){
+ const [btc,eth,fees,pool]=await Promise.all([get("https://mempool.space/api/blocks"),get("https://eth.blockscout.com/api/v2/blocks?type=block"),get("https://mempool.space/api/v1/fees/recommended"),get("https://mempool.space/api/mempool")]);
+ const btcBlocks=Array.isArray(btc)?btc.slice(0,10):[];
+ const ethBlocks=Array.isArray(eth?.items)?eth.items.slice(0,10):[];
+ return <main className="pt-explorer">
+  <div className="pt-eyebrow">THE BLOCKCHAIN, EXPLAINED</div><h1>Explore the blockchain</h1><p className="pt-explorer-lead">See real blocks and transactions, understand what they mean, and follow the activity behind Bitcoin and Ethereum.</p>
+  <div className="pt-explore-top"><Link href="/#transaction-search">↗ Track a transaction</Link><span>Live public blockchain data · No account required</span></div>
+  <div className="pt-explorer-networks">
+   <section className="pt-explorer-panel"><div className="pt-eyebrow">₿ BITCOIN</div><h2>Bitcoin blocks</h2><p>Each block is a batch of confirmed Bitcoin transactions. A new one arrives roughly every 10 minutes on average.</p><div className="pt-explorer-stats"><div><span>Waiting transactions</span><strong>{n(pool?.count)}</strong></div><div><span>Suggested priority fee</span><strong>{fees?.fastestFee==null?"—":fees.fastestFee+" sat/vB"}</strong></div></div><h3>Recently confirmed blocks</h3>{btcBlocks.length?btcBlocks.map((b:any)=><Link className="pt-explorer-block-row" href={"/btc/block/"+b.id} key={b.id}><span><b>Block #{n(b.height)}</b><small>{n(b.tx_count)} transactions · {new Date(b.timestamp*1000).toLocaleString("en-US")}</small></span><span>Explore →</span></Link>):<p>Bitcoin blocks are temporarily unavailable.</p>}</section>
+   <section className="pt-explorer-panel"><div className="pt-eyebrow">◆ ETHEREUM</div><h2>Ethereum blocks</h2><p>Ethereum blocks contain transactions, token transfers, and smart-contract activity. Blocks usually arrive around every 12 seconds.</p><div className="pt-explorer-stats"><div><span>Latest block</span><strong>{n(ethBlocks[0]?.height)}</strong></div><div><span>Network</span><strong>Ethereum mainnet</strong></div></div><h3>Recently confirmed blocks</h3>{ethBlocks.length?ethBlocks.map((b:any)=><Link className="pt-explorer-block-row" href={"/eth/block/"+b.hash} key={b.hash}><span><b>Block #{n(b.height)}</b><small>{n(b.tx_count??b.transactions_count)} transactions · {b.timestamp?new Date(b.timestamp).toLocaleString("en-US"):"Recently added"}</small></span><span>Explore →</span></Link>):<p>Ethereum blocks are temporarily unavailable.</p>}</section>
+  </div><p className="pt-explorer-note">Live blockchain records are provided by mempool.space and Blockscout. Suggested fees and confirmation times are estimates, not guarantees.</p>
+ </main>;
+}
