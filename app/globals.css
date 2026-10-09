@@ -1421,3 +1421,21 @@ body{
  .pt-chain-page .pt-chain-search,.pt-explorer .pt-explorer-panel,
  .pt-tx-page .pt-tx-stage{box-shadow:0 8px 24px #0000002b,inset 0 1px 0 #ffffff12!important}
 }
+
+
+/* Restore the original open, edge-to-edge projected-block section.
+   Previous theme rules accidentally overrode its intentional transparent,
+   square-edged layout via !important. Never theme the motion visualization. */
+.pt-chain-page section.pt-dash-blocks{
+ background:transparent!important;
+ border:0!important;
+ border-top:1px solid #40586a!important;
+ border-bottom:1px solid #40586a!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ padding:30px 0!important;
+}
+.pt-chain-page section.pt-dash-blocks .pt-chain-flow{
+ border-radius:22px;
+ overflow:hidden;
+}
