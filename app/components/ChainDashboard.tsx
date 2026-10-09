@@ -1,13 +1,22 @@
 "use client";
 import "./explorer-dashboard.css";
-import {useEffect,useState} from "react";
+import {useEffect,useRef,useState} from "react";
 import Link from "next/link";
 type Net={btc?:{pending?:number|null;fastestFee?:number|null;halfHourFee?:number|null;hourFee?:number|null;economyFee?:number|null;minimumFee?:number|null;projectedBlocks?:Array<{position:number;transactionCount:number|null;feeRange:number[]|null;medianFee:number|null}>;latestBlock?:{height:number|null;id:string|null;ageMinutes:number;transactionCount:number|null}|null;recentTransactions?:Array<{id:string;fee:number|null;vsize:number|null}>;congestion?:string;explanation?:string};eth?:{gasGwei?:number|null;latestBlock?:string|number|null;recentBlocks?:Array<{height:number|string|null;hash:string|null;transactionsCount:number|null;timestamp:string|null}>;recentTransactions?:Array<{hash:string;status:string|null;block:number|null}>;explanation?:string}};const fmt=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(v);
 export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
  const [data,setData]=useState<Net|null>(null);const [loading,setLoading]=useState(true);const [updated,setUpdated]=useState("");
  useEffect(()=>{let active=true;async function refresh(){try{const r=await fetch("/api/network",{cache:"no-store"});if(!r.ok)throw Error();const j=await r.json();if(active){setData(j);setUpdated(new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));}}catch{}finally{if(active)setLoading(false)}}refresh();const timer=setInterval(refresh,15000);return()=>{active=false;clearInterval(timer)}},[]);
- const [lastConfirmed,setLastConfirmed]=useState<number|null>(null);const [blockFlash,setBlockFlash]=useState(false);
- useEffect(()=>{const height=data?.btc?.latestBlock?.height;if(height==null)return;if(lastConfirmed!==null&&height>lastConfirmed){setBlockFlash(true);const timer=setTimeout(()=>setBlockFlash(false),5500);setLastConfirmed(height);return()=>clearTimeout(timer)}setLastConfirmed(height)},[data?.btc?.latestBlock?.height]);
+ const [blockFlash,setBlockFlash]=useState(false);
+ const [shiftCount,setShiftCount]=useState(0);
+
+ const lastHeightRef=useRef<number|null>(null);
+ const flashTimerRef=useRef<ReturnType<typeof setTimeout>|null>(null);
+ useEffect(()=>{const height=data?.btc?.latestBlock?.height;if(height==null)return;
+   const prev=lastHeightRef.current;
+   if(prev!==null&&height>prev){setShiftCount(n=>n+1);setBlockFlash(true);if(flashTimerRef.current)clearTimeout(flashTimerRef.current);flashTimerRef.current=setTimeout(()=>setBlockFlash(false),1800);}
+   lastHeightRef.current=height;
+ },[data?.btc?.latestBlock?.height]);
+ useEffect(()=>()=>{if(flashTimerRef.current)clearTimeout(flashTimerRef.current)},[]);
  const btc=data?.btc,eth=data?.eth,isBtc=chain==="bitcoin";
  const stat=isBtc?[{label:"Waiting transactions",value:fmt(btc?.pending),hint:"Payments waiting for a Bitcoin block"},{label:"Latest block",value:btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height),hint:"Newest confirmed batch of transactions"},{label:"Priority fee guide",value:btc?.fastestFee==null?"—":fmt(btc.fastestFee)+" sat/vB",hint:"Estimated competitive fee rate"},{label:"Network traffic",value:btc?.congestion??"—",hint:"A rough view of how crowded the network is"}]:[{label:"Latest block",value:eth?.latestBlock==null?"—":"#"+eth.latestBlock,hint:"Newest recorded Ethereum block"},{label:"Average gas price",value:eth?.gasGwei==null?"—":fmt(eth.gasGwei)+" Gwei",hint:"Estimated price for one unit of gas"},{label:"Block rhythm",value:"~12 seconds",hint:"Typical Ethereum block interval, not a promise"},{label:"Network",value:"Mainnet",hint:"Ethereum's public production blockchain"}];
  const blocks=isBtc?(btc?.projectedBlocks??[]).slice(0,5).map(b=>({id:"p"+b.position,title:"Next ~"+b.position*10+" min",sub:"Projected block "+b.position,range:b.feeRange?.length?fmt(b.feeRange[0])+"–"+fmt(b.feeRange[1])+" sat/vB":"Fee range unavailable",median:b.medianFee,count:b.transactionCount==null?"Transactions unavailable":fmt(b.transactionCount)+" transactions",href:null as string|null})):(eth?.recentBlocks??[]).slice(0,5).map(b=>({id:b.hash??String(b.height),title:"Block #"+b.height,sub:"Recently recorded",range:"Confirmed block",median:null as number|null,count:b.transactionsCount==null?"Transaction count unavailable":fmt(b.transactionsCount)+" transactions",href:b.hash?"/eth/block/"+b.hash:null as string|null}));
@@ -23,7 +32,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
         <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> LIVE MEMPOOL FLOW</span><span>Animated flow · live projected fees and transactions</span></div>
         <div className="pt-chain-flow-scene">
           <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
-          <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")}>
+          <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} key={"chain-"+shiftCount}>
             <div className={"pt-chain-flow-unit pt-chain-flow-confirmed-unit"+(blockFlash?" pt-chain-flow-new-confirmation":"")}>
               <div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span>CONFIRMED</span><strong>{btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height)}</strong><small>on chain</small></div>
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{btc?.latestBlock?.transactionCount==null?"Confirmed":fmt(btc.latestBlock.transactionCount)+" transactions"}</span></div>
@@ -38,7 +47,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
             </div>)}
           </div>
         </div>
-        <div className="pt-chain-flow-confirmed"><span className={blockFlash?"pt-chain-confirmed-flash":""}>● {blockFlash?"NEW BLOCK CONFIRMED":"LATEST CONFIRMED BLOCK"} {btc?.latestBlock?.height==null?"":("#"+fmt(btc.latestBlock.height))}</span><span>Projected shapes shift only when a new block is detected. Confirmation is verified against live network height.</span></div>
+        <div className="pt-chain-flow-confirmed"><span className={blockFlash?"pt-chain-confirmed-flash":""}>● {blockFlash?"NEW BLOCK CONFIRMED":"LATEST CONFIRMED BLOCK"} {btc?.latestBlock?.height==null?"":("#"+fmt(btc.latestBlock.height))}</span><span>Queue advances when a new block is detected; projections are recalculated from the live mempool.</span></div>
       </div>
       <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",gap:12,paddingTop:18,borderTop:"1px solid #344c5c"}}>
         <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}><strong style={{color:"#ebcf9f"}}>What you're seeing:</strong> projected transaction groups, not actual scheduled blocks.</span>
