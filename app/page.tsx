@@ -121,6 +121,7 @@ export default function Page() {
       </div>
     </div>
 
+    <div className="pt-explore-link"><a href="/explore">Explore Bitcoin &amp; Ethereum blocks →</a><span>Browse live blocks and transactions with plain-English explanations</span></div>
     <section className="pt-section pt-journey" id="how-it-works">
       <div className="pt-eyebrow">TRACKING MADE SIMPLE</div><h2>Three steps. One clear answer.</h2>
       <p className="pt-section-sub">No wallet connection. No signup. Just your transaction ID.</p>
