@@ -20,38 +20,22 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
     {isBtc?<div>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,marginBottom:18,color:"#adc4d0",fontSize:11,letterSpacing:"0.08em",fontWeight:700}}><span>NOW · MEMPOOL</span><span>PROJECTED BLOCKS →</span></div>
       <div className="pt-chain-flow" aria-label="Animated illustration of transactions moving toward projected Bitcoin blocks">
-        <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> LIVE MEMPOOL FLOW</span><span>Visual illustration · live data below</span></div>
+        <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> LIVE MEMPOOL FLOW</span><span>Animated flow · live projected fees and transactions</span></div>
         <div className="pt-chain-flow-scene">
           <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
           <div className="pt-chain-flow-shapes">
             {blocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
               <div className="pt-chain-flow-hex"><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
-              <div className="pt-chain-flow-caption">~{(i+1)*10} min <span>· {b.count.replace(" transactions","")} tx</span></div>
+              <div className="pt-chain-flow-caption">
+                <span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
+                <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
+                <span className="pt-chain-flow-tx">{b.count} projected</span>
+              </div>
             </div>)}
           </div>
         </div>
         <div className="pt-chain-flow-confirmed"><span className={blockFlash?"pt-chain-confirmed-flash":""}>● {blockFlash?"NEW BLOCK CONFIRMED":"LATEST CONFIRMED BLOCK"} {btc?.latestBlock?.height==null?"":("#"+fmt(btc.latestBlock.height))}</span><span>Animation represents activity; block confirmation updates only when live network data changes.</span></div>
       </div>
-      <div style={{overflowX:"auto",width:"100%",WebkitOverflowScrolling:"touch"}}><div style={{display:"grid",gridTemplateColumns:"repeat(5,minmax(145px,1fr))",gap:0,paddingBottom:12,minWidth:750}}>
-        {blocks.length?blocks.map((b,i)=><div key={b.id} style={{display:"flex",flexDirection:"column",gap:0,minWidth:0,padding:"0 13px",borderLeft:"1px solid #3c5364"}}>
-          <div style={{display:"flex",alignItems:"center",gap:9,marginBottom:17}}><span style={{display:"inline-block",width:7,height:7,borderRadius:"50%",background:i===0?"#e7c78e":"#7f9cab",flexShrink:0}}/><span style={{fontSize:11,fontWeight:700,color:"#bed0d9"}}>BLOCK {i+1}</span></div>
-          <strong style={{display:"block",fontSize:"clamp(22px,2.7vw,35px)",lineHeight:1.12,letterSpacing:"-0.04em",fontWeight:650,color:"#f1d29d"}}>~{(i+1)*10}<span style={{fontSize:13,letterSpacing:0,fontWeight:500,color:"#bdced8",marginLeft:4}}>min</span></strong>
-          <span style={{display:"block",fontSize:11,color:"#a8c1ce",marginTop:7,marginBottom:22}}>Typical cumulative time</span>
-          <div style={{height:3,width:"100%",background:"#3b5263",borderRadius:6,overflow:"hidden",marginBottom:19}}><div style={{width:(100-i*15)+"%",height:"100%",background:i===0?"#e7c78e":"#7593a5",borderRadius:6}}/></div>
-          <div style={{display:"flex",flexDirection:"column",gap:5,marginTop:1}}>
-            <span style={{fontSize:11,color:"#b9cbd5",fontWeight:600}}>Typical fee in this block</span>
-            <div style={{display:"flex",alignItems:"baseline",gap:5,flexWrap:"wrap"}}>
-              <span style={{fontSize:"clamp(28px,3.2vw,42px)",fontWeight:750,letterSpacing:"-0.05em",lineHeight:1.1,color:"#f3d298"}}>{b.median==null?"—":fmt(b.median)}</span>
-              <span style={{fontSize:13,color:"#e8d0a6",fontWeight:600}}>sat/vB</span>
-            </div>
-            <span style={{fontSize:10,color:"#98b1bf",lineHeight:1.5}}>Projected range: {b.range}</span>
-          </div>
-          <div style={{marginTop:13,paddingTop:11,borderTop:"1px solid #3c5363",display:"flex",flexDirection:"column",gap:3}}>
-            <span style={{fontSize:11,color:"#a9c0cb"}}>Transactions in this group</span>
-            <span style={{fontSize:14,color:"#e3edf2",fontWeight:650}}>{b.count}</span>
-          </div>
-        </div>):<p className="pt-dash-empty">Live mempool projections are temporarily unavailable.</p>}
-      </div></div>
       <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",gap:12,paddingTop:18,borderTop:"1px solid #344c5c"}}>
         <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}><strong style={{color:"#ebcf9f"}}>What you're seeing:</strong> projected transaction groups, not actual scheduled blocks.</span>
         <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}>Blocks average ~10 minutes, but individual waits vary.</span>
