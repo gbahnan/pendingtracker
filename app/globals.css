@@ -2389,3 +2389,40 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-shell .pt-reference-table a{color:var(--pt-unified-link)!important}
 .pt-chain-page .pt-dash-tx,
 .pt-shell .pt-reference-table-row{border-color:#27475c!important}
+
+/* Explorer hero particle fields: same fine dotted perspective as homepage.
+   Bitcoin amber / Ethereum electric blue. Decoration only; no layout/motion edits. */
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-hero,
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-hero{
+ position:relative!important;
+ isolation:isolate;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-hero::before,
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-hero::before{
+ content:"";
+ position:absolute;
+ z-index:-1;
+ pointer-events:none;
+ top:-20px;
+ right:-5%;
+ width:70%;
+ height:320px;
+ opacity:.64;
+ background-size:19px 19px,27px 27px;
+ background-position:0 0,9px 10px;
+ mask-image:radial-gradient(ellipse at 78% 44%,#000 8%,transparent 76%);
+ -webkit-mask-image:radial-gradient(ellipse at 78% 44%,#000 8%,transparent 76%);
+ transform:perspective(560px) rotateY(-20deg) rotateZ(-7deg);
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-hero::before{
+ background-image:radial-gradient(circle,#f3b84c 1px,transparent 1.65px),radial-gradient(circle,#a87520 1px,transparent 1.65px);
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-hero::before{
+ background-image:radial-gradient(circle,#719cff 1px,transparent 1.65px),radial-gradient(circle,#426bd5 1px,transparent 1.65px);
+}
+@media(max-width:700px){
+ .pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-hero::before,
+ .pt-chain-page:has(.pt-chain-ethereum) .pt-chain-hero::before{
+  width:95%;right:-2%;height:210px;opacity:.35;
+ }
+}
