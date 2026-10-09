@@ -352,3 +352,11 @@
  70%{opacity:.65}
  100%{transform:translate(var(--hop-x),var(--hop-y));opacity:0}
 }
+
+/* Transaction detail uses the exact same block timeline and adds only a locator arrow. */
+.pt-dash-tracking{padding:0!important;margin:0!important;background:transparent!important}
+.pt-dash-tracking .pt-chain-flow{margin:0!important}
+.pt-chain-tracked-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#d8bf92;font-size:10px;letter-spacing:.06em;font-weight:750;text-align:center;white-space:nowrap;margin-top:8px}
+.pt-chain-tracked-arrow span{font-size:23px;line-height:1;color:#e2c99b}
+.pt-tx-block-track .pt-dash-tracking{width:100%}
+.pt-tx-block-track{overflow-x:auto}
