@@ -1313,41 +1313,41 @@ body{
 .pt-tx-page .pt-tx-back a{background:#29343e!important;border-color:#566a79!important;color:#c5d8e5!important}
 
 
-/* OBSIDIAN & ICE — refined card contrast; no layout or animation edits.
+/* OBSIDIAN & FROSTED TITANIUM — final palette; no layout or animation edits.
    All layout and blockchain motion rules remain in their existing files. */
 :root{
  color-scheme:dark;
  --bg:#090d12;
- --card:#35424d;
- --text:#f5f7fa;
- --muted:#c7d2db;
- --border:#536372;
- --brand:#a7ddf5;
- --pt-surface-1:#35424d;
- --pt-surface-2:#2c3843;
+ --card:#3d4853;
+ --text:#f7f9fc;
+ --muted:#c8d2dc;
+ --border:#596a78;
+ --brand:#a8ddf4;
+ --pt-surface-1:#3d4853;
+ --pt-surface-2:#333e48;
  --pt-surface-3:#1b2732;
- --pt-line:#536372;
- --pt-fg:#f5f7fa;
- --pt-secondary:#c7d2db;
- --pt-link:#a7ddf5;
- --pt-border:#536372;
- --pt-accent:#a7ddf5;
+ --pt-line:#596a78;
+ --pt-fg:#f7f9fc;
+ --pt-secondary:#c8d2dc;
+ --pt-link:#a8ddf4;
+ --pt-border:#596a78;
+ --pt-accent:#a8ddf4;
  --pt-accent-bright:#d2effb;
 }
 html{background:#090d12}
 body{
- color:#f5f7fa;
+ color:#f7f9fc;
  background:radial-gradient(ellipse 75% 360px at 50% 0%,#192530 0%,#101922 45%,transparent 100%),linear-gradient(180deg,#090d12,#090d12 95%)!important;
  background-attachment:fixed!important;
 }
 .header{border-bottom:1px solid #303d48}
-.brand{color:#f5f7fa}
+.brand{color:#f7f9fc}
 .logo{background:linear-gradient(135deg,#8ac5e7,#455f76)!important;box-shadow:0 3px 16px #89c5e73b!important}
 .nav a{color:#c1d0da}
-.nav a:hover{background:#293641;color:#f5f7fa}
+.nav a:hover{background:#293641;color:#f7f9fc}
 .pt-shell .pt-hero h1,.pt-chain-page .pt-chain-hero h1,
-.pt-explorer h1,.pt-tx-page h1{color:#f5f7fa!important}
-.pt-eyebrow,.pt-section-head .pt-eyebrow{color:#a7ddf5!important}
+.pt-explorer h1,.pt-tx-page h1{color:#f7f9fc!important}
+.pt-eyebrow,.pt-section-head .pt-eyebrow{color:#a8ddf4!important}
 .pt-shell .pt-searchbox,.pt-shell .pt-home-live-panel,
 .pt-shell .pt-journey-step,.pt-shell .pt-network-drawer,
 .pt-shell .pt-learn-simple .pt-term,
@@ -1367,23 +1367,23 @@ body{
 .pt-tx-page .pt-tx-details,.pt-tx-page .pt-tx-ai,
 .pt-tx-page .pt-tx-more,.pt-tx-page .pt-tx-tech,
 .card{
- background:linear-gradient(150deg,#3b4854 0%,#35424d 48%,#2c3843 100%)!important;
- border-color:#536372!important;
+ background:linear-gradient(150deg,#414d58 0%,#3d4853 48%,#333e48 100%)!important;
+ border-color:#596a78!important;
  box-shadow:0 14px 36px #00000030,inset 0 1px 0 #ffffff14!important;
 }
 .pt-shell .pt-home-live-panel,.pt-shell .pt-network-drawer,
 .pt-chain-page .pt-chain-search,.pt-tx-page .pt-tx-stage{
- background:linear-gradient(140deg,#40505d 0%,#35424d 55%,#34424e 100%)!important;
+ background:linear-gradient(140deg,#46535f 0%,#3d4853 55%,#34424e 100%)!important;
  border-color:#566879!important;
 }
-.pt-shell .pt-journey-step>span{color:#a7ddf5!important;font-weight:900}
+.pt-shell .pt-journey-step>span{color:#a8ddf4!important;font-weight:900}
 .pt-shell .pt-journey-step{border-top:2px solid #87b7d1!important}
 .pt-shell .pt-journey-step h3,.pt-shell .pt-home-live-title,
-.pt-shell .pt-network-drawer>summary b{color:#f5f7fa!important}
+.pt-shell .pt-network-drawer>summary b{color:#f7f9fc!important}
 .pt-shell .pt-journey-step p,.pt-shell .pt-home-live-row,
-.pt-shell .pt-network-drawer>summary small{color:#c7d2db!important}
+.pt-shell .pt-network-drawer>summary small{color:#c8d2dc!important}
 .pt-shell .pt-learn-simple .pt-term summary span,
-.pt-shell .pt-network-drawer>summary>span:last-child{color:#a7ddf5!important}
+.pt-shell .pt-network-drawer>summary>span:last-child{color:#a8ddf4!important}
 .pt-shell .pt-chain-gateway-btc .pt-chain-gateway-icon,
 .pt-chain-page .pt-chain-bitcoin{color:#f3b84c!important}
 .pt-shell .pt-chain-gateway-eth .pt-chain-gateway-icon,
@@ -1391,12 +1391,12 @@ body{
 .pt-shell .pt-chain-gateway-btc .pt-chain-gateway-icon{background:linear-gradient(145deg,#59472c,#302f2b)!important;border-color:#9c7b45!important}
 .pt-shell .pt-chain-gateway-eth .pt-chain-gateway-icon{background:linear-gradient(145deg,#36466a,#283343)!important;border-color:#687cba!important}
 .pt-shell .pt-home-live-panel a,.pt-shell .pt-chain-gateway-card a,
-.pt-explorer a,.pt-tx-page a{color:#a7ddf5}
+.pt-explorer a,.pt-tx-page a{color:#a8ddf4}
 .pt-shell .pt-home-live-status,.pt-chain-page .pt-dash-live{color:#a9e1c6!important}
 .pt-shell .pt-searchrow input,.pt-chain-page .pt-chain-search input,
-.pt-tx-page input{background:#151f29!important;border-color:#617587!important;color:#f5f7fa!important}
+.pt-tx-page input{background:#151f29!important;border-color:#617587!important;color:#f7f9fc!important}
 .pt-shell .pt-searchrow input:focus,.pt-chain-page .pt-chain-search input:focus,
-.pt-tx-page input:focus{border-color:#a7ddf5!important;box-shadow:0 0 0 3px #a7ddf533!important}
+.pt-tx-page input:focus{border-color:#a8ddf4!important;box-shadow:0 0 0 3px #a8ddf433!important}
 .pt-shell .pt-searchrow button,.pt-chain-page .pt-chain-search button,
 .pt-tx-page .pt-tx-summary-actions button{background:linear-gradient(120deg,#b9e0f4,#86b8d4)!important;color:#162633!important;border-color:#c5e5f5!important}
 .pt-explorer .pt-explorer-stats>div,.pt-tx-page .pt-tx-facts>div,
@@ -1404,18 +1404,18 @@ body{
 .pt-tx-page .pt-tx-io-column,.pt-tx-page .pt-tx-io-row,
 .pt-tx-page .pt-tx-tech-grid>div,.pt-tx-page .pt-eth-token-row,
 .pt-tx-page .pt-eth-parties>div{
- background:linear-gradient(145deg,#394752,#303e49)!important;
- border-color:#5a6b79!important;
+ background:linear-gradient(145deg,#404d57,#35434d)!important;
+ border-color:#596a78!important;
 }
 .pt-chain-page .pt-dash-blocks-premium .pt-dash-block{
- background:linear-gradient(145deg,#394752,#303e49)!important;
- border-color:#5a6b79!important;
+ background:linear-gradient(145deg,#404d57,#35434d)!important;
+ border-color:#596a78!important;
 }
 .pt-shell .pt-learn-simple .pt-term summary,
-.pt-shell .pt-journey-step h3{color:#f5f7fa!important}
+.pt-shell .pt-journey-step h3{color:#f7f9fc!important}
 .pt-shell .pt-learn-simple .pt-term p,
 .pt-chain-page .pt-chain-search p,.pt-explorer .pt-explorer-lead,
-.pt-tx-page .pt-tx-details-intro{color:#c7d2db!important}
+.pt-tx-page .pt-tx-details-intro{color:#c8d2dc!important}
 @media(max-width:700px){
  .pt-shell .pt-journey-step,.pt-shell .pt-home-live-panel,
  .pt-chain-page .pt-chain-search,.pt-explorer .pt-explorer-panel,
@@ -1423,6 +1423,23 @@ body{
 }
 
 
+
+/* Focused surface hierarchy: information cards are frosted titanium,
+   while the live flow retains its darker stage and original geometry. */
+.pt-shell .pt-chain-gateway-card,
+.pt-shell .pt-journey-step,
+.pt-chain-page .pt-dash-stat,
+.pt-explorer .pt-explorer-stats>div{
+ background:linear-gradient(145deg,#3d4853,#35414c)!important;
+ border-color:#596a78!important;
+}
+.pt-shell .pt-chain-gateway-btc,
+.pt-shell .pt-chain-gateway-eth{
+ border-color:#596a78!important;
+}
+.pt-chain-page .pt-chain-flow{
+ background:linear-gradient(155deg,#15212c,#0d1721)!important;
+}
 /* Restore the original open, edge-to-edge projected-block section.
    Previous theme rules accidentally overrode its intentional transparent,
    square-edged layout via !important. Never theme the motion visualization. */
