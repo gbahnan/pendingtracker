@@ -2109,3 +2109,114 @@ body{background:#05111c!important}
 .pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro p{color:#c4d8e6!important}
 @media(max-width:850px){.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:520px){.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat{padding-left:60px!important}.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat::before{left:9px;width:40px;height:40px}.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stats{gap:8px!important}}
+
+/* SITE-WIDE REFERENCE PALETTE — Oct 9.
+   Color-only finish based on approved homepage reference. Do not modify
+   geometry, spacing, animation, queue motion, or honeycomb mechanics. */
+:root{
+ --bg:#04111c;--card:#102638;--text:#f5f9ff;--muted:#b9cfdd;
+ --brand:#8ddcff;--border:#2b5068;
+ --pt-home-stroke:#284d65;
+}
+html,body{background:#04111c!important;color:#f5f9ff}
+body{
+ background-image:radial-gradient(ellipse at 70% 4%,#10314a85 0%,transparent 43%),linear-gradient(180deg,#061725 0%,#04111c 48%,#051522 100%)!important;
+ background-attachment:fixed!important;
+}
+.pt-reference-header{background:linear-gradient(90deg,#05131f,#071b2b 55%,#05131f)!important;border-bottom:1px solid #21435a!important}
+.pt-reference-header .brand,.pt-reference-header .nav a{color:#f4f9ff!important}
+.pt-reference-header .nav a:hover{color:#8bdcff!important}
+.pt-reference-header .pt-header-search,.pt-reference-header .pt-header-search a{background:#0c2335!important;color:#c6dce9!important;border-color:#31566f!important}
+.pt-eyebrow{color:#8edbff!important}
+.pt-shell .pt-hero h1,.pt-shell .pt-journey h2,.pt-shell .pt-home-live h2,.pt-shell .pt-chain-gateway h2,.pt-shell .pt-reference-transactions h2{color:#f8fbff!important}
+.pt-shell .pt-hero h1 span{color:#8edaff!important}
+.pt-shell .pt-lead,.pt-shell .pt-section-sub,.pt-shell .pt-hero-intro p{color:#c4d8e5!important}
+.pt-shell .pt-searchbox,.pt-shell .pt-search-top{
+ background:linear-gradient(112deg,#8aa6ba 0%,#5b7b94 52%,#314e64 100%)!important;
+ border-color:#a1bed0!important;
+}
+.pt-shell .pt-searchbox h2,.pt-shell .pt-searchbox .pt-search-label,.pt-shell .pt-searchbox .pt-search-explain{color:#071b2a!important}
+.pt-shell .pt-searchrow input,.pt-chain-page .pt-chain-search input{
+ background:#071b2b!important;border-color:#5b829a!important;color:#f5faff!important;
+}
+.pt-shell .pt-searchrow input::placeholder,.pt-chain-page .pt-chain-search input::placeholder{color:#a6bfd0!important}
+.pt-shell .pt-searchrow button{background:linear-gradient(110deg,#8fe2ff,#54b9f9)!important;color:#061625!important;border-color:#a1e7ff!important}
+.pt-shell .pt-chain-gateway-card.pt-btc,.pt-shell .pt-chain-gateway-card:has(.pt-btc){background:linear-gradient(145deg,#32251a,#121b23)!important;border-color:#b78025!important}
+.pt-shell .pt-chain-gateway-card.pt-eth,.pt-shell .pt-chain-gateway-card:has(.pt-eth){background:linear-gradient(145deg,#1c2b50,#0c1c32)!important;border-color:#6888ec!important}
+.pt-shell .pt-home-live,.pt-shell .pt-journey{
+ background:linear-gradient(155deg,#081b2a,#061420)!important;border-color:#23445b!important;
+}
+.pt-shell .pt-home-live-panel,.pt-shell .pt-reference-table{
+ background:linear-gradient(155deg,#0e273a,#081a29)!important;border-color:#2a5069!important;
+}
+.pt-shell .pt-reference-table-title,.pt-shell .pt-home-live-title{color:#f6faff!important}
+.pt-shell .pt-reference-table-row,.pt-shell .pt-home-live-row{border-color:#29485e!important}
+.pt-shell .pt-reference-table a,.pt-shell .pt-home-live a{color:#8ddcff!important}
+.pt-shell .pt-journey-step{color:#f5faff!important}
+/* Subtle futuristic dots: two receding layers; background only, no interaction. */
+.pt-shell .pt-hero{position:relative!important;isolation:isolate}
+.pt-shell .pt-hero::before{
+ content:"";position:absolute;z-index:-1;pointer-events:none;
+ top:0;right:-6%;width:68%;height:310px;opacity:.65;
+ background-image:radial-gradient(circle,#45a4ff 1px,transparent 1.65px),radial-gradient(circle,#1974cc 1px,transparent 1.65px);
+ background-size:19px 19px,27px 27px;background-position:0 0,9px 10px;
+ mask-image:radial-gradient(ellipse at 78% 44%,#000 8%,transparent 76%);
+ -webkit-mask-image:radial-gradient(ellipse at 78% 44%,#000 8%,transparent 76%);
+ transform:perspective(560px) rotateY(-20deg) rotateZ(-7deg);
+}
+@media(max-width:700px){.pt-shell .pt-hero::before{width:95%;right:-2%;height:210px;opacity:.35}}
+/* Explorer pages share the same navy and steel visual language.
+   Keep existing layout and Bitcoin honeycomb gold overrides untouched. */
+.pt-chain-page{color:#f5f9ff!important}
+.pt-chain-page .pt-chain-hero h1,.pt-chain-page .pt-dash-heading h3,.pt-chain-page .pt-dash-summary h3,.pt-chain-page .pt-chain-intro h2{color:#f7fbff!important}
+.pt-chain-page .pt-chain-hero p,.pt-chain-page .pt-dash-heading p,.pt-chain-page .pt-chain-intro p{color:#c5d9e7!important}
+.pt-chain-page .pt-chain-search{
+ background:linear-gradient(112deg,#83a2b8 0%,#577993 56%,#304e65 100%)!important;
+ border-color:#9bbbd0!important;
+}
+.pt-chain-page .pt-chain-search h2,.pt-chain-page .pt-chain-search p,.pt-chain-page .pt-chain-search label{color:#f9fcff!important}
+.pt-chain-page .pt-dash-stats{background:transparent!important;border-color:transparent!important}
+.pt-chain-page .pt-dash-stat{
+ background:linear-gradient(145deg,#153449,#0b2335)!important;
+ border-color:#38617c!important;
+}
+.pt-chain-page .pt-dash-stat strong{color:#f9fcff!important}
+.pt-chain-page .pt-dash-stat span,.pt-chain-page .pt-dash-stat small{color:#c0d6e5!important}
+.pt-chain-page .pt-dash-recent,.pt-chain-page .pt-dash-fees{
+ background:linear-gradient(145deg,#143449,#0b2335)!important;
+ border-color:#315a74!important;
+}
+.pt-chain-page .pt-dash-recent .pt-dash-tx{border-color:#2b5067!important}
+.pt-chain-page .pt-dash-recent .pt-dash-tx b{color:#f5faff!important}
+.pt-chain-page .pt-dash-recent .pt-dash-tx span{color:#89dcff!important}
+.pt-chain-page .pt-dash-summary{
+ background:linear-gradient(120deg,#698aa2,#456780)!important;
+ border-color:#94b1c4!important;
+}
+.pt-chain-page .pt-dash-summary h3,.pt-chain-page .pt-dash-summary p{color:#f8fbff!important}
+.pt-chain-page .pt-chain-intro{
+ background:linear-gradient(145deg,#153448,#0b2334)!important;
+ border-color:#38617b!important;
+}
+.pt-chain-page section.pt-dash-blocks{
+ background:linear-gradient(150deg,#0b2639,#061827)!important;
+ border-color:#315773!important;
+}
+.pt-chain-page section.pt-dash-blocks .pt-chain-flow{
+ background:linear-gradient(150deg,#071c2b,#061624)!important;
+ border-color:#2c5269!important;
+}
+/* Bitcoin remains gold, Ethereum remains violet; accents only. */
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search button{
+ background:linear-gradient(110deg,#ffdc76,#ffb93c)!important;color:#091725!important;border-color:#ffe29a!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat:first-child{border-color:#a7772c!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat:first-child strong{color:#ffca61!important}
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-blocks{border-color:#b48134!important}
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-blocks .pt-eyebrow{color:#ffc65e!important}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-search button{
+ background:linear-gradient(110deg,#aabaff,#738ef6)!important;color:#08162b!important;border-color:#b4c4ff!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-dash-stat:first-child{border-color:#647de1!important}
+.pt-chain-page:has(.pt-chain-ethereum) section.pt-dash-blocks{border-color:#5a73cc!important}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-eyebrow{color:#a9b9ff!important}
