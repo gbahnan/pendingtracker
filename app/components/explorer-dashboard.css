@@ -450,3 +450,32 @@
 .pt-chain-flow .pt-chain-tracked-arrow span,
 .pt-eth-pending-locator{color:#a7c9e8}
 .pt-eth-pending-locator strong{color:#d9e6f0}
+
+
+/* Luxury pending-block palette — final specificity layer.
+   Keep all timing, keyframes, queue shifts, and transaction pointers intact. */
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending,
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-confirmed{
+ background:#7e90a3!important;
+}
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending::before{
+ background:#15212e!important;
+}
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending::after,
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-confirmed::after{
+ background:#8292a4!important;
+}
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>.pt-honeycomb-live .pt-honeycomb-cell-live{
+ fill:#253545!important;
+ stroke:#71879b!important;
+ stroke-width:1.15!important;
+}
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>.pt-honeycomb-live .pt-honeycomb-traveler{
+ fill:#89b8da!important;
+ stroke:#c0e0f4!important;
+ stroke-width:1.65!important;
+}
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>strong{
+ color:#f3f6fa!important;
+ text-shadow:0 1px 5px #07121e!important;
+}
