@@ -1195,3 +1195,53 @@ body{
 .pt-shell .pt-learn-simple .pt-term summary{color:#e1e5e9!important}
 .pt-shell .pt-learn-simple .pt-term summary span{color:#a8c9df!important}
 .pt-shell .pt-learn-simple .pt-term p{color:#b8c4ce!important}
+
+
+/* Audit completion: explorer overview, fee analysis, activity, educational
+   sections and transaction details. Styling only; no flow/hex animation edits. */
+.pt-shell .pt-overview,.pt-shell .pt-fee-explorer,.pt-shell .pt-explainer,
+.pt-shell .pt-fee-panel,.pt-shell .pt-queue-panel,.pt-shell .pt-activity-panel,
+.pt-shell .pt-confirm-panel,.pt-shell .pt-compact-fees,.pt-shell .pt-cta,
+.pt-shell .pt-insight,.pt-shell .pt-network-brief{
+ background:linear-gradient(145deg,#2b323a,#202831)!important;
+ border-color:#53616d!important;
+ box-shadow:0 14px 34px #0002,inset 0 1px 0 #ffffff0b;
+}
+.pt-shell .pt-overview-card,.pt-shell .pt-projected-card,
+.pt-shell .pt-fee-choice,.pt-shell .pt-simple-fee,
+.pt-shell .pt-time-tier,.pt-shell .pt-mini-block,
+.pt-shell .pt-queue-block,.pt-shell .pt-confirm-item,
+.pt-shell .pt-activity-row,.pt-shell .pt-journey-step,
+.pt-shell .pt-fee-intro,.pt-shell .pt-overview-explainer{
+ background:linear-gradient(150deg,#323b44,#252f38)!important;
+ border-color:#566674!important;
+}
+.pt-shell .pt-fee-choice:hover,.pt-shell .pt-fee-choice.active,
+.pt-shell .pt-simple-fee:hover,.pt-shell .pt-simple-fee.active,
+.pt-shell .pt-activity-row:hover{
+ background:linear-gradient(145deg,#3b4753,#2c3944)!important;
+ border-color:#8db3ce!important;
+}
+.pt-shell .pt-fee-checker,.pt-shell .pt-fee-checker input,
+.pt-shell .pt-queue-controls input{
+ background:#202a33!important;
+ border-color:#536775!important;
+ color:#e4e8ec!important;
+}
+.pt-shell .pt-fee-track{background:#202831!important}
+.pt-shell .pt-fee-fill{background:linear-gradient(90deg,#557d99,#a1c7df)!important}
+.pt-shell .pt-timeline-node{background:#9bbfd5!important;border-color:#354b5a!important;color:#142331!important}
+.pt-shell .pt-fee-timeline:before{background:linear-gradient(90deg,#789eb9,#b2cadb)!important}
+.pt-shell .pt-estimate-summary,.pt-shell .pt-new-block{
+ background:#293944!important;border-color:#648095!important;color:#d7e3ea!important;
+}
+.pt-shell .pt-network-drawer .pt-section{background:transparent!important}
+.pt-shell .pt-learn-simple .pt-term,
+.pt-shell .pt-learn-simple .pt-glossary-inner .pt-term{
+ background:linear-gradient(145deg,#30363e,#252c34)!important;
+ border-color:#58636d!important;
+}
+.pt-shell .pt-activity-row,.pt-shell .pt-confirm-item{color:#d3dce4!important}
+.pt-shell .pt-overview-mark,.pt-shell .pt-fee-intro-icon{
+ background:#3a4855!important;border-color:#647583!important;color:#c4d5e2!important;
+}
