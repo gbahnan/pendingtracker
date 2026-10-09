@@ -275,3 +275,23 @@
 .pt-chain-flow-hex-pending:after{display:none!important}
 .pt-chain-flow-hex-pending>span,.pt-chain-flow-hex-pending>strong,.pt-chain-flow-hex-pending>small{z-index:4!important;text-shadow:0 2px 5px #071927,0 0 8px #071927}
 @keyframes pt-honeycomb-soft-turnover{0%,22%,100%{opacity:.9}35%,49%{opacity:.16}62%,88%{opacity:.95}}
+
+/* Softer antique-gold honeycomb with more frequent, independent cell turnover */
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell,
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-hop{
+  stroke:#a68d65!important;
+  stroke-width:1.15!important;
+  fill:#a58a5c12!important;
+  animation:pt-honeycomb-quiet-turnover 3.6s ease-in-out infinite!important;
+}
+@keyframes pt-honeycomb-quiet-turnover{
+  0%,14%,100%{opacity:.68}
+  25%{opacity:.3}
+  35%,43%{opacity:.04}
+  55%{opacity:.56}
+  72%{opacity:.75}
+  85%{opacity:.2}
+}
+@media(prefers-reduced-motion:reduce){
+ .pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell{animation:none!important;opacity:.65!important}
+}
