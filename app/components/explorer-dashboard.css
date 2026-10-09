@@ -267,3 +267,11 @@
 @keyframes pt-honeycomb-occupancy{0%,20%,100%{opacity:.82}35%,47%{opacity:.07}65%,86%{opacity:.94}}
 @keyframes pt-honeycomb-travel{0%,20%,100%{opacity:.8;transform:translateX(0)}34%{opacity:.08;transform:translateX(0)}50%{opacity:.4;transform:translateX(15px)}70%,83%{opacity:.95;transform:translateX(15px)}95%{opacity:.08;transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.pt-honeycomb-cell{animation:none!important;opacity:.8}}
+
+/* Make the SVG honeycomb unmistakably visible above decorative layers. */
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;visibility:visible!important;opacity:1!important;z-index:2!important;overflow:hidden;pointer-events:none}
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell{stroke:#f4d38d!important;stroke-width:1.7!important;fill:#c89c4833!important;vector-effect:non-scaling-stroke;animation:pt-honeycomb-soft-turnover 9s ease-in-out infinite!important}
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-hop{animation:pt-honeycomb-soft-turnover 9s ease-in-out infinite!important}
+.pt-chain-flow-hex-pending:after{display:none!important}
+.pt-chain-flow-hex-pending>span,.pt-chain-flow-hex-pending>strong,.pt-chain-flow-hex-pending>small{z-index:4!important;text-shadow:0 2px 5px #071927,0 0 8px #071927}
+@keyframes pt-honeycomb-soft-turnover{0%,22%,100%{opacity:.9}35%,49%{opacity:.16}62%,88%{opacity:.95}}
