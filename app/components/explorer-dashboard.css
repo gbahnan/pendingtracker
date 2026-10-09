@@ -174,3 +174,11 @@
 @keyframes pt-queue-shift{0%{transform:translateX(35%);opacity:.6}100%{transform:translateX(0);opacity:1}}
 @media(max-width:760px){.pt-chain-flow-shapes{min-width:850px}.pt-chain-flow-hex{height:120px}}
 @media(prefers-reduced-motion:reduce){.pt-chain-flow-new-confirmation .pt-chain-flow-hex-confirmed,.pt-chain-flow-shift>.pt-chain-flow-unit{animation:none!important}}
+
+/* Subtle activity particles inside each pending hexagon */
+.pt-chain-flow-micro{position:absolute;inset:6px;z-index:0;overflow:hidden;clip-path:inherit;pointer-events:none}
+.pt-chain-flow-micro i{position:absolute;width:12px;height:12px;background:#e9c98b22;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);opacity:.2;animation:pt-micro-drift 4s ease-in-out infinite;filter:drop-shadow(0 0 2px #e4c58a)}
+.pt-chain-flow-micro i:after{content:"";position:absolute;inset:1.5px;background:#152d3e;clip-path:inherit;opacity:.65}
+.pt-chain-flow-hex-pending>span,.pt-chain-flow-hex-pending>strong,.pt-chain-flow-hex-pending>small{position:relative;z-index:2;text-shadow:0 1px 5px #0b2039}
+@keyframes pt-micro-drift{0%{transform:translate(-7px,13px) scale(.7);opacity:0}30%{opacity:.6}65%{opacity:.42}100%{transform:translate(9px,-19px) scale(1.1);opacity:0}}
+@media(prefers-reduced-motion:reduce){.pt-chain-flow-micro i{animation:none!important;opacity:.25}}
