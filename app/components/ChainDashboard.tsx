@@ -1,5 +1,4 @@
 "use client";
-import "./explorer-dashboard.css";
 import {useEffect,useRef,useState} from "react";
 import Link from "next/link";
 type Net={btc?:{pending?:number|null;fastestFee?:number|null;halfHourFee?:number|null;hourFee?:number|null;economyFee?:number|null;minimumFee?:number|null;projectedBlocks?:Array<{position:number;transactionCount:number|null;feeRange:number[]|null;medianFee:number|null}>;latestBlock?:{height:number|null;id:string|null;ageMinutes:number;transactionCount:number|null}|null;recentTransactions?:Array<{id:string;fee:number|null;vsize:number|null}>;congestion?:string;explanation?:string};eth?:{gasGwei?:number|null;latestBlock?:string|number|null;recentBlocks?:Array<{height:number|string|null;hash:string|null;transactionsCount:number|null;timestamp:string|null}>;recentTransactions?:Array<{hash:string;status:string|null;block:number|null}>;explanation?:string}};const fmt=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(v);
