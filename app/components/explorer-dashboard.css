@@ -545,3 +545,50 @@
  background:#26372f!important;
  border-color:#4e7561!important;
 }
+
+/* BITCOIN ONLY — match approved gold honeycomb reference.
+   Override the old high-specificity silver-metal rules in this stylesheet.
+   No animation, transforms, queue positions, or timing changed. */
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending{
+ background:linear-gradient(140deg,#ffcb55 0%,#bb7916 50%,#ffc352 100%)!important;
+ filter:drop-shadow(0 0 4px #e5a12640)!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending::before{
+ background:linear-gradient(145deg,#2d281d 0%,#171d20 75%,#342a18 100%)!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending::after{
+ background:linear-gradient(180deg,transparent 32%,#ffc85b1c 50%,transparent 68%)!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>.pt-honeycomb-live .pt-honeycomb-cell-live{
+ fill:#4a361b!important;
+ stroke:#c58a27!important;
+ stroke-width:1.15!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>.pt-honeycomb-live .pt-honeycomb-traveler{
+ fill:#ffb839!important;
+ stroke:#ffd77c!important;
+ stroke-width:1.65!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-confirmed{
+ background:linear-gradient(145deg,#ffdc73,#f5aa26 48%,#ffe18a)!important;
+ filter:drop-shadow(0 0 11px #ffba3e80)!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-confirmed::before{
+ background:linear-gradient(145deg,#48351c,#25241f 75%,#44301a)!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-confirmed::after{
+ background:linear-gradient(180deg,transparent 36%,#ffc65a14 50%,transparent 64%)!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-confirmed>span{
+ color:#ffcf5a!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-confirmed>strong,
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>strong{
+ color:#fffaf0!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>span{
+ color:#ffd16b!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>small{
+ color:#edcb93!important;
+}
