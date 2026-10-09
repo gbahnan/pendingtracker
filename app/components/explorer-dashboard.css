@@ -143,3 +143,14 @@
 @keyframes pt-block-flash{50%{color:#f7db9e;text-shadow:0 0 15px #f7db9e}}
 @media(max-width:760px){.pt-chain-flow{padding:17px 12px}.pt-chain-flow-scene{overflow-x:auto}.pt-chain-flow-shapes{min-width:700px}.pt-chain-flow-stream{min-width:700px}.pt-chain-flow-hex{height:120px}.pt-chain-flow-caption{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.pt-chain-flow *{animation:none!important}}
+
+/* Integrated confirmation metrics beneath each live hexagon */
+.pt-chain-flow-scene{min-height:295px;padding-bottom:22px}
+.pt-chain-flow-unit{gap:12px}
+.pt-chain-flow-caption{display:flex;flex-direction:column;align-items:center;gap:7px;white-space:normal;line-height:1.3;width:100%}
+.pt-chain-flow-time{color:#dbe8ee;font-size:14px;font-weight:700;white-space:nowrap}
+.pt-chain-flow-time small{font-size:10px;color:#94b0c1;font-weight:500}
+.pt-chain-flow-fee{color:#f3d49e;font-size:clamp(21px,2.4vw,32px);font-weight:750;letter-spacing:-.035em;white-space:nowrap}
+.pt-chain-flow-fee small{color:#e4cfab;font-size:12px;font-weight:600;letter-spacing:0}
+.pt-chain-flow-tx{color:#a7bfcd;font-size:11px;line-height:1.4;text-align:center}
+@media(max-width:760px){.pt-chain-flow-scene{min-height:280px}.pt-chain-flow-fee{font-size:27px}}
