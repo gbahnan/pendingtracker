@@ -23,10 +23,10 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
           <strong style={{display:"block",fontSize:"clamp(22px,2.7vw,35px)",lineHeight:1.12,letterSpacing:"-0.04em",fontWeight:650,color:"#f1d29d"}}>~{(i+1)*10}<span style={{fontSize:13,letterSpacing:0,fontWeight:500,color:"#bdced8",marginLeft:4}}>min</span></strong>
           <span style={{display:"block",fontSize:11,color:"#a8c1ce",marginTop:7,marginBottom:22}}>Typical cumulative time</span>
           <div style={{height:3,width:"100%",background:"#3b5263",borderRadius:6,overflow:"hidden",marginBottom:19}}><div style={{width:(100-i*15)+"%",height:"100%",background:i===0?"#e7c78e":"#7593a5",borderRadius:6}}/></div>
-          <strong style={{display:"block",fontSize:"clamp(16px,2vw,23px)",lineHeight:1.25,color:"#f3f5f8",fontWeight:650}}>{b.count.replace(" transactions","")}</strong>
-          <span style={{display:"block",fontSize:11,color:"#acc2ce",marginTop:5}}>transactions projected</span>
-          <span style={{display:"block",fontSize:11,color:"#b6c9d4",marginTop:17,lineHeight:1.5}}>Fee range</span>
-          <span style={{display:"block",fontSize:12,color:"#ebcf9f",fontWeight:650,lineHeight:1.55,overflowWrap:"anywhere"}}>{b.range}</span>
+          <span style={{display:"block",fontSize:11,color:"#acc2ce",marginBottom:3}}>Current projected fee</span>
+          <strong style={{display:"block",fontSize:"clamp(19px,2.2vw,28px)",lineHeight:1.25,color:"#f1d29d",fontWeight:700,letterSpacing:"-0.02em",overflowWrap:"anywhere"}}>{b.range}</strong>
+          <span style={{display:"block",fontSize:11,color:"#b6c9d4",marginTop:14,lineHeight:1.5}}>Projected transactions</span>
+          <span style={{display:"block",fontSize:13,color:"#d5e2e9",fontWeight:600,lineHeight:1.5}}>{b.count}</span>
         </div>):<p className="pt-dash-empty">Live mempool projections are temporarily unavailable.</p>}
       </div></div>
       <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",gap:12,paddingTop:18,borderTop:"1px solid #344c5c"}}>
