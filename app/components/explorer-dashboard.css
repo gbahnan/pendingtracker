@@ -1,0 +1,45 @@
+/* Visual-first blockchain explorer dashboards */
+.pt-dash{margin:28px 0 38px;color:#eaf1f5}
+.pt-dash-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin:0 0 20px}
+.pt-dash-top h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;color:#f4f6f8;margin:8px 0}
+.pt-dash-top p,.pt-dash-heading p{color:#b7cad5;font-size:13px;line-height:1.65;margin:0}
+.pt-dash-live{color:#e9cb95;background:#223c4b;border:1px solid #466472;border-radius:30px;padding:8px 12px;white-space:nowrap;font-size:11px}
+.pt-dash-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pt-dash-stat{background:#193443;border:1px solid #496877;border-radius:12px;padding:19px 15px;min-width:0}
+.pt-dash-stat span{font-size:12px;color:#c1d0d9}
+.pt-dash-stat strong{display:block;color:#f2d49e;font-size:clamp(18px,2.3vw,27px);margin:11px 0 9px;overflow-wrap:anywhere;line-height:1.2}
+.pt-dash-stat small{font-size:11px;color:#a8beca;line-height:1.55;display:block}
+.pt-dash-blocks,.pt-dash-fees,.pt-dash-recent,.pt-dash-summary{margin-top:28px;background:#142d3c;border:1px solid #3c596a;border-radius:16px;padding:22px}
+.pt-dash-heading{margin-bottom:18px}
+.pt-dash-heading h3,.pt-dash-summary h3{color:#f4f7f9;font-size:clamp(20px,2.7vw,26px);letter-spacing:-.02em;margin:8px 0}
+.pt-dash-blockstrip{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 13px;scroll-snap-type:x mandatory}
+.pt-dash-block{min-width:183px;flex:1 0 183px;min-height:183px;display:flex;flex-direction:column;gap:11px;padding:17px 14px;border-radius:12px;border:1px solid #426579;background:linear-gradient(160deg,#27547a,#17384e);scroll-snap-align:start}
+.pt-dash-block-1{background:linear-gradient(160deg,#30597d,#1b3e58)}
+.pt-dash-block-2{background:linear-gradient(160deg,#385c79,#203f53)}
+.pt-dash-block-3{background:linear-gradient(160deg,#405e7a,#233b50)}
+.pt-dash-block-label{color:#d6e3ed;font-size:11px;font-weight:700}
+.pt-dash-block strong{color:#fff;font-size:19px}
+.pt-dash-block b{color:#f2d49b;font-size:13px}
+.pt-dash-block small{color:#d2e1e9;font-size:12px;margin-top:auto}
+.pt-dash-block a{color:#f3d6a1;font-size:12px;font-weight:700}
+.pt-dash-feegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pt-dash-feecard{background:#203b4a;border:1px solid #4b6c7a;border-radius:12px;padding:18px 14px;min-width:0}
+.pt-dash-feecard>span{display:block;font-size:12px;color:#b7cbd5;font-weight:700}
+.pt-dash-feecard strong{display:block;font-size:clamp(19px,2.4vw,27px);color:#f2d49e;margin:14px 0;overflow-wrap:anywhere}
+.pt-dash-feecard b{display:block;font-size:13px;color:#e7f1f4;line-height:1.5}
+.pt-dash-feecard small{display:block;font-size:11px;color:#acc3cf;line-height:1.55;margin-top:9px}
+.pt-dash-disclaimer,.pt-dash-source{font-size:11px;color:#a8bfcc;line-height:1.65;margin:16px 0 0}
+.pt-dash-txlist{border-top:1px solid #385567}
+.pt-dash-tx{display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #385567;padding:16px 4px;text-decoration:none!important}
+.pt-dash-tx b{font-size:13px;font-family:monospace;color:#eaf2f5;overflow-wrap:anywhere}
+.pt-dash-tx small{display:block;color:#afc4d0;font-size:11px;margin-top:6px;line-height:1.5}
+.pt-dash-tx>span{color:#f0d097;white-space:nowrap;font-size:12px;font-weight:700}
+.pt-dash-tx:hover b{color:#f0d097}
+.pt-dash-summary{background:linear-gradient(145deg,#244657,#1a3444);border-color:#6a7980}
+.pt-dash-summary>p{color:#d4e1e8;line-height:1.75;font-size:14px}
+.pt-dash-summary details{border-top:1px solid #526c7a;margin-top:19px;padding-top:14px}
+.pt-dash-summary summary{cursor:pointer;color:#f0d19a;font-weight:700;font-size:13px}
+.pt-dash-summary details p{color:#c2d4df;font-size:13px;line-height:1.7}
+.pt-dash-empty{color:#bacbd4;font-size:13px}
+@media(max-width:850px){.pt-dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pt-dash-feegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.pt-dash-top{flex-direction:column}.pt-dash-stats{gap:9px}.pt-dash-stat{padding:15px 12px}.pt-dash-feegrid{grid-template-columns:1fr}.pt-dash-blocks,.pt-dash-fees,.pt-dash-recent,.pt-dash-summary{padding:17px}.pt-dash-tx{align-items:flex-start}.pt-dash-tx b{font-size:11px}.pt-dash-block{min-width:170px;flex-basis:170px}}
