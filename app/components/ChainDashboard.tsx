@@ -8,28 +8,28 @@ type Net={btc?:{pending?:number|null;fastestFee?:number|null;halfHourFee?:number
 // occasionally a cell travels to a neighboring slot while another takes its place.
 function Honeycomb(){
  const [hidden,setHidden]=useState<number[]>([]);
- const [moving,setMoving]=useState<{from:number;to:number;id:number}|null>(null);
+ const [moving,setMoving]=useState<Array<{from:number;to:number;id:number}>>([]);
  const sequence=useRef(0);
  useEffect(()=>{
    const timers:ReturnType<typeof setTimeout>[]=[];
-   const interval=setInterval(()=>{
+   const interval=setInterval(()=>{\n    for(let batch=0;batch<3+Math.floor(Math.random()*2);batch++){
      const from=Math.floor(Math.random()*120);
      const to=Math.max(0,Math.min(119,from+(Math.random()<.5?10:1)));
      setHidden(old=>old.includes(from)?old:[...old,from]);
-     if(Math.random()<.9){
+     if(true){
        const id=++sequence.current;
-       setMoving({from,to,id});
-       timers.push(setTimeout(()=>setMoving(m=>m?.id===id?null:m),560));
+       setMoving(old=>[...old,{from,to,id}]);
+       timers.push(setTimeout(()=>setMoving(old=>old.filter(m=>m.id!==id)),560));
      }
      timers.push(setTimeout(()=>setHidden(old=>old.filter(x=>x!==from)),1700+Math.random()*1200));
-   },420);
+    }\n   },2200);
    return()=>{clearInterval(interval);timers.forEach(clearTimeout)};
  },[]);
  const coords=(n:number)=>{const col=Math.floor(n/10),row=n%10;return {x:col*15-5,y:row*17.32+(col%2)*8.66-10}};
  const points=(x:number,y:number)=>Array.from({length:6},(_,k)=>{const a=Math.PI*k/3;return (x+10*Math.cos(a)).toFixed(2)+","+(y+10*Math.sin(a)).toFixed(2)}).join(" ");
  return <svg className="pt-chain-honeycomb pt-honeycomb-live" viewBox="0 0 160 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   {Array.from({length:120},(_,n)=>{const {x,y}=coords(n);return <polygon key={n} className={"pt-honeycomb-cell-live"+(hidden.includes(n)?" pt-honeycomb-empty":"")} points={points(x,y)}/>})}
-  {moving&&<polygon key={moving.id} className="pt-honeycomb-traveler" points={points(coords(moving.from).x,coords(moving.from).y)} style={{"--hop-x":(coords(moving.to).x-coords(moving.from).x)+"px","--hop-y":(coords(moving.to).y-coords(moving.from).y)+"px"} as React.CSSProperties}/>}
+  {moving.map(m=><polygon key={m.id} className="pt-honeycomb-traveler" points={points(coords(m.from).x,coords(m.from).y)} style={{"--hop-x":(coords(m.to).x-coords(m.from).x)+"px","--hop-y":(coords(m.to).y-coords(m.from).y)+"px"} as React.CSSProperties}/>)}
  </svg>;
 }
 export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
