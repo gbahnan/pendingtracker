@@ -13,18 +13,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <div className="container">
-          <div className="header">
-            <div className="brand">
-              <div className="logo" aria-hidden="true" />
-              <div>Pending Tracker</div>
-            </div>
-            <div className="nav">
-              <Link href="/">Track</Link>
-              <Link href="/bitcoin">Bitcoin</Link>
-              <Link href="/ethereum">Ethereum</Link>
-              <Link href="/faq">FAQ</Link>
-            </div>
-          </div>
+          <header className="header pt-reference-header">
+          <Link href="/" className="brand"><span className="pt-brand-hex" aria-hidden="true">⬡</span><span>PENDING TRACKER</span></Link>
+          <nav className="nav" aria-label="Main navigation">
+            <Link href="/">Home</Link><Link href="/bitcoin">Bitcoin</Link><Link href="/ethereum">Ethereum</Link><Link href="/blocks">Blocks</Link><Link href="/mempool">Mempool</Link><Link href="/faq">FAQ</Link>
+          </nav>
+          <form className="pt-header-search" action="/" method="get"><a href="/#transaction-search">⌕ &nbsp; Search a transaction…</a></form>
+        </header>
 
           {children}
 
