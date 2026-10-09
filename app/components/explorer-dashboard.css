@@ -385,3 +385,21 @@
 .pt-chain-flow .pt-chain-flow-hex>span,
 .pt-chain-flow .pt-chain-flow-hex>strong,
 .pt-chain-flow .pt-chain-flow-hex>small{position:relative;z-index:4!important}
+
+/* Visible outer perimeter overlay: sits ABOVE the full-size honeycomb SVG.
+   Only the outer 5px ring is painted; the animated cells remain untouched. */
+.pt-chain-flow .pt-chain-flow-hex::after{
+ content:""!important;
+ display:block!important;
+ position:absolute!important;
+ inset:0!important;
+ z-index:5!important;
+ pointer-events:none!important;
+ animation:none!important;
+ background:#0b0f14!important;
+ clip-path:polygon(23% 0,77% 0,100% 50%,77% 100%,23% 100%,0 50%)!important;
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+ -webkit-mask-composite:xor!important;
+ mask-composite:exclude!important;
+ padding:5px!important;
+}
