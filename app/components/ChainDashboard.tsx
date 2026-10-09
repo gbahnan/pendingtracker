@@ -3,6 +3,35 @@ import "./explorer-dashboard.css";
 import {useEffect,useRef,useState} from "react";
 import Link from "next/link";
 type Net={btc?:{pending?:number|null;fastestFee?:number|null;halfHourFee?:number|null;hourFee?:number|null;economyFee?:number|null;minimumFee?:number|null;projectedBlocks?:Array<{position:number;transactionCount:number|null;feeRange:number[]|null;medianFee:number|null}>;latestBlock?:{height:number|null;id:string|null;ageMinutes:number;transactionCount:number|null}|null;recentTransactions?:Array<{id:string;fee:number|null;vsize:number|null}>;congestion?:string;explanation?:string};eth?:{gasGwei?:number|null;latestBlock?:string|number|null;recentBlocks?:Array<{height:number|string|null;hash:string|null;transactionsCount:number|null;timestamp:string|null}>;recentTransactions?:Array<{hash:string;status:string|null;block:number|null}>;explanation?:string}};const fmt=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(v);
+
+// Most cells remain visible. One transaction-like cell changes at a time;
+// occasionally a cell travels to a neighboring slot while another takes its place.
+function Honeycomb(){
+ const [hidden,setHidden]=useState<number[]>([]);
+ const [moving,setMoving]=useState<{from:number;to:number;id:number}|null>(null);
+ const sequence=useRef(0);
+ useEffect(()=>{
+   const timers:ReturnType<typeof setTimeout>[]=[];
+   const interval=setInterval(()=>{
+     const from=Math.floor(Math.random()*120);
+     const to=Math.max(0,Math.min(119,from+(Math.random()<.5?10:1)));
+     setHidden(old=>old.includes(from)?old:[...old,from]);
+     if(Math.random()<.4){
+       const id=++sequence.current;
+       setMoving({from,to,id});
+       timers.push(setTimeout(()=>setMoving(m=>m?.id===id?null:m),560));
+     }
+     timers.push(setTimeout(()=>setHidden(old=>old.filter(x=>x!==from)),850+Math.random()*900));
+   },420);
+   return()=>{clearInterval(interval);timers.forEach(clearTimeout)};
+ },[]);
+ const coords=(n:number)=>{const col=Math.floor(n/10),row=n%10;return {x:col*15-5,y:row*17.32+(col%2)*8.66-10}};
+ const points=(x:number,y:number)=>Array.from({length:6},(_,k)=>{const a=Math.PI*k/3;return (x+10*Math.cos(a)).toFixed(2)+","+(y+10*Math.sin(a)).toFixed(2)}).join(" ");
+ return <svg className="pt-chain-honeycomb pt-honeycomb-live" viewBox="0 0 160 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  {Array.from({length:120},(_,n)=>{const {x,y}=coords(n);return <polygon key={n} className={"pt-honeycomb-cell-live"+(hidden.includes(n)?" pt-honeycomb-empty":"")} points={points(x,y)}/>})}
+  {moving&&<polygon key={moving.id} className="pt-honeycomb-traveler" points={points(coords(moving.from).x,coords(moving.from).y)} style={{"--hop-x":(coords(moving.to).x-coords(moving.from).x)+"px","--hop-y":(coords(moving.to).y-coords(moving.from).y)+"px"} as React.CSSProperties}/>}
+ </svg>;
+}
 export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
  const [data,setData]=useState<Net|null>(null);const [loading,setLoading]=useState(true);const [updated,setUpdated]=useState("");
  const [liveConnected,setLiveConnected]=useState(false);
@@ -84,7 +113,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
             {flowBlocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
-              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><svg className="pt-chain-honeycomb" viewBox="0 0 160 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true">{Array.from({length:12},(_,col)=>Array.from({length:10},(_,row)=>{const x=col*15-5,y=row*17.32+(col%2)*8.66-10;return <polygon key={col+"-"+row} className={(col*13+row*7)%11===0?"pt-honeycomb-cell pt-honeycomb-hop":"pt-honeycomb-cell"} points={Array.from({length:6},(_,k)=>{const a=Math.PI*k/3;return (x+10*Math.cos(a)).toFixed(2)+","+(y+10*Math.sin(a)).toFixed(2)}).join(" ")} style={{animationDelay:-((col*17+row*11)%61)/9+"s",animationDuration:(5+(col*3+row)%7)+"s"}}/>}))}</svg><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
+              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
@@ -92,7 +121,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
               </div>
             </div>)}
             {blockFlash&&<div className="pt-chain-flow-unit pt-chain-flow-incoming" aria-hidden="true">
-              <div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><svg className="pt-chain-honeycomb" viewBox="0 0 160 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true">{Array.from({length:12},(_,col)=>Array.from({length:10},(_,row)=>{const x=col*15-5,y=row*17.32+(col%2)*8.66-10;return <polygon key={col+"-"+row} className={(col*13+row*7)%11===0?"pt-honeycomb-cell pt-honeycomb-hop":"pt-honeycomb-cell"} points={Array.from({length:6},(_,k)=>{const a=Math.PI*k/3;return (x+10*Math.cos(a)).toFixed(2)+","+(y+10*Math.sin(a)).toFixed(2)}).join(" ")} style={{animationDelay:-((col*17+row*11)%61)/9+"s",animationDuration:(5+(col*3+row)%7)+"s"}}/>}))}</svg><span>NEW</span><strong>→</strong><small>pending</small></div>
+              <div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><Honeycomb/><span>NEW</span><strong>→</strong><small>pending</small></div>
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">New projection</span></div>
             </div>}
           </div>
