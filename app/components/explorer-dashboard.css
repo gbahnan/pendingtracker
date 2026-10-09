@@ -339,3 +339,6 @@
 /* Gentler individual turnover and slower, more noticeable neighbor movement */
 .pt-honeycomb-cell-live{transition:opacity 1.15s ease-in-out!important}
 .pt-honeycomb-traveler{animation-duration:.95s!important}
+
+/* Three to four simultaneous cell movements, each at roughly 60% previous speed. */
+.pt-honeycomb-traveler{animation-duration:1.6s!important}
