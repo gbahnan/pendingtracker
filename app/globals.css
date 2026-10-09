@@ -2463,3 +2463,26 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-confirmed>span{
  color:#b5c8ff!important;
 }
+
+/* Ethereum block honeycombs — direct visualization scope, not page-marker dependent.
+   Match Bitcoin's filled, luminous treatment using Ethereum blue. */
+.pt-eth-flow .pt-chain-flow-hex-pending{
+ border-color:#7399f9!important;
+ background:linear-gradient(155deg,#233b66,#101d36)!important;
+ filter:drop-shadow(0 0 5px #6c94ff48)!important;
+}
+.pt-eth-flow .pt-chain-flow-hex-pending::before,
+.pt-eth-flow .pt-chain-flow-hex-pending::after{border-color:#83a5ff!important}
+.pt-eth-flow .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon,
+.pt-eth-flow .pt-chain-flow-hex-pending .pt-honeycomb-cell-live{
+ stroke:#8fa8ff!important;fill:#233e70!important;
+}
+.pt-eth-flow .pt-chain-flow-hex-pending .pt-honeycomb-traveler{
+ stroke:#c5d4ff!important;fill:#92b3ff!important;
+}
+.pt-eth-flow .pt-chain-flow-hex-pending .pt-honeycomb-empty{opacity:.16!important}
+.pt-eth-flow .pt-chain-flow-hex-pending>span{color:#a9bfff!important}
+.pt-eth-flow .pt-chain-flow-hex-pending>strong{color:#fff!important}
+.pt-eth-flow .pt-chain-flow-hex-pending .pt-chain-flow-shine{
+ background:linear-gradient(120deg,transparent,#819fff24,transparent)!important;
+}
