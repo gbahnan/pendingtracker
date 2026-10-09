@@ -1,26 +1,17 @@
 :root {
-  color-scheme: light dark;
-  --bg: #070a0f;
-  --card: rgba(255,255,255,0.04);
-  --text: #e6edf3;
-  --muted: #97a3b0;
-  --brand: #4f46e5;
+  color-scheme: dark;
+  --bg: #111923;
+  --card: #303e4b;
+  --text: #f1f5f8;
+  --muted: #b8c8d4;
+  --brand: #a5d9f3;
   --brand2: #22c55e;
-  --border: rgba(255,255,255,0.10);
+  --border: #647787;
   --shadow: 0 10px 30px rgba(0,0,0,0.35);
   --radius: 16px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f7f9fc;
-    --card: #ffffff;
-    --text: #0b1220;
-    --muted: #556173;
-    --border: rgba(11,18,32,0.10);
-    --shadow: 0 12px 28px rgba(11,18,32,0.10);
-  }
-}
+/* Midnight Titanium is intentionally a consistent dark-only experience. */
 
 * { box-sizing: border-box; }
 html, body { padding: 0; margin: 0; }
@@ -1320,3 +1311,113 @@ body{
 .pt-explorer .pt-explorer-lead{color:#c1ccd5!important}
 .pt-tx-page .pt-tx-back button,
 .pt-tx-page .pt-tx-back a{background:#29343e!important;border-color:#566a79!important;color:#c5d8e5!important}
+
+
+/* MIDNIGHT TITANIUM — final shared design system.
+   All layout and blockchain motion rules remain in their existing files. */
+:root{
+ color-scheme:dark;
+ --bg:#111923;
+ --card:#303e4b;
+ --text:#f1f5f8;
+ --muted:#b8c8d4;
+ --border:#647787;
+ --brand:#a5d9f3;
+ --pt-surface-1:#303e4b;
+ --pt-surface-2:#283541;
+ --pt-surface-3:#1b2732;
+ --pt-line:#647787;
+ --pt-fg:#f1f5f8;
+ --pt-secondary:#b8c8d4;
+ --pt-link:#a5d9f3;
+ --pt-border:#647787;
+ --pt-accent:#a5d9f3;
+ --pt-accent-bright:#c4e7f8;
+}
+html{background:#111923}
+body{
+ color:#f1f5f8;
+ background:radial-gradient(ellipse 75% 360px at 50% 0%,#2b3947 0%,#1b2631 45%,transparent 100%),linear-gradient(180deg,#111923,#0e151d 95%)!important;
+ background-attachment:fixed!important;
+}
+.header{border-bottom:1px solid #354653}
+.brand{color:#f1f5f8}
+.logo{background:linear-gradient(135deg,#8ac5e7,#455f76)!important;box-shadow:0 3px 16px #89c5e73b!important}
+.nav a{color:#c1d0da}
+.nav a:hover{background:#344451;color:#f1f5f8}
+.pt-shell .pt-hero h1,.pt-chain-page .pt-chain-hero h1,
+.pt-explorer h1,.pt-tx-page h1{color:#f1f5f8!important}
+.pt-eyebrow,.pt-section-head .pt-eyebrow{color:#a5d9f3!important}
+.pt-shell .pt-searchbox,.pt-shell .pt-home-live-panel,
+.pt-shell .pt-journey-step,.pt-shell .pt-network-drawer,
+.pt-shell .pt-learn-simple .pt-term,
+.pt-shell .pt-overview,.pt-shell .pt-fee-explorer,
+.pt-shell .pt-activity-panel,.pt-shell .pt-fee-panel,
+.pt-shell .pt-queue-panel,.pt-shell .pt-confirm-panel,
+.pt-shell .pt-compact-fees,.pt-shell .pt-insight,
+.pt-shell .pt-chain-gateway-card,.pt-shell .pt-overview-card,
+.pt-chain-page .pt-chain-search,.pt-chain-page .pt-chain-how,
+.pt-chain-page .pt-chain-intro details,
+.pt-chain-page .pt-dash-stats,.pt-chain-page .pt-dash-stat,
+.pt-chain-page .pt-dash-feecard,.pt-chain-page .pt-dash-blocks,
+.pt-chain-page .pt-dash-fees,.pt-chain-page .pt-dash-recent,
+.pt-chain-page .pt-dash-summary,
+.pt-explorer .pt-explorer-panel,.pt-explorer .pt-explorer-stats>div,
+.pt-tx-page .pt-tx-stage,.pt-tx-page .pt-tx-summary,
+.pt-tx-page .pt-tx-details,.pt-tx-page .pt-tx-ai,
+.pt-tx-page .pt-tx-more,.pt-tx-page .pt-tx-tech,
+.card{
+ background:linear-gradient(150deg,#34424f 0%,#303e4b 48%,#283541 100%)!important;
+ border-color:#647787!important;
+ box-shadow:0 14px 36px #00000030,inset 0 1px 0 #ffffff14!important;
+}
+.pt-shell .pt-home-live-panel,.pt-shell .pt-network-drawer,
+.pt-chain-page .pt-chain-search,.pt-tx-page .pt-tx-stage{
+ background:linear-gradient(140deg,#3b4b59 0%,#303e4b 55%,#293845 100%)!important;
+ border-color:#71889a!important;
+}
+.pt-shell .pt-journey-step>span{color:#a5d9f3!important;font-weight:900}
+.pt-shell .pt-journey-step{border-top:2px solid #87b7d1!important}
+.pt-shell .pt-journey-step h3,.pt-shell .pt-home-live-title,
+.pt-shell .pt-network-drawer>summary b{color:#f1f5f8!important}
+.pt-shell .pt-journey-step p,.pt-shell .pt-home-live-row,
+.pt-shell .pt-network-drawer>summary small{color:#c4d0d9!important}
+.pt-shell .pt-learn-simple .pt-term summary span,
+.pt-shell .pt-network-drawer>summary>span:last-child{color:#a5d9f3!important}
+.pt-shell .pt-chain-gateway-btc .pt-chain-gateway-icon,
+.pt-chain-page .pt-chain-bitcoin{color:#f3b84c!important}
+.pt-shell .pt-chain-gateway-eth .pt-chain-gateway-icon,
+.pt-chain-page .pt-chain-ethereum{color:#8fa8ff!important}
+.pt-shell .pt-chain-gateway-btc .pt-chain-gateway-icon{background:linear-gradient(145deg,#59472c,#302f2b)!important;border-color:#9c7b45!important}
+.pt-shell .pt-chain-gateway-eth .pt-chain-gateway-icon{background:linear-gradient(145deg,#36466a,#283343)!important;border-color:#687cba!important}
+.pt-shell .pt-home-live-panel a,.pt-shell .pt-chain-gateway-card a,
+.pt-explorer a,.pt-tx-page a{color:#a5d9f3}
+.pt-shell .pt-home-live-status,.pt-chain-page .pt-dash-live{color:#a9e1c6!important}
+.pt-shell .pt-searchrow input,.pt-chain-page .pt-chain-search input,
+.pt-tx-page input{background:#192733!important;border-color:#72889a!important;color:#f1f5f8!important}
+.pt-shell .pt-searchrow input:focus,.pt-chain-page .pt-chain-search input:focus,
+.pt-tx-page input:focus{border-color:#a5d9f3!important;box-shadow:0 0 0 3px #a5d9f333!important}
+.pt-shell .pt-searchrow button,.pt-chain-page .pt-chain-search button,
+.pt-tx-page .pt-tx-summary-actions button{background:linear-gradient(120deg,#b9e0f4,#86b8d4)!important;color:#162633!important;border-color:#c5e5f5!important}
+.pt-explorer .pt-explorer-stats>div,.pt-tx-page .pt-tx-facts>div,
+.pt-tx-page .pt-tx-fact,.pt-tx-page .pt-tx-story-step,
+.pt-tx-page .pt-tx-io-column,.pt-tx-page .pt-tx-io-row,
+.pt-tx-page .pt-tx-tech-grid>div,.pt-tx-page .pt-eth-token-row,
+.pt-tx-page .pt-eth-parties>div{
+ background:linear-gradient(145deg,#394957,#2c3a47)!important;
+ border-color:#657a8a!important;
+}
+.pt-chain-page .pt-dash-blocks-premium .pt-dash-block{
+ background:linear-gradient(145deg,#394957,#2c3a47)!important;
+ border-color:#657a8a!important;
+}
+.pt-shell .pt-learn-simple .pt-term summary,
+.pt-shell .pt-journey-step h3{color:#f1f5f8!important}
+.pt-shell .pt-learn-simple .pt-term p,
+.pt-chain-page .pt-chain-search p,.pt-explorer .pt-explorer-lead,
+.pt-tx-page .pt-tx-details-intro{color:#c4d0d9!important}
+@media(max-width:700px){
+ .pt-shell .pt-journey-step,.pt-shell .pt-home-live-panel,
+ .pt-chain-page .pt-chain-search,.pt-explorer .pt-explorer-panel,
+ .pt-tx-page .pt-tx-stage{box-shadow:0 8px 24px #0000002b,inset 0 1px 0 #ffffff12!important}
+}
