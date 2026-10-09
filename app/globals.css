@@ -1313,24 +1313,24 @@ body{
 .pt-tx-page .pt-tx-back a{background:#29343e!important;border-color:#566a79!important;color:#c5d8e5!important}
 
 
-/* OBSIDIAN & ICE — unified semantic palette; no layout or animation edits.
+/* OBSIDIAN & ICE — refined card contrast; no layout or animation edits.
    All layout and blockchain motion rules remain in their existing files. */
 :root{
  color-scheme:dark;
  --bg:#090d12;
- --card:#29333d;
+ --card:#35424d;
  --text:#f5f7fa;
- --muted:#bac6d1;
- --border:#465461;
+ --muted:#c7d2db;
+ --border:#536372;
  --brand:#a7ddf5;
- --pt-surface-1:#29333d;
- --pt-surface-2:#232d37;
+ --pt-surface-1:#35424d;
+ --pt-surface-2:#2c3843;
  --pt-surface-3:#1b2732;
- --pt-line:#465461;
+ --pt-line:#536372;
  --pt-fg:#f5f7fa;
- --pt-secondary:#bac6d1;
+ --pt-secondary:#c7d2db;
  --pt-link:#a7ddf5;
- --pt-border:#465461;
+ --pt-border:#536372;
  --pt-accent:#a7ddf5;
  --pt-accent-bright:#d2effb;
 }
@@ -1367,13 +1367,13 @@ body{
 .pt-tx-page .pt-tx-details,.pt-tx-page .pt-tx-ai,
 .pt-tx-page .pt-tx-more,.pt-tx-page .pt-tx-tech,
 .card{
- background:linear-gradient(150deg,#303b46 0%,#29333d 48%,#232d37 100%)!important;
- border-color:#465461!important;
+ background:linear-gradient(150deg,#3b4854 0%,#35424d 48%,#2c3843 100%)!important;
+ border-color:#536372!important;
  box-shadow:0 14px 36px #00000030,inset 0 1px 0 #ffffff14!important;
 }
 .pt-shell .pt-home-live-panel,.pt-shell .pt-network-drawer,
 .pt-chain-page .pt-chain-search,.pt-tx-page .pt-tx-stage{
- background:linear-gradient(140deg,#34414d 0%,#29333d 55%,#263440 100%)!important;
+ background:linear-gradient(140deg,#40505d 0%,#35424d 55%,#34424e 100%)!important;
  border-color:#566879!important;
 }
 .pt-shell .pt-journey-step>span{color:#a7ddf5!important;font-weight:900}
@@ -1381,7 +1381,7 @@ body{
 .pt-shell .pt-journey-step h3,.pt-shell .pt-home-live-title,
 .pt-shell .pt-network-drawer>summary b{color:#f5f7fa!important}
 .pt-shell .pt-journey-step p,.pt-shell .pt-home-live-row,
-.pt-shell .pt-network-drawer>summary small{color:#bac6d1!important}
+.pt-shell .pt-network-drawer>summary small{color:#c7d2db!important}
 .pt-shell .pt-learn-simple .pt-term summary span,
 .pt-shell .pt-network-drawer>summary>span:last-child{color:#a7ddf5!important}
 .pt-shell .pt-chain-gateway-btc .pt-chain-gateway-icon,
@@ -1404,18 +1404,18 @@ body{
 .pt-tx-page .pt-tx-io-column,.pt-tx-page .pt-tx-io-row,
 .pt-tx-page .pt-tx-tech-grid>div,.pt-tx-page .pt-eth-token-row,
 .pt-tx-page .pt-eth-parties>div{
- background:linear-gradient(145deg,#303c47,#26333e)!important;
- border-color:#506373!important;
+ background:linear-gradient(145deg,#394752,#303e49)!important;
+ border-color:#5a6b79!important;
 }
 .pt-chain-page .pt-dash-blocks-premium .pt-dash-block{
- background:linear-gradient(145deg,#303c47,#26333e)!important;
- border-color:#506373!important;
+ background:linear-gradient(145deg,#394752,#303e49)!important;
+ border-color:#5a6b79!important;
 }
 .pt-shell .pt-learn-simple .pt-term summary,
 .pt-shell .pt-journey-step h3{color:#f5f7fa!important}
 .pt-shell .pt-learn-simple .pt-term p,
 .pt-chain-page .pt-chain-search p,.pt-explorer .pt-explorer-lead,
-.pt-tx-page .pt-tx-details-intro{color:#bac6d1!important}
+.pt-tx-page .pt-tx-details-intro{color:#c7d2db!important}
 @media(max-width:700px){
  .pt-shell .pt-journey-step,.pt-shell .pt-home-live-panel,
  .pt-chain-page .pt-chain-search,.pt-explorer .pt-explorer-panel,
