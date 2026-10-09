@@ -295,3 +295,35 @@
 @media(prefers-reduced-motion:reduce){
  .pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell{animation:none!important;opacity:.65!important}
 }
+
+/* Stable muted outlines: cells actually vanish and repopulate; never pulse between gold shades. */
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell{
+ stroke:#9e9078!important;
+ stroke-width:1.05!important;
+ fill:#a8957310!important;
+ animation-name:pt-cell-vanish!important;
+ animation-duration:4.1s!important;
+ animation-timing-function:ease-in-out!important;
+ animation-iteration-count:infinite!important;
+ animation-delay:-.7s!important;
+}
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell:nth-child(3n){animation-duration:5.3s!important;animation-delay:-2.9s!important}
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell:nth-child(4n){animation-duration:3.4s!important;animation-delay:-1.6s!important}
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell:nth-child(7n){animation-duration:6.1s!important;animation-delay:-4.3s!important}
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell:nth-child(11n){animation-duration:4.7s!important;animation-delay:-3.8s!important}
+.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-hop{animation-name:pt-cell-hop-neighbor!important;animation-duration:5.5s!important;animation-delay:-2.1s!important}
+@keyframes pt-cell-vanish{
+ 0%,16%,70%,100%{opacity:.58;transform:translate(0,0)}
+ 25%{opacity:.12;transform:translate(0,0)}
+ 33%,52%{opacity:0;transform:translate(0,0)}
+ 62%{opacity:.58;transform:translate(0,0)}
+}
+@keyframes pt-cell-hop-neighbor{
+ 0%,19%,100%{opacity:.58;transform:translateX(0)}
+ 29%{opacity:0;transform:translateX(0)}
+ 39%{opacity:0;transform:translateX(15px)}
+ 49%,71%{opacity:.58;transform:translateX(15px)}
+ 82%{opacity:0;transform:translateX(15px)}
+ 91%{opacity:0;transform:translateX(0)}
+}
+@media(prefers-reduced-motion:reduce){.pt-chain-flow-hex-pending>.pt-chain-honeycomb .pt-honeycomb-cell{animation:none!important;opacity:.58!important}}
