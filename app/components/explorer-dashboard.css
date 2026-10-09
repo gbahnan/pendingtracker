@@ -154,3 +154,23 @@
 .pt-chain-flow-fee small{color:#e4cfab;font-size:12px;font-weight:600;letter-spacing:0}
 .pt-chain-flow-tx{color:#a7bfcd;font-size:11px;line-height:1.4;text-align:center}
 @media(max-width:760px){.pt-chain-flow-scene{min-height:280px}.pt-chain-flow-fee{font-size:27px}}
+
+/* Chain progression: keep the established hexagonal design */
+.pt-chain-flow-shapes{grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}
+.pt-chain-flow-hex{height:128px}
+.pt-chain-flow-hex-pending{background:linear-gradient(135deg,#e4c88e,#846a4d 55%,#4b6577)}
+.pt-chain-flow-hex-pending:before{background:linear-gradient(145deg,#263e50,#152b3e 65%,#564735)}
+.pt-chain-flow-hex-confirmed{background:linear-gradient(145deg,#e1e8ef,#7893a7 52%,#466276)}
+.pt-chain-flow-hex-confirmed:before{background:linear-gradient(145deg,#2d5267,#1a3548 72%,#274d63)}
+.pt-chain-flow-hex-confirmed>strong{font-size:clamp(13px,1.5vw,19px);color:#dcecf5}
+.pt-chain-flow-hex-confirmed>span{color:#b6d7e6}
+.pt-chain-flow-confirmed-unit{opacity:.92}
+.pt-chain-flow-new-confirmation .pt-chain-flow-hex-confirmed{animation:pt-confirmed-arrival 1.4s cubic-bezier(.2,.7,.2,1) both}
+.pt-chain-flow-shift>.pt-chain-flow-unit:not(.pt-chain-flow-confirmed-unit){animation:pt-queue-shift 1.3s cubic-bezier(.2,.7,.2,1) both}
+.pt-chain-flow-shift>.pt-chain-flow-unit:nth-child(3){animation-delay:.06s}
+.pt-chain-flow-shift>.pt-chain-flow-unit:nth-child(4){animation-delay:.12s}
+.pt-chain-flow-shift>.pt-chain-flow-unit:nth-child(5){animation-delay:.18s}
+@keyframes pt-confirmed-arrival{0%{transform:translateX(80%) scale(1.06);filter:brightness(1.7)}65%{filter:brightness(1.35)}100%{transform:translateX(0) scale(1);filter:brightness(1)}}
+@keyframes pt-queue-shift{0%{transform:translateX(35%);opacity:.6}100%{transform:translateX(0);opacity:1}}
+@media(max-width:760px){.pt-chain-flow-shapes{min-width:850px}.pt-chain-flow-hex{height:120px}}
+@media(prefers-reduced-motion:reduce){.pt-chain-flow-new-confirmation .pt-chain-flow-hex-confirmed,.pt-chain-flow-shift>.pt-chain-flow-unit{animation:none!important}}
