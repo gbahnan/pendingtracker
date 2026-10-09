@@ -26,10 +26,6 @@
 html, body { padding: 0; margin: 0; }
 body {
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  background:
-    radial-gradient(1200px 700px at 20% -10%, rgba(79,70,229,0.28), transparent 60%),
-    radial-gradient(900px 600px at 90% 0%, rgba(34,197,94,0.18), transparent 55%),
-    var(--bg);
   color: var(--text);
 }
 
@@ -121,15 +117,15 @@ a:hover { text-decoration: underline; }
 
 /* Pending Tracker 2.0 — explorer */
 html { scroll-behavior: smooth; }
-body { color-scheme: dark; background: radial-gradient(ellipse 70% 35% at 55% 5%,rgba(106,51,209,.28),transparent),radial-gradient(ellipse 45% 30% at 95% 38%,rgba(47,23,104,.22),transparent),#080817; color:#f4f1ff; }
+body { color-scheme: dark; color:#f4f1ff; }
 .pt-shell { max-width:1120px; margin:0 auto; }
 .pt-hero { text-align:center; padding:86px 12px 76px; }
 .pt-eyebrow { font-size:11px; font-weight:800; letter-spacing:.18em; color:#bca6ff; }
 .pt-pulse { display:inline-block; width:8px; height:8px; margin-right:9px; border-radius:50%; background:#a5ffcf; box-shadow:0 0 15px #a5ffcf; }
 .pt-hero h1 { font-size:clamp(38px,6vw,70px); line-height:1.12; letter-spacing:-.055em; margin:22px 0; font-weight:850; }
-.pt-hero h1 span { background:linear-gradient(95deg,#b6a3ff,#c0d4e2); color:transparent; background-clip:text; }
-.pt-lead { color:#b8b3cc; font-size:17px; line-height:1.7; max-width:730px; margin:0 auto 38px; }
-.pt-searchbox { text-align:left; max-width:800px; margin:auto; padding:21px; border:1px solid rgba(185,151,255,.3); border-radius:20px; background:rgba(30,23,60,.8); box-shadow:0 20px 80px rgba(91,41,170,.17); }
+.pt-hero h1 span {}
+.pt-lead { font-size:17px; line-height:1.7; max-width:730px; margin:0 auto 38px; }
+.pt-searchbox { text-align:left; max-width:800px; margin:auto; padding:21px; border-radius:20px; }
 .pt-search-label { font-size:11px; font-weight:800; color:#d7c9ff; letter-spacing:.12em; margin-bottom:12px; }
 .pt-searchrow { display:flex; gap:10px; }
 .pt-searchrow input { flex:1; min-width:0; padding:16px; background:#101027; border:1px solid #40375f; border-radius:11px; color:white; font-size:14px; outline:none; }
@@ -300,10 +296,10 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#a8bac9,#7997aa); 
 .pt-hero .pt-eyebrow { color:#91b4ce; letter-spacing:.22em; }
 .pt-hero .pt-pulse { background:#b5e3dc; box-shadow:0 0 14px rgba(181,227,220,.6); }
 .pt-hero h1 { font-size:clamp(40px,5.8vw,76px); line-height:1.09; letter-spacing:-.062em; margin:24px 0 22px; font-weight:780; }
-.pt-hero h1 span { background:linear-gradient(95deg,#c1d0dc,#9abfd0); background-clip:text; color:transparent; }
-.pt-lead { max-width:780px; color:#aebbc8; font-size:clamp(16px,1.6vw,19px); line-height:1.7; margin:0 auto 22px; }
+.pt-hero h1 span {}
+.pt-lead { max-width:780px; font-size:clamp(16px,1.6vw,19px); line-height:1.7; margin:0 auto 22px; }
 .pt-hero-trust { display:flex; justify-content:center; gap:22px; flex-wrap:wrap; color:#aabdc8; font-size:12px; font-weight:650; letter-spacing:.025em; }
-.pt-searchbox { max-width:920px; padding:32px 36px 25px; background:linear-gradient(135deg,rgba(22,37,51,.98),rgba(13,25,38,.98)); border:1px solid rgba(165,193,205,.23); border-radius:19px; box-shadow:0 25px 75px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.05); }
+.pt-searchbox { max-width:920px; padding:32px 36px 25px; border-radius:19px; }
 .pt-search-top { display:flex; justify-content:space-between; gap:24px; align-items:flex-start; }
 .pt-search-label { color:#a9bfce; font-size:11px; letter-spacing:.18em; margin:0 0 9px; }
 .pt-search-top h2 { font-size:clamp(22px,2.5vw,30px); letter-spacing:-.035em; margin:0 0 11px; color:#f3f5f7; }
@@ -349,8 +345,8 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#a8bac9,#7997aa); 
 .pt-shell .pt-activity-row:hover { background:#203b4c; border-color:#9abfd0; }
 .pt-shell .pt-tabs button.selected { background:#294657; border-color:#a4bed1; }
 .pt-shell .pt-activity-arrow,.pt-shell .pt-term summary span { color:#9abfd0; }
-.pt-shell .pt-timeline-node { background:#8db8ca; border-color:#203a4a; color:#10202d; }
-.pt-shell .pt-fee-timeline:before { background:linear-gradient(90deg,#a7cbd9,#527e93); }
+.pt-shell .pt-timeline-node {}
+.pt-shell .pt-fee-timeline:before {}
 .pt-shell .pt-timeline-stop b { background:#243f50; color:#c5e0ec; }
 .pt-shell .pt-estimate-summary { background:#203b4c; border-color:#62869a; color:#e3f0f5; }
 
@@ -789,7 +785,7 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#a8bac9,#7997aa); 
 .pt-chain-hero h1{font-size:clamp(34px,5vw,60px);letter-spacing:-.045em;margin:7px 0;color:#f7f8fa}
 .pt-chain-hero p{font-size:16px;line-height:1.7;color:#bdd0da;max-width:710px;margin:0}
 .pt-chain-symbol{flex:0 0 75px;width:75px;height:75px;display:grid;place-items:center;border-radius:18px;font-size:49px;font-weight:800}
-.pt-chain-bitcoin{background:#789fb9;color:white}
+.pt-chain-bitcoin{}
 .pt-chain-ethereum{background:#5566a6;color:white}
 .pt-chain-search{border:1px solid #60798a;background:#1c3849;border-radius:15px;padding:23px 25px;margin:25px 0}
 .pt-chain-search h2{font-size:20px;color:#f4f5f7;margin:0 0 7px}
@@ -915,7 +911,6 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#a8bac9,#7997aa); 
 body{
  color-scheme:dark;
  color:#cbd6e0;
- background:radial-gradient(ellipse 65% 35% at 50% 0%,#1c2c3a 0%,transparent 72%),#0b1017;
 }
 .pt-shell,.pt-dash{color:#cbd6e0}
 .pt-eyebrow,.pt-search-label,.pt-term summary span,.pt-insight-icon{color:#9bbbd3}
@@ -926,9 +921,7 @@ body{
  box-shadow:0 14px 36px #0003;
 }
 .pt-searchrow button,.pt-cta a,.button{
- background:linear-gradient(115deg,#557e9d,#759ebd);
  border-color:#769bb6;
- color:#f0f5f8;
 }
 .pt-tabs button,.pt-metric,.pt-term,.pt-dash-stat,.pt-dash-feecard,.pt-dash-block,.pt-dash-summary{
  background:linear-gradient(145deg,#1a2a38,#121f2b);
@@ -1154,8 +1147,6 @@ body{
 .pt-shell .pt-network-drawer>summary>span:last-child{color:var(--pt-accent)!important}
 .pt-shell .pt-learn-simple .pt-term,
 .pt-shell .pt-learn-simple .pt-glossary-inner .pt-term{
- background:linear-gradient(145deg,#30363e,#252c34)!important;
- border-color:var(--pt-border)!important;
  box-shadow:inset 0 1px 0 rgba(255,255,255,.045)!important;
 }
 .pt-shell .pt-learn-simple .pt-term summary{color:#e1e5e9!important}
