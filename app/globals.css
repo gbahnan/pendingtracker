@@ -1061,3 +1061,12 @@ body{
 .pt-home-live .pt-home-live-row{border-top-color:#414a53!important}
 .pt-home-live .pt-home-live-row b{color:#d7dce0!important}
 .pt-home-live .pt-home-live-row:hover b{color:#a8c9df!important}
+
+/* Ethereum brand blue: homepage and Ethereum explorer badge only. */
+.pt-chain-gateway .pt-chain-gateway-eth .pt-chain-gateway-icon,
+.pt-chain-ethereum{
+ background:linear-gradient(145deg,#8198ef 0%,#627eea 55%,#4866c9 100%)!important;
+ color:#f8faff!important;
+ border:1px solid #9aafff!important;
+ box-shadow:inset 0 1px 0 #ffffff35,0 6px 18px #0004!important;
+}
