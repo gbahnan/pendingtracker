@@ -712,3 +712,37 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-network-drawer>.pt-section{padding:0 22px 22px;margin:0}
 .pt-network-drawer .pt-section-head{padding-top:12px}
 @media(max-width:650px){.pt-network-drawer>summary{padding:16px}.pt-network-drawer>.pt-section{padding:0 12px 18px}}
+
+
+/* Connected blockchain explorer */
+.pt-explore-link{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:20px 0 30px;padding:17px 21px;border:1px solid #577080;border-radius:13px;background:#1b3443}
+.pt-explore-link a{color:#f0d29d;font-size:15px;font-weight:800;text-decoration:none}
+.pt-explore-link span{color:#aec5d0;font-size:12px}
+.pt-explorer{max-width:1200px;margin:0 auto;padding:50px 12px 75px;color:#e7f0f4}
+.pt-explorer h1{font-size:clamp(32px,4vw,56px);letter-spacing:-.04em;line-height:1.1;margin:13px 0}
+.pt-explorer h2{font-size:26px;color:#f3e2c2}
+.pt-explorer h3{font-size:16px;color:#d6e5eb;margin-top:28px}
+.pt-explorer-lead{font-size:17px;line-height:1.7;color:#bbd0dc;max-width:740px}
+.pt-explore-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:28px 0 32px}
+.pt-explore-top a{display:inline-block;padding:13px 20px;border-radius:9px;background:#d9bc8c;color:#182e3b;text-decoration:none;font-weight:800}
+.pt-explore-top span,.pt-explorer-note{font-size:12px;color:#aec0ca}
+.pt-explorer-networks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.pt-explorer-panel{border:1px solid #456171;background:#172f3e;border-radius:17px;padding:24px;min-width:0}
+.pt-explorer-panel>p,.pt-explorer-detail>p{line-height:1.7;color:#bdd0da}
+.pt-explorer-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:24px 0}
+.pt-explorer-stats>div{padding:15px;border:1px solid #486475;background:#213c4b;border-radius:10px;min-width:0}
+.pt-explorer-stats span{display:block;color:#b0c3cc;font-size:11px;margin-bottom:9px}
+.pt-explorer-stats strong{display:block;color:#eed2a4;font-size:18px;overflow-wrap:anywhere}
+.pt-explorer-block-row{display:flex;align-items:center;justify-content:space-between;gap:15px;border-top:1px solid #365261;padding:15px 0;color:#e5eef2;text-decoration:none}
+.pt-explorer-block-row:hover{color:#f3d29b}
+.pt-explorer-block-row>span:first-child{min-width:0}
+.pt-explorer-block-row>span:last-child{white-space:nowrap;color:#d8bb89;font-size:12px;font-weight:700}
+.pt-explorer-block-row b{display:block;font-size:14px;overflow-wrap:anywhere}
+.pt-explorer-block-row small{display:block;color:#a9bfca;margin-top:5px;font-size:11px;line-height:1.5}
+.pt-explorer-detail{max-width:950px}
+.pt-explorer-detail>a:first-child{display:inline-block;color:#dfc497;margin-bottom:27px}
+.pt-explorer-hash{font-family:monospace;font-size:12px!important}
+.pt-explorer-detail .pt-explorer-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pt-explorer-note{margin-top:25px;line-height:1.7}
+.pt-explorer-note a{color:#e7ca97}
+@media(max-width:750px){.pt-explorer-networks{grid-template-columns:1fr}.pt-explorer-detail .pt-explorer-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pt-explore-link,.pt-explore-top{align-items:flex-start;flex-direction:column}.pt-explorer{padding:25px 8px 50px}.pt-explorer-panel{padding:17px}}
