@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Pending Tracker | The Blockchain Explorer That Explains Everything",
-  description: "Understand Bitcoin and Ethereum in plain English. Explore live network conditions, gas fees, the mempool, and your own blockchain transactions.",
+  description: "Track Bitcoin and Ethereum transactions in plain English, or explore each blockchain through live blocks, addresses, tokens and fees.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -19,7 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
             <div className="nav">
               <Link href="/">Track</Link>
-              <Link href="/explore">Explore blocks</Link>
+              <Link href="/bitcoin">Bitcoin</Link>
+              <Link href="/ethereum">Ethereum</Link>
               <Link href="/faq">FAQ</Link>
             </div>
           </div>
