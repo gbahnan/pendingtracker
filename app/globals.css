@@ -1491,3 +1491,87 @@ body{
  border-color:#465968!important;
  box-shadow:none!important;
 }
+
+
+/* PENDING TRACKER / MIDNIGHT NETWORK — unified screenshot-inspired theme.
+   Presentation only: no movement, geometry, flow or data logic changed. */
+:root{
+ --bg:#07111b;--card:#122230;--text:#f4f8fc;--muted:#b8cddd;
+ --brand:#8cdbff;--border:#2b465b;
+ --pt-surface-1:#132536;--pt-surface-2:#0d1c2a;--pt-surface-3:#081725;
+ --pt-line:#2b4559;--pt-fg:#f4f8fc;--pt-secondary:#b7cbd9;--pt-link:#91dfff;
+ --pt-accent:#91dfff;--pt-border:#2b4559;
+}
+html,body{background:#07111b!important;color:#f4f8fc!important}
+body{background:radial-gradient(ellipse 85% 34% at 52% 0%,#102a3c 0%,#07111b 72%) fixed!important}
+.pt-shell,.pt-chain-page,.pt-explorer{color:#f4f8fc}
+.pt-shell .pt-hero-intro h1{color:#f5f9fc!important;letter-spacing:-.055em}
+.pt-shell .pt-hero-intro h1 span{color:#9eddf9!important;background:linear-gradient(100deg,#f0f6ff,#8bd9ff)!important;background-clip:text!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important}
+.pt-shell .pt-lead{color:#c4d7e4!important}
+.pt-shell .pt-eyebrow{color:#9bdcf8!important}
+.pt-shell .pt-searchbox{
+ background:linear-gradient(115deg,#7890a2 0%,#5c7487 49%,#334a5e 100%)!important;
+ border:1px solid #9db3c5!important;
+ box-shadow:0 20px 55px #0007,inset 0 1px 0 #ffffff38!important;
+}
+.pt-shell .pt-searchbox h2{color:#f8fbff!important}
+.pt-shell .pt-searchbox .pt-search-label{color:#e3f2fc!important}
+.pt-shell .pt-searchbox .pt-search-explain,.pt-shell .pt-searchbox .pt-hint{color:#e5edf5!important}
+.pt-shell .pt-searchbox .pt-search-explain strong{color:#fff!important}
+.pt-shell .pt-searchrow input{background:#0d2131!important;border-color:#829eaf!important;color:#f4f9ff!important}
+.pt-shell .pt-searchrow input::placeholder{color:#9fb9ca!important}
+.pt-shell .pt-searchrow button{background:linear-gradient(110deg,#91e1ff,#58b9f8)!important;border-color:#9be0ff!important;color:#061929!important;font-weight:800!important}
+.pt-shell .pt-chain-gateway-card{box-shadow:0 15px 38px #0005,inset 0 1px 0 #ffffff0d!important}
+.pt-shell .pt-chain-gateway-btc{
+ background:linear-gradient(140deg,#302719 0%,#241f19 52%,#101923 100%)!important;
+ border-color:#b57a22!important;
+}
+.pt-shell .pt-chain-gateway-eth{
+ background:linear-gradient(140deg,#222b4c 0%,#172441 55%,#0c1a30 100%)!important;
+ border-color:#617fe3!important;
+}
+.pt-shell .pt-chain-gateway-btc .pt-chain-gateway-icon{background:linear-gradient(140deg,#ffc95d,#f2a72a)!important;color:#fff!important}
+.pt-shell .pt-chain-gateway-eth .pt-chain-gateway-icon{background:linear-gradient(140deg,#9faeff,#566be4)!important;color:#fff!important}
+.pt-shell .pt-chain-gateway-btc .pt-chain-gateway-copy em{color:#ffc55d!important}
+.pt-shell .pt-chain-gateway-eth .pt-chain-gateway-copy em{color:#9cbbff!important}
+.pt-shell .pt-chain-gateway-card strong{color:#f9fbff!important}
+.pt-shell .pt-chain-gateway-card small{color:#c8d3df!important}
+.pt-shell .pt-home-live{background:linear-gradient(140deg,#0c1e2d,#07121e)!important;border:1px solid #1e394d!important;border-radius:22px!important;padding:24px!important}
+.pt-shell .pt-home-live-panel{
+ background:linear-gradient(145deg,#102536,#091824)!important;
+ border-color:#27465b!important;
+ box-shadow:inset 0 1px 0 #ffffff0a!important;
+}
+.pt-shell .pt-home-live-row{border-color:#274052!important}
+.pt-shell .pt-home-live-panel:first-child .pt-home-live-title h3{color:#ffc05a!important}
+.pt-shell .pt-home-live-panel:nth-child(2) .pt-home-live-title h3{color:#a4b7ff!important}
+.pt-shell .pt-home-live-title a{color:#9adfff!important}
+.pt-shell .pt-journey{background:linear-gradient(150deg,#0c1b29,#091622)!important;border:1px solid #1e3547!important;border-radius:22px!important;padding:24px!important}
+.pt-shell .pt-journey .pt-journey-step{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;border-right:1px solid #254053!important}
+.pt-shell .pt-journey .pt-journey-step:last-child{border-right:0!important}
+.pt-shell .pt-journey .pt-journey-step>span{color:#bde6ff!important}
+.pt-shell .pt-network-drawer{background:linear-gradient(125deg,#172e40,#0d2030)!important;border-color:#355c76!important}
+.pt-shell .pt-learn-simple .pt-term,.pt-shell .pt-learn-simple .pt-glossary-inner .pt-term{background:#112332!important;border-color:#2a475b!important}
+.pt-chain-page .pt-chain-search{
+ background:linear-gradient(125deg,#344c60,#1c3448)!important;
+ border-color:#66849a!important;box-shadow:0 18px 42px #0005!important;
+}
+.pt-chain-page .pt-chain-search input{background:#0c1e2e!important;border-color:#4b6b81!important;color:#f5f9ff!important}
+.pt-chain-page .pt-chain-search button{background:linear-gradient(110deg,#91e1ff,#58b9f8)!important;border-color:#9be0ff!important;color:#081b2a!important}
+.pt-chain-page .pt-dash-stat,.pt-chain-page .pt-dash-fees,.pt-chain-page .pt-dash-recent,
+.pt-chain-page .pt-chain-how,.pt-chain-page .pt-chain-search-first,
+.pt-explorer .pt-explorer-panel,.pt-explorer .pt-explorer-stats>div{
+ background:linear-gradient(145deg,#132638,#0a1927)!important;border-color:#29465b!important;
+ box-shadow:inset 0 1px 0 #ffffff09!important;
+}
+.pt-chain-page .pt-chain-hero h1,.pt-chain-page .pt-chain-intro h2{color:#f5f9ff!important}
+.pt-chain-page .pt-chain-hero p,.pt-chain-page .pt-chain-intro p{color:#bed1df!important}
+.pt-chain-page .pt-chain-flow{background:linear-gradient(155deg,#0b1b29,#07131f)!important}
+/* Scope identity colors to chrome; never restyle animated SVGs or honeycomb cells. */
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-hero h1{color:#f8faff!important}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-hero h1{color:#f8faff!important}
+@media(max-width:700px){
+ .pt-shell .pt-home-live,.pt-shell .pt-journey{padding:16px!important}
+ .pt-shell .pt-journey .pt-journey-step{border-right:0!important;border-bottom:1px solid #254053!important}
+ .pt-shell .pt-journey .pt-journey-step:last-child{border-bottom:0!important}
+}
