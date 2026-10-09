@@ -16,12 +16,12 @@ function Honeycomb(){
      const from=Math.floor(Math.random()*120);
      const to=Math.max(0,Math.min(119,from+(Math.random()<.5?10:1)));
      setHidden(old=>old.includes(from)?old:[...old,from]);
-     if(Math.random()<.4){
+     if(Math.random()<.8){
        const id=++sequence.current;
        setMoving({from,to,id});
        timers.push(setTimeout(()=>setMoving(m=>m?.id===id?null:m),560));
      }
-     timers.push(setTimeout(()=>setHidden(old=>old.filter(x=>x!==from)),850+Math.random()*900));
+     timers.push(setTimeout(()=>setHidden(old=>old.filter(x=>x!==from)),1700+Math.random()*1200));
    },420);
    return()=>{clearInterval(interval);timers.forEach(clearTimeout)};
  },[]);
