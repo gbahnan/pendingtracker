@@ -511,3 +511,37 @@
 .pt-chain-how-steps span,.pt-chain-how summary{color:#cbd1d7}
 .pt-dash-summary summary{color:#d0d5da}
 .pt-dash-live{color:#9ed0ba;background:#1b2c27;border-color:#3d6658}
+
+
+/* Explorer-only neutral finishing pass; exclude live hexagon animation elements. */
+.pt-chain-page .pt-dash-stats{
+ background:#252c34!important;
+ border-color:#52606c!important;
+}
+.pt-chain-page .pt-dash-stat,
+.pt-chain-page .pt-dash-feecard{
+ background:linear-gradient(145deg,#303840,#252d36)!important;
+ border-color:#53616d!important;
+}
+.pt-chain-page .pt-dash-stat strong,
+.pt-chain-page .pt-dash-feecard strong{color:#e1e5e9!important}
+.pt-chain-page .pt-dash-blocks,
+.pt-chain-page .pt-dash-fees,
+.pt-chain-page .pt-dash-recent,
+.pt-chain-page .pt-dash-summary{
+ background:linear-gradient(145deg,#2c343d,#222b34)!important;
+ border-color:#53616d!important;
+}
+.pt-chain-page .pt-dash-blocks-premium .pt-dash-block{
+ background:linear-gradient(145deg,#343e48,#28333d)!important;
+ border-color:#5c6c79!important;
+}
+.pt-chain-page .pt-chain-how-steps>div{
+ background:#29343e!important;
+ border-color:#53616d!important;
+}
+.pt-chain-page .pt-dash-live{
+ color:#a4d6be!important;
+ background:#26372f!important;
+ border-color:#4e7561!important;
+}
