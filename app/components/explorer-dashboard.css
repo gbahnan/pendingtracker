@@ -373,7 +373,7 @@
 /* Thick charcoal / gunmetal perimeter on every large Bitcoin and Ethereum flow hexagon.
    The inner honeycomb colors and animation remain unchanged. */
 .pt-chain-flow .pt-chain-flow-hex{
- background:#59636d!important;
+ background:#0b0f14!important;
 }
 .pt-chain-flow .pt-chain-flow-hex::before{
  inset:4px!important;
