@@ -1017,3 +1017,34 @@ body{
  border:1px solid #ffd17c!important;
  box-shadow:inset 0 1px 0 #fff4,0 9px 24px #0004!important;
 }
+
+
+/* Homepage-specific finishing pass: target the actual gateway cards and BTC badge.
+   Keep structure, transitions and blockchain visualizations unchanged. */
+.pt-chain-gateway .pt-chain-gateway-card{
+ background:linear-gradient(145deg,#252a31 0%,#1a2027 100%)!important;
+ border-color:#4a515a!important;
+ color:#d7dce0!important;
+}
+.pt-chain-gateway .pt-chain-gateway-card:hover{
+ background:linear-gradient(145deg,#303740,#202832)!important;
+ border-color:#8292a4!important;
+}
+.pt-chain-gateway .pt-chain-gateway-btc .pt-chain-gateway-icon{
+ background:linear-gradient(145deg,#f9c35b 0%,#f0a925 56%,#d88a16 100%)!important;
+ color:#382506!important;
+ box-shadow:inset 0 1px 0 #fff6,0 6px 18px #0005!important;
+}
+.pt-chain-gateway .pt-chain-gateway-eth .pt-chain-gateway-icon{
+ background:linear-gradient(145deg,#69799b,#4b5c83)!important;
+ color:#f0f2f7!important;
+}
+.pt-chain-gateway .pt-chain-gateway-copy strong{color:#e0e3e7!important}
+.pt-chain-gateway .pt-chain-gateway-copy small{color:#a9b2bc!important}
+.pt-chain-gateway .pt-chain-gateway-copy em{color:#a8c9df!important}
+.pt-home-live [class*="card"]{
+ border-color:#414a53;
+}
+.pt-home-live [class*="card"]:not(.pt-chain-flow-hex){
+ background-color:#1b2229;
+}
