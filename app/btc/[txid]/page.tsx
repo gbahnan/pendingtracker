@@ -1,5 +1,5 @@
-import ChainDashboard from "../../components/ChainDashboard";
 "use client";
+import ChainDashboard from "../../components/ChainDashboard";
 import {useCallback,useEffect,useMemo,useState} from "react";
 import type {BtcMvpResult} from "@/lib/btc/types";
 import {isLikelyTxid} from "@/lib/btc/validate";
