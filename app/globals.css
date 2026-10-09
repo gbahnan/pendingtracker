@@ -2257,3 +2257,67 @@ body{
 }
 .pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-tx{border-bottom-color:#31536a!important}
 .pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-tx>span{color:#8edfff!important}
+
+/* APPROVED REFERENCE THEME — unified home / BTC / ETH surfaces.
+   Color-only: no size, positioning, geometry, motion or interaction changes. */
+:root{--bg:#03101b;--card:#0b2233;--text:#f6faff;--muted:#bdd3e3;--brand:#8bdcff;--border:#2a4d63}
+html,body{background-color:#03101b!important;color:#f6faff!important}
+body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42%),linear-gradient(180deg,#03111d 0%,#020d17 65%,#03111d 100%)!important}
+.pt-shell,.pt-chain-page{background-color:transparent!important;color:#f6faff!important}
+.pt-shell .pt-home-live,.pt-shell .pt-journey,.pt-shell .pt-reference-transactions,
+.pt-chain-page .pt-dash-recent,.pt-chain-page .pt-dash-fees,.pt-chain-page .pt-chain-intro{
+ background:linear-gradient(145deg,#0b2537 0%,#061927 100%)!important;
+ border-color:#284e66!important;
+ color:#f6faff!important;
+}
+.pt-shell .pt-home-live-panel,.pt-shell .pt-reference-table,
+.pt-chain-page .pt-dash-stat,.pt-chain-page .pt-dash-feecard{
+ background:linear-gradient(145deg,#0d293c,#071b2b)!important;
+ border-color:#2c526b!important;
+ color:#f6faff!important;
+}
+.pt-shell .pt-reference-table-row,.pt-shell .pt-home-live-row,
+.pt-chain-page .pt-dash-tx,.pt-chain-page .pt-dash-txlist{
+ border-color:#27475c!important;
+}
+.pt-shell .pt-reference-table-title,.pt-shell .pt-home-live-title,
+.pt-chain-page .pt-dash-heading h3,.pt-chain-page .pt-dash-recent h3,
+.pt-chain-page .pt-chain-intro h2{color:#f8fbff!important}
+.pt-shell .pt-reference-table a,.pt-shell .pt-home-live a,
+.pt-chain-page .pt-dash-tx a,.pt-chain-page .pt-dash-tx span,
+.pt-chain-page .pt-chain-foot a{color:#8cddff!important}
+.pt-shell .pt-reference-table-row,.pt-shell .pt-home-live-panel,
+.pt-chain-page .pt-dash-recent p,.pt-chain-page .pt-dash-recent small,
+.pt-chain-page .pt-chain-intro p{color:#c4d8e6!important}
+.pt-shell .pt-searchbox,.pt-shell .pt-search-top,
+.pt-chain-page .pt-chain-search,.pt-chain-page .pt-dash-summary{
+ background:linear-gradient(110deg,#7898af 0%,#577891 58%,#314e64 100%)!important;
+ border-color:#9bbacf!important;
+}
+.pt-shell .pt-searchbox h2,.pt-shell .pt-searchbox .pt-search-explain,
+.pt-chain-page .pt-chain-search h2,.pt-chain-page .pt-chain-search p{
+ color:#f9fcff!important;
+}
+.pt-shell .pt-searchrow input,.pt-chain-page .pt-chain-search input{
+ background:#061c2b!important;color:#f8fbff!important;border-color:#5c8098!important;
+}
+.pt-chain-page .pt-dash-summary h3,.pt-chain-page .pt-dash-summary p,
+.pt-chain-page .pt-dash-summary summary{color:#f9fcff!important}
+.pt-chain-page .pt-chain-intro details,
+.pt-chain-page .pt-chain-intro summary{
+ background:#14364c!important;color:#eaf6ff!important;border-color:#47738d!important;
+}
+.pt-chain-page section.pt-dash-blocks{
+ background:linear-gradient(150deg,#082033,#041522)!important;
+ border-color:#34566d!important;
+}
+.pt-chain-page section.pt-dash-blocks .pt-chain-flow{
+ background:linear-gradient(150deg,#071b2b,#04131f)!important;
+ border-color:#28485d!important;
+}
+.pt-chain-page .pt-dash-disclaimer,.pt-chain-page .pt-dash-source,
+.pt-chain-page .pt-bitcoin-reference-note{color:#c0d5e4!important}
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-blocks{border-color:#a9772b!important}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-heading .pt-eyebrow{color:#ffc85f!important}
+.pt-chain-page:has(.pt-chain-ethereum) section.pt-dash-blocks{border-color:#6078c5!important}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-dash-heading .pt-eyebrow{color:#a9bbff!important}
