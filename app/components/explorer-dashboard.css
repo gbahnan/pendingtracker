@@ -227,3 +227,10 @@
   88%{opacity:.8;transform:translate(-1px,1px) scale(.98)}
 }
 @media(prefers-reduced-motion:reduce){.pt-chain-flow-mosaic i{animation:none!important;opacity:.55!important}}
+
+/* True honeycomb tessellation: fixed staggered hexagonal cells, no drifting or translation */
+.pt-chain-flow-mosaic{position:absolute;inset:2px;display:block;overflow:hidden;clip-path:polygon(23% 0,77% 0,100% 50%,77% 100%,23% 100%,0 50%)}
+.pt-chain-flow-mosaic i{position:absolute!important;width:9.5%!important;height:8.7%!important;top:auto;left:auto;opacity:.7;transform:none!important;filter:none!important;background:#e9ca89!important;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);animation:pt-honeycomb-blink 3s steps(1,end) infinite!important}
+.pt-chain-flow-mosaic i:after{position:absolute;content:"";inset:1.2px;background:#193345;clip-path:inherit;opacity:1}
+@keyframes pt-honeycomb-blink{0%,100%{opacity:.78}12%{opacity:.95}24%{opacity:.12}40%{opacity:0}56%{opacity:.6}74%{opacity:1}86%{opacity:.28}}
+@media(prefers-reduced-motion:reduce){.pt-chain-flow-mosaic i{animation:none!important;opacity:.7!important}}
