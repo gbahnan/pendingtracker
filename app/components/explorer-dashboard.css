@@ -258,3 +258,12 @@
   100%{opacity:.72;transform:translate(0,0)}
 }
 @media(prefers-reduced-motion:reduce){.pt-chain-flow-mosaic i{animation:none!important;opacity:.65!important}}
+
+/* SVG honeycomb: exact edge-sharing geometry, visible gold outlines, no CSS tile overlap bugs */
+.pt-chain-flow-hex-pending{isolation:isolate}
+.pt-chain-honeycomb{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:1;clip-path:polygon(23% 0,77% 0,100% 50%,77% 100%,23% 100%,0 50%)}
+.pt-honeycomb-cell{fill:#c8a96b14;stroke:#f3d18b;stroke-width:1.4;stroke-linejoin:round;opacity:.8;animation:pt-honeycomb-occupancy 7s ease-in-out infinite}
+.pt-honeycomb-hop{animation-name:pt-honeycomb-travel;stroke:#ffe1a4}
+@keyframes pt-honeycomb-occupancy{0%,20%,100%{opacity:.82}35%,47%{opacity:.07}65%,86%{opacity:.94}}
+@keyframes pt-honeycomb-travel{0%,20%,100%{opacity:.8;transform:translateX(0)}34%{opacity:.08;transform:translateX(0)}50%{opacity:.4;transform:translateX(15px)}70%,83%{opacity:.95;transform:translateX(15px)}95%{opacity:.08;transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.pt-honeycomb-cell{animation:none!important;opacity:.8}}
