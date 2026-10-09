@@ -335,3 +335,7 @@
 .pt-honeycomb-traveler{opacity:.72;animation:pt-honeycomb-actual-hop .55s ease-in-out both}
 @keyframes pt-honeycomb-actual-hop{0%{transform:translate(0,0);opacity:.75}55%{opacity:.85}100%{transform:translate(var(--hop-x),var(--hop-y));opacity:0}}
 @media(prefers-reduced-motion:reduce){.pt-honeycomb-traveler{display:none}.pt-honeycomb-cell-live{transition:none}}
+
+/* Gentler individual turnover and slower, more noticeable neighbor movement */
+.pt-honeycomb-cell-live{transition:opacity 1.15s ease-in-out!important}
+.pt-honeycomb-traveler{animation-duration:.95s!important}
