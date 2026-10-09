@@ -43,3 +43,41 @@
 .pt-dash-empty{color:#bacbd4;font-size:13px}
 @media(max-width:850px){.pt-dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pt-dash-feegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.pt-dash-top{flex-direction:column}.pt-dash-stats{gap:9px}.pt-dash-stat{padding:15px 12px}.pt-dash-feegrid{grid-template-columns:1fr}.pt-dash-blocks,.pt-dash-fees,.pt-dash-recent,.pt-dash-summary{padding:17px}.pt-dash-tx{align-items:flex-start}.pt-dash-tx b{font-size:11px}.pt-dash-block{min-width:170px;flex-basis:170px}}
+
+/* Premium network explorer refinements */
+.pt-chain-back{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0 26px}
+.pt-chain-back a{display:inline-flex;align-items:center;gap:8px;border:1px solid #546b79;background:#1a3443;color:#f2d5a1;border-radius:999px;padding:10px 17px;text-decoration:none;font-weight:700;font-size:13px;transition:background .2s,border-color .2s}
+.pt-chain-back a:hover{background:#29495a;border-color:#dfc28d}
+.pt-chain-back>span{font-size:11px;letter-spacing:.15em;color:#a7bbc8}
+.pt-chain-hero-refined{margin-bottom:25px}
+.pt-chain-how{background:linear-gradient(125deg,#213d4c 0%,#142b3a 75%);border:1px solid #526b77;border-radius:20px;padding:26px 28px;margin:0 0 25px;box-shadow:0 18px 40px rgba(0,0,0,.14)}
+.pt-chain-how-intro h2{font-size:clamp(23px,3vw,31px);letter-spacing:-.03em;color:#f8f9fa;margin:9px 0 12px}
+.pt-chain-how-intro>p{color:#d2dfe6;font-size:14px;line-height:1.85;max-width:950px;margin:0}
+.pt-chain-how-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:23px 0 17px}
+.pt-chain-how-steps>div{padding:18px;border-radius:13px;border:1px solid #4c6572;background:rgba(10,28,40,.36)}
+.pt-chain-how-steps span{display:block;color:#edc98e;font-size:12px;font-weight:800;letter-spacing:.08em;margin-bottom:11px}
+.pt-chain-how-steps strong{display:block;color:#f4f7f9;font-size:15px}
+.pt-chain-how-steps p{color:#b8cbd6;font-size:12px;line-height:1.65;margin:7px 0 0}
+.pt-chain-how details{border-top:1px solid #486372;padding-top:14px}
+.pt-chain-how summary{color:#efd19b;font-size:13px;font-weight:750;cursor:pointer}
+.pt-chain-how details p{font-size:13px;color:#c7d8e0;line-height:1.8}
+.pt-dash-blocks-premium{background:linear-gradient(140deg,#182f40,#102735);border-color:#4c6876}
+.pt-dash-journey{position:relative}
+.pt-dash-journey-rail{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 16px;padding:0 5px 12px;border-bottom:1px solid #536a76;color:#b5cad5;font-size:10px;font-weight:800;letter-spacing:.1em}
+.pt-dash-blocks-premium .pt-dash-blockstrip{gap:14px;padding:5px 3px 17px}
+.pt-dash-blocks-premium .pt-dash-block{min-width:210px;flex:1 0 210px;min-height:234px;border:1px solid #557488;border-radius:17px;padding:20px 19px;background:linear-gradient(145deg,#25485b,#1a3445 78%);box-shadow:0 9px 20px rgba(0,0,0,.15);gap:0;transition:transform .2s,border-color .2s,box-shadow .2s}
+.pt-dash-blocks-premium .pt-dash-block:hover{transform:translateY(-4px);border-color:#d3b782;box-shadow:0 14px 30px rgba(0,0,0,.25)}
+.pt-dash-blocks-premium .pt-dash-block-1{background:linear-gradient(145deg,#29485b,#1b3345 78%)}
+.pt-dash-blocks-premium .pt-dash-block-2{background:linear-gradient(145deg,#2a4658,#1b3041 78%)}
+.pt-dash-blocks-premium .pt-dash-block-3{background:linear-gradient(145deg,#2b4354,#1a2d3e 78%)}
+.pt-dash-block-upper{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:22px}
+.pt-dash-block-index{display:grid;place-items:center;width:34px;height:34px;border:1px solid #849ba6;border-radius:50%;font-size:11px;font-weight:800;color:#eacb98}
+.pt-dash-blocks-premium .pt-dash-block-label{font-size:10px;letter-spacing:.08em;color:#afc5d1}
+.pt-dash-blocks-premium .pt-dash-block strong{font-size:20px;line-height:1.3;color:#fff;letter-spacing:-.02em}
+.pt-dash-block-timing{display:block;color:#e9c994;font-size:12px;margin-top:9px;line-height:1.4}
+.pt-dash-block-metric{display:flex;flex-direction:column;gap:6px;border-top:1px solid #4d6876;margin-top:20px;padding-top:14px}
+.pt-dash-block-metric span{font-size:11px;color:#a8c0cc}
+.pt-dash-blocks-premium .pt-dash-block-metric b{color:#f5dba9;font-size:14px;line-height:1.4}
+.pt-dash-blocks-premium .pt-dash-block small{font-size:11px;margin-top:9px}
+.pt-dash-blocks-premium .pt-dash-block a{margin-top:12px}
+@media(max-width:750px){.pt-chain-how-steps{grid-template-columns:1fr}.pt-chain-how{padding:21px 18px}.pt-chain-back>span{display:none}.pt-dash-blocks-premium .pt-dash-block{min-width:195px;flex-basis:195px}.pt-dash-journey-rail{font-size:9px}}
