@@ -29,7 +29,7 @@ function Honeycomb(){
    schedule(()=>setHidden(old=>old.filter(n=>n!==from)),2600);
   };
   // Independent staggered activity, with roughly three to five traveling cells visible.
-  const tick=()=>{startMove();schedule(tick,440+Math.random()*170)};
+  const tick=()=>{startMove();schedule(tick,275+Math.random()*65)};
   schedule(tick,350);
   return()=>{active=false;timers.forEach(clearTimeout);timers.clear()};
  },[]);
