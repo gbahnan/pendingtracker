@@ -18,7 +18,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>Pending Tracker</div>
             </div>
             <div className="nav">
-              <Link href="/">Explore</Link>
+              <Link href="/">Track</Link>
+              <Link href="/explore">Explore blocks</Link>
               <Link href="/faq">FAQ</Link>
             </div>
           </div>
