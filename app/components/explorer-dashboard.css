@@ -436,8 +436,6 @@
 }
 .pt-chain-flow .pt-chain-flow-hex>strong,
 .pt-chain-flow .pt-chain-flow-fee{color:#f3f6fa!important}
-.pt-chain-flow .pt-chain-flow-hex>span,
-.pt-chain-flow .pt-chain-flow-time{color:#d1deea!important}
 .pt-chain-flow .pt-chain-flow-hex>small,
 .pt-chain-flow .pt-chain-flow-tx,
 .pt-chain-flow .pt-chain-flow-head{color:#9baebe!important}
@@ -474,10 +472,6 @@
  fill:#89b8da!important;
  stroke:#c0e0f4!important;
  stroke-width:1.65!important;
-}
-.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>strong{
- color:#f3f6fa!important;
- text-shadow:0 1px 5px #07121e!important;
 }
 
 
