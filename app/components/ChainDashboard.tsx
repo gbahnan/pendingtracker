@@ -41,19 +41,31 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
    return()=>{active=false;setLiveConnected(false);clearInterval(fallback);if(reconnect)clearTimeout(reconnect);if(pendingRefresh)clearTimeout(pendingRefresh);if(socket){socket.onclose=null;socket.close()}};
  },[chain]);
  const [blockFlash,setBlockFlash]=useState(false);
- const [shiftCount,setShiftCount]=useState(0);
-
+ const [queueFrame,setQueueFrame]=useState<Net["btc"]|null>(null);
+ const lastBtcRef=useRef<Net["btc"]|null>(null);
  const lastHeightRef=useRef<number|null>(null);
  const flashTimerRef=useRef<ReturnType<typeof setTimeout>|null>(null);
- useEffect(()=>{const height=data?.btc?.latestBlock?.height;if(height==null)return;
-   const prev=lastHeightRef.current;
-   if(prev!==null&&height>prev){setShiftCount(n=>n+1);setBlockFlash(true);if(flashTimerRef.current)clearTimeout(flashTimerRef.current);flashTimerRef.current=setTimeout(()=>setBlockFlash(false),1800);}
+ useEffect(()=>{
+   const next=data?.btc;
+   const height=next?.latestBlock?.height;
+   if(height==null)return;
+   const previous=lastBtcRef.current;
+   const previousHeight=lastHeightRef.current;
+   if(previousHeight!==null&&height>previousHeight&&previous?.projectedBlocks?.length){
+     setQueueFrame(previous);
+     setBlockFlash(true);
+     if(flashTimerRef.current)clearTimeout(flashTimerRef.current);
+     flashTimerRef.current=setTimeout(()=>{setBlockFlash(false);setQueueFrame(null)},1650);
+   }
+   lastBtcRef.current=next;
    lastHeightRef.current=height;
- },[data?.btc?.latestBlock?.height]);
+ },[data?.btc]);
  useEffect(()=>()=>{if(flashTimerRef.current)clearTimeout(flashTimerRef.current)},[]);
  const btc=data?.btc,eth=data?.eth,isBtc=chain==="bitcoin";
  const stat=isBtc?[{label:"Waiting transactions",value:fmt(btc?.pending),hint:"Payments waiting for a Bitcoin block"},{label:"Latest block",value:btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height),hint:"Newest confirmed batch of transactions"},{label:"Priority fee guide",value:btc?.fastestFee==null?"—":fmt(btc.fastestFee)+" sat/vB",hint:"Estimated competitive fee rate"},{label:"Network traffic",value:btc?.congestion??"—",hint:"A rough view of how crowded the network is"}]:[{label:"Latest block",value:eth?.latestBlock==null?"—":"#"+eth.latestBlock,hint:"Newest recorded Ethereum block"},{label:"Average gas price",value:eth?.gasGwei==null?"—":fmt(eth.gasGwei)+" Gwei",hint:"Estimated price for one unit of gas"},{label:"Block rhythm",value:"~12 seconds",hint:"Typical Ethereum block interval, not a promise"},{label:"Network",value:"Mainnet",hint:"Ethereum's public production blockchain"}];
  const blocks=isBtc?(btc?.projectedBlocks??[]).slice(0,5).map(b=>({id:"p"+b.position,title:"Next ~"+b.position*10+" min",sub:"Projected block "+b.position,range:b.feeRange?.length?fmt(b.feeRange[0])+"–"+fmt(b.feeRange[1])+" sat/vB":"Fee range unavailable",median:b.medianFee,count:b.transactionCount==null?"Transactions unavailable":fmt(b.transactionCount)+" transactions",href:null as string|null})):(eth?.recentBlocks??[]).slice(0,5).map(b=>({id:b.hash??String(b.height),title:"Block #"+b.height,sub:"Recently recorded",range:"Confirmed block",median:null as number|null,count:b.transactionsCount==null?"Transaction count unavailable":fmt(b.transactionsCount)+" transactions",href:b.hash?"/eth/block/"+b.hash:null as string|null}));
+ const displayBtc=blockFlash&&queueFrame?queueFrame:btc;
+ const flowBlocks=(displayBtc?.projectedBlocks??[]).slice(0,5).map(b=>({id:"p"+b.position,median:b.medianFee,count:b.transactionCount==null?"Transactions unavailable":fmt(b.transactionCount)+" transactions"}));
  const feeLevels=isBtc?[{label:"Higher priority",fee:btc?.fastestFee,wait:"Often next block (~10 min)",note:"A current fee recommendation, not a guarantee"},{label:"Medium priority",fee:btc?.halfHourFee,wait:"Around 30 minutes",note:"Guide for roughly three average Bitcoin blocks"},{label:"Lower priority",fee:btc?.hourFee,wait:"Around 60 minutes",note:"May take longer if the network gets busier"},{label:"Economy",fee:btc?.economyFee,wait:"No dependable time",note:"Lower fees can wait much longer"}]:[{label:"Typical gas price",fee:eth?.gasGwei,wait:"Blocks usually ~12 seconds apart",note:"Actual inclusion depends on your transaction's max fee, priority fee and nonce"}];
  return <div className="pt-dash">
   <div className="pt-dash-top"><div><div className="pt-eyebrow">LIVE NETWORK OVERVIEW</div><h2>What's happening on the {isBtc?"Bitcoin":"Ethereum"} network?</h2><p>A live snapshot of activity, waiting transactions and network costs — with the important numbers explained.</p></div><span className="pt-dash-live">{loading?"Loading live data…":updated?"● Updated "+updated:"● Data unavailable"}</span></div>
@@ -66,13 +78,13 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
         <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> {liveConnected?"LIVE MEMPOOL FLOW":"LIVE DATA · RECONNECTING"}</span><span>Animated flow · live projected fees and transactions</span></div>
         <div className="pt-chain-flow-scene">
           <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
-          <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} key={"chain-"+shiftCount}>
+          <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} >
             <div className={"pt-chain-flow-unit pt-chain-flow-confirmed-unit"+(blockFlash?" pt-chain-flow-new-confirmation":"")}>
-              <div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span>CONFIRMED</span><strong>{btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height)}</strong><small>on chain</small></div>
-              <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{btc?.latestBlock?.transactionCount==null?"Confirmed":fmt(btc.latestBlock.transactionCount)+" transactions"}</span></div>
+              <div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span>CONFIRMED</span><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>on chain</small></div>
+              <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
-            {blocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
-              <div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><div className="pt-chain-flow-micro" aria-hidden="true">{Array.from({length:9},(_,n)=><i key={n} style={{left:(12+(n*23)%75)+"%",top:(12+(n*37)%72)+"%",animationDelay:(n*.47)+"s",animationDuration:(3.4+(n%4)*.65)+"s"}}/>)}</div><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
+            {flowBlocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
+              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><div className="pt-chain-flow-micro" aria-hidden="true">{Array.from({length:9},(_,n)=><i key={n} style={{left:(12+(n*23)%75)+"%",top:(12+(n*37)%72)+"%",animationDelay:(n*.47)+"s",animationDuration:(3.4+(n%4)*.65)+"s"}}/>)}</div><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
