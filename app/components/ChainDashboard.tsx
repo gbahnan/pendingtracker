@@ -169,7 +169,7 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,marginBottom:18,color:"#adc4d0",fontSize:11,letterSpacing:"0.08em",fontWeight:700}}><span>NOW · MEMPOOL</span><span>PROJECTED BLOCKS →</span></div>
       {flowVisualization}
       <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",gap:12,paddingTop:18,borderTop:"1px solid #344c5c"}}>
-        <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}><strong style={{color:"#ebcf9f"}}>What you're seeing:</strong> projected transaction groups, not actual scheduled blocks.</span>
+        <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}><strong style={{color:"#a8c9df"}}>What you're seeing:</strong> projected transaction groups, not actual scheduled blocks.</span>
         <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}>Blocks average ~10 minutes, but individual waits vary.</span>
       </div>
       <p style={{fontSize:11,lineHeight:1.7,color:"#9cb4c3",marginTop:12}}>These counts are live mempool estimates grouped by projected block position, not confirmed bookings or a guarantee that your transaction will appear at that time. Search your transaction above to review its fee and status.</p>
