@@ -699,3 +699,16 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 @media(max-width:650px){.pt-tx-story{grid-template-columns:1fr}.pt-tx-story-step:last-child{grid-column:auto}.pt-tx-story-step{padding:15px}.pt-tx-detail-v2 .pt-tx-arrow-only span{font-size:31px}}
 
 .footer .founder-credit{margin-top:12px;text-align:center;color:#d9c6a1;font-size:12px;font-weight:600;letter-spacing:.035em}
+
+
+/* Search-first homepage: keep professional network tools accessible without overwhelming first-time visitors */
+.pt-network-drawer{margin:30px 0 18px;border:1px solid #466070;border-radius:16px;background:#142b38;overflow:hidden}
+.pt-network-drawer>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;padding:21px 24px;color:#e9d0a6}
+.pt-network-drawer>summary::-webkit-details-marker{display:none}
+.pt-network-drawer>summary b{display:block;font-size:17px;line-height:1.4}
+.pt-network-drawer>summary small{display:block;margin-top:5px;color:#a8c0ce;font-size:12px}
+.pt-network-drawer>summary>span:last-child{font-size:23px;line-height:1;transition:transform .2s}
+.pt-network-drawer[open]>summary>span:last-child{transform:rotate(45deg)}
+.pt-network-drawer>.pt-section{padding:0 22px 22px;margin:0}
+.pt-network-drawer .pt-section-head{padding-top:12px}
+@media(max-width:650px){.pt-network-drawer>summary{padding:16px}.pt-network-drawer>.pt-section{padding:0 12px 18px}}
