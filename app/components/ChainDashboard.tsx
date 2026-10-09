@@ -12,7 +12,8 @@ function Honeycomb(){
  const sequence=useRef(0);
  useEffect(()=>{
    const timers:ReturnType<typeof setTimeout>[]=[];
-   const interval=setInterval(()=>{\n    for(let batch=0;batch<3+Math.floor(Math.random()*2);batch++){
+   const interval=setInterval(()=>{
+    for(let batch=0;batch<3+Math.floor(Math.random()*2);batch++){
      const from=Math.floor(Math.random()*120);
      const to=Math.max(0,Math.min(119,from+(Math.random()<.5?10:1)));
      setHidden(old=>old.includes(from)?old:[...old,from]);
@@ -22,7 +23,8 @@ function Honeycomb(){
        timers.push(setTimeout(()=>setMoving(old=>old.filter(m=>m.id!==id)),560));
      }
      timers.push(setTimeout(()=>setHidden(old=>old.filter(x=>x!==from)),1700+Math.random()*1200));
-    }\n   },2200);
+    }
+   },2200);
    return()=>{clearInterval(interval);timers.forEach(clearTimeout)};
  },[]);
  const coords=(n:number)=>{const col=Math.floor(n/10),row=n%10;return {x:col*15-5,y:row*17.32+(col%2)*8.66-10}};
