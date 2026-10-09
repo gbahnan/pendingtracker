@@ -2486,3 +2486,23 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-eth-flow .pt-chain-flow-hex-pending .pt-chain-flow-shine{
  background:linear-gradient(120deg,transparent,#819fff24,transparent)!important;
 }
+
+/* Ethereum: vivid sapphire/periwinkle honeycomb treatment.
+   Scoped to Ethereum flow only; animation and layout untouched. */
+.pt-chain-flow.pt-eth-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending{
+ background:linear-gradient(155deg,#253c7a 0%,#15294e 60%,#0a162c 100%)!important;
+ border:3px solid #759bff!important;
+ box-shadow:inset 0 0 22px #567cff35,0 0 17px #668cff55!important;
+ filter:drop-shadow(0 0 8px #6d91ff66)!important;
+}
+.pt-chain-flow.pt-eth-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-cell-live{
+ fill:#27447e!important;
+ stroke:#91adff!important;
+ stroke-width:1.15!important;
+}
+.pt-chain-flow.pt-eth-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-traveler{
+ fill:#b6c9ff!important;
+ stroke:#e1e9ff!important;
+}
+.pt-chain-flow.pt-eth-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>span{color:#b9cbff!important}
+.pt-chain-flow.pt-eth-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>strong{color:#fff!important;text-shadow:0 1px 6px #060e24!important}
