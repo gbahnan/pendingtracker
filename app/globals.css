@@ -746,3 +746,5 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-explorer-note{margin-top:25px;line-height:1.7}
 .pt-explorer-note a{color:#e7ca97}
 @media(max-width:750px){.pt-explorer-networks{grid-template-columns:1fr}.pt-explorer-detail .pt-explorer-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pt-explore-link,.pt-explore-top{align-items:flex-start;flex-direction:column}.pt-explorer{padding:25px 8px 50px}.pt-explorer-panel{padding:17px}}
+
+.pt-tx-arrow-in-block{position:relative!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:40px;margin:0 auto 7px!important;z-index:2}.pt-tx-arrow-in-block strong{font-size:10px!important;letter-spacing:.07em}.pt-tx-arrow-in-block span{font-size:24px!important;line-height:1!important}.pt-tx-confirmed-message{padding:22px;border:1px solid #547b6c;border-radius:12px;color:#c4e6d0;background:#1a3838;font-weight:700;line-height:1.6}.pt-tx-block-grid>.pt-tx-block{min-width:0}
