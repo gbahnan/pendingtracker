@@ -479,3 +479,22 @@
  color:#f3f6fa!important;
  text-shadow:0 1px 5px #07121e!important;
 }
+
+
+/* Softer premium typography inside pending transaction flow — no motion changes. */
+.pt-chain-flow .pt-chain-flow-hex>strong,
+.pt-chain-flow .pt-chain-flow-fee{
+ color:#c6d1dc!important;
+}
+.pt-chain-flow .pt-chain-flow-hex>span,
+.pt-chain-flow .pt-chain-flow-time{
+ color:#aebdca!important;
+}
+.pt-chain-flow .pt-chain-flow-hex>small,
+.pt-chain-flow .pt-chain-flow-tx{
+ color:#8fa3b5!important;
+}
+.pt-chain-flow .pt-chain-flow-hex.pt-chain-flow-hex-pending>strong{
+ color:#c6d1dc!important;
+ text-shadow:0 1px 3px #07121e!important;
+}
