@@ -77,7 +77,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  function copy(){if(typeof navigator!=="undefined"&&navigator.clipboard){navigator.clipboard.writeText(txid).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),1800);}).catch(()=>{});}}
  if(!valid)return <main className="pt-tx-page"><a href="/">← Back to explorer</a><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID is 64 hexadecimal characters.</p></main>;
  return <main className="pt-tx-page pt-tx-detail-v2">
-  <div className="pt-tx-back"><a href="/">← Back to explorer</a></div>
+  <div className="pt-tx-back"><a href="/">← Track another transaction</a> · <a href="/explore">Explore blockchain →</a></div>
   <header className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Your transaction is pending"}</h1><p>Follow the live status, understand the numbers, and see what happens next.</p></div><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></header>
   <div className="pt-tx-idbar"><div><span>TRANSACTION ID (TXID)</span><code title={txid}>{txid}</code></div><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div>
   {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
