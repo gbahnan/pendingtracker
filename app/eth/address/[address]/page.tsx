@@ -1,0 +1,10 @@
+import Link from "next/link";
+async function get(url:string){try{const r=await fetch(url,{next:{revalidate:25},signal:AbortSignal.timeout(7000)});return r.ok?await r.json():null}catch{return null}}
+export default async function EthereumAddress({params}:{params:{address:string}}){
+ const address=params.address;const valid=/^0x[a-fA-F0-9]{40}$/.test(address);
+ const [info,txs]=valid?await Promise.all([get("https://eth.blockscout.com/api/v2/addresses/"+address),get("https://eth.blockscout.com/api/v2/addresses/"+address+"/transactions")]):[null,null];
+ const rows=Array.isArray(txs?.items)?txs.items:[];
+ const wei=info?.coin_balance?BigInt(info.coin_balance):null;
+ const balance=wei==null?"—":(Number(wei/1000000000000n)/1000000).toLocaleString("en-US",{maximumFractionDigits:6})+" ETH";
+ return <main className="pt-explorer pt-explorer-detail"><Link href="/explore">← Back to explorer</Link><div className="pt-eyebrow">ETHEREUM ADDRESS EXPLORER</div><h1>Ethereum address</h1><p className="pt-explorer-lead pt-explorer-hash">{address}</p>{info?<><p>This public address can hold ETH, tokens or contract data. An address is not proof of a person's identity. The ETH balance does not include token balances.</p><div className="pt-explorer-stats"><div><span>ETH balance</span><strong>{balance}</strong></div><div><span>Address type</span><strong>{info.is_contract?"Smart contract":"Account"}</strong></div></div><h2>Recent transactions</h2>{rows.length?rows.map((t:any)=><Link className="pt-explorer-block-row" href={"/eth/"+t.hash} key={t.hash}><span><b className="pt-explorer-hash">{t.hash}</b><small>{t.status??"Unknown"} · {t.method??"Transfer or contract action"}</small></span><span>Explain →</span></Link>):<p>Recent activity unavailable.</p>}</>:<p>Address information is unavailable. Check the address or try again.</p>}</main>
+}
