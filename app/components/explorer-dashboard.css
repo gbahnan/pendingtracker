@@ -498,3 +498,22 @@
  color:#c6d1dc!important;
  text-shadow:0 1px 3px #07121e!important;
 }
+
+
+/* Neutral-metal dashboard finish: blue reserved for interaction and live flow. */
+.pt-dash-stat,.pt-dash-feecard{background:linear-gradient(145deg,#22272e,#191e25);border-color:#414a54}
+.pt-dash-stat strong,.pt-dash-feecard strong{color:#d1d5da}
+.pt-dash-blocks,.pt-dash-fees,.pt-dash-recent,.pt-dash-summary{background:#171c23;border-color:#3c454f}
+.pt-dash-blocks-premium .pt-dash-block,
+.pt-dash-blocks-premium .pt-dash-block-1,
+.pt-dash-blocks-premium .pt-dash-block-2,
+.pt-dash-blocks-premium .pt-dash-block-3{
+ background:linear-gradient(145deg,#29313a,#1a222a);border-color:#4b5560;
+}
+.pt-dash-blocks-premium .pt-dash-block:hover{border-color:#89b8da}
+.pt-dash-block b,.pt-dash-block-index{color:#c7cdd3}
+.pt-chain-how{background:linear-gradient(145deg,#242a31,#171d24);border-color:#48515b}
+.pt-chain-how-steps>div{background:#1b2229;border-color:#414a54}
+.pt-chain-how-steps span,.pt-chain-how summary{color:#cbd1d7}
+.pt-dash-summary summary{color:#d0d5da}
+.pt-dash-live{color:#9ed0ba;background:#1b2c27;border-color:#3d6658}
