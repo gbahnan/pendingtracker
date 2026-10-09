@@ -28,6 +28,7 @@ export default function Page() {
   const [network, setNetwork] = useState<"btc" | "eth">("btc");
   const [query, setQuery] = useState("");
   const [error, setError] = useState("");
+  const [ambiguousHash,setAmbiguousHash]=useState("");
   const [overview, setOverview] = useState<Overview | null>(null);
   const [loading, setLoading] = useState(true);
   const [newestEvents, setNewestEvents] = useState<{btc:string;eth:string}>({btc:"",eth:""});
@@ -96,10 +97,23 @@ export default function Page() {
   }, []);
 
   function search() {
-    const q = query.trim().replace(/^https?:\/\/[^/]+\/tx\//i, "").split(/[?#]/)[0].replace(/\/$/, "");
-    if (/^0x[a-f\d]{64}$/i.test(q)) return router.push("/eth/" + q);
-    if (/^[a-f\d]{64}$/i.test(q)) return router.push("/btc/" + q);
-    setError("Paste a Bitcoin or Ethereum transaction ID, address, or supported explorer transaction link.");
+    const raw=query.trim();
+    let q=raw;
+    try {
+      if(/^https?:\/\//i.test(raw)){
+        const u=new URL(raw);
+        const parts=u.pathname.split("/").filter(Boolean);
+        const marker=parts.findIndex(p=>["tx","transaction","address"].includes(p.toLowerCase()));
+        if(marker>=0&&parts[marker+1])q=parts[marker+1];
+      }
+    }catch{}
+    q=q.split(/[?#]/)[0].replace(/\/$/,"");
+    setAmbiguousHash("");
+    if(/^0x[a-f\d]{40}$/i.test(q))return router.push("/eth/address/"+q);
+    if(/^(bc1[a-z0-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(q))return router.push("/btc/address/"+q);
+    if(/^0x[a-f\d]{64}$/i.test(q))return router.push("/eth/"+q);
+    if(/^[a-f\d]{64}$/i.test(q)){setAmbiguousHash(q);setError("");return;}
+    setError("Enter a Bitcoin or Ethereum transaction ID, wallet address, or supported explorer link. Never enter a private key or recovery phrase.");
   }
 
   const btc = overview?.btc, eth = overview?.eth;
@@ -107,21 +121,28 @@ export default function Page() {
     <div className="pt-hero">
       <div className="pt-hero-intro">
         <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, MADE SIMPLE</div>
-        <h1>Track your crypto.<br/><span>Understand every step.</span></h1>
-        <p className="pt-lead">Paste a Bitcoin or Ethereum transaction ID. See whether it arrived, why it might be delayed, what the fees mean, and what to do next.</p>
+        <h1>Track any transaction.<br/><span>Explore every block.</span></h1>
+        <p className="pt-lead">One place to track Bitcoin and Ethereum transactions in plain English. Or choose a blockchain below to explore blocks, addresses, fees and live activity.</p>
         <div className="pt-hero-trust"><span>◇ Live blockchain data</span><span>◇ Plain-English explanations</span><span>◇ No account needed</span></div>
       </div>
       <div className="pt-searchbox" id="transaction-search">
         <div className="pt-search-top"><div><div className="pt-search-label">TRANSACTION EXPLAINER</div><h2>Where is my transaction?</h2><p className="pt-search-explain">Paste your Bitcoin transaction ID or Ethereum transaction hash. We'll check the blockchain and give you an easy-to-read breakdown of <strong>whether it's pending or confirmed, what the fees mean, why it might be taking longer, and what you can do next.</strong> No technical knowledge needed.</p></div><div className="pt-search-symbol" aria-hidden="true">↗</div></div>
         <div className="pt-searchrow">
-          <input aria-label="Transaction hash" placeholder="Paste a Bitcoin TXID, Ethereum hash, or explorer link" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
+          <input aria-label="Transaction hash" placeholder="Paste a transaction ID, address, or explorer link" value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
           <button onClick={search}>Track my transaction <span aria-hidden="true">→</span></button>
         </div>
+        {ambiguousHash?<div className="pt-chain-choice" role="group" aria-label="Select blockchain"><p>This transaction ID could belong to more than one network. Which blockchain are you tracking?</p><div><button type="button" onClick={()=>router.push("/btc/"+ambiguousHash)}>₿ Bitcoin →</button><button type="button" onClick={()=>router.push("/eth/0x"+ambiguousHash)}>◆ Ethereum →</button></div></div>:null}
         {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">Free to explore · No wallet connection or signup · Never enter a seed phrase or private key.</p>}
       </div>
     </div>
 
-    <div className="pt-explore-link"><a href="/explore">Explore Bitcoin &amp; Ethereum blocks →</a><span>Browse live blocks and transactions with plain-English explanations</span></div>
+    <section className="pt-chain-gateway" aria-labelledby="pt-chain-gateway-title">
+      <div className="pt-chain-gateway-intro"><div className="pt-eyebrow">TWO BLOCKCHAINS. ONE SIMPLE STARTING POINT.</div><h2 id="pt-chain-gateway-title">Choose a blockchain to explore</h2><p>Want to browse instead of tracking a specific transaction? Each blockchain has its own complete explorer.</p></div>
+      <div className="pt-chain-gateway-grid">
+        <a className="pt-chain-gateway-card pt-chain-gateway-btc" href="/bitcoin"><span className="pt-chain-gateway-icon">₿</span><span className="pt-chain-gateway-copy"><strong>Bitcoin Explorer</strong><small>Live blocks, transactions, addresses, mempool and fees</small><em>Explore Bitcoin <span aria-hidden="true">→</span></em></span></a>
+        <a className="pt-chain-gateway-card pt-chain-gateway-eth" href="/ethereum"><span className="pt-chain-gateway-icon">◆</span><span className="pt-chain-gateway-copy"><strong>Ethereum Explorer</strong><small>Live blocks, transactions, tokens, contracts and gas</small><em>Explore Ethereum <span aria-hidden="true">→</span></em></span></a>
+      </div>
+    </section>
     <section className="pt-section pt-journey" id="how-it-works">
       <div className="pt-eyebrow">TRACKING MADE SIMPLE</div><h2>Three steps. One clear answer.</h2>
       <p className="pt-section-sub">No wallet connection. No signup. Just your transaction ID.</p>
@@ -131,7 +152,7 @@ export default function Page() {
         <div className="pt-journey-step"><span>03</span><h3>Know what comes next</h3><p>Understand the fees, confirmation status, and possible next steps.</p></div>
       </div>
     </section>
-<details className="pt-network-drawer"><summary><span><b>Explore live blockchain activity</b><small>Bitcoin blocks, Ethereum blocks, fees and live transactions</small></span><span aria-hidden="true">＋</span></summary>    <section className="pt-section" id="network">
+<details className="pt-network-drawer"><summary><span><b>Live network dashboard</b><small>Expand for Bitcoin and Ethereum blocks, fees and live transactions</small></span><span aria-hidden="true">＋</span></summary>    <section className="pt-section" id="network">
       <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE BLOCKCHAIN EXPLORER</div><h2>{network==="btc"?"The Bitcoin Network, Live.":"The Ethereum Network, Live."}</h2><p>See what's happening on the network right now—and understand what it means for your transactions.</p></div><span className="pt-live" role="status">{loading?"Loading live data…":overview?"● Live data · refreshed every 5 seconds":"Network data temporarily unavailable"}</span></div>
       <div className="pt-tabs" role="tablist" aria-label="Choose blockchain">
         <button role="tab" aria-selected={network==="btc"} className={network==="btc"?"selected":""} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button>
