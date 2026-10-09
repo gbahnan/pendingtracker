@@ -121,12 +121,12 @@ export default function Page() {
     <div className="pt-hero">
       <div className="pt-hero-intro">
         <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, MADE SIMPLE</div>
-        <h1>Blockchain made simple.<br/><span>Every transaction, explained.</span></h1>
-        <p className="pt-lead">Pending Tracker is a user-friendly Bitcoin and Ethereum blockchain explorer and transaction search tool. Search a transaction to see a clear summary of what happened, whether it is pending or confirmed, and what it means—without confusing technical jargon. Want the full technical details? They are still there whenever you need them.</p>
+        <h1>Track. Explore. <span>Understand.</span></h1>
+        <p className="pt-lead">Pending Tracker gives you real-time blockchain data and clear, plain-English explanations for Bitcoin and Ethereum transactions.</p>
         <div className="pt-hero-trust"><span>◇ Live blockchain data</span><span>◇ Plain-English explanations</span><span>◇ No account needed</span></div>
       </div>
       <div className="pt-searchbox" id="transaction-search">
-        <div className="pt-search-top"><div><div className="pt-search-label">TRANSACTION EXPLAINER</div><h2>Where is my transaction?</h2><p className="pt-search-explain">Paste your Bitcoin transaction ID or Ethereum transaction hash. We'll check the blockchain and give you an easy-to-read breakdown of <strong>whether it's pending or confirmed, what the fees mean, why it might be taking longer, and what you can do next.</strong> No technical knowledge needed.</p></div><div className="pt-search-symbol" aria-hidden="true">↗</div></div>
+        <div className="pt-search-top"><div><div className="pt-search-label">TRANSACTION EXPLAINER</div><h2>Where is my transaction?</h2><p className="pt-search-explain">Enter a transaction ID, wallet address, or block number to see its status, confirmation progress, fees, and what it means.</p></div><div className="pt-search-symbol" aria-hidden="true">↗</div></div>
         <div className="pt-searchrow">
           <input aria-label="Transaction hash" placeholder="Paste a transaction ID, address, or explorer link" value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
           <button onClick={search}>Track my transaction <span aria-hidden="true">→</span></button>
@@ -139,12 +139,12 @@ export default function Page() {
     <section className="pt-chain-gateway" aria-labelledby="pt-chain-gateway-title">
       <div className="pt-chain-gateway-intro"><div className="pt-eyebrow">TWO BLOCKCHAINS. ONE SIMPLE STARTING POINT.</div><h2 id="pt-chain-gateway-title">Choose a blockchain to explore</h2><p>Browse a blockchain in its own dedicated explorer, or search a transaction directly inside Bitcoin or Ethereum. Every record should be easy to understand, with deeper technical information available when you want it.</p></div>
       <div className="pt-chain-gateway-grid">
-        <a className="pt-chain-gateway-card pt-chain-gateway-btc" href="/bitcoin"><span className="pt-chain-gateway-icon">₿</span><span className="pt-chain-gateway-copy"><strong>Bitcoin Explorer</strong><small>Live blocks, transactions, addresses, mempool and fees</small><em>Explore Bitcoin <span aria-hidden="true">→</span></em></span></a>
-        <a className="pt-chain-gateway-card pt-chain-gateway-eth" href="/ethereum"><span className="pt-chain-gateway-icon">◆</span><span className="pt-chain-gateway-copy"><strong>Ethereum Explorer</strong><small>Live blocks, transactions, tokens, contracts and gas</small><em>Explore Ethereum <span aria-hidden="true">→</span></em></span></a>
+        <a className="pt-chain-gateway-card pt-chain-gateway-btc" href="/bitcoin"><span className="pt-chain-gateway-icon">₿</span><span className="pt-chain-gateway-copy"><strong>Bitcoin Explorer</strong><small>Live blocks, transactions, addresses, mempool and fees</small><em>Explore Bitcoin <span aria-hidden="true">→</span></em></span><span className="pt-gateway-chart" aria-hidden="true">{Array.from({length:38},(_,i)=><i key={i} style={{height:`${12+((i*17+i*i*3)%48)}%`}} />)}</span><span className="pt-gateway-metrics"><span><b>{format(btc?.pending)}</b><small>Pending transactions</small></span><span><b>{btc?.halfHourFee==null?"—":btc.halfHourFee+" sat/vB"}</b><small>Suggested fee rate</small></span><span><b>~10 min</b><small>Typical block interval</small></span></span></a>
+        <a className="pt-chain-gateway-card pt-chain-gateway-eth" href="/ethereum"><span className="pt-chain-gateway-icon">◆</span><span className="pt-chain-gateway-copy"><strong>Ethereum Explorer</strong><small>Live blocks, transactions, tokens, contracts and gas</small><em>Explore Ethereum <span aria-hidden="true">→</span></em></span><span className="pt-gateway-chart" aria-hidden="true">{Array.from({length:38},(_,i)=><i key={i} style={{height:`${12+((i*17+i*i*3)%48)}%`}} />)}</span><span className="pt-gateway-metrics"><span><b>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</b><small>Latest block</small></span><span><b>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</b><small>Current gas price</small></span><span><b>~12 sec</b><small>Typical block interval</small></span></span></a>
       </div>
     </section>
     <section className="pt-home-live" aria-labelledby="pt-home-live-title">
-      <div className="pt-home-live-head"><div><div className="pt-eyebrow"><span className="pt-pulse"/> LIVE BLOCKCHAIN ACTIVITY</div><h2 id="pt-home-live-title">See what's happening right now</h2><p>A quick look at real Bitcoin and Ethereum transactions. Click any transaction for its status and plain-English explanation.</p></div><span className="pt-home-live-status">{loading?"Loading…":overview?"Live network data":"Temporarily unavailable"}</span></div>
+      <div className="pt-home-live-head"><div><div className="pt-eyebrow"><span className="pt-pulse"/> LIVE BLOCKCHAIN ACTIVITY</div><h2 id="pt-home-live-title">See what's happening right now</h2><p>Real-time Bitcoin and Ethereum network activity. Select a transaction to view its status and details.</p></div><span className="pt-home-live-status">{loading?"Loading…":overview?"Live network data":"Temporarily unavailable"}</span></div>
       <div className="pt-home-live-grid">
         <section className="pt-home-live-panel"><div className="pt-home-live-title"><h3>₿ Bitcoin transactions</h3><a href="/bitcoin">Explore Bitcoin →</a></div><p>Recently broadcast transactions waiting for confirmation.</p>
         {(liveBtcTransactions.length?liveBtcTransactions.map(t=>({id:t.id,fee:t.fee})):btc?.recentTransactions??[]).slice(0,3).map(t=><a key={t.id} className="pt-home-live-row" href={"/btc/"+t.id}><span><b>{t.id.slice(0,12)}…{t.id.slice(-8)}</b><small>{t.fee==null?"Fee unavailable":format(t.fee)+" sats network fee"} · Awaiting confirmation</small></span><span aria-hidden="true">↗</span></a>)}
@@ -158,7 +158,7 @@ export default function Page() {
     </section>
     <section className="pt-section pt-journey" id="how-it-works">
       <div className="pt-eyebrow">TRACKING MADE SIMPLE</div><h2>Three steps. One clear answer.</h2>
-      <p className="pt-section-sub">No wallet connection. No signup. Just your transaction ID.</p>
+      <p className="pt-section-sub">Find out if your transaction is pending or confirmed, what the fees mean, and what comes next.</p>
       <div className="pt-journey-grid">
         <div className="pt-journey-step"><span>01</span><h3>Paste your transaction ID</h3><p>Find it in your wallet or exchange and paste it above.</p></div>
         <div className="pt-journey-step"><span>02</span><h3>See what's happening</h3><p>Find out if it's waiting, confirmed, or not yet visible on the network.</p></div>
