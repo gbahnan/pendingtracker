@@ -910,19 +910,12 @@ body{
 }
 .pt-shell,.pt-dash{color:#cbd6e0}
 .pt-eyebrow,.pt-search-label,.pt-term summary span,.pt-insight-icon{color:#9bbbd3}
-.pt-hero h1 span{background:linear-gradient(95deg,#d3dde7,#8fb8d6);background-clip:text;color:transparent}
 .pt-lead,.pt-section-head p,.pt-section-sub,.pt-hint,.pt-metric span,.pt-metric small,.pt-insight .pt-note,.pt-source{color:#98acbc}
 .pt-searchbox,.pt-chain-search-first,.pt-insight,.pt-chain-how{
  background:linear-gradient(135deg,#192938,#111d29);
  border-color:#3b4c5d;
  box-shadow:0 14px 36px #0003;
 }
-.pt-searchrow input,.input{
- background:#101b26;
- border-color:#405263;
- color:#d6e0e9;
-}
-.pt-searchrow input:focus,.input:focus{border-color:#89b8da;box-shadow:0 0 0 3px #89b8da26}
 .pt-searchrow button,.pt-cta a,.button{
  background:linear-gradient(115deg,#557e9d,#759ebd);
  border-color:#769bb6;
@@ -932,32 +925,15 @@ body{
  background:linear-gradient(145deg,#1a2a38,#121f2b);
  border-color:#3b5061;
 }
-.pt-tabs button.selected{background:#283e51;border-color:#89b8da;color:#dce8f0}
 .pt-metric strong,.pt-dash-stat strong,.pt-dash-feecard strong,.pt-dash-block b,
 .pt-dash-block a,.pt-dash-tx>span,.pt-dash-summary summary,
 .pt-chain-how-steps span,.pt-chain-how summary,.pt-chain-back a,
 .pt-dash-block-index,.pt-chain-intro summary{color:#a8c9df}
 .pt-insight p,.pt-chain-how-intro>p,.pt-dash-summary>p{color:#b8c9d6}
-.pt-dash-top h2,.pt-dash-heading h3,.pt-dash-summary h3,
-.pt-chain-how-intro h2{color:#dbe4ec}
-.pt-dash-live{color:#a8c9df;background:#1a2b39;border-color:#3c5365}
-.pt-dash-blocks,.pt-dash-fees,.pt-dash-recent{
- background:#111e2a;
- border-color:#354a5a;
-}
-.pt-dash-blocks-premium .pt-dash-block,
-.pt-dash-blocks-premium .pt-dash-block-1,
-.pt-dash-blocks-premium .pt-dash-block-2,
-.pt-dash-blocks-premium .pt-dash-block-3{
- background:linear-gradient(145deg,#203343,#142330);
- border-color:#43596a;
-}
 .pt-dash-blocks-premium .pt-dash-block:hover{border-color:#89b8da}
 .pt-dash-summary{background:linear-gradient(145deg,#1b2d3a,#12212c)}
 .pt-dash-tx:hover b{color:#a8c9df}
-.pt-chain-back a{background:#1a2b39;border-color:#40576a}
 .pt-chain-back a:hover{background:#253b4d;border-color:#89b8da}
-.pt-chain-how-steps>div{background:#111f2b;border-color:#354b5b}
 .pt-dash-blocks .pt-dash-waiting-stop{border-color:#7a9cb5}
 .pt-dash-waiting-node{border-color:#8fb1c9;color:#c1d7e6}
 .pt-dash-waiting-time,.pt-dash-eth-index,.pt-dash-eth-block a{color:#a8c9df}
@@ -974,10 +950,6 @@ body{
  --brand:#89b8da;
  --brand2:#779ab4;
 }
-body{
- background:radial-gradient(ellipse 60% 32% at 52% 0%,#20252c 0%,transparent 75%),#0b0e13;
- color:#d4d6d9;
-}
 .pt-searchbox,.pt-chain-search-first,.pt-insight,.pt-chain-how{
  background:linear-gradient(140deg,#20252c,#141920);
  border-color:#424952;
@@ -985,17 +957,6 @@ body{
 .pt-tabs button,.pt-metric,.pt-term,.pt-dash-stat,.pt-dash-feecard,.pt-dash-summary{
  background:linear-gradient(145deg,#22272e,#181d24);
  border-color:#424a53;
-}
-.pt-dash-blocks,.pt-dash-fees,.pt-dash-recent{
- background:#171c23;
- border-color:#3c444e;
-}
-.pt-dash-blocks-premium .pt-dash-block,
-.pt-dash-blocks-premium .pt-dash-block-1,
-.pt-dash-blocks-premium .pt-dash-block-2,
-.pt-dash-blocks-premium .pt-dash-block-3{
- background:linear-gradient(145deg,#293039,#1b222a);
- border-color:#4a535e;
 }
 .pt-chain-how-steps>div{background:#191f26;border-color:#3d4650}
 .pt-metric strong,.pt-dash-stat strong,.pt-dash-feecard strong,
@@ -1025,10 +986,6 @@ body{
  background:linear-gradient(145deg,#252a31 0%,#1a2027 100%)!important;
  border-color:#4a515a!important;
  color:#d7dce0!important;
-}
-.pt-chain-gateway .pt-chain-gateway-card:hover{
- background:linear-gradient(145deg,#303740,#202832)!important;
- border-color:#8292a4!important;
 }
 .pt-chain-gateway .pt-chain-gateway-btc .pt-chain-gateway-icon{
  background:linear-gradient(145deg,#f9c35b 0%,#f0a925 56%,#d88a16 100%)!important;
