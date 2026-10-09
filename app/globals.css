@@ -1248,3 +1248,75 @@ body{
  background:linear-gradient(145deg,#2d353e,#222b34)!important;
  border-color:#566471!important;
 }
+
+
+/* Unified surface theme for every explorer and transaction-detail route.
+   Deliberately excludes SVG honeycombs, block queues and motion selectors. */
+:root{
+ --pt-surface-1:#2d343c;
+ --pt-surface-2:#242c34;
+ --pt-surface-3:#1c252e;
+ --pt-line:#57636e;
+ --pt-fg:#e2e7eb;
+ --pt-secondary:#b9c5cf;
+ --pt-link:#a9c9de;
+}
+.pt-explorer .pt-explorer-panel,
+.pt-explorer .pt-explorer-stats>div,
+.pt-explorer .pt-explorer-note,
+.pt-tx-page .pt-tx-stage,
+.pt-tx-page .pt-tx-summary,
+.pt-tx-page .pt-tx-details,
+.pt-tx-page .pt-tx-ai,
+.pt-tx-page .pt-tx-more,
+.pt-tx-page .pt-tx-tech,
+.pt-tx-page .pt-eth-interpretation{
+ background:linear-gradient(145deg,var(--pt-surface-1),var(--pt-surface-2))!important;
+ border-color:var(--pt-line)!important;
+ box-shadow:0 13px 34px #00000020,inset 0 1px 0 #ffffff0c;
+}
+.pt-explorer .pt-explorer-panel,
+.pt-explorer .pt-explorer-detail,
+.pt-tx-page{color:var(--pt-fg)}
+.pt-explorer .pt-explorer-panel>p,
+.pt-explorer .pt-explorer-detail>p,
+.pt-tx-page .pt-tx-details-intro,
+.pt-tx-page .pt-tx-block-caveat,
+.pt-tx-page .pt-tx-footnote{color:var(--pt-secondary)!important}
+.pt-explorer .pt-explorer-stats>div,
+.pt-tx-page .pt-tx-facts>div,
+.pt-tx-page .pt-tx-fact,
+.pt-tx-page .pt-tx-story-step,
+.pt-tx-page .pt-tx-io-column,
+.pt-tx-page .pt-tx-io-row,
+.pt-tx-page .pt-tx-tech-grid>div,
+.pt-tx-page .pt-eth-token-row,
+.pt-tx-page .pt-eth-parties>div{
+ background:linear-gradient(145deg,#343c45,#28313a)!important;
+ border-color:#5a6874!important;
+}
+.pt-tx-page .pt-tx-stage-head h2,
+.pt-tx-page .pt-tx-summary h2,
+.pt-tx-page .pt-tx-details h2,
+.pt-tx-page .pt-tx-fact strong,
+.pt-tx-page .pt-tx-facts strong,
+.pt-explorer .pt-explorer-panel h2{color:#e8ecef!important}
+.pt-tx-page .pt-tx-fact span,
+.pt-tx-page .pt-tx-facts span,
+.pt-tx-page .pt-tx-fact small,
+.pt-tx-page .pt-tx-facts small{color:#b8c5cf!important}
+.pt-tx-page .pt-tx-summary>p,
+.pt-tx-page .pt-tx-summary-lead{color:#d2dce3!important}
+.pt-tx-page .pt-tx-summary-actions button{
+ background:linear-gradient(120deg,#a9c7db,#82a8c2)!important;
+ color:#17242f!important;
+}
+.pt-explorer .pt-explorer-block-row{border-top-color:#515e69!important}
+.pt-explorer .pt-explorer-block-row:hover,
+.pt-explorer .pt-explorer-block-row>span:last-child,
+.pt-tx-page .pt-tx-summary-actions a{color:var(--pt-link)!important}
+.pt-explorer .pt-explorer-hash,
+.pt-tx-page .pt-tx-idbar{background:#202a33!important;border-color:#536371!important}
+.pt-explorer .pt-explorer-lead{color:#c1ccd5!important}
+.pt-tx-page .pt-tx-back button,
+.pt-tx-page .pt-tx-back a{background:#29343e!important;border-color:#566a79!important;color:#c5d8e5!important}
