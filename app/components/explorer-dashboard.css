@@ -360,3 +360,12 @@
 .pt-chain-tracked-arrow span{font-size:23px;line-height:1;color:#e2c99b}
 .pt-tx-block-track .pt-dash-tracking{width:100%}
 .pt-tx-block-track{overflow-x:auto}
+
+/* Ethereum: same visual language, actual confirmed blocks instead of projected mempool slots. */
+.pt-eth-flow .pt-chain-flow-shapes{min-width:760px}
+.pt-eth-flow .pt-chain-flow-hex strong{font-size:clamp(13px,1.3vw,18px);letter-spacing:-.03em}
+.pt-eth-flow .pt-chain-flow-hex small{font-size:9px}
+.pt-eth-pending-locator{display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;padding:13px 16px;color:#d7c095;border-top:1px solid #40556a}
+.pt-eth-pending-locator span{font-size:12px;font-weight:800;letter-spacing:.08em}
+.pt-eth-pending-locator strong{font-size:13px;color:#e4d1ad}
+.pt-eth-pending-locator small{font-size:11px;color:#a9bfca;max-width:560px;line-height:1.6}
