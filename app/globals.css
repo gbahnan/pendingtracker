@@ -1971,3 +1971,88 @@ body{background:#05111c!important}
  .pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat{padding:13px!important;min-height:104px!important}
  .pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-search{padding:17px!important}
 }
+
+/* Bitcoin Explorer — VISIBLE homepage palette correction, Oct 9.
+   The prior pass changed mostly spacing. These colors deliberately create
+   the same contrast between steel-blue panels and deep navy as the homepage.
+   No selectors inside the actual moving hexagon visualization are changed. */
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro{
+ background:linear-gradient(112deg,#819caf 0%,#637f95 55%,#39566d 100%)!important;
+ border:1px solid #9ab7ca!important;
+ border-radius:13px!important;
+ box-shadow:0 12px 30px #0003!important;
+ padding:24px 27px!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro .pt-eyebrow{
+ color:#d9f2ff!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro h2{
+ color:#091b29!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro p{
+ color:#102839!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro details{
+ background:#213e54!important;
+ border:1px solid #7595aa!important;
+ border-radius:8px!important;
+ color:#f1f9ff!important;
+ margin-top:16px!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro details summary{
+ color:#f2faff!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro details p{
+ color:#e0eff8!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stats{
+ background:transparent!important;
+ border:0!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat{
+ background:linear-gradient(145deg,#223f53 0%,#152d40 100%)!important;
+ border:1px solid #47677c!important;
+ box-shadow:inset 0 1px 0 #ffffff13!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat:first-child{
+ background:linear-gradient(135deg,#3b3326 0%,#202d32 100%)!important;
+ border:1px solid #b58135!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat:first-child strong{
+ color:#ffc45e!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-stat:nth-child(3){
+ border-color:#5686a4!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-blocks{
+ background:linear-gradient(150deg,#102637 0%,#071725 85%)!important;
+ border:1px solid #ad7b33!important;
+ border-radius:16px!important;
+ box-shadow:0 0 0 1px #b5813512,inset 0 1px 0 #ffffff0b!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-blocks>.pt-dash-heading .pt-eyebrow{
+ color:#ffbd49!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) section.pt-dash-blocks>.pt-dash-heading h3{
+ color:#f8fbff!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-recent{
+ background:linear-gradient(145deg,#19374a 0%,#102638 100%)!important;
+ border:1px solid #4a6a7f!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-summary{
+ background:linear-gradient(110deg,#668398 0%,#405f76 100%)!important;
+ border:1px solid #8caabd!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-summary .pt-eyebrow{
+ color:#d4efff!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-summary h3{
+ color:#f9fcff!important;
+}
+.pt-chain-page:has(.pt-chain-bitcoin) .pt-dash-summary p{
+ color:#f0f7fc!important;
+}
+@media(max-width:650px){
+ .pt-chain-page:has(.pt-chain-bitcoin) .pt-chain-intro{padding:19px!important}
+}
