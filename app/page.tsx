@@ -99,7 +99,7 @@ export default function Page() {
     const q = query.trim().replace(/^https?:\/\/[^/]+\/tx\//i, "").split(/[?#]/)[0].replace(/\/$/, "");
     if (/^0x[a-f\d]{64}$/i.test(q)) return router.push("/eth/" + q);
     if (/^[a-f\d]{64}$/i.test(q)) return router.push("/btc/" + q);
-    setError("Paste a Bitcoin transaction ID or Ethereum transaction hash. You can also paste a transaction link from a blockchain explorer.");
+    setError("Paste a Bitcoin or Ethereum transaction ID, address, or supported explorer transaction link.");
   }
 
   const btc = overview?.btc, eth = overview?.eth;
