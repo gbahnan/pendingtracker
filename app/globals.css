@@ -1211,3 +1211,49 @@ body{
 .pt-shell .pt-overview-mark,.pt-shell .pt-fee-intro-icon{
  background:#3a4855!important;border-color:#647583!important;color:#c4d5e2!important;
 }
+
+
+/* Explorer pages: same premium neutral surface hierarchy as homepage.
+   Actual classes used by /bitcoin and /ethereum, not homepage-only selectors. */
+.pt-chain-page .pt-chain-search{
+ background:linear-gradient(145deg,#2e353e 0%,#232b34 100%)!important;
+ border:1px solid #596571!important;
+ box-shadow:0 18px 46px #00000029,inset 0 1px 0 #ffffff12!important;
+}
+.pt-chain-page .pt-chain-search h2,
+.pt-chain-page .pt-chain-intro h2{color:#f0f2f4!important}
+.pt-chain-page .pt-chain-search p,
+.pt-chain-page .pt-chain-intro p{color:#bdc7d0!important}
+.pt-chain-page .pt-chain-search input{
+ background:#18212a!important;
+ border-color:#596b7a!important;
+ color:#e8edf1!important;
+}
+.pt-chain-page .pt-chain-search input:focus{
+ border-color:#a8c9df!important;
+ box-shadow:0 0 0 3px #89b8da26!important;
+}
+.pt-chain-page .pt-chain-search button{
+ background:linear-gradient(120deg,#a9c7db,#82a8c2)!important;
+ border-color:#b6ccdb!important;
+ color:#17242f!important;
+}
+.pt-chain-page .pt-chain-back a{
+ background:#29343e!important;
+ border-color:#566a79!important;
+ color:#c0d3e1!important;
+}
+.pt-chain-page .pt-chain-intro{
+ border-color:#414b55!important;
+}
+.pt-chain-page .pt-chain-intro details{
+ background:linear-gradient(145deg,#2b333c,#222a32)!important;
+ border-color:#53616d!important;
+}
+.pt-chain-page .pt-chain-hero p{color:#bfc9d1!important}
+.pt-chain-page .pt-chain-hero h1{color:#f0f2f4!important}
+.pt-chain-page .pt-chain-how,
+.pt-chain-page .pt-chain-search-first{
+ background:linear-gradient(145deg,#2d353e,#222b34)!important;
+ border-color:#566471!important;
+}
