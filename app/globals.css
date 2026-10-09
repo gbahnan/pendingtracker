@@ -1575,3 +1575,57 @@ body{background:radial-gradient(ellipse 85% 34% at 52% 0%,#102a3c 0%,#07111b 72%
  .pt-shell .pt-journey .pt-journey-step{border-right:0!important;border-bottom:1px solid #254053!important}
  .pt-shell .pt-journey .pt-journey-step:last-child{border-bottom:0!important}
 }
+
+/* Approved reference: actual homepage composition (not just recoloring).
+   Explorer page layout and all blockchain motion remain untouched. */
+.pt-shell .pt-hero{max-width:1200px!important;margin:0 auto!important;padding-top:52px!important}
+.pt-shell .pt-hero-intro{text-align:left!important;max-width:none!important;margin:0 0 22px!important}
+.pt-shell .pt-hero-intro h1{text-align:left!important;font-size:clamp(42px,5.1vw,76px)!important;line-height:1.07!important;letter-spacing:-.055em!important;margin:12px 0!important}
+.pt-shell .pt-hero-intro h1 span{display:inline!important}
+.pt-shell .pt-hero-intro .pt-lead{text-align:left!important;max-width:720px!important;margin:0!important;font-size:clamp(16px,1.5vw,20px)!important;line-height:1.5!important}
+.pt-shell .pt-hero-trust{display:none!important}
+.pt-shell .pt-searchbox{margin:24px 0 0!important;max-width:none!important;padding:24px 28px!important;border-radius:12px!important}
+.pt-shell .pt-searchbox h2{color:#081723!important;font-size:clamp(23px,2.4vw,30px)!important}
+.pt-shell .pt-searchbox .pt-search-label{display:none!important}
+.pt-shell .pt-searchbox .pt-search-explain{color:#102739!important;max-width:640px!important;font-size:14px!important;line-height:1.5!important}
+.pt-shell .pt-searchbox .pt-search-explain strong{color:#102739!important;font-weight:500!important}
+.pt-shell .pt-search-symbol{display:none!important}
+.pt-shell .pt-searchrow{margin-top:14px!important}
+.pt-shell .pt-searchrow input{min-height:48px!important}
+.pt-shell .pt-searchrow button{min-height:48px!important}
+.pt-shell .pt-searchbox .pt-hint{color:#eaf5fd!important}
+.pt-shell .pt-chain-gateway{max-width:1200px!important;margin:28px auto 0!important}
+.pt-shell .pt-chain-gateway-intro{display:none!important}
+.pt-shell .pt-chain-gateway-grid{gap:14px!important}
+.pt-shell .pt-chain-gateway-card{position:relative!important;display:flex!important;flex-wrap:wrap!important;align-content:flex-start!important;min-height:230px!important;padding:22px 24px 16px!important;overflow:hidden!important;border-radius:11px!important}
+.pt-shell .pt-chain-gateway-card .pt-chain-gateway-copy{flex:1!important;min-width:0!important}
+.pt-shell .pt-chain-gateway-copy strong{font-size:21px!important}
+.pt-shell .pt-chain-gateway-copy small{font-size:12px!important}
+.pt-shell .pt-chain-gateway-copy em{display:none!important}
+.pt-shell .pt-chain-gateway-icon{width:52px!important;height:52px!important;flex:0 0 52px!important;font-size:28px!important}
+.pt-shell .pt-gateway-chart{display:flex!important;align-items:flex-end!important;gap:3px!important;position:absolute!important;left:0!important;right:0!important;top:95px!important;height:58px!important;padding:0 8px!important;opacity:.65!important;mask-image:linear-gradient(to top,transparent 0%,black 40%)!important}
+.pt-shell .pt-gateway-chart i{display:block!important;flex:1!important;min-width:2px!important;border-radius:3px 3px 0 0!important;background:linear-gradient(0deg,#ad6b17,#ffb638)!important}
+.pt-shell .pt-chain-gateway-eth .pt-gateway-chart i{background:linear-gradient(0deg,#3c55ac,#8b9fff)!important}
+.pt-shell .pt-gateway-metrics{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%!important;align-self:flex-end!important;margin-top:auto!important;padding-top:75px!important;gap:0!important;position:relative!important;z-index:1!important}
+.pt-shell .pt-gateway-metrics>span{padding:0 12px!important;border-right:1px solid #ffffff1c!important}
+.pt-shell .pt-gateway-metrics>span:first-child{padding-left:0!important}
+.pt-shell .pt-gateway-metrics>span:last-child{border-right:0!important}
+.pt-shell .pt-gateway-metrics b{display:block!important;color:#f9fcff!important;font-size:17px!important;white-space:nowrap!important}
+.pt-shell .pt-gateway-metrics small{display:block!important;color:#c5d2df!important;font-size:10px!important;white-space:nowrap!important}
+.pt-shell .pt-home-live{max-width:1250px!important;margin:24px auto!important}
+.pt-shell .pt-home-live-head h2{font-size:28px!important}
+.pt-shell .pt-home-live-head .pt-eyebrow{display:none!important}
+.pt-shell .pt-home-live-grid{gap:14px!important}
+.pt-shell .pt-home-live-panel{border-radius:11px!important}
+.pt-shell .pt-journey{max-width:1250px!important;margin:24px auto!important}
+.pt-shell .pt-journey .pt-eyebrow{display:none!important}
+.pt-shell .pt-journey h2{font-size:30px!important}
+.pt-shell .pt-journey .pt-journey-step{padding:12px 16px!important}
+.pt-shell .pt-journey .pt-journey-step>span{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:42px!important;height:42px!important;border:1px solid #547c95!important;border-radius:9px!important;background:#152d40!important;font-size:20px!important;margin-bottom:12px!important}
+@media(max-width:760px){
+ .pt-shell .pt-hero{padding-top:28px!important}
+ .pt-shell .pt-searchbox{padding:18px!important}
+ .pt-shell .pt-chain-gateway-card{min-height:220px!important}
+ .pt-shell .pt-gateway-metrics b{font-size:13px!important}
+ .pt-shell .pt-gateway-metrics small{font-size:9px!important;white-space:normal!important}
+}
