@@ -2426,3 +2426,40 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
   width:95%;right:-2%;height:210px;opacity:.35;
  }
 }
+
+/* Ethereum confirmed-block honeycombs: mirror Bitcoin's gold treatment in
+   Ethereum periwinkle/blue. Pure color changes; preserve all motion/geometry. */
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending{
+ border-color:#7899ff!important;
+ filter:drop-shadow(0 0 4px #779cff35);
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending::before,
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending::after{
+ border-color:#849eff!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon,
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending .pt-honeycomb-cell-live{
+ stroke:#8fa8ff!important;
+ fill:#17294b!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending .pt-honeycomb-traveler{
+ stroke:#b9cbff!important;
+ fill:#799eff!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending .pt-honeycomb-empty{
+ opacity:.16!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending>span{
+ color:#a9bcff!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-pending>strong{
+ color:#f7fbff!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-confirmed{
+ border-color:#88a5ff!important;
+ background:linear-gradient(155deg,#233e72,#111d37)!important;
+ filter:drop-shadow(0 0 12px #7598ff55)!important;
+}
+.pt-chain-page:has(.pt-chain-ethereum) .pt-chain-flow-hex-confirmed>span{
+ color:#b5c8ff!important;
+}
