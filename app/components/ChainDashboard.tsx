@@ -17,7 +17,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
     <div className="pt-dash-heading" style={{marginBottom:24}}><div className="pt-eyebrow">{isBtc?"LIVE BITCOIN MEMPOOL":"ETHEREUM NETWORK ACTIVITY"}</div><h3 style={{fontSize:"clamp(23px,2.8vw,32px)",letterSpacing:"-0.03em",margin:"8px 0"}}>{isBtc?"Current estimated transaction confirmation times":"Latest confirmed Ethereum blocks"}</h3><p style={{maxWidth:850,lineHeight:1.7}}>{isBtc?"See how many transactions are currently projected for each upcoming Bitcoin block. Each column is a possible block, roughly 10 minutes apart on average — not a guaranteed appointment.":"Ethereum blocks arrive approximately every 12 seconds. These are recently recorded blocks, not predictions of future transaction waiting times."}</p></div>
     {isBtc?<div>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,marginBottom:18,color:"#adc4d0",fontSize:11,letterSpacing:"0.08em",fontWeight:700}}><span>NOW · MEMPOOL</span><span>PROJECTED BLOCKS →</span></div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(5,minmax(0,1fr))",gap:0,overflowX:"auto",paddingBottom:12,minWidth:0}}>
+      <div style={{overflowX:"auto",width:"100%",WebkitOverflowScrolling:"touch"}}><div style={{display:"grid",gridTemplateColumns:"repeat(5,minmax(145px,1fr))",gap:0,paddingBottom:12,minWidth:750}}>
         {blocks.length?blocks.map((b,i)=><div key={b.id} style={{display:"flex",flexDirection:"column",gap:0,minWidth:0,padding:"0 13px",borderLeft:"1px solid #3c5364"}}>
           <div style={{display:"flex",alignItems:"center",gap:9,marginBottom:17}}><span style={{display:"inline-block",width:7,height:7,borderRadius:"50%",background:i===0?"#e7c78e":"#7f9cab",flexShrink:0}}/><span style={{fontSize:11,fontWeight:700,color:"#bed0d9"}}>BLOCK {i+1}</span></div>
           <strong style={{display:"block",fontSize:"clamp(22px,2.7vw,35px)",lineHeight:1.12,letterSpacing:"-0.04em",fontWeight:650,color:"#f1d29d"}}>~{(i+1)*10}<span style={{fontSize:13,letterSpacing:0,fontWeight:500,color:"#bdced8",marginLeft:4}}>min</span></strong>
@@ -28,7 +28,7 @@ export default function ChainDashboard({chain}:{chain:"bitcoin"|"ethereum"}){
           <span style={{display:"block",fontSize:11,color:"#b6c9d4",marginTop:17,lineHeight:1.5}}>Fee range</span>
           <span style={{display:"block",fontSize:12,color:"#ebcf9f",fontWeight:650,lineHeight:1.55,overflowWrap:"anywhere"}}>{b.range}</span>
         </div>):<p className="pt-dash-empty">Live mempool projections are temporarily unavailable.</p>}
-      </div>
+      </div></div>
       <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",gap:12,paddingTop:18,borderTop:"1px solid #344c5c"}}>
         <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}><strong style={{color:"#ebcf9f"}}>What you're seeing:</strong> projected transaction groups, not actual scheduled blocks.</span>
         <span style={{fontSize:12,lineHeight:1.7,color:"#bbced8"}}>Blocks average ~10 minutes, but individual waits vary.</span>
