@@ -11,21 +11,27 @@ function Honeycomb(){
  const [moving,setMoving]=useState<Array<{from:number;to:number;id:number}>>([]);
  const sequence=useRef(0);
  useEffect(()=>{
-   const timers:ReturnType<typeof setTimeout>[]=[];
-   const interval=setInterval(()=>{
-    for(let batch=0;batch<3+Math.floor(Math.random()*2);batch++){
-     const from=Math.floor(Math.random()*120);
-     const to=Math.max(0,Math.min(119,from+(Math.random()<.5?10:1)));
-     setHidden(old=>old.includes(from)?old:[...old,from]);
-     if(true){
-       const id=++sequence.current;
-       setMoving(old=>[...old,{from,to,id}]);
-       timers.push(setTimeout(()=>setMoving(old=>old.filter(m=>m.id!==id)),560));
-     }
-     timers.push(setTimeout(()=>setHidden(old=>old.filter(x=>x!==from)),1700+Math.random()*1200));
-    }
-   },2200);
-   return()=>{clearInterval(interval);timers.forEach(clearTimeout)};
+  let active=true;
+  const timers=new Set<ReturnType<typeof setTimeout>>();
+  const schedule=(fn:()=>void,delay:number)=>{
+   const timer=setTimeout(()=>{timers.delete(timer);if(active)fn()},delay);
+   timers.add(timer);
+  };
+  const startMove=()=>{
+   const from=Math.floor(Math.random()*120);
+   const col=Math.floor(from/10),row=from%10;
+   const options=[row>0?from-1:-1,row<9?from+1:-1,col>0?from-10:-1,col<11?from+10:-1].filter(n=>n>=0);
+   const to=options[Math.floor(Math.random()*options.length)];
+   const id=++sequence.current;
+   setHidden(old=>old.includes(from)?old:[...old,from]);
+   setMoving(old=>[...old,{from,to,id}]);
+   schedule(()=>setMoving(old=>old.filter(m=>m.id!==id)),2300);
+   schedule(()=>setHidden(old=>old.filter(n=>n!==from)),2600);
+  };
+  // Independent staggered activity, with roughly three to five traveling cells visible.
+  const tick=()=>{startMove();schedule(tick,440+Math.random()*170)};
+  schedule(tick,350);
+  return()=>{active=false;timers.forEach(clearTimeout);timers.clear()};
  },[]);
  const coords=(n:number)=>{const col=Math.floor(n/10),row=n%10;return {x:col*15-5,y:row*17.32+(col%2)*8.66-10}};
  const points=(x:number,y:number)=>Array.from({length:6},(_,k)=>{const a=Math.PI*k/3;return (x+10*Math.cos(a)).toFixed(2)+","+(y+10*Math.sin(a)).toFixed(2)}).join(" ");
