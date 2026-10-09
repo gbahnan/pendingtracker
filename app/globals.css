@@ -815,3 +815,31 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#d5c49f,#7997aa); 
 .pt-chain-foot{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:25px;font-size:12px;color:#a9bdc9}
 .pt-chain-foot a{color:#e8c98e;font-weight:700}
 @media(max-width:740px){.pt-chain-gateway-grid,.pt-chain-columns{grid-template-columns:1fr}.pt-chain-stats{grid-template-columns:1fr}.pt-chain-hero{align-items:flex-start;gap:14px}.pt-chain-symbol{flex-basis:55px;width:55px;height:55px;font-size:35px}.pt-chain-gateway-card{min-height:unset}.pt-chain-section-head{flex-wrap:wrap}.pt-chain-page{padding:15px 3px 50px}.pt-chain-foot{flex-direction:column;align-items:flex-start}}
+
+/* Concise live homepage preview and direct blockchain search */
+.pt-home-live{margin:22px 0 36px}
+.pt-home-live-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:19px}
+.pt-home-live-head h2{font-size:clamp(23px,3vw,32px);margin:9px 0;color:#f4f7f8}
+.pt-home-live-head p{color:#b9cbd5;line-height:1.6;margin:0;max-width:680px;font-size:14px}
+.pt-home-live-status{white-space:nowrap;font-size:12px;color:#dfc18b;padding:7px 10px;background:#233d4c;border-radius:20px}
+.pt-home-live-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pt-home-live-panel{background:#183343;border:1px solid #476573;border-radius:14px;padding:19px;min-width:0}
+.pt-home-live-title{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pt-home-live-title h3{color:#f3f6f8;font-size:17px;margin:0}
+.pt-home-live-title a{color:#e5c58e;font-size:12px;font-weight:700;white-space:nowrap}
+.pt-home-live-panel>p{font-size:12px;color:#b8cad3;line-height:1.6;margin:10px 0 13px}
+.pt-home-live-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-top:1px solid #3d5968;text-decoration:none!important}
+.pt-home-live-row:hover b{color:#e9c992}
+.pt-home-live-row b{display:block;color:#e8f1f5;font-family:monospace;font-size:13px;overflow-wrap:anywhere}
+.pt-home-live-row small{display:block;color:#a9c0cc;font-size:11px;margin-top:5px;line-height:1.5}
+.pt-home-live-row>span:last-child{color:#e9c992}
+.pt-home-live-source{font-size:11px;color:#aabfc9;line-height:1.5;margin-top:12px}
+.pt-home-live-empty{padding:20px 0;color:#b8cad3;font-size:13px}
+.pt-chain-inline-search label{display:block;font-size:13px;font-weight:800;color:#e8f2f6;margin-bottom:10px}
+.pt-chain-inline-search>div{display:flex;gap:9px}
+.pt-chain-inline-search input{flex:1;min-width:0;border:1px solid #6b8794;background:#0e2634;border-radius:9px;padding:14px;color:#f6f8f9;font-size:14px;font-family:inherit}
+.pt-chain-inline-search input::placeholder{color:#9eb6c4}
+.pt-chain-inline-search button{background:#e2c18a;border:0;border-radius:9px;padding:13px 20px;color:#172d3a;font-weight:800;cursor:pointer;white-space:nowrap}
+.pt-chain-inline-search small{display:block;color:#b3c6d1;margin-top:10px;font-size:11px;line-height:1.5}
+.pt-chain-search-error{color:#ffd2b8!important;font-weight:700}
+@media(max-width:740px){.pt-home-live-grid{grid-template-columns:1fr}.pt-home-live-head{flex-direction:column}.pt-home-live-title{flex-wrap:wrap}.pt-chain-inline-search>div{flex-direction:column}.pt-chain-inline-search button{width:100%}}
