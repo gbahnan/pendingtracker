@@ -107,21 +107,30 @@ export default function Page() {
     <div className="pt-hero">
       <div className="pt-hero-intro">
         <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, MADE SIMPLE</div>
-        <h1>Your blockchain explorer.<br/><span>Without the confusion.</span></h1>
-        <p className="pt-lead">Explore live Bitcoin and Ethereum activity, track any transaction, and understand what the technical details actually mean. We turn complicated blockchain data into clear, everyday language.</p>
+        <h1>Track your crypto.<br/><span>Understand every step.</span></h1>
+        <p className="pt-lead">Paste a Bitcoin or Ethereum transaction ID. See whether it arrived, why it might be delayed, what the fees mean, and what to do next.</p>
         <div className="pt-hero-trust"><span>◇ Live blockchain data</span><span>◇ Plain-English explanations</span><span>◇ No account needed</span></div>
       </div>
       <div className="pt-searchbox" id="transaction-search">
-        <div className="pt-search-top"><div><div className="pt-search-label">TRANSACTION EXPLAINER</div><h2>Wondering where your crypto went?</h2><p className="pt-search-explain">Paste your Bitcoin transaction ID or Ethereum transaction hash. We'll check the blockchain and give you an easy-to-read breakdown of <strong>whether it's pending or confirmed, what the fees mean, why it might be taking longer, and what you can do next.</strong> No technical knowledge needed.</p></div><div className="pt-search-symbol" aria-hidden="true">↗</div></div>
+        <div className="pt-search-top"><div><div className="pt-search-label">TRANSACTION EXPLAINER</div><h2>Where is my transaction?</h2><p className="pt-search-explain">Paste your Bitcoin transaction ID or Ethereum transaction hash. We'll check the blockchain and give you an easy-to-read breakdown of <strong>whether it's pending or confirmed, what the fees mean, why it might be taking longer, and what you can do next.</strong> No technical knowledge needed.</p></div><div className="pt-search-symbol" aria-hidden="true">↗</div></div>
         <div className="pt-searchrow">
           <input aria-label="Transaction hash" placeholder="Paste a Bitcoin TXID, Ethereum hash, or explorer link" value={query} onChange={e=>{setQuery(e.target.value);setError("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
-          <button onClick={search}>Explain my transaction <span aria-hidden="true">→</span></button>
+          <button onClick={search}>Track my transaction <span aria-hidden="true">→</span></button>
         </div>
         {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">Free to explore · No wallet connection or signup · Never enter a seed phrase or private key.</p>}
       </div>
     </div>
 
-    <section className="pt-section" id="network">
+    <section className="pt-section pt-journey" id="how-it-works">
+      <div className="pt-eyebrow">TRACKING MADE SIMPLE</div><h2>Three steps. One clear answer.</h2>
+      <p className="pt-section-sub">No wallet connection. No signup. Just your transaction ID.</p>
+      <div className="pt-journey-grid">
+        <div className="pt-journey-step"><span>01</span><h3>Paste your transaction ID</h3><p>Find it in your wallet or exchange and paste it above.</p></div>
+        <div className="pt-journey-step"><span>02</span><h3>See what's happening</h3><p>Find out if it's waiting, confirmed, or not yet visible on the network.</p></div>
+        <div className="pt-journey-step"><span>03</span><h3>Know what comes next</h3><p>Understand the fees, confirmation status, and possible next steps.</p></div>
+      </div>
+    </section>
+<details className="pt-network-drawer"><summary><span><b>Explore live blockchain activity</b><small>Bitcoin blocks, Ethereum blocks, fees and live transactions</small></span><span aria-hidden="true">＋</span></summary>    <section className="pt-section" id="network">
       <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE BLOCKCHAIN EXPLORER</div><h2>{network==="btc"?"The Bitcoin Network, Live.":"The Ethereum Network, Live."}</h2><p>See what's happening on the network right now—and understand what it means for your transactions.</p></div><span className="pt-live" role="status">{loading?"Loading live data…":overview?"● Live data · refreshed every 5 seconds":"Network data temporarily unavailable"}</span></div>
       <div className="pt-tabs" role="tablist" aria-label="Choose blockchain">
         <button role="tab" aria-selected={network==="btc"} className={network==="btc"?"selected":""} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button>
@@ -221,15 +230,7 @@ export default function Page() {
       <p className="pt-source">Explanations are generated from live blockchain data using transparent rules, not a generative AI model. Sources: mempool.space and Blockscout · {overview ? "Updated " + new Date(overview.updatedAt).toLocaleTimeString() : "Awaiting data"} · Estimates are informational, not guarantees.</p>
     </section>
 
-    <section className="pt-section pt-journey" id="how-it-works">
-      <div className="pt-eyebrow">TRACKING MADE SIMPLE</div><h2>Three steps. One clear answer.</h2>
-      <p className="pt-section-sub">No wallet connection. No signup. Just your transaction ID.</p>
-      <div className="pt-journey-grid">
-        <div className="pt-journey-step"><span>01</span><h3>Paste your transaction ID</h3><p>Find it in your wallet or exchange and paste it above.</p></div>
-        <div className="pt-journey-step"><span>02</span><h3>See what's happening</h3><p>Find out if it's waiting, confirmed, or not yet visible on the network.</p></div>
-        <div className="pt-journey-step"><span>03</span><h3>Know what comes next</h3><p>Understand the fees, confirmation status, and possible next steps.</p></div>
-      </div>
-    </section>
+</details>
     <section className="pt-section pt-learn-simple" id="learn">
       <div className="pt-eyebrow">QUICK ANSWERS</div><h2>New to blockchain? Start here.</h2>
       <p className="pt-section-sub">Plain-English answers to the questions people ask most.</p>
@@ -241,6 +242,6 @@ export default function Page() {
         <details className="pt-term"><summary>Explore more blockchain terms<span>＋</span></summary><div className="pt-glossary-inner">{Object.entries(terms).filter(([term])=>network==="btc"?!["Gas","Nonce"].includes(term):!["Sats","Priority fee","Mempool","sat/vB","RBF","CPFP"].includes(term)).map(([term,meaning])=><details className="pt-term" key={term}><summary>{term}<span>＋</span></summary><p>{meaning}</p></details>)}</div></details>
       </div>
     </section>
-    <section className="pt-cta pt-cta-simple"><div className="pt-eyebrow">READY TO CHECK?</div><h2>Get clarity on your transaction.</h2><p>Paste a public transaction ID. We'll explain what the blockchain shows.</p><a href="#transaction-search">Track a transaction ↑</a></section>
+
   </main>;
 }
