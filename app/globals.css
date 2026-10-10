@@ -3446,3 +3446,40 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  border-top:1px solid #294456!important;background:transparent!important;
  margin-top:12px!important;padding:16px 0 0!important;
 }
+
+
+/* Bitcoin Explorer mobile-first finishing pass.
+   Desktop styling and all existing live honeycomb animations stay untouched. */
+@media(max-width:700px){
+ body:has(.pt-bitcoin-explorer){overflow-x:clip!important}
+ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
+  padding-left:16px!important;padding-right:16px!important;
+  min-width:0!important;overflow-x:clip!important;
+ }
+ .pt-bitcoin-explorer .pt-chain-back{display:flex!important;align-items:center!important;gap:10px!important;flex-wrap:wrap!important;margin:18px 0 18px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-intro{padding:24px 0 0!important}
+ .pt-bitcoin-explorer .pt-bitcoin-intro h1{font-size:clamp(36px,10vw,54px)!important;line-height:1.08!important}
+ .pt-bitcoin-explorer .pt-bitcoin-intro p{font-size:14px!important;line-height:1.65!important;padding:0 10px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-intro .pt-hero-ambient{opacity:.22!important;pointer-events:none!important}
+ .pt-bitcoin-explorer .pt-bitcoin-search.pt-hero.pt-hero-reference{margin-top:24px!important;margin-bottom:30px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-search .pt-searchbox{padding:0!important}
+ .pt-bitcoin-explorer .pt-bitcoin-search .pt-searchrow{display:flex!important;flex-direction:column!important;gap:12px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-search .pt-search-input-wrap{width:100%!important;min-width:0!important}
+ .pt-bitcoin-explorer .pt-bitcoin-search .pt-searchrow input{min-width:0!important;width:100%!important;box-sizing:border-box!important;font-size:16px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-search .pt-searchrow button{width:100%!important;min-height:50px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-estimates .pt-dash-heading h2{font-size:clamp(24px,6.6vw,34px)!important;line-height:1.2!important}
+ .pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-head{display:flex!important;flex-wrap:wrap!important;gap:8px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-scene{
+  overflow-x:auto!important;overscroll-behavior-x:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+ }
+ .pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-shapes{min-width:730px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-stream{min-width:730px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-live .pt-home-live-head{display:flex!important;flex-wrap:wrap!important;gap:10px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-network-headline,.pt-bitcoin-explorer .pt-bitcoin-live-deep{grid-template-columns:minmax(0,1fr)!important}
+ .pt-bitcoin-explorer .pt-bitcoin-metrics{grid-template-columns:minmax(0,1fr)!important}
+ .pt-bitcoin-explorer .pt-bitcoin-transactions .pt-reference-table{overflow-x:auto!important}
+ .pt-bitcoin-explorer .pt-bitcoin-transactions .pt-reference-table-head,
+ .pt-bitcoin-explorer .pt-bitcoin-transactions .pt-reference-table-row{min-width:470px!important}
+ .pt-bitcoin-explorer .pt-bitcoin-education-grid{grid-template-columns:minmax(0,1fr)!important}
+}
