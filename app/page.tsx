@@ -25,29 +25,38 @@ const terms: Record<string, string> = {
 
 
 function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
-  const [phase,setPhase]=useState(0);
-  useEffect(()=>{
-    const timer=setInterval(()=>setPhase(v=>(v+1)%12),1800);
-    return ()=>clearInterval(timer);
-  },[]);
-  const cells=Array.from({length:24},(_,i)=>({
-    x:50+Math.cos(i*2.39996)* (26+(i%4)*12),
-    y:50+Math.sin(i*2.39996)* (23+(i%5)*9),
-    size:2.5+(i%3)*1.1,
-    active:(i+phase)%7<3
-  }));
+  const btc=chain==="btc";
+  const accent=btc?"#ffb52d":"#809dff";
+  const bright=btc?"#ffd878":"#b9c9ff";
   const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,k)=>{
-    const a=Math.PI/3*k-Math.PI/6;
-    return (x+r*Math.cos(a)).toFixed(2)+","+(y+r*Math.sin(a)).toFixed(2);
+    const angle=Math.PI/3*k-Math.PI/6;
+    return (x+r*Math.cos(angle)).toFixed(2)+","+(y+r*Math.sin(angle)).toFixed(2);
   }).join(" ");
-  return <div className={"pt-home-hex-scene pt-home-hex-"+chain} style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",color:chain==="btc"?"#f5aa28":"#829dff"}} aria-hidden="true">
-    <svg viewBox="0 0 200 100" preserveAspectRatio="xMidYMid meet" style={{display:"block",width:"100%",height:"100%",overflow:"visible"}}>
-      <defs><radialGradient id={"pt-home-hex-glow-"+chain}><stop stopColor="currentColor" stopOpacity=".18"/><stop offset="1" stopColor="currentColor" stopOpacity="0"/></radialGradient></defs>
-      <ellipse cx="100" cy="50" rx="91" ry="49" fill={"url(#pt-home-hex-glow-"+chain+")"}/>
-      {cells.map((c,i)=><polygon key={i} className={"pt-home-orbit-cell"+(c.active?" is-lit":"")} points={hex(c.x*2,c.y,c.size)} fill="currentColor" fillOpacity={c.active?.65:.15} stroke="currentColor" strokeOpacity={c.active?.9:.4} strokeWidth=".7" style={{animationDelay:(-i*.53)+"s"}}/>)}
-      <polygon className="pt-home-core-hex" points={hex(100,50,35)} fill="#071522" stroke="currentColor" strokeWidth="2.2"/>
-      <polygon className="pt-home-core-inner" points={hex(100,50,29)} fill="none" stroke="currentColor" strokeOpacity=".65"/>
-      <text className="pt-home-core-symbol" x="100" y="60" textAnchor="middle" fill="currentColor" fontSize="31" fontWeight="800">{chain==="btc"?"₿":"◆"}</text>
+  const cells=Array.from({length:33},(_,i)=>{
+    const angle=i*2.39996323;
+    const distance=33+(i%7)*7.4;
+    return {x:110+Math.cos(angle)*distance*1.45,y:60+Math.sin(angle)*distance*.67,
+      size:1.7+(i%5)*.64,duration:11+(i*7)%17,delay:-(i*13%23),
+      opacity:.19+(i%6)*.095,dx:((i*7)%13)-6,dy:((i*11)%15)-7};
+  });
+  return <div className={"pt-home-hex-scene pt-home-hex-"+chain} style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",color:accent,pointerEvents:"none"}} aria-hidden="true">
+    <svg viewBox="0 0 220 120" preserveAspectRatio="xMidYMid meet" style={{display:"block",width:"100%",height:"100%",overflow:"visible"}}>
+      <defs>
+        <radialGradient id={"home-space-"+chain}><stop stopColor={accent} stopOpacity=".13"/><stop offset="1" stopColor={accent} stopOpacity="0"/></radialGradient>
+        <linearGradient id={"home-core-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={accent} stopOpacity=".16"/><stop offset="1" stopColor="#06121e" stopOpacity=".9"/></linearGradient>
+        <filter id={"home-glow-"+chain} x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <ellipse cx="110" cy="60" rx="105" ry="56" fill={"url(#home-space-"+chain+")"}/>
+      {cells.map((c,i)=><g key={i} opacity={c.opacity}>
+        <polygon points={hex(c.x,c.y,c.size)} fill={i%4===0?accent:"none"} fillOpacity={i%4===0?".68":"0"} stroke={i%4===0?bright:accent} strokeWidth=".75">
+          <animateTransform attributeName="transform" type="translate" values={`0 0; ${c.dx} ${c.dy}; ${-c.dx*.5} ${-c.dy*.7}; 0 0`} dur={c.duration+"s"} begin={c.delay+"s"} repeatCount="indefinite" calcMode="spline" keyTimes="0;0.36;0.72;1" keySplines=".42 0 .58 1;.42 0 .58 1;.42 0 .58 1"/>
+          <animate attributeName="opacity" values=".5;1;.65;.5" dur={(c.duration+4)+"s"} begin={c.delay+"s"} repeatCount="indefinite"/>
+        </polygon>
+      </g>)}
+      <polygon points={hex(110,60,31)} fill={accent} fillOpacity=".08" stroke={accent} strokeOpacity=".24" strokeWidth="7" filter={"url(#home-glow-"+chain+")"}/>
+      <polygon points={hex(110,60,30)} fill={"url(#home-core-"+chain+")"} stroke={accent} strokeWidth="2.3" filter={"url(#home-glow-"+chain+")"}/>
+      <polygon points={hex(110,60,25)} fill="none" stroke={bright} strokeOpacity=".48" strokeWidth=".75"/>
+      <text x="110" y="70" textAnchor="middle" fill={bright} fontSize={btc?"32":"29"} fontWeight="800">{btc?"₿":"◆"}</text>
     </svg>
   </div>;
 }
