@@ -3082,3 +3082,8 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-founder-footer .founder-eyebrow{font-size:11px!important;font-weight:700!important;letter-spacing:.2em!important;color:#c69c55!important}
 .pt-founder-footer .founder-name{font-size:clamp(20px,2.1vw,29px)!important;font-weight:800!important;letter-spacing:.1em!important;line-height:1.25!important;color:#f4f8fc!important}
 .pt-founder-footer .footer-disclaimer{max-width:760px!important;margin:0!important;color:#91aabc!important;font-size:12px!important;line-height:1.6!important;text-align:center!important}
+
+
+/* Footer typography and copyright hierarchy */
+.pt-founder-footer .founder-eyebrow{font-size:12px!important;letter-spacing:.075em!important;text-transform:none!important;word-spacing:.16em!important;white-space:normal!important}
+.pt-founder-footer .footer-copyright{margin:2px 0 -8px!important;color:#c2d0dc!important;font-size:12px!important;font-weight:600!important;line-height:1.5!important;text-align:center!important}
