@@ -40,14 +40,14 @@ function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
     const a=Math.PI/3*k-Math.PI/6;
     return (x+r*Math.cos(a)).toFixed(2)+","+(y+r*Math.sin(a)).toFixed(2);
   }).join(" ");
-  return <div className={"pt-home-hex-scene pt-home-hex-"+chain} aria-hidden="true">
-    <svg viewBox="0 0 200 100" preserveAspectRatio="xMidYMid meet">
+  return <div className={"pt-home-hex-scene pt-home-hex-"+chain} style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",color:chain==="btc"?"#f5aa28":"#829dff"}} aria-hidden="true">
+    <svg viewBox="0 0 200 100" preserveAspectRatio="xMidYMid meet" style={{display:"block",width:"100%",height:"100%",overflow:"visible"}}>
       <defs><radialGradient id={"pt-home-hex-glow-"+chain}><stop stopColor="currentColor" stopOpacity=".18"/><stop offset="1" stopColor="currentColor" stopOpacity="0"/></radialGradient></defs>
       <ellipse cx="100" cy="50" rx="91" ry="49" fill={"url(#pt-home-hex-glow-"+chain+")"}/>
-      {cells.map((c,i)=><polygon key={i} className={"pt-home-orbit-cell"+(c.active?" is-lit":"")} points={hex(c.x*2,c.y,c.size)} style={{animationDelay:(-i*.53)+"s"}}/>)}
-      <polygon className="pt-home-core-hex" points={hex(100,50,35)}/>
-      <polygon className="pt-home-core-inner" points={hex(100,50,29)}/>
-      <text className="pt-home-core-symbol" x="100" y="60" textAnchor="middle">{chain==="btc"?"₿":"◆"}</text>
+      {cells.map((c,i)=><polygon key={i} className={"pt-home-orbit-cell"+(c.active?" is-lit":"")} points={hex(c.x*2,c.y,c.size)} fill="currentColor" fillOpacity={c.active?.65:.15} stroke="currentColor" strokeOpacity={c.active?.9:.4} strokeWidth=".7" style={{animationDelay:(-i*.53)+"s"}}/>)}
+      <polygon className="pt-home-core-hex" points={hex(100,50,35)} fill="#071522" stroke="currentColor" strokeWidth="2.2"/>
+      <polygon className="pt-home-core-inner" points={hex(100,50,29)} fill="none" stroke="currentColor" strokeOpacity=".65"/>
+      <text className="pt-home-core-symbol" x="100" y="60" textAnchor="middle" fill="currentColor" fontSize="31" fontWeight="800">{chain==="btc"?"₿":"◆"}</text>
     </svg>
   </div>;
 }
