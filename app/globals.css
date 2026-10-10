@@ -3075,3 +3075,10 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-faq-refresh .pt-faq-safety>span{font-size:16px!important}
 .pt-faq-refresh .pt-faq-safety p{color:#9eb7c8!important}
 @media(max-width:700px){.pt-faq-refresh .pt-faq-list{grid-template-columns:1fr!important;column-gap:0!important}.pt-shell .pt-faq-refresh{margin:25px auto 35px!important;padding:0 14px!important}.pt-faq-refresh .pt-faq-item summary{min-height:62px!important;font-size:14px!important}.pt-faq-refresh .pt-faq-answer{padding-left:48px!important}}
+
+
+.pt-founder-footer{display:flex!important;flex-direction:column!important;align-items:center!important;gap:16px!important;text-align:center!important;padding:30px 18px 36px!important;margin-inline:auto!important;width:100%!important;box-sizing:border-box!important}
+.pt-founder-footer .founder-credit{display:flex!important;flex-direction:column!important;align-items:center!important;gap:8px!important;margin:0!important;text-align:center!important}
+.pt-founder-footer .founder-eyebrow{font-size:11px!important;font-weight:700!important;letter-spacing:.2em!important;color:#c69c55!important}
+.pt-founder-footer .founder-name{font-size:clamp(20px,2.1vw,29px)!important;font-weight:800!important;letter-spacing:.1em!important;line-height:1.25!important;color:#f4f8fc!important}
+.pt-founder-footer .footer-disclaimer{max-width:760px!important;margin:0!important;color:#91aabc!important;font-size:12px!important;line-height:1.6!important;text-align:center!important}
