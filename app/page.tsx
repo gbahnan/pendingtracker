@@ -256,9 +256,9 @@ export default function Page() {
           <button type="button" className={comparisonChain==="eth"?"is-active":""} data-chain="eth" aria-pressed={comparisonChain==="eth"} onClick={()=>setComparisonChain("eth")}><span className="pt-comparison-honeycombs" aria-hidden="true"><i/><i/><i/></span><span className="pt-comparison-button-content"><span className="pt-comparison-hex" aria-hidden="true">◆</span><span>Ethereum<small>{comparisonChain==="eth"?"✓ Selected":"Click to explore"}</small></span></span></button>
         </div>
       </div>
-      <div className="pt-comparison-mode-tabs" role="group" aria-label="Choose example type">
-        <button type="button" className={comparisonMode==="explore"?"is-active":""} aria-pressed={comparisonMode==="explore"} onClick={()=>setComparisonMode("explore")}><span aria-hidden="true">⬡</span> Explore the Blockchain</button>
-        <button type="button" className={comparisonMode==="track"?"is-active":""} aria-pressed={comparisonMode==="track"} onClick={()=>setComparisonMode("track")}><span aria-hidden="true">⌕</span> Track a Transaction</button>
+      <div className="pt-comparison-mode-tabs" role="group" aria-label="Choose what to explore">
+        <button type="button" className={comparisonMode==="explore"?"is-active":""} aria-pressed={comparisonMode==="explore"} onClick={()=>setComparisonMode("explore")}><span aria-hidden="true">⬡</span> Explore Blockchain</button>
+        <button type="button" className={comparisonMode==="track"?"is-active":""} aria-pressed={comparisonMode==="track"} onClick={()=>setComparisonMode("track")}><span aria-hidden="true">⌕</span> Track Transaction</button>
       </div>
       <div className="pt-comparison-grid">
         <div className="pt-comparison-raw">
