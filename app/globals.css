@@ -3249,3 +3249,41 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-bitcoin-education-grid article p{font-size:13px;color:#b3cadb;line-height:1.75;margin:0}
 @media(max-width:800px){.pt-bitcoin-explorer .pt-bitcoin-live .pt-home-live-grid{grid-template-columns:1fr!important}.pt-bitcoin-live-explained{margin-top:6px}}
 @media(max-width:620px){.pt-bitcoin-explorer{padding:0 13px 45px!important}.pt-bitcoin-intro{margin-bottom:20px}.pt-bitcoin-explorer .pt-bitcoin-estimates,.pt-bitcoin-explorer .pt-bitcoin-live,.pt-bitcoin-explorer .pt-bitcoin-education{margin-top:42px!important}.pt-bitcoin-explorer .pt-bitcoin-estimates::before,.pt-bitcoin-explorer .pt-bitcoin-live::before,.pt-bitcoin-explorer .pt-bitcoin-education::before{top:-21px}.pt-bitcoin-education-grid{grid-template-columns:1fr}.pt-bitcoin-explorer .pt-bitcoin-search .pt-searchbox{padding:14px 0!important}}
+
+
+/* Bitcoin explorer v2: open layout, gold hero particles and detailed network. */
+.pt-bitcoin-explorer .pt-bitcoin-intro{position:relative;isolation:isolate;padding:65px 0 38px;overflow:hidden;max-width:none}
+.pt-bitcoin-explorer .pt-bitcoin-intro>.pt-eyebrow,.pt-bitcoin-explorer .pt-bitcoin-intro>h1,.pt-bitcoin-explorer .pt-bitcoin-intro>p{position:relative;z-index:2}
+.pt-bitcoin-explorer .pt-bitcoin-intro .pt-hero-ambient{position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none}
+.pt-bitcoin-explorer .pt-bitcoin-intro .pt-hero-ambient span{opacity:.7}
+.pt-bitcoin-explorer .pt-bitcoin-search{margin-top:0!important}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-blocks{margin:0!important;padding:0 0 18px!important;border:0!important}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading{margin-bottom:23px!important}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading h2{font-size:clamp(26px,3vw,38px);letter-spacing:-.035em;color:#f5f9fc;margin:8px 0 12px}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading p{color:#b7cad8;line-height:1.75;max-width:850px}
+.pt-bitcoin-flow-labels{display:flex;justify-content:space-between;gap:15px;color:#b5cad9;font-size:11px;letter-spacing:.1em;font-weight:800;margin-bottom:18px}
+.pt-bitcoin-flow-note{color:#9db7c9;font-size:12px;line-height:1.8;margin:19px 0}
+.pt-bitcoin-explorer .pt-bitcoin-live .pt-home-live-grid{display:none!important}
+.pt-bitcoin-network-headline{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;padding:4px 0 24px}
+.pt-bitcoin-network-visual{min-width:0;max-width:530px;margin:0 auto;width:100%}
+.pt-bitcoin-network-visual .pt-home-hex-scene{width:100%;max-width:530px}
+.pt-bitcoin-network-reading{border-left:2px solid #d99b3d;padding:6px 0 6px 22px}
+.pt-bitcoin-network-reading .pt-eyebrow,.pt-bitcoin-fee-section .pt-eyebrow,.pt-bitcoin-transactions .pt-eyebrow{color:#ffc35d!important}
+.pt-bitcoin-network-reading h3,.pt-bitcoin-fee-section h3,.pt-bitcoin-transactions h3{color:#f5f9fc;font-size:clamp(21px,2.4vw,30px);letter-spacing:-.03em;margin:10px 0}
+.pt-bitcoin-network-reading p,.pt-bitcoin-fee-section>p,.pt-bitcoin-transactions>p{color:#b5cad9;font-size:13px;line-height:1.8}
+.pt-bitcoin-network-reading small{color:#87a6bb;font-size:11px;line-height:1.7}
+.pt-bitcoin-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;margin:12px 0 34px}
+.pt-bitcoin-metrics>div{border-bottom:1px solid #294456;padding:16px 5px 21px;min-width:0}
+.pt-bitcoin-metrics span{display:block;color:#b5c8d7;font-size:12px;font-weight:700}
+.pt-bitcoin-metrics strong{display:block;color:#ffc35d;font-size:clamp(22px,2.6vw,33px);letter-spacing:-.03em;margin:10px 0}
+.pt-bitcoin-metrics p{color:#a9c0d0;font-size:12px;line-height:1.7;margin:0}
+.pt-bitcoin-live-deep{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:45px}
+.pt-bitcoin-fee-rows{margin-top:20px}
+.pt-bitcoin-fee-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid #294456}
+.pt-bitcoin-fee-row strong{display:block;color:#f0f5fa;font-size:14px}
+.pt-bitcoin-fee-row small{display:block;color:#a3bccc;font-size:11px;line-height:1.6;margin-top:4px}
+.pt-bitcoin-fee-row b{white-space:nowrap;color:#ffc35d;font-size:15px}
+.pt-bitcoin-fee-note{color:#8daabc!important;font-size:11px!important;line-height:1.7!important;margin-top:18px}
+.pt-bitcoin-transactions .pt-reference-table{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+.pt-bitcoin-transactions .pt-reference-table-row{background:transparent!important}
+@media(max-width:780px){.pt-bitcoin-network-headline,.pt-bitcoin-live-deep{grid-template-columns:1fr;gap:20px}.pt-bitcoin-metrics{grid-template-columns:1fr;gap:0}.pt-bitcoin-explorer .pt-bitcoin-intro{padding:45px 0 28px}}
