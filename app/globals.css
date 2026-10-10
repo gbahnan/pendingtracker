@@ -3388,3 +3388,23 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  .pt-bitcoin-explorer .pt-bitcoin-intro .pt-hero-ambient{width:130px!important;opacity:.3!important}
 }
 @media(prefers-reduced-motion:reduce){.pt-bitcoin-explorer .pt-bitcoin-intro .pt-hero-ambient span{animation:none!important}}
+
+
+/* Fix hero heading/search overlap: restore natural document flow while keeping
+   the tighter spacing and the mirrored floating gold hexagons. */
+@media(min-width:901px){
+ .pt-bitcoin-explorer .pt-bitcoin-search.pt-hero.pt-hero-reference{
+  margin-top:28px!important;
+ }
+}
+@media(min-width:621px) and (max-width:900px){
+ .pt-bitcoin-explorer .pt-bitcoin-search.pt-hero.pt-hero-reference{
+  margin-top:28px!important;
+ }
+}
+@media(max-width:620px){
+ .pt-bitcoin-explorer .pt-bitcoin-search.pt-hero.pt-hero-reference{
+  margin-top:22px!important;
+ }
+}
+.pt-bitcoin-explorer .pt-bitcoin-intro{margin-bottom:0!important}
