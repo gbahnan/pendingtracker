@@ -2812,3 +2812,69 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
  .pt-shell .pt-hero-reference .pt-hero-benefits small{font-size:10px!important}
  .pt-shell .pt-hero-reference .pt-hero-ambient{display:none!important}
 }
+
+/* Hero-only fidelity corrections: exact centering, dark search heading, luminous drifting hexagons. */
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-intro,
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-intro h1,
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-subtitle,
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-intro .pt-lead{
+ text-align:center!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-intro h1{
+ display:block!important;width:100%!important;max-width:none!important;
+ margin-left:auto!important;margin-right:auto!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-searchbox .pt-search-top,
+.pt-shell .pt-hero.pt-hero-reference .pt-searchbox .pt-search-top>div{
+ background:transparent!important;background-image:none!important;
+ border:0!important;box-shadow:none!important;
+ border-radius:0!important;padding:0!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-searchbox .pt-search-top h2,
+.pt-shell .pt-hero.pt-hero-reference .pt-searchbox .pt-search-top p{
+ background:transparent!important;background-image:none!important;
+ box-shadow:none!important;border:0!important;
+}
+@keyframes pt-hero-hex-drift{
+ 0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
+ 50%{transform:translate3d(6px,-9px,0) rotate(2deg)}
+}
+@keyframes pt-hero-hex-drift-alt{
+ 0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
+ 50%{transform:translate3d(-7px,8px,0) rotate(-2deg)}
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient{opacity:.92!important}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span{
+ background:linear-gradient(145deg,#fff2b0 0%,#ffbd45 42%,#9c5510 100%)!important;
+ filter:drop-shadow(0 0 5px #f7a727) drop-shadow(0 0 15px #e48b16)!important;
+ opacity:.68!important;
+ animation:pt-hero-hex-drift 25s ease-in-out infinite!important;
+ will-change:transform;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient-eth span{
+ background:linear-gradient(145deg,#c2e0ff 0%,#548dff 45%,#2343c2 100%)!important;
+ filter:drop-shadow(0 0 5px #5c96ff) drop-shadow(0 0 17px #285bdf)!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span::after{
+ background:linear-gradient(135deg,rgba(255,205,98,.36),rgba(60,34,15,.88))!important;
+ inset:5px!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient-eth span::after{
+ background:linear-gradient(135deg,rgba(109,159,255,.43),rgba(7,23,65,.88))!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span:nth-child(even){
+ animation-name:pt-hero-hex-drift-alt!important;animation-duration:31s!important;
+ animation-delay:-11s!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span:nth-child(3n){
+ animation-duration:36s!important;animation-delay:-19s!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span:nth-child(1){
+ opacity:.96!important;
+}
+.pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span:nth-child(3){
+ opacity:.83!important;
+}
+@media(prefers-reduced-motion:reduce){
+ .pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span{animation:none!important}
+}
