@@ -77,9 +77,47 @@ function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
   </div>;
 }
 
+const comparisonExamples = {
+  btc: {
+    explore: {
+      raw: [["Block height","950,000"],["Transactions","2,845"],["Block size","1,620,000 bytes"],["Block weight","3,920,000 WU"],["Median fee rate","4.2 sat/vB"],["Total transaction fees","0.085 BTC"],["Confirmations","3"],["Block hash","000000000000…8a42"]],
+      heading: "Bitcoin has added another block to its blockchain.",
+      intro: "Think of a block as a new page in Bitcoin's public record. This page contains 2,845 transactions that have now been recorded together.",
+      details: [["2,845 transactions","This is how many Bitcoin transactions were included. Instead of recording transactions one at a time, Bitcoin groups them into blocks."],["4.2 sat/vB — median fee rate","This is the middle fee rate among transactions in this block. It tells you about the fees those transactions paid relative to their size, not what every sender paid."],["3 confirmations","Two additional blocks have been added after this one. Each confirmation adds more security to the transaction history recorded in this block."],["Block size and weight","These describe how much data the block contains and how Bitcoin measures the space transactions use. Weight units help determine how much fits in a block."]],
+      bottom: "This block is part of Bitcoin's confirmed history. You can explore its transactions, understand the fees they paid, and see how this block fits into the network."
+    },
+    track: {
+      raw: [["Transaction status","Unconfirmed"],["Confirmations","0"],["Fee rate","2.1 sat/vB"],["Virtual size","141 vB"],["Transaction fee","296 sats"],["Block height","Not assigned"],["RBF signaling","Enabled"],["Mempool status","Pending"]],
+      heading: "Your Bitcoin transaction is still waiting.",
+      intro: "The transaction has reached the network, but a miner hasn't included it in a block. That doesn't necessarily mean anything is wrong.",
+      details: [["0 confirmations","Your transaction hasn't been recorded in a block yet. It gets its first confirmation when a miner includes it."],["2.1 sat/vB — fee rate","The sender offered 2.1 satoshis for each virtual byte of transaction size. Whether that fee is competitive depends on how busy the network is."],["296 sats — transaction fee","That's the total network fee offered. A satoshi is one hundred-millionth of a bitcoin."],["RBF enabled","The transaction signals that it may be replaced with a higher-fee version. Whether you can do this depends on the wallet and transaction circumstances."]],
+      bottom: "The transaction is unconfirmed, not necessarily failed. Comparing its fee with current network conditions can help explain the wait and estimate when it might confirm."
+    }
+  },
+  eth: {
+    explore: {
+      raw: [["Block number","24,000,000"],["Transactions","186"],["Gas used","18,500,000"],["Gas limit","36,000,000"],["Gas utilization","51.39%"],["Base fee","0.75 gwei"],["Block status","Canonical"],["Parent hash","0x7a3f…c921"]],
+      heading: "Ethereum has processed another block of activity.",
+      intro: "Ethereum records transactions and smart contract activity in blocks. This block contains 186 transactions that were processed together.",
+      details: [["186 transactions","These transactions can include ETH payments, token transfers, and interactions with applications built on Ethereum."],["18.5 million gas used","Gas measures the computational work Ethereum performed. It's not a separate cryptocurrency — it's a unit used to measure how much processing transactions require."],["51.39% gas utilization","The transactions used about half the block's stated gas limit. This tells you how much of that block's execution capacity was used, not whether the entire network was congested."],["0.75 gwei base fee","This is the base fee rate per unit of gas for the block. Transactions may also include priority fees. One gwei equals one-billionth of an ETH."]],
+      bottom: "You can see what Ethereum processed, how much computational work it required, and what the fee numbers mean — without decoding every technical field yourself."
+    },
+    track: {
+      raw: [["Execution status","Success"],["Block number","24,000,000"],["Confirmations","12"],["Gas used","21,000"],["Effective gas price","0.8 gwei"],["Transaction fee","0.0000168 ETH"],["Nonce","42"],["Transaction type","2 (EIP-1559)"]],
+      heading: "Your Ethereum transaction was processed successfully.",
+      intro: "Ethereum included this transaction in a block and executed it without an error. The result is now recorded on the blockchain.",
+      details: [["Success — what does that mean?","The transaction executed successfully. The specific result depends on whether it was an ETH transfer, token interaction, or another operation."],["21,000 gas used","This is the processing work charged for the transaction. A standard ETH transfer between regular accounts typically uses 21,000 gas."],["0.0000168 ETH — total network fee","This is the fee paid for processing. It comes from 21,000 gas multiplied by an effective price of 0.8 gwei per gas unit."],["Nonce 42 and EIP-1559","The nonce is the sender's transaction sequence number. EIP-1559 is the transaction's fee format. Neither represents an additional fee."]],
+      bottom: "Your transaction succeeded and cost 0.0000168 ETH in network fees. You can explore its details and confirmations to understand what Ethereum recorded."
+    }
+  }
+} as const;
+
 export default function Page() {
   const router = useRouter();
   const [network, setNetwork] = useState<"btc" | "eth">("btc");
+  const [comparisonChain, setComparisonChain] = useState<"btc" | "eth">("btc");
+  const [comparisonMode, setComparisonMode] = useState<"explore" | "track">("explore");
+  const comparison = comparisonExamples[comparisonChain][comparisonMode];
   const [query, setQuery] = useState("");
   const [error, setError] = useState("");
   const [ambiguousHash,setAmbiguousHash]=useState("");
@@ -205,14 +243,39 @@ export default function Page() {
         <div className="pt-home-live-panel pt-live-eth"><div className="pt-live-panel-heading"><span className="pt-live-coin">◆</span><h3>Ethereum</h3><a className="pt-live-explore-link" href="/ethereum" aria-label="Open Ethereum Explorer">Explore Ethereum <span aria-hidden="true">↗</span></a></div><div className="pt-live-network-top"><div className="pt-live-chart"><NetworkHoneycomb chain="eth"/></div><div className="pt-live-facts"><span>Latest block<b>{eth?.latestBlock==null?"—":"#"+format(Number(eth.latestBlock))}</b></span><span>Gas price<b>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</b></span><span>Block interval<b>~12 sec</b></span></div></div><div className="pt-reference-table"><div className="pt-reference-table-title"><h3>Recent Ethereum Transactions</h3><a href="/ethereum">View all →</a></div><div className="pt-reference-table-head"><span>TX Hash</span><span>Block</span><span>Type</span><span>Status</span></div>{(eth?.recentTransactions??[]).slice(0,4).map(t=><a className="pt-reference-table-row" key={t.hash} href={"/eth/"+t.hash}><span>{t.hash.slice(0,12)}…{t.hash.slice(-7)}</span><span>{t.block==null?"—":"#"+format(t.block)}</span><span>Transaction</span><span><em>{t.status??"Unknown"}</em></span></a>)}{!eth?.recentTransactions?.length?<p className="pt-reference-empty">Waiting for Ethereum transactions…</p>:null}</div></div>
       </div><p className="pt-home-live-source">Network data from mempool.space and Blockscout. Animated visuals are decorative, not historical measurements.</p>
     </section>
-    <section className="pt-section pt-journey" id="how-it-works">
-      <div className="pt-eyebrow">TRACKING MADE SIMPLE</div><h2>Three steps. One clear answer.</h2>
-      <p className="pt-section-sub">Find out if your transaction is pending or confirmed, what the fees mean, and what comes next.</p>
-      <div className="pt-journey-grid">
-        <div className="pt-journey-step"><span>01</span><h3>Paste your transaction ID</h3><p>Find it in your wallet or exchange and paste it above.</p></div>
-        <div className="pt-journey-step"><span>02</span><h3>See what's happening</h3><p>Find out if it's waiting, confirmed, or not yet visible on the network.</p></div>
-        <div className="pt-journey-step"><span>03</span><h3>Know what comes next</h3><p>Understand the fees, confirmation status, and possible next steps.</p></div>
+    <section className="pt-section pt-journey pt-comparison" id="how-it-works" data-chain={comparisonChain}>
+      <div className="pt-comparison-heading">
+        <div className="pt-eyebrow">THE PENDING TRACKER DIFFERENCE</div>
+        <h2>Same blockchain. A clearer picture.</h2>
+        <p>We show you the blockchain data — then translate it into clear explanations, so you understand what you're looking at and why it matters.</p>
       </div>
+      <div className="pt-comparison-selector">
+        <div className="pt-comparison-selector-title">CHOOSE YOUR BLOCKCHAIN</div>
+        <div className="pt-comparison-chain-tabs" role="group" aria-label="Choose blockchain example">
+          <button type="button" className={comparisonChain==="btc"?"is-active":""} data-chain="btc" aria-pressed={comparisonChain==="btc"} onClick={()=>setComparisonChain("btc")}><span className="pt-comparison-hex" aria-hidden="true">₿</span><span>Bitcoin<small>{comparisonChain==="btc"?"Selected":"View Bitcoin"}</small></span></button>
+          <button type="button" className={comparisonChain==="eth"?"is-active":""} data-chain="eth" aria-pressed={comparisonChain==="eth"} onClick={()=>setComparisonChain("eth")}><span className="pt-comparison-hex" aria-hidden="true">◆</span><span>Ethereum<small>{comparisonChain==="eth"?"Selected":"View Ethereum"}</small></span></button>
+        </div>
+      </div>
+      <div className="pt-comparison-mode-tabs" role="group" aria-label="Choose example type">
+        <button type="button" className={comparisonMode==="explore"?"is-active":""} aria-pressed={comparisonMode==="explore"} onClick={()=>setComparisonMode("explore")}><span aria-hidden="true">⬡</span> Explore the Blockchain</button>
+        <button type="button" className={comparisonMode==="track"?"is-active":""} aria-pressed={comparisonMode==="track"} onClick={()=>setComparisonMode("track")}><span aria-hidden="true">⌕</span> Track a Transaction</button>
+      </div>
+      <div className="pt-comparison-grid">
+        <div className="pt-comparison-raw">
+          <h3><span aria-hidden="true">▤</span> Traditional Explorer</h3>
+          <div className="pt-comparison-kicker">RAW BLOCKCHAIN DATA</div>
+          <div className="pt-comparison-fields">{comparison.raw.map(([label,value])=><div className="pt-comparison-field" key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>
+        </div>
+        <div className="pt-comparison-explained">
+          <h3><span aria-hidden="true">✦</span> Pending Tracker Explains</h3>
+          <div className="pt-comparison-copy"><h4>{comparison.heading}</h4><p>{comparison.intro}</p>
+            {comparison.details.map(([label,description])=><div className="pt-comparison-detail" key={label}><h5>{label}</h5><p>{description}</p></div>)}
+          </div>
+          <div className="pt-comparison-bottom"><h5><span aria-hidden="true">✓</span> The bottom line</h5><p>{comparison.bottom}</p></div>
+        </div>
+      </div>
+      <p className="pt-comparison-disclaimer">Illustrative examples using hypothetical data, not live blockchain measurements.</p>
+      <div className="pt-comparison-footer"><h3>Not just transactions. The entire network, made understandable.</h3><p>From individual transactions and wallet activity to blocks, fees, and network conditions, Pending Tracker helps you explore Bitcoin and Ethereum without getting lost in technical data.</p></div>
     </section>
 <details className="pt-network-drawer" id="network-dashboard"><summary><span><b>Live network dashboard</b><small>Expand for Bitcoin and Ethereum blocks, fees and live transactions</small></span><span aria-hidden="true">＋</span></summary>    <section className="pt-section" id="network">
       <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE BLOCKCHAIN EXPLORER</div><h2>{network==="btc"?"The Bitcoin Network, Live.":"The Ethereum Network, Live."}</h2><p>See what's happening on the network right now—and understand what it means for your transactions.</p></div><span className="pt-live" role="status">{loading?"Loading live data…":overview?"● Live data · refreshed every 5 seconds":"Network data temporarily unavailable"}</span></div>
