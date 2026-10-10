@@ -23,10 +23,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           {children}
 
-          <div className="footer">
-            <div>Educational tool only. Not financial advice. We never custody funds or submit transactions for you.</div>
-            <div className="founder-credit">Founded &amp; Developed by Colin N. Goudas</div>
-          </div>
+          <footer className="footer pt-founder-footer">
+            <div className="founder-credit">
+              <span className="founder-eyebrow">FOUNDED &amp; DEVELOPED BY</span>
+              <span className="founder-name">COLIN N. GOUDAS</span>
+            </div>
+            <p className="footer-disclaimer">Educational tool only. Not financial advice. We never custody funds or submit transactions for you.</p>
+          </footer>
         </div>
       </body>
     </html>
