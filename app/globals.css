@@ -3101,3 +3101,44 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
   box-shadow:none!important;
 }
 /* Keep existing section dimensions and padding untouched. */
+
+
+/* Homepage editorial rhythm: subtle separators between open sections only. */
+.pt-shell > .pt-home-live,
+.pt-shell > .pt-section.pt-comparison,
+.pt-shell > .pt-network-drawer,
+.pt-shell > .pt-section.pt-faq-refresh{
+  position:relative!important;
+  margin-top:clamp(44px,5vw,62px)!important;
+}
+.pt-shell > .pt-home-live::before,
+.pt-shell > .pt-section.pt-comparison::before,
+.pt-shell > .pt-network-drawer::before,
+.pt-shell > .pt-section.pt-faq-refresh::before{
+  content:"";
+  position:absolute;
+  display:block;
+  pointer-events:none;
+  top:-26px;
+  left:8%;
+  width:84%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(93,139,170,.23) 22%,rgba(93,139,170,.23) 78%,transparent);
+}
+.pt-shell > .pt-section.pt-comparison{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+@media(max-width:700px){
+  .pt-shell > .pt-home-live,
+  .pt-shell > .pt-section.pt-comparison,
+  .pt-shell > .pt-network-drawer,
+  .pt-shell > .pt-section.pt-faq-refresh{margin-top:36px!important}
+  .pt-shell > .pt-home-live::before,
+  .pt-shell > .pt-section.pt-comparison::before,
+  .pt-shell > .pt-network-drawer::before,
+  .pt-shell > .pt-section.pt-faq-refresh::before{top:-19px;left:6%;width:88%}
+}
