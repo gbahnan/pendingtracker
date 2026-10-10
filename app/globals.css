@@ -3408,3 +3408,41 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  }
 }
 .pt-bitcoin-explorer .pt-bitcoin-intro{margin-bottom:0!important}
+
+
+/* Bitcoin explorer: frameless live block projection, same gold honeycomb motion.
+   The visual now lives directly on the navy canvas instead of a gray card. */
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow.pt-btc-flow{
+ background:transparent!important;background-image:none!important;
+ border:0!important;border-radius:0!important;
+ outline:0!important;box-shadow:none!important;
+ padding:12px 0 8px!important;overflow:visible!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow.pt-btc-flow::before,
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow.pt-btc-flow::after{
+ background:none!important;border:0!important;box-shadow:none!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-head{
+ border:0!important;background:transparent!important;
+ padding:0 0 18px!important;margin:0!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-scene{
+ background:transparent!important;background-image:none!important;
+ border:0!important;box-shadow:none!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-shapes{
+ background:transparent!important;background-image:none!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-stream{
+ opacity:.48!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-head>span:last-child{
+ color:#91afc1!important;font-size:11px!important;letter-spacing:.045em!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-status{
+ color:#a9dccd!important;font-size:11px!important;letter-spacing:.1em!important;
+}
+.pt-bitcoin-explorer .pt-bitcoin-estimates .pt-chain-flow-footer{
+ border-top:1px solid #294456!important;background:transparent!important;
+ margin-top:12px!important;padding:16px 0 0!important;
+}
