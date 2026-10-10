@@ -32,12 +32,12 @@ function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
     const angle=Math.PI/3*k-Math.PI/6;
     return (x+r*Math.cos(angle)).toFixed(2)+","+(y+r*Math.sin(angle)).toFixed(2);
   }).join(" ");
-  const cells=Array.from({length:33},(_,i)=>{
+  const cells=Array.from({length:66},(_,i)=>{
     const angle=i*2.39996323;
-    const distance=33+(i%7)*7.4;
+    const distance=34+(i%9)*7.2;
     return {x:110+Math.cos(angle)*distance*1.45,y:60+Math.sin(angle)*distance*.67,
-      size:1.7+(i%5)*.64,duration:11+(i*7)%17,delay:-(i*13%23),
-      opacity:.19+(i%6)*.095,dx:((i*7)%13)-6,dy:((i*11)%15)-7};
+      size:1.7+(i%6)*.78,duration:16+(i*7)%21,delay:-(i*13%23),
+      opacity:.22+(i%6)*.105,dx:((i*7)%17)-8,dy:((i*11)%17)-8};
   });
   return <div className={"pt-home-hex-scene pt-home-hex-"+chain} style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",color:accent,pointerEvents:"none"}} aria-hidden="true">
     <svg viewBox="0 0 220 120" preserveAspectRatio="xMidYMid meet" style={{display:"block",width:"100%",height:"100%",overflow:"visible"}}>
@@ -53,8 +53,8 @@ function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
           <animate attributeName="opacity" values=".5;1;.65;.5" dur={(c.duration+4)+"s"} begin={c.delay+"s"} repeatCount="indefinite"/>
         </polygon>
       </g>)}
-      <polygon points={hex(110,60,31)} fill={accent} fillOpacity=".08" stroke={accent} strokeOpacity=".24" strokeWidth="7" filter={"url(#home-glow-"+chain+")"}/>
-      <polygon points={hex(110,60,30)} fill={"url(#home-core-"+chain+")"} stroke={accent} strokeWidth="2.3" filter={"url(#home-glow-"+chain+")"}/>
+      <polygon points={hex(110,60,31)} fill={accent} fillOpacity=".08" stroke={accent} strokeOpacity=".24" strokeWidth="8" filter={"url(#home-glow-"+chain+")"}/>
+      <polygon points={hex(110,60,30)} fill={"url(#home-core-"+chain+")"} stroke={accent} strokeWidth="2.8" filter={"url(#home-glow-"+chain+")"}/>
       <polygon points={hex(110,60,25)} fill="none" stroke={bright} strokeOpacity=".48" strokeWidth=".75"/>
       <text x="110" y="70" textAnchor="middle" fill={bright} fontSize={btc?"32":"29"} fontWeight="800">{btc?"₿":"◆"}</text>
     </svg>
