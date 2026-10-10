@@ -5,7 +5,7 @@ export const metadata={title:"Bitcoin Explorer | Pending Tracker",description:"E
 export default function BitcoinExplorer(){
  return <main className="pt-shell pt-bitcoin-explorer">
   <div className="pt-chain-back"><Link href="/">← Back to Pending Tracker</Link><span>BITCOIN EXPLORER</span></div>
-  <header className="pt-bitcoin-intro"><div className="pt-hero-ambient pt-hero-ambient-btc" aria-hidden="true"><span/><span/><span/><span/><span/><span/></div><div className="pt-eyebrow">₿ THE BITCOIN NETWORK, EXPLAINED</div><h1>Explore <span>Bitcoin.</span></h1><p>Live blockchain data. Clear answers. Understand what Bitcoin is doing, what transactions are waiting for, and what the numbers mean.</p></header>
+  <header className="pt-bitcoin-intro"><div className="pt-hero-ambient pt-hero-ambient-btc" aria-hidden="true"><span/><span/><span/><span/><span/><span/></div><div className="pt-hero-ambient pt-hero-ambient-btc pt-bitcoin-ambient-right" aria-hidden="true"><span/><span/><span/><span/><span/><span/></div><div className="pt-eyebrow">₿ THE BITCOIN NETWORK, EXPLAINED</div><h1>Explore <span>Bitcoin.</span></h1><p>Live blockchain data. Clear answers. Understand what Bitcoin is doing, what transactions are waiting for, and what the numbers mean.</p></header>
   <BitcoinExplorerLive part="search"/>
   <section className="pt-bitcoin-estimates" aria-label="Current Bitcoin transaction confirmation estimates"><ChainDashboard chain="bitcoin" view="estimates"/></section>
   <BitcoinExplorerLive part="live"/>
