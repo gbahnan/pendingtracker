@@ -2931,3 +2931,34 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-comparison-footer p{color:#bbcede!important;font-size:14px!important;line-height:1.6;max-width:770px;margin:0 auto!important}
 @media(max-width:640px){.pt-comparison{padding:17px!important}.pt-comparison-grid{grid-template-columns:1fr}.pt-comparison-chain-tabs button{min-height:66px;font-size:14px;gap:7px}.pt-comparison-hex{width:30px;height:34px;font-size:18px}.pt-comparison-mode-tabs button{font-size:12px;padding:9px 5px}.pt-comparison-mode-tabs button span{font-size:17px;margin-right:3px}.pt-comparison-raw,.pt-comparison-explained{padding:17px}.pt-comparison-field{padding:10px 0}}
 @media(prefers-reduced-motion:reduce){.pt-comparison button{transition:none}}
+
+
+/* Homepage comparison selector polish: scoped to these four buttons */
+.pt-comparison .pt-comparison-chain-tabs button{position:relative;isolation:isolate;overflow:hidden;min-height:90px;box-shadow:inset 0 0 30px #ffffff06;transform:translateZ(0)}
+.pt-comparison .pt-comparison-chain-tabs button[data-chain="btc"]{background:linear-gradient(110deg,#382714 0%,#261f17 58%,#3c2b15 100%);border:1.5px solid #c38c35;box-shadow:inset 0 0 36px #e5a52c15,0 0 14px #e5a52c1c}
+.pt-comparison .pt-comparison-chain-tabs button[data-chain="eth"]{background:linear-gradient(110deg,#152f59 0%,#15253e 58%,#193a73 100%);border:1.5px solid #547de2;box-shadow:inset 0 0 36px #588cff18,0 0 14px #588cff24}
+.pt-comparison .pt-comparison-chain-tabs button[data-chain="btc"].is-active{background:linear-gradient(115deg,#513516,#2d2518 60%,#503313);border:2px solid #ffc35d;box-shadow:0 0 24px #ffb84b45,inset 0 0 30px #ffb84b16}
+.pt-comparison .pt-comparison-chain-tabs button[data-chain="eth"].is-active{background:linear-gradient(115deg,#1b3f7b,#172b4d 60%,#214b90);border:2px solid #88a9ff;box-shadow:0 0 25px #648cff55,inset 0 0 30px #648cff20}
+.pt-comparison .pt-comparison-chain-tabs button:hover{filter:brightness(1.16);transform:translateY(-2px)}
+.pt-comparison .pt-comparison-chain-tabs button:active{transform:translateY(0)}
+.pt-comparison .pt-comparison-button-content{display:flex;align-items:center;gap:12px;position:relative;z-index:2;text-align:left;text-shadow:0 1px 8px #0009}
+.pt-comparison .pt-comparison-button-content>span:last-child{font-size:17px}
+.pt-comparison .pt-comparison-chain-tabs button small{font-size:11px;color:#d6c6a6}
+.pt-comparison .pt-comparison-chain-tabs button[data-chain="eth"] small{color:#c5d4ff}
+.pt-comparison .pt-comparison-hex{width:42px;height:47px;background:#72501d;color:#ffcf78;box-shadow:inset 0 0 18px #ffbb4460;font-size:25px}
+.pt-comparison .pt-comparison-chain-tabs button[data-chain="eth"] .pt-comparison-hex{background:#2b4b9a;color:#c3d1ff;box-shadow:inset 0 0 18px #729bff65}
+.pt-comparison .pt-comparison-honeycombs{position:absolute;inset:0;pointer-events:none;z-index:1}
+.pt-comparison .pt-comparison-honeycombs i{position:absolute;display:block;width:28px;height:31px;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);background:#ffbf55;opacity:.19;box-shadow:inset 0 0 14px #fff6;animation:pt-comparison-drift-a 31s ease-in-out infinite alternate;will-change:transform}
+.pt-comparison .pt-comparison-honeycombs i:nth-child(1){left:9%;top:15%;width:20px;height:23px;animation-duration:29s}
+.pt-comparison .pt-comparison-honeycombs i:nth-child(2){right:12%;top:18%;width:34px;height:38px;opacity:.24;animation-name:pt-comparison-drift-b;animation-duration:35s}
+.pt-comparison .pt-comparison-honeycombs i:nth-child(3){right:26%;bottom:8%;width:17px;height:20px;opacity:.22;animation-name:pt-comparison-drift-c;animation-duration:27s}
+.pt-comparison .pt-comparison-chain-tabs button[data-chain="eth"] .pt-comparison-honeycombs i{background:#82a8ff}
+@keyframes pt-comparison-drift-a{from{transform:translate3d(-5px,4px,0) rotate(-9deg)}to{transform:translate3d(13px,-8px,0) rotate(13deg)}}
+@keyframes pt-comparison-drift-b{from{transform:translate3d(6px,-7px,0) rotate(11deg)}to{transform:translate3d(-16px,8px,0) rotate(-10deg)}}
+@keyframes pt-comparison-drift-c{from{transform:translate3d(-6px,-4px,0) rotate(-12deg)}to{transform:translate3d(10px,9px,0) rotate(8deg)}}
+.pt-comparison .pt-comparison-mode-tabs button{position:relative;background:linear-gradient(120deg,#0e2538,#0c2031);border:1px solid #3b5870;box-shadow:inset 0 1px 0 #ffffff08}
+.pt-comparison .pt-comparison-mode-tabs button.is-active{background:linear-gradient(120deg,#1d4159,#183449);border:2px solid #8eb9d8;box-shadow:0 0 16px #72a5d12b,inset 0 0 20px #72a5d10e}
+.pt-comparison .pt-comparison-mode-tabs button:hover{background:#23445c;border-color:#9bbdd5}
+.pt-comparison .pt-comparison-mode-tabs button.is-active:before{content:"";position:absolute;left:13px;top:50%;transform:translateY(-50%);height:7px;width:7px;border-radius:50%;background:#a7d6f7;box-shadow:0 0 9px #a7d6f7}
+@media(max-width:640px){.pt-comparison .pt-comparison-chain-tabs button{min-height:77px}.pt-comparison .pt-comparison-button-content{gap:7px}.pt-comparison .pt-comparison-button-content>span:last-child{font-size:14px}.pt-comparison .pt-comparison-hex{width:31px;height:36px;font-size:19px}.pt-comparison .pt-comparison-mode-tabs button.is-active:before{left:6px;width:5px;height:5px}}
+@media(prefers-reduced-motion:reduce){.pt-comparison .pt-comparison-honeycombs i{animation:none;will-change:auto}.pt-comparison .pt-comparison-chain-tabs button:hover{transform:none}}
