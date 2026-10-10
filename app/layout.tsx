@@ -25,9 +25,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <footer className="footer pt-founder-footer">
             <div className="founder-credit">
-              <span className="founder-eyebrow">FOUNDED &amp; DEVELOPED BY</span>
+              <span className="founder-eyebrow">Founded &amp; Developed By</span>
               <span className="founder-name">COLIN N. GOUDAS</span>
             </div>
+            <p className="footer-copyright">© {new Date().getFullYear()} Pending Tracker. All rights reserved.</p>
             <p className="footer-disclaimer">Educational tool only. Not financial advice. We never custody funds or submit transactions for you.</p>
           </footer>
         </div>
