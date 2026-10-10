@@ -2667,3 +2667,148 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 }
 .pt-home-live .pt-live-explore-link:focus-visible{outline:2px solid #fff!important;outline-offset:3px!important}
 @media(max-width:420px){.pt-home-live .pt-live-panel-heading .pt-live-explore-link{padding:7px 10px!important;font-size:11px!important}}
+
+/* Reference-approved hero redesign. Scoped exclusively to homepage hero.
+   Live Network Activity and its motion, cards and tables are untouched. */
+.pt-shell .pt-hero.pt-hero-reference{
+ position:relative!important;isolation:isolate!important;
+ max-width:1320px!important;width:100%!important;
+ margin:0 auto 36px!important;padding:53px 30px 0!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ gap:0!important;background:transparent!important;overflow:hidden!important;
+}
+.pt-shell .pt-hero-reference::before,.pt-shell .pt-hero-reference::after{display:none!important}
+.pt-shell .pt-hero-reference .pt-hero-intro{
+ width:100%!important;max-width:1080px!important;margin:0 auto 27px!important;
+ text-align:center!important;position:relative!important;z-index:2!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-intro h1{
+ font-size:clamp(36px,4.65vw,69px)!important;line-height:1.13!important;
+ margin:0 0 9px!important;letter-spacing:-.045em!important;color:#fff!important;
+ font-weight:850!important;white-space:normal!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-intro h1 .pt-hero-gold{
+ color:#ffc866!important;background:linear-gradient(95deg,#ffba44,#ffe5a1)!important;
+ -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-intro h1 .pt-hero-blue{
+ color:#80b6ff!important;background:linear-gradient(100deg,#9ac8ff,#4788ed)!important;
+ -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-subtitle{
+ color:#b9c4d4!important;font-size:clamp(23px,2.6vw,38px)!important;
+ line-height:1.25!important;font-weight:450!important;letter-spacing:-.025em!important;margin:0 0 12px!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-intro .pt-lead{
+ margin:0 auto!important;max-width:850px!important;font-size:clamp(14px,1.3vw,18px)!important;
+ line-height:1.55!important;color:#c2cddd!important;text-align:center!important;
+}
+.pt-shell .pt-hero-reference .pt-searchbox{
+ position:relative!important;z-index:2!important;width:100%!important;max-width:1044px!important;
+ margin:0 auto!important;padding:25px 35px 17px!important;
+ border-radius:17px!important;border:1px solid #28516b!important;
+ background:linear-gradient(155deg,#061b2b,#03111e 85%)!important;
+ box-shadow:0 20px 46px #0005,inset 0 1px 0 #ffffff0a!important;
+ text-align:center!important;
+}
+.pt-shell .pt-hero-reference .pt-search-top{
+ display:block!important;text-align:center!important;margin:0 0 15px!important;
+}
+.pt-shell .pt-hero-reference .pt-search-top>div{width:100%!important;max-width:none!important}
+.pt-shell .pt-hero-reference .pt-searchbox h2{
+ color:#f8faff!important;font-size:clamp(23px,2.1vw,30px)!important;
+ font-weight:750!important;letter-spacing:-.035em!important;margin:0 0 5px!important;
+}
+.pt-shell .pt-hero-reference .pt-searchbox .pt-search-explain{
+ color:#c4cfdf!important;font-size:15px!important;line-height:1.5!important;
+ max-width:none!important;margin:0 auto!important;text-align:center!important;
+}
+.pt-shell .pt-hero-reference .pt-searchrow{
+ display:flex!important;align-items:stretch!important;gap:11px!important;
+ width:100%!important;margin:0 0 16px!important;
+}
+.pt-shell .pt-hero-reference .pt-search-input-wrap{position:relative!important;flex:1!important;min-width:0!important}
+.pt-shell .pt-hero-reference .pt-search-magnifier{
+ position:absolute!important;left:18px!important;top:50%!important;transform:translateY(-50%)!important;
+ color:#a9c3d8!important;font-size:32px!important;line-height:1!important;pointer-events:none!important;
+}
+.pt-shell .pt-hero-reference .pt-searchrow input{
+ display:block!important;width:100%!important;min-height:62px!important;
+ background:#10283d!important;border:1px solid #4c789a!important;border-radius:12px!important;
+ padding:14px 18px 14px 58px!important;color:#f4f9ff!important;
+ font-size:15px!important;box-shadow:inset 0 2px 8px #0002!important;
+}
+.pt-shell .pt-hero-reference .pt-searchrow input::placeholder{color:#9eb2c4!important;opacity:1!important}
+.pt-shell .pt-hero-reference .pt-searchrow button{
+ min-height:62px!important;min-width:222px!important;border-radius:12px!important;
+ padding:12px 25px!important;border:1px solid #ffcc70!important;
+ background:linear-gradient(145deg,#ffd47d 0%,#ffc357 60%,#e6a735 100%)!important;
+ color:#0b1119!important;font-weight:800!important;font-size:15px!important;
+ box-shadow:0 5px 20px #e7a52c35!important;cursor:pointer!important;
+}
+.pt-shell .pt-hero-reference .pt-searchrow button:hover{filter:brightness(1.09)!important;transform:translateY(-1px)!important}
+.pt-shell .pt-hero-reference .pt-hero-benefits{
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ border-top:1px solid #26455c!important;padding-top:17px!important;
+ gap:0!important;text-align:left!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-benefits>div{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ gap:14px!important;padding:4px 15px!important;min-width:0!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-benefits>div+div{border-left:1px solid #1c3b50!important}
+.pt-shell .pt-hero-reference .pt-benefit-icon{
+ flex:none!important;color:#ffb936!important;font-size:31px!important;
+ line-height:1!important;font-weight:350!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-benefits strong{
+ display:block!important;color:#f5f8ff!important;font-size:14px!important;line-height:1.3!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-benefits small{
+ display:block!important;color:#a7bbcc!important;font-size:12px!important;line-height:1.4!important;margin-top:3px!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-safety{
+ margin:13px 0 0!important;color:#829daf!important;font-size:10px!important;text-align:center!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-ambient{
+ position:absolute!important;z-index:0!important;top:35px!important;width:235px!important;
+ height:350px!important;pointer-events:none!important;opacity:.72!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-ambient-btc{left:-34px!important;color:#f6a829!important}
+.pt-shell .pt-hero-reference .pt-hero-ambient-eth{right:-34px!important;color:#3e85ff!important}
+.pt-shell .pt-hero-reference .pt-hero-ambient span{
+ display:block!important;position:absolute!important;width:50px!important;height:55px!important;
+ background:currentColor!important;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)!important;
+ filter:drop-shadow(0 0 12px currentColor)!important;opacity:.36!important;
+}
+.pt-shell .pt-hero-reference .pt-hero-ambient span::after{
+ content:"";position:absolute;inset:4px;background:#04121f;
+ clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+}
+.pt-shell .pt-hero-reference .pt-hero-ambient span:nth-child(1){left:5%;top:2%;width:80px!important;height:90px!important;opacity:.9!important}
+.pt-shell .pt-hero-reference .pt-hero-ambient span:nth-child(2){left:57%;top:20%;width:35px!important;height:40px!important}
+.pt-shell .pt-hero-reference .pt-hero-ambient span:nth-child(3){left:33%;top:43%;width:68px!important;height:76px!important;opacity:.7!important}
+.pt-shell .pt-hero-reference .pt-hero-ambient span:nth-child(4){left:78%;top:66%;width:24px!important;height:28px!important}
+.pt-shell .pt-hero-reference .pt-hero-ambient span:nth-child(5){left:2%;top:80%;width:40px!important;height:45px!important}
+.pt-shell .pt-hero-reference .pt-hero-ambient span:nth-child(6){left:85%;top:5%;width:22px!important;height:25px!important}
+@media(max-width:900px){
+ .pt-shell .pt-hero.pt-hero-reference{padding:38px 20px 0!important;margin-bottom:32px!important}
+ .pt-shell .pt-hero-reference .pt-hero-ambient{opacity:.3!important}
+ .pt-shell .pt-hero-reference .pt-searchbox{padding:23px 20px 16px!important}
+ .pt-shell .pt-hero-reference .pt-hero-desktop-break{display:none!important}
+}
+@media(max-width:620px){
+ .pt-shell .pt-hero.pt-hero-reference{padding:30px 14px 0!important;margin-bottom:28px!important}
+ .pt-shell .pt-hero-reference .pt-hero-intro{margin-bottom:22px!important}
+ .pt-shell .pt-hero-reference .pt-searchbox{padding:22px 15px 14px!important}
+ .pt-shell .pt-hero-reference .pt-searchrow{flex-direction:column!important}
+ .pt-shell .pt-hero-reference .pt-searchrow input{min-height:54px!important;font-size:13px!important}
+ .pt-shell .pt-hero-reference .pt-searchrow button{width:100%!important;min-width:0!important;min-height:51px!important}
+ .pt-shell .pt-hero-reference .pt-hero-benefits{gap:10px!important}
+ .pt-shell .pt-hero-reference .pt-hero-benefits>div{flex-direction:column!important;text-align:center!important;gap:6px!important;padding:3px!important}
+ .pt-shell .pt-hero-reference .pt-hero-benefits>div+div{border-left:0!important}
+ .pt-shell .pt-hero-reference .pt-benefit-icon{font-size:25px!important}
+ .pt-shell .pt-hero-reference .pt-hero-benefits strong{font-size:11px!important}
+ .pt-shell .pt-hero-reference .pt-hero-benefits small{font-size:10px!important}
+ .pt-shell .pt-hero-reference .pt-hero-ambient{display:none!important}
+}
