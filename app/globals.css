@@ -3087,3 +3087,17 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 /* Footer typography and copyright hierarchy */
 .pt-founder-footer .founder-eyebrow{font-size:12px!important;letter-spacing:.075em!important;text-transform:none!important;word-spacing:.16em!important;white-space:normal!important}
 .pt-founder-footer .footer-copyright{margin:2px 0 -8px!important;color:#c2d0dc!important;font-size:12px!important;font-weight:600!important;line-height:1.5!important;text-align:center!important}
+
+
+/* Open homepage sections: remove ONLY outer section surfaces.
+   Preserve spacing, layout, cards, controls, animations and all inner elements. */
+.pt-shell > .pt-home-live,
+.pt-shell > .pt-section.pt-comparison,
+.pt-shell > .pt-hero.pt-hero-reference{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+/* Keep existing section dimensions and padding untouched. */
