@@ -2602,3 +2602,26 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
  .pt-home-live .pt-live-facts b{font-size:13px!important}
  .pt-shell .pt-home-live .pt-reference-table-row{font-size:9px!important}
 }
+
+/* Approved Live Network Activity mockup — artwork and surface finish only.
+   Maintain paired cards, live data, table layout and explorer visualizations. */
+.pt-shell .pt-home-live .pt-live-btc{
+ background:radial-gradient(ellipse at 36% 27%,rgba(116,56,4,.26),transparent 55%),linear-gradient(145deg,#17130f 0%,#080f17 69%,#04111d 100%)!important;
+ border-color:#5a4631!important;
+}
+.pt-shell .pt-home-live .pt-live-eth{
+ background:radial-gradient(ellipse at 37% 27%,rgba(28,66,173,.35),transparent 56%),linear-gradient(145deg,#071633 0%,#071326 65%,#04111d 100%)!important;
+ border-color:#345eac!important;
+}
+.pt-home-live .pt-live-network-top{grid-template-columns:minmax(0,2fr) minmax(110px,.62fr)!important;min-height:224px!important}
+.pt-home-live .pt-live-chart{height:220px!important;overflow:hidden!important}
+.pt-home-live .pt-home-hex-scene{filter:none!important;position:relative!important}
+.pt-home-live .pt-home-hex-scene svg{width:100%!important;height:100%!important;overflow:visible!important;filter:drop-shadow(0 0 4px rgba(255,174,37,.18))}
+.pt-home-live .pt-home-hex-eth svg{filter:drop-shadow(0 0 5px rgba(77,113,255,.28))}
+.pt-home-live .pt-live-facts{border-left-color:rgba(179,203,226,.24)!important}
+.pt-home-live .pt-live-btc .pt-live-facts b{color:#f7faff!important}
+.pt-home-live .pt-live-btc .pt-live-facts span:nth-child(1) b{color:#ffcf79!important}
+.pt-home-live .pt-live-eth .pt-live-facts span:nth-child(1) b{color:#b8caff!important}
+.pt-home-live .pt-live-btc .pt-reference-table-row em{border:1px solid #e39a15!important;border-radius:12px!important;padding:2px 7px!important;background:rgba(226,140,11,.11)!important}
+.pt-home-live .pt-live-eth .pt-reference-table-row em{border:1px solid #617fff!important;border-radius:12px!important;padding:2px 7px!important;background:rgba(72,102,245,.12)!important}
+@media(max-width:480px){.pt-home-live .pt-live-chart{height:165px!important}.pt-home-live .pt-live-network-top{min-height:175px!important}}
