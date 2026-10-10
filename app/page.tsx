@@ -23,6 +23,35 @@ const terms: Record<string, string> = {
   "Nonce": "Ethereum uses a sequence number for transactions from the same account. An earlier pending nonce can hold up later transactions."
 };
 
+
+function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
+  const [phase,setPhase]=useState(0);
+  useEffect(()=>{
+    const timer=setInterval(()=>setPhase(v=>(v+1)%12),1800);
+    return ()=>clearInterval(timer);
+  },[]);
+  const cells=Array.from({length:24},(_,i)=>({
+    x:50+Math.cos(i*2.39996)* (26+(i%4)*12),
+    y:50+Math.sin(i*2.39996)* (23+(i%5)*9),
+    size:2.5+(i%3)*1.1,
+    active:(i+phase)%7<3
+  }));
+  const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,k)=>{
+    const a=Math.PI/3*k-Math.PI/6;
+    return (x+r*Math.cos(a)).toFixed(2)+","+(y+r*Math.sin(a)).toFixed(2);
+  }).join(" ");
+  return <div className={"pt-home-hex-scene pt-home-hex-"+chain} aria-hidden="true">
+    <svg viewBox="0 0 200 100" preserveAspectRatio="xMidYMid meet">
+      <defs><radialGradient id={"pt-home-hex-glow-"+chain}><stop stopColor="currentColor" stopOpacity=".18"/><stop offset="1" stopColor="currentColor" stopOpacity="0"/></radialGradient></defs>
+      <ellipse cx="100" cy="50" rx="91" ry="49" fill={"url(#pt-home-hex-glow-"+chain+")"}/>
+      {cells.map((c,i)=><polygon key={i} className={"pt-home-orbit-cell"+(c.active?" is-lit":"")} points={hex(c.x*2,c.y,c.size)} style={{animationDelay:(-i*.53)+"s"}}/>)}
+      <polygon className="pt-home-core-hex" points={hex(100,50,35)}/>
+      <polygon className="pt-home-core-inner" points={hex(100,50,29)}/>
+      <text className="pt-home-core-symbol" x="100" y="60" textAnchor="middle">{chain==="btc"?"₿":"◆"}</text>
+    </svg>
+  </div>;
+}
+
 export default function Page() {
   const router = useRouter();
   const [network, setNetwork] = useState<"btc" | "eth">("btc");
@@ -146,8 +175,8 @@ export default function Page() {
     <section className="pt-home-live" aria-labelledby="pt-home-live-title">
       <div className="pt-home-live-head"><div><h2 id="pt-home-live-title">Live Network Activity <span className="pt-live-pill">● LIVE</span></h2><p>Real-time Bitcoin and Ethereum network activity. Click into either explorer for full details.</p></div><a className="pt-live-dashboard-link" href="#network">View live dashboard →</a></div>
       <div className="pt-home-live-grid">
-        <a className="pt-home-live-panel pt-live-btc" href="/bitcoin"><div className="pt-live-panel-heading"><span className="pt-live-coin">₿</span><h3>Bitcoin</h3></div><div className="pt-live-chart">{Array.from({length:36},(_,i)=><i key={i} style={{height:`${19+((i*11+i*i*7)%65)}%`}} />)}</div><div className="pt-live-facts"><span>Latest block<b>{btc?.height==null?"—":"#"+format(btc.height)}</b></span><span>Transactions waiting<b>{format(btc?.pending)}</b></span><span>Priority fee<b>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</b></span></div></a>
-        <a className="pt-home-live-panel pt-live-eth" href="/ethereum"><div className="pt-live-panel-heading"><span className="pt-live-coin">◆</span><h3>Ethereum</h3></div><div className="pt-live-chart">{Array.from({length:36},(_,i)=><i key={i} style={{height:`${19+((i*13+i*i*5)%65)}%`}} />)}</div><div className="pt-live-facts"><span>Latest block<b>{eth?.latestBlock==null?"—":"#"+format(Number(eth.latestBlock))}</b></span><span>Gas price<b>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</b></span><span>Block interval<b>~12 sec</b></span></div></a>
+        <a className="pt-home-live-panel pt-live-btc" href="/bitcoin"><div className="pt-live-panel-heading"><span className="pt-live-coin">₿</span><h3>Bitcoin</h3></div><div className="pt-live-chart"><NetworkHoneycomb chain="btc"/></div><div className="pt-live-facts"><span>Latest block<b>{btc?.height==null?"—":"#"+format(btc.height)}</b></span><span>Transactions waiting<b>{format(btc?.pending)}</b></span><span>Priority fee<b>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</b></span></div></a>
+        <a className="pt-home-live-panel pt-live-eth" href="/ethereum"><div className="pt-live-panel-heading"><span className="pt-live-coin">◆</span><h3>Ethereum</h3></div><div className="pt-live-chart"><NetworkHoneycomb chain="eth"/></div><div className="pt-live-facts"><span>Latest block<b>{eth?.latestBlock==null?"—":"#"+format(Number(eth.latestBlock))}</b></span><span>Gas price<b>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</b></span><span>Block interval<b>~12 sec</b></span></div></a>
       </div><p className="pt-home-live-source">Network data from mempool.space and Blockscout. Charts are decorative, not historical measurements.</p>
     </section>
     <section className="pt-section pt-journey" id="how-it-works">
