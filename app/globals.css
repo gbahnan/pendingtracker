@@ -2524,3 +2524,17 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
  filter:drop-shadow(0 0 12px #ffb63b55)!important;
 }
 .pt-chain-flow.pt-btc-flow .pt-chain-flow-hex-confirmed>span{color:#ffd16b!important}
+
+/* Homepage Live Network Activity: visual-only replacement; card geometry stays intact. */
+.pt-home-live .pt-live-chart{position:relative!important;align-items:center!important;justify-content:center!important;overflow:hidden!important}
+.pt-home-live .pt-home-hex-scene{width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.pt-home-live .pt-home-hex-scene svg{display:block;width:100%;height:100%;overflow:visible}
+.pt-home-live .pt-home-hex-btc{color:#f5aa28}
+.pt-home-live .pt-home-hex-eth{color:#829dff}
+.pt-home-live .pt-home-core-hex{fill:#071522;fill-opacity:.82;stroke:currentColor;stroke-width:2.2;filter:drop-shadow(0 0 4px currentColor)}
+.pt-home-live .pt-home-core-inner{fill:currentColor;fill-opacity:.055;stroke:currentColor;stroke-width:.45;stroke-opacity:.65}
+.pt-home-live .pt-home-core-symbol{font-size:31px;font-weight:800;fill:currentColor;filter:drop-shadow(0 0 5px currentColor)}
+.pt-home-live .pt-home-orbit-cell{fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.3;stroke-width:.7;animation:pt-home-orbit 9s ease-in-out infinite alternate}
+.pt-home-live .pt-home-orbit-cell.is-lit{fill-opacity:.62;stroke-opacity:.9;filter:drop-shadow(0 0 2px currentColor)}
+@keyframes pt-home-orbit{0%{transform:translate(-1px,1px);opacity:.45}50%{transform:translate(2px,-2px);opacity:1}100%{transform:translate(-2px,2px);opacity:.55}}
+@media(prefers-reduced-motion:reduce){.pt-home-live .pt-home-orbit-cell{animation:none!important}}
