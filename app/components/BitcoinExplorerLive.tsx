@@ -57,7 +57,7 @@ function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
 
 type BitcoinNet={btc?:{height?:number|null;pending?:number|null;fastestFee?:number|null;recentTransactions?:Array<{id:string;fee:number|null;vsize:number|null}>;latestBlock?:{height:number|null}|null;explanation?:string}};
 const fmt=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US").format(v);
-export default function BitcoinExplorerLive(){
+export default function BitcoinExplorerLive({part="all"}:{part?:"search"|"live"|"all"}){
  const router=useRouter();
  const [query,setQuery]=useState("");const [error,setError]=useState("");
  const [net,setNet]=useState<BitcoinNet|null>(null);const [updated,setUpdated]=useState("");
@@ -65,7 +65,7 @@ export default function BitcoinExplorerLive(){
  const btc=net?.btc;
  function search(){let q=query.trim();try{if(/^https?:\/\//i.test(q)){const p=new URL(q).pathname.split("/").filter(Boolean);const i=p.findIndex(x=>["tx","transaction","address"].includes(x.toLowerCase()));if(i>=0&&p[i+1])q=p[i+1]}}catch{}q=q.split(/[?#]/)[0].replace(/\/$/,"");if(/^[a-f0-9]{64}$/i.test(q)){router.push("/btc/"+q);return}if(/^(bc1[a-z0-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(q)){router.push("/btc/address/"+q);return}setError("Enter a valid Bitcoin transaction ID or wallet address.")}
  return <>
- <section className="pt-bitcoin-search pt-hero pt-hero-reference" id="transaction-search">
+ {(part==="search"||part==="all")&&<section className="pt-bitcoin-search pt-hero pt-hero-reference" id="transaction-search">
   <div className="pt-searchbox">
    <div className="pt-search-top"><div><h2>Track Your Transaction</h2><p className="pt-search-explain">Paste a Bitcoin transaction ID or wallet address and we'll turn the complex data into a simple, easy-to-understand summary.</p></div></div>
    <div className="pt-searchrow"><div className="pt-search-input-wrap"><span className="pt-search-magnifier" aria-hidden="true">⌕</span><input aria-label="Bitcoin transaction ID or wallet address" placeholder="Enter a Bitcoin transaction hash or address..." value={query} onChange={e=>{setQuery(e.target.value);setError("")}} onKeyDown={e=>{if(e.key==="Enter")search()}} spellCheck={false}/></div><button type="button" onClick={search}>Track Transaction <span aria-hidden="true">→</span></button></div>
@@ -73,12 +73,12 @@ export default function BitcoinExplorerLive(){
    <div className="pt-hero-benefits"><div><span className="pt-benefit-icon" aria-hidden="true">▤</span><span><strong>Clear summaries</strong><small>No confusing technical jargon.</small></span></div><div><span className="pt-benefit-icon" aria-hidden="true">◷</span><span><strong>Real-time status</strong><small>See what's happening now.</small></span></div><div><span className="pt-benefit-icon" aria-hidden="true">↗</span><span><strong>Understand delays</strong><small>Get insights and estimated timing.</small></span></div></div>
    <p className="pt-hero-safety">No signup or wallet connection required. Never enter a seed phrase or private key.</p>
   </div>
- </section>
- <section className="pt-home-live pt-bitcoin-live" aria-labelledby="pt-bitcoin-live-title">
+ </section>}
+ {(part==="live"||part==="all")&&<section className="pt-home-live pt-bitcoin-live" aria-labelledby="pt-bitcoin-live-title">
   <div className="pt-home-live-head"><div><div className="pt-eyebrow">THE BITCOIN NETWORK · LIVE</div><h2 id="pt-bitcoin-live-title">Live Network Activity <span className="pt-live-pill">● LIVE</span></h2><p>Real Bitcoin blocks, waiting transactions and current fee conditions — explained alongside the data.</p></div><span className="pt-bitcoin-updated">{updated?"Updated "+updated:"Connecting to live data…"}</span></div>
   <div className="pt-home-live-grid"><div className="pt-home-live-panel pt-live-btc"><div className="pt-live-panel-heading"><span className="pt-live-coin">₿</span><h3>Bitcoin</h3><span className="pt-bitcoin-mainnet">MAINNET</span></div><div className="pt-live-network-top"><div className="pt-live-chart"><NetworkHoneycomb chain="btc"/></div><div className="pt-live-facts"><span>Latest block<b>{btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height)}</b></span><span>Transactions waiting<b>{fmt(btc?.pending)}</b></span><span>Priority fee<b>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</b></span></div></div><div className="pt-reference-table"><div className="pt-reference-table-title"><h3>Recent Bitcoin Transactions</h3><span>LIVE MEMPOOL</span></div><div className="pt-reference-table-head"><span>TXID</span><span>Network fee</span><span>Size</span><span>Status</span></div>{(btc?.recentTransactions??[]).slice(0,4).map(t=><Link className="pt-reference-table-row" key={t.id} href={"/btc/"+t.id}><span>{t.id.slice(0,12)}…{t.id.slice(-7)}</span><span>{t.fee==null?"—":fmt(t.fee)+" sats"}</span><span>{t.vsize==null?"—":fmt(t.vsize)+" vB"}</span><span><em>Pending</em></span></Link>)}{!btc?.recentTransactions?.length&&<p className="pt-reference-empty">Waiting for Bitcoin transactions…</p>}</div></div>
   <aside className="pt-bitcoin-live-explained"><div className="pt-eyebrow">✦ PENDING TRACKER EXPLAINS</div><h3>What does this mean right now?</h3><p>{btc?.explanation??"Bitcoin transactions wait in the mempool until miners include them in a block. Fee competition affects priority, but confirmation times are never guaranteed."}</p><div className="pt-bitcoin-explain-point"><strong>Transactions waiting</strong><p>Payments that have been broadcast but are not yet confirmed in a Bitcoin block.</p></div><div className="pt-bitcoin-explain-point"><strong>Priority fee</strong><p>A live fee-rate recommendation, measured in satoshis per virtual byte (sat/vB). It is a guide, not a promise.</p></div><div className="pt-bitcoin-explain-point"><strong>Latest block</strong><p>The newest confirmed group of transactions added to Bitcoin's public record.</p></div><Link href="#bitcoin-fees" className="pt-bitcoin-text-link">Understand Bitcoin fees ↓</Link></aside></div>
   <p className="pt-home-live-source">Source: mempool.space via Pending Tracker · Values update while this page is open. The honeycomb is decorative.</p>
- </section>
+ </section>}
  </>;
 }
