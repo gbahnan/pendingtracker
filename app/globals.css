@@ -2878,3 +2878,56 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 @media(prefers-reduced-motion:reduce){
  .pt-shell .pt-hero.pt-hero-reference .pt-hero-ambient span{animation:none!important}
 }
+
+
+/* Homepage comparison — scoped to the replaced three-step section only */
+.pt-comparison{--cmp-gold:#ffc35d;--cmp-blue:#91b0ff;--cmp-accent:var(--cmp-gold);--cmp-edge:#dda347;--cmp-soft:#58472b;background:#061522!important;border:1px solid #29475f!important;border-radius:22px!important;padding:clamp(20px,3vw,38px)!important;color:#fff!important;max-width:1200px;margin-left:auto;margin-right:auto}
+.pt-comparison[data-chain="eth"]{--cmp-accent:var(--cmp-blue);--cmp-edge:#648cff;--cmp-soft:#354f80}
+.pt-comparison .pt-comparison-heading{margin-bottom:23px}
+.pt-comparison .pt-comparison-heading .pt-eyebrow{color:#a7bdcf!important;font-size:11px;letter-spacing:.13em}
+.pt-comparison .pt-comparison-heading h2{color:#fff!important;margin:8px 0 10px!important;line-height:1.13}
+.pt-comparison .pt-comparison-heading p{color:#c0d0df!important;max-width:790px;margin:0!important;line-height:1.65}
+.pt-comparison button{font-family:inherit;cursor:pointer;transition:background .25s ease,border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+.pt-comparison button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.pt-comparison-selector{background:#0a1e2e;border:1px solid #29465d;border-radius:16px;padding:16px;margin-bottom:14px}
+.pt-comparison-selector-title{font-size:11px;letter-spacing:.11em;color:#aabfd1;text-align:center;font-weight:700;margin-bottom:12px}
+.pt-comparison-chain-tabs,.pt-comparison-mode-tabs,.pt-comparison-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pt-comparison-chain-tabs button{display:flex;align-items:center;justify-content:center;gap:12px;min-height:76px;border-radius:13px;background:#122537;border:1px solid #40566d;color:#e4edf5;font-size:16px;font-weight:750}
+.pt-comparison-chain-tabs button[data-chain="btc"]{border-color:#8c6a38;color:#ffcd78}
+.pt-comparison-chain-tabs button[data-chain="eth"]{border-color:#496ab1;color:#b5c9ff}
+.pt-comparison-chain-tabs button[data-chain="btc"].is-active{background:#302817;border:2px solid #ffc35d;box-shadow:0 0 0 1px #ffc35d20,0 0 23px #ffb84b30,inset 0 0 19px #ffc35d0d}
+.pt-comparison-chain-tabs button[data-chain="eth"].is-active{background:#172b4d;border:2px solid #648cff;box-shadow:0 0 0 1px #648cff20,0 0 23px #648cff35,inset 0 0 19px #648cff0d}
+.pt-comparison-chain-tabs button small{display:block;font-size:11px;color:#b1bbca;margin-top:4px;font-weight:500}
+.pt-comparison-hex{width:38px;height:42px;display:grid;place-items:center;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);font-size:22px;font-weight:800;background:#4d381a;color:#ffc35d;filter:drop-shadow(0 0 7px #ffbf4f60)}
+.pt-comparison-chain-tabs button[data-chain="eth"] .pt-comparison-hex{background:#253e7b;color:#a8bdff}
+.pt-comparison-mode-tabs{margin-bottom:17px}
+.pt-comparison-mode-tabs button{background:#0d2335;border:1px solid #344f65;border-radius:12px;min-height:58px;color:#fff;font-size:14px;font-weight:650;padding:10px}
+.pt-comparison-mode-tabs button span{font-size:22px;color:#b9d4e7;vertical-align:middle;margin-right:8px}
+.pt-comparison-mode-tabs button.is-active{background:#18364b;border:2px solid #719bb9}
+.pt-comparison-grid{gap:16px;align-items:stretch}
+.pt-comparison-raw,.pt-comparison-explained{border-radius:16px;padding:clamp(16px,2vw,24px);min-width:0}
+.pt-comparison-raw{background:#0b1b2a;border:1px solid #344c60}
+.pt-comparison-explained{background:#0c2032;border:2px solid var(--cmp-edge);box-shadow:0 0 25px color-mix(in srgb,var(--cmp-edge) 9%,transparent)}
+.pt-comparison-raw h3,.pt-comparison-explained h3{font-size:16px!important;line-height:1.3;margin:0 0 7px!important;color:#e6edf5!important}
+.pt-comparison-explained h3,.pt-comparison-explained h3 span{color:var(--cmp-accent)!important}
+.pt-comparison-raw h3 span{color:#94aabe;margin-right:6px}
+.pt-comparison-kicker{color:#8ea7bb;font-size:10px;letter-spacing:.12em;font-weight:750;padding-bottom:13px;border-bottom:1px solid #344c60}
+.pt-comparison-fields{display:flex;flex-direction:column}
+.pt-comparison-field{padding:13px 0;border-bottom:1px solid #1e3648;display:flex;flex-direction:column;gap:5px}
+.pt-comparison-field:last-child{border-bottom:0}
+.pt-comparison-field span{font-size:12px;color:#94aabe}
+.pt-comparison-field strong{font-size:14px;font-weight:600;color:#e7eef6;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.pt-comparison-copy{border-top:1px solid var(--cmp-soft);padding-top:15px}
+.pt-comparison-copy h4{font-size:17px!important;line-height:1.35;color:#fff!important;margin:0 0 10px!important}
+.pt-comparison-copy p,.pt-comparison-bottom p{font-size:13px!important;line-height:1.68;color:#d3e1ed!important;margin:0!important}
+.pt-comparison-detail{margin-top:17px}
+.pt-comparison-detail h5,.pt-comparison-bottom h5{font-size:13px!important;color:var(--cmp-accent)!important;font-weight:750;margin:0 0 6px!important;line-height:1.4}
+.pt-comparison-bottom{background:#112b40;border:1px solid var(--cmp-soft);border-radius:12px;padding:15px;margin-top:20px}
+.pt-comparison-bottom h5 span{margin-right:5px}
+.pt-comparison-bottom p{color:#fff!important}
+.pt-comparison-disclaimer{text-align:center;color:#8fa7ba!important;font-size:11px!important;margin:15px 0 20px!important}
+.pt-comparison-footer{text-align:center;border-top:1px solid #29475f;padding-top:23px}
+.pt-comparison-footer h3{color:#fff!important;font-size:clamp(19px,2vw,25px)!important;margin:0 0 10px!important}
+.pt-comparison-footer p{color:#bbcede!important;font-size:14px!important;line-height:1.6;max-width:770px;margin:0 auto!important}
+@media(max-width:640px){.pt-comparison{padding:17px!important}.pt-comparison-grid{grid-template-columns:1fr}.pt-comparison-chain-tabs button{min-height:66px;font-size:14px;gap:7px}.pt-comparison-hex{width:30px;height:34px;font-size:18px}.pt-comparison-mode-tabs button{font-size:12px;padding:9px 5px}.pt-comparison-mode-tabs button span{font-size:17px;margin-right:3px}.pt-comparison-raw,.pt-comparison-explained{padding:17px}.pt-comparison-field{padding:10px 0}}
+@media(prefers-reduced-motion:reduce){.pt-comparison button{transition:none}}
