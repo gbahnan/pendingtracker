@@ -2962,3 +2962,32 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-comparison .pt-comparison-mode-tabs button.is-active:before{content:"";position:absolute;left:13px;top:50%;transform:translateY(-50%);height:7px;width:7px;border-radius:50%;background:#a7d6f7;box-shadow:0 0 9px #a7d6f7}
 @media(max-width:640px){.pt-comparison .pt-comparison-chain-tabs button{min-height:77px}.pt-comparison .pt-comparison-button-content{gap:7px}.pt-comparison .pt-comparison-button-content>span:last-child{font-size:14px}.pt-comparison .pt-comparison-hex{width:31px;height:36px;font-size:19px}.pt-comparison .pt-comparison-mode-tabs button.is-active:before{left:6px;width:5px;height:5px}}
 @media(prefers-reduced-motion:reduce){.pt-comparison .pt-comparison-honeycombs i{animation:none;will-change:auto}.pt-comparison .pt-comparison-chain-tabs button:hover{transform:none}}
+
+
+/* Compact homepage comparison: no changes outside this section */
+.pt-comparison{padding:clamp(17px,2.3vw,28px)!important}
+.pt-comparison .pt-comparison-heading{margin-bottom:16px}
+.pt-comparison .pt-comparison-heading h2{font-size:clamp(24px,2.3vw,33px)!important;margin:5px 0 7px!important}
+.pt-comparison .pt-comparison-heading p{font-size:14px!important;line-height:1.5!important}
+.pt-comparison .pt-comparison-selector{padding:12px;margin-bottom:11px}
+.pt-comparison .pt-comparison-selector-title{margin-bottom:8px}
+.pt-comparison .pt-comparison-chain-tabs button{min-height:74px}
+.pt-comparison .pt-comparison-mode-tabs{gap:0;margin-bottom:14px;padding:4px;background:#0a1d2d;border:1px solid #36546c;border-radius:12px}
+.pt-comparison .pt-comparison-mode-tabs button{min-height:43px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:#afc1d1!important;font-size:13px!important}
+.pt-comparison .pt-comparison-mode-tabs button.is-active{background:#204b68!important;border:1px solid #8bc8ee!important;box-shadow:0 0 12px #72b9eb27!important;color:#fff!important}
+.pt-comparison .pt-comparison-mode-tabs button.is-active:before{display:none!important}
+.pt-comparison .pt-comparison-mode-tabs button:hover:not(.is-active){background:#19364b!important;color:#fff!important}
+.pt-comparison .pt-comparison-mode-tabs button span{font-size:17px!important;color:#b8e3ff!important}
+.pt-comparison .pt-comparison-raw,.pt-comparison .pt-comparison-explained{padding:clamp(14px,1.6vw,19px)}
+.pt-comparison .pt-comparison-field{padding:9px 0}
+.pt-comparison .pt-comparison-copy{padding-top:12px}
+.pt-comparison .pt-comparison-copy h4{font-size:16px!important;margin-bottom:7px!important}
+.pt-comparison .pt-comparison-copy p,.pt-comparison .pt-comparison-bottom p{font-size:12.5px!important;line-height:1.55!important}
+.pt-comparison .pt-comparison-detail{margin-top:12px}
+.pt-comparison .pt-comparison-detail h5{margin-bottom:4px!important}
+.pt-comparison .pt-comparison-bottom{padding:12px;margin-top:14px}
+.pt-comparison .pt-comparison-disclaimer{margin:11px 0 14px!important}
+.pt-comparison .pt-comparison-footer{padding-top:17px}
+.pt-comparison .pt-comparison-footer h3{font-size:clamp(18px,1.8vw,23px)!important}
+.pt-comparison .pt-comparison-footer p{font-size:13px!important}
+@media(max-width:640px){.pt-comparison{padding:15px!important}.pt-comparison .pt-comparison-chain-tabs button{min-height:68px}.pt-comparison .pt-comparison-mode-tabs button{font-size:12px!important;min-height:42px!important}.pt-comparison .pt-comparison-raw,.pt-comparison .pt-comparison-explained{padding:14px}}
