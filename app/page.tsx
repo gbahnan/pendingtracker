@@ -269,7 +269,7 @@ export default function Page() {
         <div className="pt-comparison-explained">
           <h3><span aria-hidden="true">✦</span> Pending Tracker Explains</h3>
           <div className="pt-comparison-copy"><h4>{comparison.heading}</h4><p>{comparison.intro}</p>
-            {comparison.details.map(([label,description])=><div className="pt-comparison-detail" key={label}><h5>{label}</h5><p>{description}</p></div>)}
+            <div className="pt-comparison-details-grid">{comparison.details.map(([label,description])=><div className="pt-comparison-detail" key={label}><h5>{label}</h5><p>{description}</p></div>)}</div>
           </div>
           <div className="pt-comparison-bottom"><h5><span aria-hidden="true">✓</span> The bottom line</h5><p>{comparison.bottom}</p></div>
         </div>
