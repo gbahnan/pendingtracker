@@ -3026,3 +3026,33 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-comparison .pt-comparison-mode-tabs button:not(.is-active){background:#0b1e2e!important;border:1px solid transparent!important;box-shadow:none!important;color:#9db4c6!important}
 .pt-comparison .pt-comparison-mode-tabs button.is-active{background:linear-gradient(110deg,#225473,#1b405d)!important;border:2px solid #a1d8ff!important;box-shadow:0 0 0 1px #91cfff26,0 0 21px #71bfff5e,inset 0 0 22px #a1d8ff15!important;color:#fff!important}
 .pt-comparison .pt-comparison-mode-tabs button:hover:not(.is-active){background:#18364b!important;border-color:#5b8fb3!important;color:#fff!important}
+
+
+/* Bottom homepage FAQ — scoped redesign, aligned to comparison section */
+.pt-shell .pt-faq-refresh{box-sizing:border-box!important;width:100%!important;max-width:1200px!important;margin:26px auto 36px!important;padding:clamp(20px,2.3vw,30px)!important;background:linear-gradient(155deg,#0b2536,#081a2b 75%)!important;border:1px solid #31516a!important;border-radius:20px!important;color:#fff!important;display:block!important;text-align:left!important}
+.pt-faq-refresh .pt-faq-heading{margin-bottom:19px;text-align:left!important}
+.pt-faq-refresh .pt-faq-heading .pt-eyebrow{color:#9fb8cb!important;font-size:11px;letter-spacing:.13em;font-weight:700}
+.pt-faq-refresh .pt-faq-heading h2{color:#fff!important;font-size:clamp(24px,2.3vw,33px)!important;line-height:1.18!important;margin:7px 0 9px!important;text-align:left!important}
+.pt-faq-refresh .pt-faq-heading p{color:#bbcede!important;font-size:14px!important;line-height:1.55!important;margin:0!important;max-width:730px}
+.pt-faq-refresh .pt-faq-list{display:flex;flex-direction:column;gap:9px}
+.pt-faq-refresh .pt-faq-item{border:1px solid #29475f;background:#0d2233;border-radius:12px;overflow:hidden;transition:border-color .2s ease,background .2s ease}
+.pt-faq-refresh .pt-faq-item[open]{border-color:#658cac;background:#102a3e}
+.pt-faq-refresh .pt-faq-item summary{list-style:none!important;display:flex!important;align-items:center;gap:13px;padding:15px 17px;cursor:pointer;color:#f0f5fb!important;font-size:14px!important;font-weight:650;line-height:1.4;min-height:56px}
+.pt-faq-refresh .pt-faq-item summary::-webkit-details-marker{display:none}
+.pt-faq-refresh .pt-faq-item summary::marker{content:""}
+.pt-faq-refresh .pt-faq-item summary:hover{background:#153249}
+.pt-faq-refresh .pt-faq-item summary:focus-visible{outline:2px solid #91bfff;outline-offset:-3px}
+.pt-faq-refresh .pt-faq-symbol{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border-radius:9px;background:#183b53;color:#a8d1ec;font-size:17px}
+.pt-faq-refresh .pt-faq-item:nth-child(1) .pt-faq-symbol{color:#ffc35d;background:#3a2e1c}
+.pt-faq-refresh .pt-faq-item:nth-child(2) .pt-faq-symbol{color:#a3baff;background:#1b3159}
+.pt-faq-refresh .pt-faq-chevron{margin-left:auto;color:#aac8dc;font-size:20px;line-height:1;transition:transform .2s ease}
+.pt-faq-refresh .pt-faq-item[open] .pt-faq-chevron{transform:rotate(45deg);color:#fff}
+.pt-faq-refresh .pt-faq-answer{padding:0 19px 17px 62px}
+.pt-faq-refresh .pt-faq-answer p{color:#c8dbe9!important;font-size:13px!important;line-height:1.7!important;margin:0!important}
+.pt-faq-refresh .pt-faq-answer strong{color:#fff}
+.pt-faq-refresh .pt-faq-safety{display:flex;align-items:flex-start;gap:12px;margin-top:17px;padding:14px 16px;border-radius:11px;background:#102b3d;border:1px solid #294b62}
+.pt-faq-refresh .pt-faq-safety>span{color:#e6b45c;font-size:18px;line-height:1.2}
+.pt-faq-refresh .pt-faq-safety p{margin:0!important;font-size:12px!important;line-height:1.6!important;color:#b9ccdb!important}
+.pt-faq-refresh .pt-faq-safety strong{color:#e8f1fa}
+@media(max-width:640px){.pt-shell .pt-faq-refresh{margin:20px auto 28px!important;padding:17px!important}.pt-faq-refresh .pt-faq-item summary{padding:12px;gap:10px;font-size:13px!important}.pt-faq-refresh .pt-faq-answer{padding:0 13px 15px 54px}.pt-faq-refresh .pt-faq-symbol{flex-basis:30px;width:30px;height:30px}}
+@media(prefers-reduced-motion:reduce){.pt-faq-refresh .pt-faq-item,.pt-faq-refresh .pt-faq-chevron{transition:none}}
