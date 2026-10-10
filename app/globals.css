@@ -3483,3 +3483,53 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  .pt-bitcoin-explorer .pt-bitcoin-transactions .pt-reference-table-row{min-width:470px!important}
  .pt-bitcoin-explorer .pt-bitcoin-education-grid{grid-template-columns:minmax(0,1fr)!important}
 }
+
+
+/* Homepage iPhone usability: responsive only; retain approved desktop design. */
+@media(max-width:700px){
+ body:has(.pt-shell:not(.pt-bitcoin-explorer)):has(.pt-hero-reference){overflow-x:clip!important}
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference{min-width:0!important;max-width:100%!important}
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-hero-intro{
+  max-width:100%!important;padding-left:12px!important;padding-right:12px!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-hero-intro h1{
+  font-size:clamp(36px,9.2vw,56px)!important;line-height:1.09!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-searchbox{
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  padding-left:0!important;padding-right:0!important;max-width:100%!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-searchrow{
+  display:flex!important;flex-direction:column!important;gap:12px!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-search-input-wrap{
+  width:100%!important;min-width:0!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-searchrow input{
+  width:100%!important;min-width:0!important;box-sizing:border-box!important;
+  font-size:16px!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-searchrow button{
+  width:100%!important;min-height:50px!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-hero-benefits{
+  display:grid!important;grid-template-columns:1fr!important;gap:12px!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-hero-reference .pt-hero-benefits>div{
+  min-width:0!important;border-right:0!important;padding:8px 0!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-home-live-grid{
+  display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:16px!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-home-live-panel{min-width:0!important;max-width:100%!important}
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-comparison{
+  min-width:0!important;max-width:100%!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-comparison .pt-comparison-selector{
+  display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:10px!important;
+ }
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-comparison .pt-comparison-raw,
+ .pt-shell:not(.pt-bitcoin-explorer) .pt-comparison .pt-comparison-explained{
+  min-width:0!important;overflow-wrap:anywhere!important;
+ }
+}
