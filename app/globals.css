@@ -2556,3 +2556,49 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
   .pt-home-live .pt-home-hex-scene animate,
   .pt-home-live .pt-home-hex-scene animateTransform{display:none!important}
 }
+
+
+/* Homepage paired live-network dashboard: one continuous panel per blockchain.
+   Only the homepage live area is affected; explorer block queues stay untouched. */
+.pt-shell .pt-home-live{background:linear-gradient(155deg,#051523,#04111d)!important;border:1px solid #1a4058!important;border-radius:20px!important;padding:22px!important}
+.pt-shell .pt-home-live-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;align-items:stretch!important}
+.pt-shell .pt-home-live .pt-home-live-panel{
+ display:flex!important;flex-direction:column!important;grid-template-columns:none!important;grid-template-rows:none!important;
+ gap:0!important;min-width:0!important;min-height:0!important;padding:14px 13px 12px!important;
+ border-radius:16px!important;overflow:hidden!important;box-shadow:inset 0 1px 0 #ffffff0b!important;
+ background:linear-gradient(160deg,#0b1823,#05121e)!important;border:1px solid #8a561e!important
+}
+.pt-shell .pt-home-live .pt-live-eth{background:linear-gradient(160deg,#081831,#061323)!important;border-color:#355fa8!important}
+.pt-home-live .pt-live-panel-heading{display:flex!important;align-items:center!important;gap:10px!important;grid-column:auto!important;grid-row:auto!important;margin:0 0 4px!important}
+.pt-home-live .pt-live-panel-heading h3{font-size:20px!important;margin:0!important;color:#f5f8ff!important}
+.pt-home-live .pt-live-network-top{display:grid!important;grid-template-columns:minmax(0,1.8fr) minmax(110px,.65fr)!important;align-items:center!important;gap:9px!important;min-height:194px!important}
+.pt-home-live .pt-live-chart{grid-column:auto!important;grid-row:auto!important;width:100%!important;height:190px!important;min-height:0!important;overflow:visible!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.pt-home-live .pt-home-hex-scene{height:100%!important;width:100%!important;filter:drop-shadow(0 0 7px #ffa9225c)}
+.pt-home-live .pt-home-hex-eth{filter:drop-shadow(0 0 8px #628bff65)}
+.pt-home-live .pt-live-facts{grid-column:auto!important;grid-row:auto!important;align-self:center!important;gap:13px!important;justify-content:center!important;border-left:1px solid #ffffff24!important;padding-left:13px!important;min-height:155px!important}
+.pt-home-live .pt-live-facts>span{font-size:11px!important;color:#c0d2e0!important}
+.pt-home-live .pt-live-facts b{font-size:16px!important;color:#f5faff!important;line-height:1.35!important}
+.pt-home-live .pt-live-btc .pt-live-facts b:first-child{color:#ffcf77!important}
+.pt-home-live .pt-live-eth .pt-live-facts b:first-child{color:#b1c5ff!important}
+.pt-shell .pt-home-live .pt-reference-table{margin-top:8px!important;min-width:0!important;width:100%!important;border:0!important;border-top:1px solid #ffffff20!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
+.pt-shell .pt-home-live .pt-reference-table-title{padding:13px 3px 10px!important;border-bottom:1px solid #ffffff18!important}
+.pt-shell .pt-home-live .pt-reference-table-title h3{font-size:16px!important;color:#f6f9ff!important}
+.pt-shell .pt-home-live .pt-reference-table-head{padding:9px 3px!important;font-size:10px!important}
+.pt-shell .pt-home-live .pt-reference-table-row{padding:10px 3px!important;gap:6px!important;grid-template-columns:1.55fr .95fr .7fr .75fr!important;font-size:10.5px!important}
+.pt-shell .pt-home-live .pt-reference-table-row span{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.pt-shell .pt-home-live .pt-live-btc .pt-reference-table-row em{color:#ffca66!important;border-color:#c28b29!important}
+.pt-shell .pt-home-live .pt-live-eth .pt-reference-table-row em{color:#adc2ff!important;border-color:#6d89eb!important}
+.pt-shell .pt-home-live .pt-live-btc .pt-reference-table-title a{color:#ffc76a!important}
+.pt-shell .pt-home-live .pt-live-eth .pt-reference-table-title a{color:#9eb9ff!important}
+.pt-shell .pt-home-live-source{margin-top:12px!important}
+@media(max-width:850px){
+ .pt-shell .pt-home-live-grid{grid-template-columns:1fr!important}
+ .pt-home-live .pt-live-network-top{grid-template-columns:minmax(0,1.8fr) minmax(100px,.7fr)!important}
+}
+@media(max-width:480px){
+ .pt-shell .pt-home-live{padding:14px!important}
+ .pt-home-live .pt-live-chart{height:145px!important}
+ .pt-home-live .pt-live-network-top{min-height:155px!important}
+ .pt-home-live .pt-live-facts b{font-size:13px!important}
+ .pt-shell .pt-home-live .pt-reference-table-row{font-size:9px!important}
+}
