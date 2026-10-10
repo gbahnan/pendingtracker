@@ -3179,3 +3179,15 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
     padding:18px 8px 10px!important;
   }
 }
+
+
+/* Unbox only the homepage transaction-search section.
+   Keep the input, action button, benefit row, dividers and all spacing intact. */
+.pt-shell .pt-hero.pt-hero-reference .pt-searchbox{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
