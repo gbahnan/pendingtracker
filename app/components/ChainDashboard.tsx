@@ -39,7 +39,7 @@ function Honeycomb(){
   {moving.map(m=><polygon key={m.id} className="pt-honeycomb-traveler" points={points(coords(m.from).x,coords(m.from).y)} style={{"--hop-x":(coords(m.to).x-coords(m.from).x)+"px","--hop-y":(coords(m.to).y-coords(m.from).y)+"px"} as React.CSSProperties}/>)}
  </svg>;
 }
-export default function ChainDashboard({chain,trackedPosition,tracking=false,trackedEthBlock=null,ethPending=false}:{chain:"bitcoin"|"ethereum";trackedPosition?:number|null;tracking?:boolean;trackedEthBlock?:number|null;ethPending?:boolean}){
+export default function ChainDashboard({chain,trackedPosition,tracking=false,trackedEthBlock=null,ethPending=false,view="full"}:{chain:"bitcoin"|"ethereum";trackedPosition?:number|null;tracking?:boolean;trackedEthBlock?:number|null;ethPending?:boolean;view?:"full"|"estimates"}){
  const [data,setData]=useState<Net|null>(null);const [loading,setLoading]=useState(true);const [updated,setUpdated]=useState("");
  const [liveConnected,setLiveConnected]=useState(false);
  useEffect(()=>{
@@ -157,6 +157,14 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
   </div>
   {tracking&&ethPending&&<div className="pt-eth-pending-locator"><span>↑ YOUR TRANSACTION</span><strong>Pending in the network · future block unknown</strong><small>Ethereum transactions are not assigned a guaranteed upcoming block. Gas settings and account nonce can affect inclusion.</small></div>}
   <div className="pt-chain-flow-confirmed"><span className={ethShift?"pt-chain-confirmed-flash":""}>● {ethShift?"NEW ETHEREUM BLOCK":"LATEST ETHEREUM BLOCK"} {eth?.latestBlock==null?"":"#"+eth.latestBlock}</span><span>Confirmed blocks advance when the network reports a new block; these are historical blocks, not a future queue.</span></div>
+ </div>;
+ if(view==="estimates"&&!tracking)return <div className="pt-dash pt-dash-estimates-only">
+  <section className="pt-dash-blocks">
+   <div className="pt-dash-heading"><div className="pt-eyebrow">LIVE BITCOIN MEMPOOL</div><h2>Current estimated transaction confirmation times</h2><p>Watch how the projected queue changes as new transactions arrive and blocks are confirmed. Each step represents roughly ten minutes on average, not a guaranteed confirmation time.</p></div>
+   <div className="pt-bitcoin-flow-labels"><span>NOW · MEMPOOL</span><span>PROJECTED BLOCKS →</span></div>
+   {flowVisualization}
+   <p className="pt-bitcoin-flow-note">These are live mempool projections, not scheduled blocks. Your transaction's actual wait depends on its fee rate, network conditions and when miners find blocks.</p>
+  </section>
  </div>;
  if(tracking)return <div className="pt-dash pt-dash-tracking">{isBtc?flowVisualization:ethereumVisualization}</div>;
  return <div className="pt-dash">
