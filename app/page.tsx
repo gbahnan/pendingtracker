@@ -26,50 +26,56 @@ const terms: Record<string, string> = {
 
 function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
   const btc=chain==="btc";
-  const accent=btc?"#ff9c0a":"#476dff";
-  const bright=btc?"#ffe5a0":"#c6d4ff";
-  const mid=btc?"#ffbf43":"#87a2ff";
+  const accent=btc?"#ff9c08":"#376dff";
+  const edge=btc?"#ffba32":"#668aff";
+  const hot=btc?"#fff1b9":"#dbe5ff";
   const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,k)=>{
-    const angle=Math.PI/3*k-Math.PI/6;
-    return (x+r*Math.cos(angle)).toFixed(2)+","+(y+r*Math.sin(angle)).toFixed(2);
+    const a=Math.PI/3*k-Math.PI/6;
+    return `${(x+r*Math.cos(a)).toFixed(2)},${(y+r*Math.sin(a)).toFixed(2)}`;
   }).join(" ");
-  const particles=Array.from({length:105},(_,i)=>{
-    const angle=i*2.3999632297;
-    const radius=34+Math.sqrt(i/105)*91;
-    return {x:150+Math.cos(angle)*radius*1.48,y:72+Math.sin(angle)*radius*.69,
-      size:1.15+(i%7)*.51,dx:((i*17)%27)-13,dy:((i*13)%21)-10,
-      duration:21+(i*7)%24,delay:-(i*11%37),opacity:.13+(i%6)*.09};
+  const particles=Array.from({length:135},(_,i)=>{
+    const a=i*2.3999632297;
+    const rad=26+Math.sqrt(i/135)*122;
+    return {x:170+Math.cos(a)*rad*1.36,y:91+Math.sin(a)*rad*.57,
+      r:.7+(i%7)*.34,opacity:.1+(i%6)*.065,dx:((i*17)%19)-9,dy:((i*13)%15)-7,
+      duration:26+(i*7)%27,delay:-(i*11%37)};
   });
   const satellites=[
-    [36,89,10],[65,44,13],[96,102,8],[214,39,11],[247,91,14],
-    [274,51,7],[27,45,6],[204,112,7],[91,19,6],[267,115,5]
+    [33,100,10],[77,47,16],[119,116,11],[261,45,13],[302,99,17],
+    [330,56,9],[58,148,9],[259,146,10],[119,28,7],[322,145,7],
+    [19,64,6],[213,28,7]
   ];
-  return <div className={"pt-home-hex-scene pt-home-hex-"+chain} style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",color:accent,pointerEvents:"none"}} aria-hidden="true">
-    <svg viewBox="0 0 300 145" preserveAspectRatio="xMidYMid meet" style={{display:"block",width:"100%",height:"100%",overflow:"hidden"}}>
+  return <div className={"pt-home-hex-scene pt-home-hex-"+chain} aria-hidden="true">
+    <svg viewBox="0 0 340 182" preserveAspectRatio="xMidYMid meet" role="presentation">
       <defs>
-        <radialGradient id={"nh-space-"+chain}><stop stopColor={accent} stopOpacity=".24"/><stop offset=".55" stopColor={accent} stopOpacity=".07"/><stop offset="1" stopColor={accent} stopOpacity="0"/></radialGradient>
-        <linearGradient id={"nh-core-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={btc?"#563009":"#18295b"}/><stop offset=".48" stopColor={btc?"#211406":"#091735"}/><stop offset="1" stopColor="#030c18"/></linearGradient>
-        <linearGradient id={"nh-edge-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={bright}/><stop offset=".45" stopColor={accent}/><stop offset="1" stopColor={mid}/></linearGradient>
-        <filter id={"nh-bloom-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5"/></filter>
-        <filter id={"nh-soft-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2"/></filter>
+        <radialGradient id={"nh-space-"+chain}><stop stopColor={accent} stopOpacity={btc?".29":".36"}/><stop offset=".5" stopColor={accent} stopOpacity=".095"/><stop offset="1" stopColor={accent} stopOpacity="0"/></radialGradient>
+        <linearGradient id={"nh-core-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={btc?"#57300b":"#142961"}/><stop offset=".43" stopColor={btc?"#1b130b":"#09152e"}/><stop offset="1" stopColor="#020913"/></linearGradient>
+        <linearGradient id={"nh-edge-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={hot}/><stop offset=".37" stopColor={edge}/><stop offset=".75" stopColor={accent}/><stop offset="1" stopColor={hot}/></linearGradient>
+        <linearGradient id={"nh-facet-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#ffffff" stopOpacity=".92"/><stop offset=".42" stopColor={edge} stopOpacity=".8"/><stop offset="1" stopColor={accent} stopOpacity=".25"/></linearGradient>
+        <filter id={"nh-bloom-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id={"nh-soft-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.3"/></filter>
       </defs>
-      <ellipse cx="150" cy="72" rx="149" ry="76" fill={"url(#nh-space-"+chain+")"}/>
-      {particles.map((p,i)=><polygon key={i} points={hex(p.x,p.y,p.size)} fill={i%5===0?accent:"none"} fillOpacity={i%5===0?".36":"0"} stroke={i%8===0?bright:accent} strokeWidth=".45" opacity={p.opacity}>
-        <animateTransform attributeName="transform" type="translate" values={`0 0; ${p.dx} ${p.dy}; ${-p.dx*.45} ${-p.dy*.6}; 0 0`} dur={p.duration+"s"} begin={p.delay+"s"} repeatCount="indefinite" calcMode="spline" keyTimes="0;0.33;0.7;1" keySplines=".42 0 .58 1;.42 0 .58 1;.42 0 .58 1"/>
-        <animate attributeName="opacity" values={`${p.opacity};${Math.min(.85,p.opacity*1.5)};${p.opacity}`} dur={(p.duration+8)+"s"} begin={p.delay+"s"} repeatCount="indefinite"/>
+      <ellipse cx="170" cy="91" rx="166" ry="91" fill={"url(#nh-space-"+chain+")"}/>
+      {particles.map((p,i)=><polygon key={i} points={hex(p.x,p.y,p.r)} fill={i%4===0?accent:"none"} fillOpacity={i%4===0?".32":"0"} stroke={i%8===0?hot:accent} strokeWidth=".42" opacity={p.opacity}>
+        <animateTransform attributeName="transform" type="translate" values={`0 0; ${p.dx} ${p.dy}; ${-p.dx*.55} ${-p.dy*.6}; 0 0`} dur={p.duration+"s"} begin={p.delay+"s"} repeatCount="indefinite" calcMode="spline" keyTimes="0;.33;.7;1" keySplines=".42 0 .58 1;.42 0 .58 1;.42 0 .58 1"/>
       </polygon>)}
-      {satellites.map(([x,y,r],i)=><g key={i} opacity={i%3===0?".96":".78"}>
-        <animateTransform attributeName="transform" type="translate" values={`0 0; ${(i%2?1:-1)*(4+i%5)} ${(i%3-1)*6}; 0 0`} dur={(17+i*2)+"s"} begin={-(i*3)+"s"} repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".42 0 .58 1;.42 0 .58 1"/>
-        <polygon points={hex(x,y,r+2)} fill={accent} opacity=".48" filter={"url(#nh-bloom-"+chain+")"}/>
-        <polygon points={hex(x,y,r)} fill={accent} fillOpacity=".26" stroke={mid} strokeWidth="1.5"/>
-        <polygon points={hex(x,y,r*.72)} fill={bright} fillOpacity=".16" stroke={bright} strokeWidth=".7"/>
-        <polygon points={hex(x,y,r*.42)} fill={bright} fillOpacity=".55"/>
+      {satellites.map(([x,y,r],i)=><g key={i} opacity={i%4===0?".95":".83"}>
+        <animateTransform attributeName="transform" type="translate" values={`0 0; ${(i%2?1:-1)*(3+i%5)} ${(i%3-1)*5}; 0 0`} dur={(21+i*2)+"s"} begin={-(i*3)+"s"} repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".42 0 .58 1;.42 0 .58 1"/>
+        <polygon points={hex(x,y,r+5)} fill={accent} opacity=".65" filter={"url(#nh-bloom-"+chain+")"}/>
+        <polygon points={hex(x,y,r)} fill={accent} fillOpacity=".34" stroke={hot} strokeWidth="1.2"/>
+        <polygon points={hex(x,y,r*.82)} fill="none" stroke={edge} strokeWidth="1"/>
+        <polygon points={hex(x,y,r*.65)} fill={"url(#nh-facet-"+chain+")"} opacity=".83"/>
+        <polygon points={hex(x,y,r*.32)} fill={hot} opacity=".73"/>
       </g>)}
-      <polygon points={hex(150,72,49)} fill={accent} opacity=".72" filter={"url(#nh-bloom-"+chain+")"}/>
-      <polygon points={hex(150,72,43)} fill={"url(#nh-core-"+chain+")"} stroke={"url(#nh-edge-"+chain+")"} strokeWidth="3.6"/>
-      <polygon points={hex(150,72,37)} fill="none" stroke={bright} strokeOpacity=".64" strokeWidth=".9"/>
-      <polygon points={hex(150,72,47)} fill="none" stroke={accent} strokeOpacity=".65" strokeWidth="1" filter={"url(#nh-soft-"+chain+")"}/>
-      <text x="150" y={btc?"89":"88"} textAnchor="middle" fill={bright} fontSize={btc?"48":"46"} fontWeight="800" style={{filter:`drop-shadow(0 0 8px ${accent})`}}>{btc?"₿":"◆"}</text>
+      <polygon points={hex(170,91,61)} fill={accent} opacity=".76" filter={"url(#nh-bloom-"+chain+")"}/>
+      <polygon points={hex(170,91,56)} fill={accent} opacity=".46" filter={"url(#nh-soft-"+chain+")"}/>
+      <polygon points={hex(170,91,53)} fill={"url(#nh-core-"+chain+")"} stroke={"url(#nh-edge-"+chain+")"} strokeWidth="3.2"/>
+      <polygon points={hex(170,91,47)} fill="none" stroke={hot} strokeOpacity=".9" strokeWidth=".8"/>
+      <polygon points={hex(170,91,42)} fill="none" stroke={edge} strokeOpacity=".25" strokeWidth=".6"/>
+      {btc
+        ? <text x="170" y="111" textAnchor="middle" fill="#ffce63" fontSize="59" fontWeight="800" style={{filter:"drop-shadow(0 0 7px #ff9a00)"}}>₿</text>
+        : <g filter="url(#nh-soft-eth)" opacity=".5"><polygon points="170,52 144,94 170,109 196,94" fill="#7296ff"/></g>}
+      {!btc&&<g><polygon points="170,48 144,94 170,109" fill="#b8c9ff"/><polygon points="170,48 196,94 170,109" fill="#7596ff"/><polygon points="144,99 170,136 170,113" fill="#9bb4ff"/><polygon points="196,99 170,136 170,113" fill="#5475df"/></g>}
     </svg>
   </div>;
 }
