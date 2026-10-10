@@ -172,21 +172,28 @@ export default function Page() {
 
   const btc = overview?.btc, eth = overview?.eth;
   return <main className="pt-shell">
-    <div className="pt-hero">
+    <div className="pt-hero pt-hero-reference">
+      <div className="pt-hero-ambient pt-hero-ambient-btc" aria-hidden="true"><span/><span/><span/><span/><span/><span/></div>
+      <div className="pt-hero-ambient pt-hero-ambient-eth" aria-hidden="true"><span/><span/><span/><span/><span/><span/></div>
       <div className="pt-hero-intro">
-        <div className="pt-eyebrow"><span className="pt-pulse"/> THE BLOCKCHAIN, MADE SIMPLE</div>
-        <h1>Track. Explore. <span>Understand.</span></h1>
-        <p className="pt-lead">Pending Tracker gives you real-time blockchain data and clear, plain-English explanations for Bitcoin and Ethereum transactions.</p>
-        <div className="pt-hero-trust"><span>◇ Live blockchain data</span><span>◇ Plain-English explanations</span><span>◇ No account needed</span></div>
+        <h1>Track. <span className="pt-hero-gold">Explore.</span> <span className="pt-hero-blue">Understand.</span></h1>
+        <h2 className="pt-hero-subtitle">A simpler blockchain explorer.</h2>
+        <p className="pt-lead">We decode confusing blockchain data into clear, easy-to-understand summaries<br className="pt-hero-desktop-break"/> so you can track transactions, explore the network, and know what’s happening.</p>
       </div>
       <div className="pt-searchbox" id="transaction-search">
-        <div className="pt-search-top"><div><div className="pt-search-label">TRANSACTION EXPLAINER</div><h2>Where is my transaction?</h2><p className="pt-search-explain">Enter a transaction ID, wallet address, or block number to see its status, confirmation progress, fees, and what it means.</p></div><div className="pt-search-symbol" aria-hidden="true">↗</div></div>
+        <div className="pt-search-top"><div><h2>Track Your Transaction</h2><p className="pt-search-explain">Paste a Bitcoin or Ethereum transaction ID and we’ll turn the complex data<br className="pt-hero-desktop-break"/> into a simple, easy-to-understand summary.</p></div></div>
         <div className="pt-searchrow">
-          <input aria-label="Transaction hash" placeholder="Paste a transaction ID, address, or explorer link" value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/>
-          <button onClick={search}>Track my transaction <span aria-hidden="true">→</span></button>
+          <div className="pt-search-input-wrap"><span className="pt-search-magnifier" aria-hidden="true">⌕</span><input aria-label="Transaction hash or wallet address" placeholder="Enter a Bitcoin or Ethereum transaction hash..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/></div>
+          <button onClick={search}>Track Transaction <span aria-hidden="true">→</span></button>
         </div>
         {ambiguousHash?<div className="pt-chain-choice" role="group" aria-label="Select blockchain"><p>This transaction ID could belong to more than one network. Which blockchain are you tracking?</p><div><button type="button" onClick={()=>router.push("/btc/"+ambiguousHash)}>₿ Bitcoin →</button><button type="button" onClick={()=>router.push("/eth/0x"+ambiguousHash)}>◆ Ethereum →</button></div></div>:null}
-        {error ? <p className="pt-error" role="alert">{error}</p> : <p className="pt-hint">Free to explore · No wallet connection or signup · Never enter a seed phrase or private key.</p>}
+        {error ? <p className="pt-error" role="alert">{error}</p> : null}
+        <div className="pt-hero-benefits">
+          <div><span className="pt-benefit-icon" aria-hidden="true">▤</span><span><strong>Clear summaries</strong><small>No confusing technical jargon.</small></span></div>
+          <div><span className="pt-benefit-icon" aria-hidden="true">◷</span><span><strong>Real-time status</strong><small>See what’s happening now.</small></span></div>
+          <div><span className="pt-benefit-icon" aria-hidden="true">↗</span><span><strong>Understand delays</strong><small>Get insights and estimated timing.</small></span></div>
+        </div>
+        <p className="pt-hero-safety">No signup or wallet connection required. Never enter a seed phrase or private key.</p>
       </div>
     </div>
 
