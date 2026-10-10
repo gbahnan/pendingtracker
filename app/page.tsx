@@ -378,16 +378,19 @@ export default function Page() {
     </section>
 
 </details>
-    <section className="pt-section pt-learn-simple" id="learn">
-      <div className="pt-eyebrow">QUICK ANSWERS</div><h2>New to blockchain? Start here.</h2>
-      <p className="pt-section-sub">Plain-English answers to the questions people ask most.</p>
-      <div className="pt-glossary">
-        <details className="pt-term"><summary>Why is my transaction still waiting?<span>＋</span></summary><p>It may be waiting for a block, offering a less competitive fee, or depending on an earlier transaction. Search your transaction ID above to see the available evidence.</p></details>
-        <details className="pt-term"><summary>How long does confirmation take?<span>＋</span></summary><p>Bitcoin blocks arrive about every 10 minutes on average, but individual waits vary. Ethereum generally produces blocks more frequently. No estimated time is a guarantee.</p></details>
-        <details className="pt-term"><summary>What does sat/vB mean?<span>＋</span></summary><p>It's Bitcoin's fee rate: how many tiny units of Bitcoin (sats) are offered for each unit of transaction size. A higher rate usually gives miners more reason to include a transaction sooner.</p></details>
-        <details className="pt-term"><summary>Is it safe to paste my transaction ID?<span>＋</span></summary><p>Transaction IDs are public tracking references. Never share your wallet recovery phrase, private key, or password.</p></details>
-        <details className="pt-term"><summary>Explore more blockchain terms<span>＋</span></summary><div className="pt-glossary-inner">{Object.entries(terms).filter(([term])=>network==="btc"?!["Gas","Nonce"].includes(term):!["Sats","Priority fee","Mempool","sat/vB","RBF","CPFP"].includes(term)).map(([term,meaning])=><details className="pt-term" key={term}><summary>{term}<span>＋</span></summary><p>{meaning}</p></details>)}</div></details>
+    <section className="pt-section pt-learn-simple pt-faq-refresh" id="learn" aria-labelledby="pt-faq-title">
+      <div className="pt-faq-heading">
+        <div className="pt-eyebrow">QUICK ANSWERS</div>
+        <h2 id="pt-faq-title">Blockchain questions? Simple answers.</h2>
+        <p>Understand the basics of Bitcoin and Ethereum without the technical jargon.</p>
       </div>
+      <div className="pt-faq-list">
+        <details className="pt-faq-item"><summary><span className="pt-faq-symbol" aria-hidden="true">⬡</span><span>What is a blockchain explorer?</span><span className="pt-faq-chevron" aria-hidden="true">＋</span></summary><div className="pt-faq-answer"><p>Think of it as a search engine for a blockchain's public records. You can look up transactions, blocks, fees, and network activity. Pending Tracker shows the underlying data and explains what it means in everyday language.</p></div></details>
+        <details className="pt-faq-item"><summary><span className="pt-faq-symbol" aria-hidden="true">◆</span><span>What's the difference between Bitcoin and Ethereum?</span><span className="pt-faq-chevron" aria-hidden="true">＋</span></summary><div className="pt-faq-answer"><p><strong>Bitcoin</strong> is primarily a network for transferring and holding bitcoin. <strong>Ethereum</strong> also runs smart contracts — programs that can power tokens and decentralized applications. Both record activity on public blockchains, but their fees, transaction details, and confirmation processes work differently. Pending Tracker explains each network using its own terminology.</p></div></details>
+        <details className="pt-faq-item"><summary><span className="pt-faq-symbol" aria-hidden="true">⌛</span><span>Why is my transaction pending?</span><span className="pt-faq-chevron" aria-hidden="true">＋</span></summary><div className="pt-faq-answer"><p>A pending transaction has not yet been included in a block. On Bitcoin, its fee rate compared with other waiting transactions can affect when miners include it. On Ethereum, network demand, the offered fee, and account transaction ordering can affect when a transaction is processed. Pending does not automatically mean failed, and no confirmation estimate is guaranteed. Search your transaction ID to see what the available data tells us.</p></div></details>
+        <details className="pt-faq-item"><summary><span className="pt-faq-symbol" aria-hidden="true">▤</span><span>What are blocks, confirmations, and network fees?</span><span className="pt-faq-chevron" aria-hidden="true">＋</span></summary><div className="pt-faq-answer"><p><strong>Blocks</strong> group recorded blockchain activity. A <strong>confirmation</strong> means a transaction has been included in a block; additional blocks can add confidence that the record will remain unchanged. <strong>Network fees</strong> are costs associated with processing transactions. Bitcoin commonly expresses fee rates in satoshis per virtual byte (sat/vB), while Ethereum uses gas to measure computational work and prices gas in units such as gwei. The amount and meaning of a fee depend on the network.</p></div></details>
+      </div>
+      <div className="pt-faq-safety"><span aria-hidden="true">◈</span><p><strong>A quick safety note:</strong> Transaction IDs are public references, but your wallet's recovery phrase, private keys, and passwords are secret. Never enter those into a blockchain explorer.</p></div>
     </section>
 
   </main>;
