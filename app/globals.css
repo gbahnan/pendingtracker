@@ -2644,3 +2644,26 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 @media(prefers-reduced-motion:reduce){
  .pt-home-live .pt-home-drifting-cell,.pt-home-live .pt-home-drifting-satellite{animation:none!important}
 }
+
+/* Compact, obvious explorer navigation integrated into live network cards. */
+.pt-home-live .pt-live-panel-heading{display:flex!important;align-items:center!important;gap:10px!important;flex-wrap:wrap!important}
+.pt-home-live .pt-live-panel-heading .pt-live-explore-link{
+ margin-left:auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+ padding:8px 13px!important;min-height:34px!important;border-radius:9px!important;
+ font-size:12px!important;font-weight:750!important;line-height:1.15!important;
+ text-decoration:none!important;white-space:nowrap!important;cursor:pointer!important;
+ transition:background-color .22s ease,box-shadow .22s ease,transform .22s ease!important;
+}
+.pt-home-live .pt-live-btc .pt-live-explore-link{
+ color:#160f05!important;background:#ffb83d!important;border:1px solid #ffd27b!important;
+ box-shadow:0 0 14px #f4a21b26!important;
+}
+.pt-home-live .pt-live-eth .pt-live-explore-link{
+ color:#fff!important;background:#557cff!important;border:1px solid #8faaff!important;
+ box-shadow:0 0 14px #5e83ff30!important;
+}
+.pt-home-live .pt-live-explore-link:hover,.pt-home-live .pt-live-explore-link:focus-visible{
+ transform:translateY(-1px)!important;box-shadow:0 0 22px currentColor!important;
+}
+.pt-home-live .pt-live-explore-link:focus-visible{outline:2px solid #fff!important;outline-offset:3px!important}
+@media(max-width:420px){.pt-home-live .pt-live-panel-heading .pt-live-explore-link{padding:7px 10px!important;font-size:11px!important}}
