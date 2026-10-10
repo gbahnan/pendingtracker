@@ -2625,3 +2625,22 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-home-live .pt-live-btc .pt-reference-table-row em{border:1px solid #e39a15!important;border-radius:12px!important;padding:2px 7px!important;background:rgba(226,140,11,.11)!important}
 .pt-home-live .pt-live-eth .pt-reference-table-row em{border:1px solid #617fff!important;border-radius:12px!important;padding:2px 7px!important;background:rgba(72,102,245,.12)!important}
 @media(max-width:480px){.pt-home-live .pt-live-chart{height:165px!important}.pt-home-live .pt-live-network-top{min-height:175px!important}}
+
+/* Safari-compatible, independent floating honeycombs in homepage network cards. */
+@keyframes pt-home-cell-drift{
+  0%,100%{transform:translate3d(0,0,0)}
+  32%{transform:translate3d(var(--drift-x),var(--drift-y),0)}
+  68%{transform:translate3d(calc(var(--drift-x)*-.58),calc(var(--drift-y)*-.72),0)}
+}
+.pt-home-live .pt-home-drifting-cell,
+.pt-home-live .pt-home-drifting-satellite{
+  animation-name:pt-home-cell-drift!important;
+  animation-timing-function:ease-in-out!important;
+  animation-iteration-count:infinite!important;
+  animation-direction:normal!important;
+  transform-box:view-box;
+  will-change:transform;
+}
+@media(prefers-reduced-motion:reduce){
+ .pt-home-live .pt-home-drifting-cell,.pt-home-live .pt-home-drifting-satellite{animation:none!important}
+}
