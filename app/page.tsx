@@ -56,11 +56,8 @@ function NetworkHoneycomb({chain}:{chain:"btc"|"eth"}) {
         <filter id={"nh-soft-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.3"/></filter>
       </defs>
       <ellipse cx="170" cy="91" rx="166" ry="91" fill={"url(#nh-space-"+chain+")"}/>
-      {particles.map((p,i)=><polygon key={i} points={hex(p.x,p.y,p.r)} fill={i%4===0?accent:"none"} fillOpacity={i%4===0?".32":"0"} stroke={i%8===0?hot:accent} strokeWidth=".42" opacity={p.opacity}>
-        <animateTransform attributeName="transform" type="translate" values={`0 0; ${p.dx} ${p.dy}; ${-p.dx*.55} ${-p.dy*.6}; 0 0`} dur={p.duration+"s"} begin={p.delay+"s"} repeatCount="indefinite" calcMode="spline" keyTimes="0;.33;.7;1" keySplines=".42 0 .58 1;.42 0 .58 1;.42 0 .58 1"/>
-      </polygon>)}
-      {satellites.map(([x,y,r],i)=><g key={i} opacity={i%4===0?".95":".83"}>
-        <animateTransform attributeName="transform" type="translate" values={`0 0; ${(i%2?1:-1)*(3+i%5)} ${(i%3-1)*5}; 0 0`} dur={(21+i*2)+"s"} begin={-(i*3)+"s"} repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".42 0 .58 1;.42 0 .58 1"/>
+      {particles.map((p,i)=><polygon key={i} className="pt-home-drifting-cell" style={{"--drift-x":p.dx*2+"px","--drift-y":p.dy*2+"px",animationDuration:p.duration+"s",animationDelay:p.delay+"s"} as React.CSSProperties} points={hex(p.x,p.y,p.r)} fill={i%4===0?accent:"none"} fillOpacity={i%4===0?".32":"0"} stroke={i%8===0?hot:accent} strokeWidth=".42" opacity={p.opacity}/>)}
+      {satellites.map(([x,y,r],i)=><g key={i} className="pt-home-drifting-satellite" style={{"--drift-x":((i%2?1:-1)*(11+i%5))+"px","--drift-y":((i%3-1)*13+5)+"px",animationDuration:(18+i*1.7)+"s",animationDelay:-(i*3)+"s"} as React.CSSProperties} opacity={i%4===0?".95":".83"}>
         <polygon points={hex(x,y,r+5)} fill={accent} opacity=".65" filter={"url(#nh-bloom-"+chain+")"}/>
         <polygon points={hex(x,y,r)} fill={accent} fillOpacity=".34" stroke={hot} strokeWidth="1.2"/>
         <polygon points={hex(x,y,r*.82)} fill="none" stroke={edge} strokeWidth="1"/>
