@@ -3191,3 +3191,11 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
   outline:0!important;
   box-shadow:none!important;
 }
+
+
+/* Remove redundant homepage live dashboard entry points.
+   Preserve underlying network dashboard implementation and explorer pages. */
+.pt-shell .pt-home-live-head .pt-live-dashboard-link,
+.pt-shell > .pt-network-drawer{
+  display:none!important;
+}
