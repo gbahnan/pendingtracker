@@ -2538,3 +2538,21 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
 .pt-home-live .pt-home-orbit-cell.is-lit{fill-opacity:.62;stroke-opacity:.9;filter:drop-shadow(0 0 2px currentColor)}
 @keyframes pt-home-orbit{0%{transform:translate(-1px,1px);opacity:.45}50%{transform:translate(2px,-2px);opacity:1}100%{transform:translate(-2px,2px);opacity:.55}}
 @media(prefers-reduced-motion:reduce){.pt-home-live .pt-home-orbit-cell{animation:none!important}}
+
+/* Home live activity: visually integrate the two network cards into the section.
+   No grid, dimensions, spacing or explorer visualization changes. */
+.pt-home-live .pt-home-live-panel{
+  background:linear-gradient(135deg,rgba(12,32,47,.53),rgba(7,22,35,.25))!important;
+  border-color:rgba(115,171,203,.19)!important;
+  box-shadow:none!important;
+}
+.pt-home-live .pt-live-chart{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.pt-home-live .pt-home-hex-scene svg{overflow:visible!important}
+@media(prefers-reduced-motion:reduce){
+  .pt-home-live .pt-home-hex-scene animate,
+  .pt-home-live .pt-home-hex-scene animateTransform{display:none!important}
+}
