@@ -3142,3 +3142,40 @@ body{background-image:radial-gradient(ellipse at 76% 0%,#0a2b4380,transparent 42
   .pt-shell > .pt-network-drawer::before,
   .pt-shell > .pt-section.pt-faq-refresh::before{top:-19px;left:6%;width:88%}
 }
+
+
+/* Editorial comparison: retain all content, controls and responsive columns.
+   Only remove nested card surfaces, using dividers and an accent rule instead. */
+.pt-shell .pt-comparison .pt-comparison-selector{
+  background:transparent!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;padding:0!important;
+}
+.pt-shell .pt-comparison .pt-comparison-raw,
+.pt-shell .pt-comparison .pt-comparison-explained{
+  background:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  padding:10px 8px!important;
+}
+.pt-shell .pt-comparison .pt-comparison-explained{
+  border-left:2px solid var(--cmp-edge)!important;
+  padding-left:22px!important;
+}
+.pt-shell .pt-comparison .pt-comparison-field,
+.pt-shell .pt-comparison .pt-comparison-field:last-child{
+  background:transparent!important;background-image:none!important;
+  border:0!important;border-bottom:1px solid #294456!important;
+  border-radius:0!important;box-shadow:none!important;
+  padding:11px 2px!important;min-height:60px!important;
+}
+.pt-shell .pt-comparison .pt-comparison-bottom{
+  background:transparent!important;background-image:none!important;
+  border:0!important;border-left:2px solid var(--cmp-edge)!important;
+  border-radius:0!important;box-shadow:none!important;
+  padding:5px 0 5px 13px!important;
+}
+@media(max-width:700px){
+  .pt-shell .pt-comparison .pt-comparison-explained{
+    border-left:0!important;border-top:2px solid var(--cmp-edge)!important;
+    padding:18px 8px 10px!important;
+  }
+}
