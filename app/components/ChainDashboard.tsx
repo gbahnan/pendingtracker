@@ -118,7 +118,7 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
  const flowBlocks=(displayBtc?.projectedBlocks??[]).slice(0,5).map(b=>({id:"p"+b.position,median:b.medianFee,count:b.transactionCount==null?"Transactions unavailable":fmt(b.transactionCount)+" transactions"}));
  const feeLevels=isBtc?[{label:"Higher priority",fee:btc?.fastestFee,wait:"Often next block (~10 min)",note:"A current fee recommendation, not a guarantee"},{label:"Medium priority",fee:btc?.halfHourFee,wait:"Around 30 minutes",note:"Guide for roughly three average Bitcoin blocks"},{label:"Lower priority",fee:btc?.hourFee,wait:"Around 60 minutes",note:"May take longer if the network gets busier"},{label:"Economy",fee:btc?.economyFee,wait:"No dependable time",note:"Lower fees can wait much longer"}]:[{label:"Typical gas price",fee:eth?.gasGwei,wait:"Blocks usually ~12 seconds apart",note:"Actual inclusion depends on your transaction's max fee, priority fee and nonce"}];
  const flowVisualization=<div className="pt-chain-flow pt-btc-flow" aria-label="Animated illustration of transactions moving toward projected Bitcoin blocks">
-        <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> {liveConnected?"LIVE MEMPOOL FLOW":"LIVE DATA · RECONNECTING"}</span><span>Animated flow · live projected fees and transactions</span></div>
+        <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> {liveConnected?"LIVE MEMPOOL FLOW":"LIVE DATA · RECONNECTING"}</span><span>GOLD = PROJECTED <span className="pt-flow-legend-dot"/> TEAL = CONFIRMED</span></div>
         <div className="pt-chain-flow-scene">
           <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
           <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} >
@@ -127,7 +127,7 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
             {flowBlocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
-              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB median fee</small></div>
+              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
@@ -160,7 +160,7 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
  </div>;
  if(view==="estimates"&&!tracking)return <div className="pt-dash pt-dash-estimates-only">
   <section className="pt-dash-blocks">
-   <div className="pt-dash-heading"><div className="pt-eyebrow">LIVE BITCOIN MEMPOOL</div><h2>Current estimated transaction confirmation times</h2><p>Watch how the projected queue changes as new transactions arrive and blocks are confirmed. Each step represents roughly ten minutes on average, not a guaranteed confirmation time.</p></div>
+   <div className="pt-dash-heading"><div className="pt-eyebrow">LIVE BITCOIN MEMPOOL</div><h2>Current estimated transaction confirmation times</h2><p>Follow pending transactions as they move toward confirmation. Each honeycomb represents a projected block, roughly ten minutes apart on average.</p></div>
    
    {flowVisualization}
    <div className="pt-bitcoin-projection-insight" aria-live="polite">
@@ -169,7 +169,7 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
      ?"Connecting to the latest Bitcoin mempool projections. The honeycombs illustrate potential future blocks, not guaranteed confirmation times."
      :flowBlocks[0]?.median==null
       ?"The next projected block is forming from transactions waiting in the mempool. Fee competition and block arrival times can change."
-      :<>Each gold honeycomb is a projected Bitcoin block. As miners confirm blocks, the queue moves forward. The next projected block has a median fee rate of <strong>{fmt(flowBlocks[0].median)} sat/vB</strong>. {flowBlocks[1]?.median!=null&&flowBlocks[0].median>flowBlocks[1].median
+      :<>Gold honeycombs show waiting transactions; teal marks the latest confirmed block. The next projected block has a median fee rate of <strong>{fmt(flowBlocks[0].median)} sat/vB</strong>. {flowBlocks[1]?.median!=null&&flowBlocks[0].median>flowBlocks[1].median
        ?<>The following projected block has a lower median of <strong>{fmt(flowBlocks[1].median)} sat/vB</strong>, illustrating how lower-fee transactions may wait longer.</>
        :"Your actual confirmation time depends on your transaction's fee rate and how the queue changes."} Each step represents roughly ten minutes on average; confirmation times are not guaranteed.</>}</p>
    </div>
