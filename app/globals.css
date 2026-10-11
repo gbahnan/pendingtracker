@@ -3859,3 +3859,175 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  }
  .pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight::before{left:11px!important}
 }
+
+
+/* REFERENCE-MATCH PASS — screenshot "Live Bitcoin Mempool Timeline".
+   Only Bitcoin Explorer overview. Never alter animation timing or tracking flow. */
+.pt-bitcoin-explorer .pt-bitcoin-estimates{--lux-gold:#ffc04f;--lux-teal:#65e5d0}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading{
+ padding-right:340px!important;margin-bottom:27px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading h2{
+ font-size:clamp(32px,3.05vw,48px)!important;line-height:1.16!important;
+ letter-spacing:-.045em!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading p{
+ color:#bed0dc!important;font-size:17px!important;line-height:1.6!important;
+ max-width:1040px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-head{
+ padding:0 0 24px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-flow-legend{
+ gap:16px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-flow-legend>span{
+ font-size:12px!important;letter-spacing:.02em!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-scene{
+ background:transparent!important;overflow:visible!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-shapes{
+ gap:10px!important;align-items:start!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit{
+ position:relative!important;min-width:0!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex{
+ transform:scale(1.055);transform-origin:center center;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending{
+ background:#061522!important;
+ border:2px solid #b78127!important;
+ box-shadow:inset 0 0 26px #d59a2921,0 0 22px #f1ae352c,0 0 38px #f4ad1912!important;
+ filter:drop-shadow(0 0 9px #d69a3744)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending::before,
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending::after{
+ border-color:#d49a37!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:nth-child(2) .pt-chain-flow-hex-pending{
+ border:2.5px solid #ffcf6a!important;
+ background:#071725!important;
+ box-shadow:inset 0 0 24px #ffb33b2c,0 0 14px #ffca6bba,0 0 31px #ffc04f80,0 0 56px #f5a51d3b!important;
+ filter:drop-shadow(0 0 11px #ffc45e99)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:nth-child(2) .pt-chain-flow-hex-pending::before,
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:nth-child(2) .pt-chain-flow-hex-pending::after{
+ border-color:#ffcf6a!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon.pt-honeycomb-cell-live{
+ fill:#071723!important;stroke:#70501e!important;stroke-opacity:.67!important;filter:none!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(19n + 4),
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(23n + 12){
+ fill:#e5a43d!important;stroke:#ffd57a!important;
+ filter:drop-shadow(0 0 6px #ffba46)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon.pt-honeycomb-traveler{
+ fill:#ffca60!important;stroke:#ffe5a1!important;
+ filter:drop-shadow(0 0 8px #ffc14e)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending>strong{
+ font-size:clamp(26px,2.5vw,43px)!important;font-weight:800!important;
+ text-shadow:0 2px 12px #00101b,0 0 8px #00101b!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending>span{
+ font-size:14px!important;letter-spacing:.09em!important;color:#ffbd4a!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending>small{
+ font-size:14px!important;color:#c8d6df!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed{
+ border:2.5px solid #75f2da!important;
+ background:linear-gradient(145deg,#082832,#061a29)!important;
+ box-shadow:inset 0 0 28px #65e5d023,0 0 16px #6ef2da90,0 0 35px #59d9c354!important;
+ filter:drop-shadow(0 0 11px #65e5d09a)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed::before,
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed::after{
+ border-color:#75f2da!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed>span:not(.pt-flow-confirmed-check){
+ color:#78e9d4!important;font-size:13px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-flow-confirmed-check{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ width:27px;height:27px;border-radius:50%;margin:0 auto 4px!important;
+ color:#072b32!important;background:#72dfcc!important;font-size:19px!important;
+ font-weight:900!important;line-height:1!important;letter-spacing:0!important;
+ box-shadow:0 0 13px #72dfcc77!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed>strong{
+ font-size:clamp(18px,1.9vw,29px)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed>small{
+ color:#c7dce2!important;font-size:13px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:not(:last-child)::after{
+ content:"»";position:absolute;right:-20px;top:26%;z-index:4;
+ color:#8aa1ad;font-size:27px;font-weight:400;letter-spacing:-5px;
+ text-shadow:0 0 6px #243c4d;pointer-events:none;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption{
+ padding-top:30px!important;gap:5px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption::before{
+ top:11px!important;background:linear-gradient(90deg,transparent,#a58139,transparent)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-timeline-dot{
+ top:5px!important;background:#ffbf4f!important;
+ box-shadow:0 0 13px #ffbd50b8!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-confirmed-unit .pt-chain-flow-timeline-dot{
+ background:#65e5d0!important;box-shadow:0 0 13px #65e5d0aa!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption .pt-chain-flow-time{
+ font-size:18px!important;color:#e7eef5!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption .pt-chain-flow-time small{
+ font-size:13px!important;color:#bdceda!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption .pt-chain-flow-tx{
+ font-size:14px!important;color:#a9bdcd!important;line-height:1.4!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-confirmed{
+ display:none!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight{
+ max-width:none!important;width:100%!important;box-sizing:border-box!important;
+ margin:40px 0 0!important;border:1px solid #274256!important;
+ border-radius:20px!important;
+ padding:26px 32px 26px 42px!important;
+ background:linear-gradient(110deg,#071d2c,#041522)!important;
+ box-shadow:0 12px 32px #0000001b!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight::before{
+ left:20px!important;top:20px!important;bottom:20px!important;width:3px!important;
+ background:#ffc052!important;box-shadow:0 0 13px #ffbf4d80!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight .pt-eyebrow{
+ font-size:13px!important;letter-spacing:.12em!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight p{
+ font-size:16px!important;line-height:1.65!important;color:#c4d4e0!important;
+}
+@media(max-width:900px){
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading{padding-right:0!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-scene{
+  overflow-x:auto!important;overflow-y:hidden!important;
+ }
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-shapes{min-width:920px!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-stream{min-width:920px!important}
+}
+@media(max-width:700px){
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading h2{font-size:29px!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-dash-heading p{font-size:14px!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-head{gap:10px!important;flex-wrap:wrap!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption .pt-chain-flow-time{font-size:16px!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight{
+  margin-top:23px!important;padding:19px 17px 19px 28px!important;
+ }
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight::before{left:13px!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-bitcoin-projection-insight p{font-size:13px!important}
+}
