@@ -123,11 +123,11 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
           <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
           <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} >
             <div className={"pt-chain-flow-unit pt-chain-flow-confirmed-unit"+(blockFlash?" pt-chain-flow-new-confirmation":"")}>
-              <div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span>CONFIRMED</span><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>on chain</small></div>
+              <div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span>CONFIRMED</span><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>✓ on chain</small></div>
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
             {flowBlocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
-              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
+              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB median fee</small></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
@@ -161,17 +161,17 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
  if(view==="estimates"&&!tracking)return <div className="pt-dash pt-dash-estimates-only">
   <section className="pt-dash-blocks">
    <div className="pt-dash-heading"><div className="pt-eyebrow">LIVE BITCOIN MEMPOOL</div><h2>Current estimated transaction confirmation times</h2><p>Watch how the projected queue changes as new transactions arrive and blocks are confirmed. Each step represents roughly ten minutes on average, not a guaranteed confirmation time.</p></div>
-   <div className="pt-bitcoin-flow-labels"><span>NOW · MEMPOOL</span><span>PROJECTED BLOCKS →</span></div>
+   
    {flowVisualization}
    <div className="pt-bitcoin-projection-insight" aria-live="polite">
-    <div className="pt-eyebrow">✦ PENDING TRACKER EXPLAINS</div>
+    <div className="pt-eyebrow">✦ WHAT YOU’RE SEEING</div>
     <p>{!liveConnected||flowBlocks.length===0
      ?"Connecting to the latest Bitcoin mempool projections. The honeycombs illustrate potential future blocks, not guaranteed confirmation times."
      :flowBlocks[0]?.median==null
       ?"The next projected block is forming from transactions waiting in the mempool. Fee competition and block arrival times can change."
-      :<>The honeycombs show projected blocks of waiting transactions. The next projected block has a median fee rate of <strong>{fmt(flowBlocks[0].median)} sat/vB</strong>. {flowBlocks[1]?.median!=null&&flowBlocks[0].median>flowBlocks[1].median
+      :<>Each gold honeycomb is a projected Bitcoin block. As miners confirm blocks, the queue moves forward. The next projected block has a median fee rate of <strong>{fmt(flowBlocks[0].median)} sat/vB</strong>. {flowBlocks[1]?.median!=null&&flowBlocks[0].median>flowBlocks[1].median
        ?<>The following projected block has a lower median of <strong>{fmt(flowBlocks[1].median)} sat/vB</strong>, illustrating how lower-fee transactions may wait longer.</>
-       :"Your actual confirmation time depends on your transaction's fee rate and how the queue changes."} When a block is confirmed, the queue advances and recalculates. Each step is roughly ten minutes on average, but actual confirmation times vary.</>}</p>
+       :"Your actual confirmation time depends on your transaction's fee rate and how the queue changes."} Each step represents roughly ten minutes on average; confirmation times are not guaranteed.</>}</p>
    </div>
   </section>
  </div>;
