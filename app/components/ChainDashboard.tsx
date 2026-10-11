@@ -123,11 +123,11 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
           <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
           <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} >
             <div className={"pt-chain-flow-unit pt-chain-flow-confirmed-unit"+(blockFlash?" pt-chain-flow-new-confirmation":"")}>
-              <div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span className="pt-flow-confirmed-check">✓</span><span>CONFIRMED</span><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>✓ on chain</small></div>
+              <div className="pt-chain-flow-glow-wrap pt-chain-flow-glow-confirmed"><div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span className="pt-flow-confirmed-check">✓</span><span>CONFIRMED</span><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>✓ on chain</small></div></div>
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-timeline-dot"/><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
             {flowBlocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
-              <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div>
+              <div className={"pt-chain-flow-glow-wrap"+(i===0?" pt-chain-flow-glow-next":"")}><div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-timeline-dot"/><span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
