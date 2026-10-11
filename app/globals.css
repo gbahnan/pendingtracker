@@ -4188,3 +4188,24 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  fill:#ffcf65!important;stroke:#ffe6a2!important;
  filter:drop-shadow(0 0 6px #ffe59a) drop-shadow(0 0 12px #ffb532)!important;
 }
+
+
+/* Oct 11: restrained dark-gold metal rim + luminous individual cells.
+   Applied to the actual website elements; no duplicate shapes or layout changes. */
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex.pt-chain-flow-hex-pending{
+ background:linear-gradient(145deg,#80541b 0%,#bd842d 23%,#754918 55%,#d39a3e 82%,#6f4315 100%)!important;
+ filter:drop-shadow(0 0 4px #e7ac50c0) drop-shadow(0 0 11px #d9953285) drop-shadow(0 0 18px #b77a244d)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:nth-child(2) .pt-chain-flow-hex.pt-chain-flow-hex-pending{
+ background:linear-gradient(145deg,#a56a1e,#f2bb55 28%,#a96d24 65%,#e5a943)!important;
+ filter:drop-shadow(0 0 5px #ffd78cd9) drop-shadow(0 0 13px #ffc05da8) drop-shadow(0 0 22px #efac4480)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(19n + 4),
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(23n + 12){
+ fill:#ffd56c!important;stroke:#ffe8a4!important;
+ filter:drop-shadow(0 0 7px #ffe7a0) drop-shadow(0 0 13px #ffbc40)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-traveler{
+ fill:#ffda73!important;stroke:#ffedb3!important;
+ filter:drop-shadow(0 0 8px #ffe8a4) drop-shadow(0 0 15px #ffba3a)!important;
+}
