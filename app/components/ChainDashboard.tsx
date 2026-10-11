@@ -163,6 +163,16 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
    <div className="pt-dash-heading"><div className="pt-eyebrow">LIVE BITCOIN MEMPOOL</div><h2>Current estimated transaction confirmation times</h2><p>Watch how the projected queue changes as new transactions arrive and blocks are confirmed. Each step represents roughly ten minutes on average, not a guaranteed confirmation time.</p></div>
    <div className="pt-bitcoin-flow-labels"><span>NOW · MEMPOOL</span><span>PROJECTED BLOCKS →</span></div>
    {flowVisualization}
+   <div className="pt-bitcoin-projection-insight" aria-live="polite">
+    <div className="pt-eyebrow">✦ PENDING TRACKER EXPLAINS</div>
+    <p>{!liveConnected||flowBlocks.length===0
+     ?"Connecting to the latest Bitcoin mempool projections. The honeycombs illustrate potential future blocks, not guaranteed confirmation times."
+     :flowBlocks[0]?.median==null
+      ?"The next projected block is forming from transactions waiting in the mempool. Fee competition and block arrival times can change."
+      :<>The next projected block currently has a median transaction fee rate of <strong>{fmt(flowBlocks[0].median)} sat/vB</strong>. {flowBlocks[1]?.median!=null&&flowBlocks[0].median>flowBlocks[1].median
+       ?<>The following projected block has a lower median of <strong>{fmt(flowBlocks[1].median)} sat/vB</strong>, illustrating how lower-fee transactions may wait longer.</>
+       :"Your actual confirmation time depends on your transaction's fee rate and how the queue changes."} These are projections, not promises.</>}</p>
+   </div>
    <p className="pt-bitcoin-flow-note">These are live mempool projections, not scheduled blocks. Your transaction's actual wait depends on its fee rate, network conditions and when miners find blocks.</p>
   </section>
  </div>;
