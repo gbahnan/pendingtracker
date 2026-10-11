@@ -4229,3 +4229,32 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed{
  filter:drop-shadow(0 0 5px #a6ffefc0) drop-shadow(0 0 13px #63e6d0a0) drop-shadow(0 0 23px #3bd0b75a)!important;
 }
+
+
+/* Targeted brightness only — no new shapes, no size or layout changes. */
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-scene,
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-shapes,
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit{
+ overflow:visible!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending{
+ filter:drop-shadow(0 0 3px #ffe4a4) drop-shadow(0 0 9px #ffba49d9) drop-shadow(0 0 18px #ffa8299c)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:nth-child(2) .pt-chain-flow-hex-pending{
+ filter:drop-shadow(0 0 4px #fff0c4) drop-shadow(0 0 12px #ffce6a) drop-shadow(0 0 24px #ffae35c9)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-confirmed{
+ filter:drop-shadow(0 0 4px #b7fff2) drop-shadow(0 0 11px #6cf5dddf) drop-shadow(0 0 21px #40d9c3aa)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon.pt-honeycomb-traveler{
+ fill:#ffca57!important;stroke:#ffe4a2!important;
+ filter:drop-shadow(0 0 5px #ffe29b) drop-shadow(0 0 10px #ffb52e)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(19n + 4),
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending .pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(23n + 12){
+ fill:#ffc14b!important;stroke:#ffdf87!important;
+ filter:drop-shadow(0 0 5px #ffe19a) drop-shadow(0 0 10px #ffb63b)!important;
+}
+@media(max-width:900px){
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-scene{overflow-x:auto!important;overflow-y:hidden!important}
+}
