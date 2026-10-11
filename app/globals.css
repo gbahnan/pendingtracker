@@ -4161,3 +4161,30 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  box-shadow:0 10px 28px #0003!important;
 }
 @media(max-width:900px){.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit{filter:none!important}}
+
+
+/* Selector-specificity correction: illuminate the actual SVG polygons.
+   Parent filter was lighting the captions; confine outer halo to the hexagon. */
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit,
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-confirmed-unit,
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:nth-child(2){
+ filter:none!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex.pt-chain-flow-hex-pending{
+ filter:drop-shadow(0 0 4px #ffd480cc) drop-shadow(0 0 11px #ffb63da3) drop-shadow(0 0 19px #ffac3766)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-unit:nth-child(2) .pt-chain-flow-hex.pt-chain-flow-hex-pending{
+ filter:drop-shadow(0 0 5px #ffe7a9ee) drop-shadow(0 0 13px #ffc458c9) drop-shadow(0 0 22px #ffad3588)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex.pt-chain-flow-hex-confirmed{
+ filter:drop-shadow(0 0 5px #aaffefc9) drop-shadow(0 0 12px #65ecd6bb) drop-shadow(0 0 21px #44d8c388)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(19n + 4),
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-cell-live:nth-child(23n + 12){
+ fill:#ffd16a!important;stroke:#ffe8a7!important;stroke-opacity:1!important;
+ filter:drop-shadow(0 0 6px #ffe18b) drop-shadow(0 0 12px #ffb52e)!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending svg.pt-chain-honeycomb polygon.pt-honeycomb-traveler{
+ fill:#ffcf65!important;stroke:#ffe6a2!important;
+ filter:drop-shadow(0 0 6px #ffe59a) drop-shadow(0 0 12px #ffb532)!important;
+}
