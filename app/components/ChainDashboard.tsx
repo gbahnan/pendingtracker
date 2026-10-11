@@ -135,24 +135,24 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
               </div>
             </div>)}
             {blockFlash&&<div className="pt-chain-flow-unit pt-chain-flow-incoming" aria-hidden="true">
-              <div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><Honeycomb/><span>NEW</span><strong>→</strong><small>pending</small></div>
+              <div className="pt-chain-flow-glow-wrap"><div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><Honeycomb/><span>NEW</span><strong>→</strong><small>pending</small></div></div>
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">New projection</span></div>
             </div>}
           </div>
         </div>
         <div className="pt-chain-flow-confirmed"><span className={blockFlash?"pt-chain-confirmed-flash":""}>● {blockFlash?"NEW BLOCK CONFIRMED":"LATEST CONFIRMED BLOCK"} {btc?.latestBlock?.height==null?"":("#"+fmt(btc.latestBlock.height))}</span><span>Queue advances when a new block is detected; projections are recalculated from the live mempool.</span></div>
       </div>;
- const ethereumVisualization=<div className="pt-chain-flow pt-eth-flow" aria-label="Live Ethereum blocks and transaction status">
+ const ethereumVisualization=<div className="pt-chain-flow pt-eth-flow pt-reference-glow" aria-label="Live Ethereum blocks and transaction status">
   <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> LIVE ETHEREUM BLOCKS</span><span>New blocks approximately every 12 seconds · live data</span></div>
   <div className="pt-chain-flow-scene">
    <div className={"pt-chain-flow-shapes"+(ethShift?" pt-chain-flow-shift":"")}>
     {(eth?.recentBlocks??[]).slice(0,5).map((b,i)=><div className="pt-chain-flow-unit" key={String(b.hash??b.height??i)}>
-     <div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(ethShift&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"LATEST":"CONFIRMED"}</span><strong>#{b.height==null?"—":fmt(Number(b.height))}</strong><small>ETH BLOCK</small></div>
+     <div className={"pt-chain-flow-glow-wrap"+(i===0?" pt-chain-flow-glow-next":"")}><div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(ethShift&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"LATEST":"CONFIRMED"}</span><strong>#{b.height==null?"—":fmt(Number(b.height))}</strong><small>ETH BLOCK</small></div></div>
      <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">{i===0?"Latest block":"Previous block"}</span><span className="pt-chain-flow-tx">{b.transactionsCount==null?"Transactions unavailable":fmt(b.transactionsCount)+" transactions"}</span>
      {tracking&&trackedEthBlock!=null&&Number(b.height)===trackedEthBlock&&<div className="pt-chain-tracked-arrow"><span>↑</span><strong>YOUR TRANSACTION</strong></div>}
      </div>
     </div>)}
-    {!(eth?.recentBlocks?.length)&&<div className="pt-chain-flow-unit"><div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><Honeycomb/><span>ETHEREUM</span><strong>—</strong><small>loading blocks</small></div></div>}
+    {!(eth?.recentBlocks?.length)&&<div className="pt-chain-flow-unit"><div className="pt-chain-flow-glow-wrap"><div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><Honeycomb/><span>ETHEREUM</span><strong>—</strong><small>loading blocks</small></div></div></div>}
    </div>
   </div>
   {tracking&&ethPending&&<div className="pt-eth-pending-locator"><span>↑ YOUR TRANSACTION</span><strong>Pending in the network · future block unknown</strong><small>Ethereum transactions are not assigned a guaranteed upcoming block. Gas settings and account nonce can affect inclusion.</small></div>}
