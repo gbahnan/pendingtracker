@@ -3533,3 +3533,47 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
   min-width:0!important;overflow-wrap:anywhere!important;
  }
 }
+
+
+/* Bitcoin projection UX refinement, informed by mempool/block explorer patterns.
+   Scope to overview only: tracked transaction arrows and animations stay intact. */
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption .pt-chain-flow-fee{
+ display:none!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption{
+ padding-top:12px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption .pt-chain-flow-time{
+ color:#e3edf5!important;font-weight:750!important;font-size:14px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-caption .pt-chain-flow-tx{
+ color:#9db6c7!important;font-size:12px!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-hex-pending{
+ filter:drop-shadow(0 0 9px rgba(246,170,41,.12))!important;
+}
+.pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-head>span:last-child{
+ font-weight:500!important;letter-spacing:0!important;
+}
+.pt-bitcoin-projection-insight{
+ border-left:2px solid #e1a438;
+ padding:3px 0 4px 19px;
+ margin:28px 0 15px;
+ max-width:930px;
+}
+.pt-bitcoin-projection-insight .pt-eyebrow{
+ color:#ffc35d!important;letter-spacing:.12em!important;
+ font-size:11px!important;font-weight:800!important;
+}
+.pt-bitcoin-projection-insight p{
+ color:#c3d5e1!important;font-size:14px!important;
+ line-height:1.8!important;margin:9px 0 0!important;
+}
+.pt-bitcoin-projection-insight strong{color:#ffc35d!important;font-weight:750!important}
+@media(max-width:700px){
+ .pt-bitcoin-projection-insight{margin:20px 0 12px;padding-left:14px}
+ .pt-bitcoin-projection-insight p{font-size:13px!important}
+ .pt-bitcoin-explorer .pt-dash-estimates-only .pt-chain-flow-scene{
+  scrollbar-width:thin;scrollbar-color:#b78336 transparent;
+ }
+}
