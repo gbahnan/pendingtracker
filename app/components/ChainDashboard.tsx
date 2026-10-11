@@ -169,11 +169,10 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
      ?"Connecting to the latest Bitcoin mempool projections. The honeycombs illustrate potential future blocks, not guaranteed confirmation times."
      :flowBlocks[0]?.median==null
       ?"The next projected block is forming from transactions waiting in the mempool. Fee competition and block arrival times can change."
-      :<>The next projected block currently has a median transaction fee rate of <strong>{fmt(flowBlocks[0].median)} sat/vB</strong>. {flowBlocks[1]?.median!=null&&flowBlocks[0].median>flowBlocks[1].median
+      :<>The honeycombs show projected blocks of waiting transactions. The next projected block has a median fee rate of <strong>{fmt(flowBlocks[0].median)} sat/vB</strong>. {flowBlocks[1]?.median!=null&&flowBlocks[0].median>flowBlocks[1].median
        ?<>The following projected block has a lower median of <strong>{fmt(flowBlocks[1].median)} sat/vB</strong>, illustrating how lower-fee transactions may wait longer.</>
-       :"Your actual confirmation time depends on your transaction's fee rate and how the queue changes."} These are projections, not promises.</>}</p>
+       :"Your actual confirmation time depends on your transaction's fee rate and how the queue changes."} When a block is confirmed, the queue advances and recalculates. Each step is roughly ten minutes on average, but actual confirmation times vary.</>}</p>
    </div>
-   <p className="pt-bitcoin-flow-note">These are live mempool projections, not scheduled blocks. Your transaction's actual wait depends on its fee rate, network conditions and when miners find blocks.</p>
   </section>
  </div>;
  if(tracking)return <div className="pt-dash pt-dash-tracking">{isBtc?flowVisualization:ethereumVisualization}</div>;
