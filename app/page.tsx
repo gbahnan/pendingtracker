@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./home-2026.css";
+import "./home-clarity.css";
 // @ts-ignore JS WebGL component intentionally owns its renderer lifecycle.
 
 
@@ -144,10 +145,34 @@ function HeroEmblem({chain,variant="hero"}:{chain:"btc"|"eth";variant?:"hero"|"n
  </svg>;
 }
 
+const clarityTopics = {
+  btc: [
+    {icon:"⬡",title:"Block Height",description:"Shows the position of a block in Bitcoin's chain. Higher numbers mean a more recent block.",example:"971,152"},
+    {icon:"⇄",title:"Transactions",description:"The number of transactions included in a block. Each one records a movement of Bitcoin.",example:"2,845 transactions"},
+    {icon:"≋",title:"Median Fee Rate",description:"The middle fee rate paid by transactions in a block. It describes past fees, not a guaranteed confirmation speed.",example:"4.2 sat/vB"},
+    {icon:"◷",title:"Confirmations",description:"A transaction gets its first confirmation when included in a block. Each later block adds one more.",example:"3 confirmations"},
+    {icon:"◈",title:"Block Size",description:"How much transaction data is in a Bitcoin block, measured in bytes.",example:"1,620,000 bytes"},
+    {icon:"▤",title:"Block Weight",description:"Bitcoin's measure of how much block capacity transactions use.",example:"3,920,000 WU"},
+    {icon:"₿",title:"Total Fees",description:"The sum of transaction fees paid to the miner who produced a block.",example:"0.085 BTC"},
+    {icon:"#",title:"Block Hash",description:"A unique cryptographic identifier for a block. You can use it to look up that exact block.",example:"000000…8a42"}
+  ],
+  eth: [
+    {icon:"⬡",title:"Block Number",description:"Identifies a block's position in Ethereum's history. Each new block gets a higher number.",example:"26,179,324"},
+    {icon:"⇄",title:"Transactions",description:"The transactions included in a block, from transfers to smart contract interactions.",example:"144 transactions"},
+    {icon:"≋",title:"Gas Price",description:"The price per unit of computation on Ethereum. The total cost also depends on gas used.",example:"1.23 gwei"},
+    {icon:"◷",title:"Block Time",description:"Ethereum creates opportunities for new blocks in roughly 12-second slots. Not every slot necessarily contains a block.",example:"~12 seconds per slot"},
+    {icon:"◇",title:"Gas Used",description:"The total computational work consumed by transactions in a block.",example:"14,500,000 gas"},
+    {icon:"▤",title:"Gas Limit",description:"The maximum amount of gas that can be used within a block.",example:"Block gas limit"},
+    {icon:"◆",title:"Base Fee",description:"A network-set fee per gas that changes with demand and is burned rather than paid to validators.",example:"0.82 gwei"},
+    {icon:"#",title:"Transaction Hash",description:"A unique identifier you can use to look up a particular Ethereum transaction.",example:"0xca03…6f0a40"}
+  ]
+} as const;
+
 export default function Page() {
   const router = useRouter();
   const [network, setNetwork] = useState<"btc" | "eth">("btc");
   const [comparisonChain, setComparisonChain] = useState<"btc" | "eth">("btc");
+  const [clarityExpanded, setClarityExpanded] = useState(false);
   const [comparisonMode, setComparisonMode] = useState<"explore" | "track">("explore");
   const comparison = comparisonExamples[comparisonChain][comparisonMode];
   const [query, setQuery] = useState("");
@@ -277,39 +302,29 @@ export default function Page() {
         </article>
       </div>
     </section>
-    <section className="pt-section pt-journey pt-comparison" id="how-it-works" data-chain={comparisonChain}>
-      <div className="pt-comparison-heading">
-        <div className="pt-eyebrow">THE PENDING TRACKER DIFFERENCE</div>
-        <h2>Same blockchain. A clearer picture.</h2>
-        <p>We show you the blockchain data — then translate it into clear explanations, so you understand what you're looking at and why it matters.</p>
-      </div>
-      <div className="pt-comparison-selector">
-        <div className="pt-comparison-selector-title">CHOOSE YOUR BLOCKCHAIN</div>
-        <div className="pt-comparison-chain-tabs" role="group" aria-label="Choose blockchain example">
-          <button type="button" className={comparisonChain==="btc"?"is-active":""} data-chain="btc" aria-pressed={comparisonChain==="btc"} onClick={()=>setComparisonChain("btc")}><span className="pt-comparison-honeycombs" aria-hidden="true"><i/><i/><i/></span><span className="pt-comparison-button-content"><span className="pt-comparison-hex" aria-hidden="true">₿</span><span>Bitcoin<small>{comparisonChain==="btc"?"✓ Currently viewing":"Click to select"}</small></span></span></button>
-          <button type="button" className={comparisonChain==="eth"?"is-active":""} data-chain="eth" aria-pressed={comparisonChain==="eth"} onClick={()=>setComparisonChain("eth")}><span className="pt-comparison-honeycombs" aria-hidden="true"><i/><i/><i/></span><span className="pt-comparison-button-content"><span className="pt-comparison-hex" aria-hidden="true">◆</span><span>Ethereum<small>{comparisonChain==="eth"?"✓ Currently viewing":"Click to select"}</small></span></span></button>
-        </div>
-      </div>
-      <div className="pt-comparison-mode-tabs" role="group" aria-label="Choose what to explore">
-        <button type="button" className={comparisonMode==="explore"?"is-active":""} aria-pressed={comparisonMode==="explore"} onClick={()=>setComparisonMode("explore")}><span aria-hidden="true">⬡</span> Explore Blockchain</button>
-        <button type="button" className={comparisonMode==="track"?"is-active":""} aria-pressed={comparisonMode==="track"} onClick={()=>setComparisonMode("track")}><span aria-hidden="true">⌕</span> Track Transaction</button>
-      </div>
-      <div className="pt-comparison-grid">
-        <div className="pt-comparison-raw">
-          <h3><span aria-hidden="true">▤</span> Traditional Explorer</h3>
-          <div className="pt-comparison-kicker">RAW BLOCKCHAIN DATA</div>
-          <div className="pt-comparison-fields">{comparison.raw.map(([label,value])=><div className="pt-comparison-field" key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>
-        </div>
-        <div className="pt-comparison-explained">
-          <h3><span aria-hidden="true">✦</span> Pending Tracker Explains</h3>
-          <div className="pt-comparison-copy"><h4>{comparison.heading}</h4><p>{comparison.intro}</p>
-            <div className="pt-comparison-details-grid">{comparison.details.map(([label,description])=><div className="pt-comparison-detail" key={label}><h5>{label}</h5><p>{description}</p></div>)}</div>
+    <section className="pt-clarity" id="how-it-works" data-chain={comparisonChain}>
+      <div className="pt-clarity-inner">
+        <div className="pt-clarity-top">
+          <div className="pt-clarity-intro">
+            <h2>Same blockchain.<br/><span>A clearer picture.</span></h2>
+            <p>We show you the blockchain data — then translate it into clear explanations, so you understand what you're looking at and why it matters.</p>
           </div>
-          <div className="pt-comparison-bottom"><h5><span aria-hidden="true">✓</span> The bottom line</h5><p>{comparison.bottom}</p></div>
+          <div className="pt-clarity-switch" role="group" aria-label="Choose blockchain explanations">
+            <button type="button" className={comparisonChain==="btc"?"active":""} aria-pressed={comparisonChain==="btc"} onClick={()=>{setComparisonChain("btc");setClarityExpanded(false)}}><span>₿</span> Bitcoin</button>
+            <button type="button" className={comparisonChain==="eth"?"active":""} aria-pressed={comparisonChain==="eth"} onClick={()=>{setComparisonChain("eth");setClarityExpanded(false)}}><span>◆</span> Ethereum</button>
+          </div>
         </div>
+        <div className="pt-clarity-cards">
+          {clarityTopics[comparisonChain].slice(0,clarityExpanded?8:4).map(topic=><article className="pt-clarity-card" key={topic.title}>
+            <div className="pt-clarity-icon" aria-hidden="true"><span>{topic.icon}</span></div>
+            <h3>{topic.title}</h3>
+            <p>{topic.description}</p>
+            <div className="pt-clarity-example"><small>EXAMPLE</small><strong>{topic.example}</strong></div>
+          </article>)}
+        </div>
+        <button className="pt-clarity-more" type="button" aria-expanded={clarityExpanded} onClick={()=>setClarityExpanded(v=>!v)}>{clarityExpanded?"Show Fewer Explanations":"Show 4 More Explanations"} <span aria-hidden="true">{clarityExpanded?"⌃":"⌄"}</span></button>
+        <p className="pt-clarity-note">Examples are illustrative, not live blockchain measurements.</p>
       </div>
-      <p className="pt-comparison-disclaimer">Illustrative examples using hypothetical data, not live blockchain measurements.</p>
-      <div className="pt-comparison-footer"><h3>Not just transactions. The entire network, made understandable.</h3><p>From individual transactions and wallet activity to blocks, fees, and network conditions, Pending Tracker helps you explore Bitcoin and Ethereum without getting lost in technical data.</p></div>
     </section>
 <details className="pt-network-drawer" id="network-dashboard"><summary><span><b>Live network dashboard</b><small>Expand for Bitcoin and Ethereum blocks, fees and live transactions</small></span><span aria-hidden="true">＋</span></summary>    <section className="pt-section" id="network">
       <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE BLOCKCHAIN EXPLORER</div><h2>{network==="btc"?"The Bitcoin Network, Live.":"The Ethereum Network, Live."}</h2><p>See what's happening on the network right now—and understand what it means for your transactions.</p></div><span className="pt-live" role="status">{loading?"Loading live data…":overview?"● Live data · refreshed every 5 seconds":"Network data temporarily unavailable"}</span></div>
