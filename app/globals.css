@@ -4527,3 +4527,73 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
    max-width:300px!important;
  }
 }
+
+/* BTC transaction: single human-first status, no outer card or dashboard grid. */
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-status{
+  padding:24px 0 30px!important;
+  margin:0!important;
+  border-bottom:1px solid rgba(131,176,198,.22);
+  background:transparent!important;
+  max-width:100%;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-top,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-eyebrow,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-eyebrow{justify-content:flex-start;gap:12px}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-pill{
+  font-size:12px;font-weight:750;padding:6px 12px;border-radius:99px;
+  border:1px solid rgba(245,185,90,.4);color:#f3bd65;background:rgba(245,185,90,.1);
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-pill.is-confirmed{
+  color:#9ae3c3;background:rgba(80,195,148,.14);border-color:rgba(80,195,148,.36);
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-status h1{
+  font-size:clamp(28px,3.15vw,44px)!important;
+  line-height:1.12!important;letter-spacing:-.045em!important;
+  margin:19px 0 12px!important;max-width:900px!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-description{
+  max-width:950px!important;font-size:clamp(15px,1.12vw,17px)!important;
+  line-height:1.65!important;color:#c8d9e5!important;margin:0 0 25px!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-facts{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:clamp(15px,3vw,45px)!important;margin:0 0 20px!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact{
+  min-width:0;padding:15px 0 0!important;
+  border-top:1px solid rgba(131,176,198,.28)!important;
+  display:flex!important;flex-direction:column!important;gap:6px!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact>span{
+  font-size:10px!important;font-weight:800!important;letter-spacing:.13em!important;color:#9bb9c9!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact>strong{
+  font-size:clamp(21px,2vw,29px)!important;line-height:1.2!important;
+  letter-spacing:-.025em!important;color:#f0bd65!important;overflow-wrap:anywhere;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact>small{
+  font-size:12px!important;line-height:1.5!important;color:#b8ccda!important;max-width:350px!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer{
+  padding-top:15px!important;border-top:1px solid rgba(131,176,198,.16)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer .pt-tx-hero-hash{
+  padding:0!important;margin:0!important;border:0!important;min-width:0;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-details-link{
+  color:#efbd68!important;font-size:13px!important;font-weight:650!important;
+  text-decoration:none!important;white-space:normal;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-details-link:hover{text-decoration:underline!important}
+@media(max-width:700px){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-status{padding:19px 0 24px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-facts{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact>strong{font-size:22px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-description{font-size:15px!important}
+}
+@media(max-width:390px){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-facts{grid-template-columns:1fr!important;gap:12px!important}
+}
