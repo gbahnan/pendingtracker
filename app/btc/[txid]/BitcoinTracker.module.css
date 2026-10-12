@@ -79,3 +79,23 @@
 .pendingHex{filter:drop-shadow(0 0 5px #b7812750)}
 .selectedHex{filter:drop-shadow(0 0 6px #ffe8afdd) drop-shadow(0 0 14px #ffc45dbb) drop-shadow(0 0 26px #ffac3c85)}
 .confirmedHex{filter:drop-shadow(0 0 5px #9bffecc9) drop-shadow(0 0 13px #65e9d5a6) drop-shadow(0 0 24px #37cbb77a)}
+
+/* Explorer pages show the confirmed block plus FIVE projections in ONE row.
+   The transaction result page intentionally retains its existing five-block grid. */
+:global(.pt-standard-tracker-flow) .blockRow{
+ grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ width:100%!important;
+ max-width:1110px!important;
+ margin:0 auto!important;
+ gap:0!important;
+}
+:global(.pt-standard-tracker-flow) .blockUnit{min-width:0!important}
+:global(.pt-standard-tracker-flow) .confirmedHex>*:not(.hexArtwork){position:relative;z-index:3}
+:global(.pt-standard-tracker-flow) .confirmedHex{isolation:isolate}
+@media(max-width:700px){
+ :global(.pt-standard-tracker-flow) .blockRow{
+  grid-template-columns:repeat(6,175px)!important;
+  width:max-content!important;
+  max-width:none!important;
+ }
+}
