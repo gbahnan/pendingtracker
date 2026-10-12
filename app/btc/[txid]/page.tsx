@@ -22,6 +22,8 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const [aiSummary,setAiSummary]=useState<string|null>(null);
  const [aiLoading,setAiLoading]=useState(false);
  const [copied,setCopied]=useState(false);
+ const [lookup,setLookup]=useState("");
+ const [lookupError,setLookupError]=useState("");
  const [lastChecked,setLastChecked]=useState<string|null>(null);
  const [changeNotice,setChangeNotice]=useState<string|null>(null);
  const [question,setQuestion]=useState<string|null>(null);
@@ -83,9 +85,9 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  function copy(){if(typeof navigator!=="undefined"&&navigator.clipboard){navigator.clipboard.writeText(txid).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),1800);}).catch(()=>{});}}
  if(!valid)return <main className="pt-tx-page"><a href="/">← Back to explorer</a><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID is 64 hexadecimal characters.</p></main>;
  return <main className="pt-tx-page pt-tx-detail-v2">
-  <div className="pt-tx-back"><a href="/">← Track another transaction</a> · <a href="/explore">Explore blockchain →</a></div>
-  <header className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Your transaction is pending"}</h1><p>Follow the live status, understand the numbers, and see what happens next.</p></div><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></header>
-  <div className="pt-tx-idbar"><div><span>TRANSACTION ID (TXID)</span><code title={txid}>{txid}</code></div><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div>
+  <div className="pt-tx-back"><a href="/explore">← Bitcoin & Ethereum Explorer</a></div>
+  <header className="pt-tx-top pt-tx-status-hero"><div><div className="pt-eyebrow">BITCOIN TRANSACTION</div><div className="pt-tx-status-line"><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span><span className="pt-tx-status-subline">{confirmed?"Recorded on the Bitcoin blockchain":observed?"Waiting for a miner to include it in a block":"Not currently visible on the network"}</span></div><h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Your transaction is pending"}</h1></div><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></header>
+  <form className="pt-tx-lookup" onSubmit={e=>{e.preventDefault();const v=lookup.trim();if(/^0x[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/eth/"+v)}else if(/^[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/btc/"+v)}else{setLookupError("Enter a valid Bitcoin transaction ID or Ethereum transaction hash.");}}}><label htmlFor="pt-transaction-lookup">TRACK ANOTHER TRANSACTION</label><div className="pt-tx-lookup-controls"><input id="pt-transaction-lookup" value={lookup} onChange={e=>{setLookup(e.target.value);if(lookupError)setLookupError("");}} placeholder="Paste a Bitcoin or Ethereum transaction hash…" autoComplete="off" spellCheck={false}/><button type="submit">Track transaction →</button></div>{lookupError&&<p role="alert">{lookupError}</p>}</form>
   {lastChecked&&<p className="pt-tx-freshness">Last successful check: {lastChecked} · Automatically refreshes every 15 seconds</p>}
   {changeNotice&&<p className="pt-tx-change" role="status">{changeNotice}</p>}
   {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
@@ -105,6 +107,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    <section className="pt-tx-clarity" aria-labelledby="btc-clarity-title">
     <div className="pt-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
     <h2 id="btc-clarity-title">Your Bitcoin transaction, in plain English</h2>
+    <div className="pt-tx-clarity-hash"><div><span>TRANSACTION ID (TXID)</span><code title={txid}>{txid}</code></div><button type="button" onClick={copy}> {copied?"✓ Copied":"Copy hash"}</button></div>
     <p className="pt-tx-details-intro">Every number below comes from this transaction or the latest available network data. Here's what it actually means for you.</p>
     <div className="pt-tx-clarity-head"><span>YOUR ACTUAL DATA</span><span>WHAT IT MEANS FOR YOU</span></div>
     <div className="pt-tx-clarity-rows">
