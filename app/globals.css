@@ -4169,10 +4169,12 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 
 /* FIX: flex glow wrapper must preserve the original hexagon width.
    Without width:100%, the flex child shrinks to text's min-content width. */
-.pt-reference-glow .pt-chain-flow-glow-wrap{
+.pt-btc-flow.pt-reference-glow .pt-chain-flow-glow-wrap{
  display:block!important;width:100%!important;min-width:0!important;
 }
-.pt-reference-glow .pt-chain-flow-glow-wrap > .pt-chain-flow-hex{
- display:flex!important;width:100%!important;min-width:0!important;
- box-sizing:border-box!important;
+.pt-btc-flow.pt-reference-glow .pt-chain-flow-glow-wrap > .pt-chain-flow-hex{
+ width:100%!important;min-width:0!important;box-sizing:border-box!important;
 }
+/* BTC uses the same full hex geometry as before the glow wrapper was added. */
+.pt-btc-flow.pt-reference-glow .pt-chain-flow-unit{min-width:0!important;}
+.pt-btc-flow.pt-reference-glow .pt-chain-flow-glow-wrap > .pt-chain-flow-hex{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;}
