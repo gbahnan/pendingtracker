@@ -11,6 +11,39 @@ const number=(n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat("en-
 const btc=(sats:number|null|undefined)=>sats==null?"—":(sats/100000000).toLocaleString("en-US",{maximumFractionDigits:8})+" BTC";
 const short=(value:string)=>value.length>27?value.slice(0,14)+"…"+value.slice(-10):value;
 const rate=(n:number|null|undefined)=>n==null?"—":number(n)+" sat/vB";
+const HEX_POINTS="25,0 75,0 100,50 75,100 25,100 0,50";
+function HexArtwork({active=false,confirmed=false}:{active?:boolean;confirmed?:boolean}){
+ const cells=[] as Array<{x:number;y:number;key:string}>;
+ for(let row=0;row<8;row++)for(let col=0;col<10;col++){
+  const x=col*12.8+(row%2?6.4:0)-9,y=row*14.6-4;
+  if(x>4&&x<95&&y>2&&y<99)cells.push({x,y,key:row+"-"+col});
+ }
+ return <svg className={styles.hexArtwork} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+  <defs>
+   <radialGradient id={confirmed?"pt-confirmed-fill":active?"pt-selected-fill":"pt-idle-fill"} cx="50%" cy="52%" r="75%">
+    <stop offset="0%" stopColor={confirmed?"#052e31":active?"#302210":"#111a20"}/><stop offset="100%" stopColor="#05111b"/>
+   </radialGradient>
+   <linearGradient id={confirmed?"pt-confirmed-line":active?"pt-selected-line":"pt-idle-line"} x1="0" y1="0" x2="1" y2="1">
+    <stop stopColor={confirmed?"#c4fff1":"#fff1a6"}/><stop offset=".5" stopColor={confirmed?"#56e7d4":"#ffc65b"}/><stop offset="1" stopColor={confirmed?"#79f3e0":"#aa762e"}/>
+   </linearGradient>
+   <filter id={confirmed?"pt-confirmed-halo":active?"pt-selected-halo":"pt-idle-halo"} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation={active?3.5:confirmed?2.2:.6}/></filter>
+   <clipPath id={confirmed?"pt-confirmed-clip":active?"pt-selected-clip":"pt-idle-clip"}><polygon points={HEX_POINTS}/></clipPath>
+  </defs>
+  <polygon points={HEX_POINTS} fill="none" stroke={confirmed?"#62ffe0":active?"#ffc450":"#b58b42"} strokeWidth={active?4.2:confirmed?2.8:1.3} opacity={active?0.8:.5} filter={`url(#${confirmed?"pt-confirmed-halo":active?"pt-selected-halo":"pt-idle-halo"})`}/>
+  <polygon points={HEX_POINTS} fill={`url(#${confirmed?"pt-confirmed-fill":active?"pt-selected-fill":"pt-idle-fill"})`}/>
+  <g clipPath={`url(#${confirmed?"pt-confirmed-clip":active?"pt-selected-clip":"pt-idle-clip"})`} opacity={confirmed?.08:active?.48:.22}>
+   {cells.map((c,i)=><polygon key={c.key} points={`${c.x},${c.y-7} ${c.x+5.9},${c.y-3.5} ${c.x+5.9},${c.y+3.5} ${c.x},${c.y+7} ${c.x-5.9},${c.y+3.5} ${c.x-5.9},${c.y-3.5}`} fill={active&&i%11===0?"#e5a342":"none"} stroke="#bc8535" strokeWidth=".5"/>)}
+  </g>
+  <polygon points={HEX_POINTS} fill="none" stroke={`url(#${confirmed?"pt-confirmed-line":active?"pt-selected-line":"pt-idle-line"})`} strokeWidth={active?1.5:confirmed?1.1:.65}/>
+ </svg>;
+}
+function EdgeLights({right=false}:{right?:boolean}){
+ const coords=right?[[146,28,20,1],[182,63,14,0],[133,97,12,0],[176,134,23,1],[116,163,12,0],[159,200,17,1],[190,240,12,0],[129,279,22,1],[175,317,13,0],[117,360,17,0],[164,400,20,1],[132,445,12,0]]:[[36,26,22,1],[71,59,15,0],[17,101,13,0],[82,131,18,1],[41,171,15,0],[15,208,24,1],[95,245,14,0],[47,287,20,1],[106,329,12,0],[28,372,17,0],[84,410,21,1],[38,458,14,0]];
+ return <svg className={right?styles.edgeRight:styles.edgeLeft} viewBox="0 0 220 500" aria-hidden="true">
+  <defs><filter id={right?"edge-r-blur":"edge-l-blur"} x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="12"/></filter><linearGradient id={right?"edge-r-gold":"edge-l-gold"} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#fff1b0"/><stop offset=".55" stopColor="#e7a638"/><stop offset="1" stopColor="#8a4c16"/></linearGradient></defs>
+  {coords.map(([x,y,r,lit],i)=>{const p=Array.from({length:6},(_,k)=>{const a=(k*60-30)*Math.PI/180;return `${x+Math.cos(a)*r},${y+Math.sin(a)*r}`}).join(" ");return <g key={i}>{lit===1&&<polygon points={p} fill="#e6a039" opacity=".82" filter={`url(#${right?"edge-r-blur":"edge-l-blur"})`}/>}<polygon points={p} fill={lit===1?`url(#${right?"edge-r-gold":"edge-l-gold"})`:"#b17a2b"} fillOpacity={lit===1?.95:.025} stroke={lit===1?"#ffe1a1":"#a87532"} strokeOpacity={lit===1?.95:.38} strokeWidth={lit===1?1.7:1}/></g>})}
+ </svg>
+}
 function Fact({label,value,help}:{label:string;value:string;help:string}){return <div className="pt-tx-fact"><span>{label}</span><strong>{value}</strong><small>{help}</small></div>}
 
 export default function BtcTxPage({params}:{params:{txid:string}}){
@@ -90,7 +123,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  return <main className={"pt-tx-page "+styles.page}>
 
   <div className={styles.shell}>
-   <div className={styles.edgeLeft} aria-hidden="true"/><div className={styles.edgeRight} aria-hidden="true"/>
+   <EdgeLights/><EdgeLights right/>
    <a className={styles.back} href="/bitcoin">← &nbsp; Bitcoin Explorer</a>
    {error&&<p role="alert" className={styles.error}>{error}{result?" Showing the last available data.":""}</p>}
    {loading&&!result&&<p className={styles.loading}>Checking the Bitcoin network…</p>}
@@ -107,12 +140,12 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
     <section className={styles.network} aria-label="Your transaction's projected position in the live Bitcoin network">
      <div className={styles.blockRow}>
       <div className={styles.blockUnit}>
-       <div className={styles.confirmedHex}><div className={styles.check}>✓</div><b>CONFIRMED</b><strong>#{number(overview?.btc?.height)}</strong><small>{number(blocks[0]?.transactionCount)} transactions</small><small>Latest confirmed block</small></div>
+       <div className={styles.confirmedHex}><HexArtwork confirmed/><div className={styles.check}>✓</div><b>CONFIRMED</b><strong>#{number(overview?.btc?.height)}</strong><small>{number(blocks[0]?.transactionCount)} transactions</small><small>Latest confirmed block</small></div>
        <div className={styles.confirmedCaption}>Latest block<br/><span>Just confirmed</span></div>
       </div>
       {Array.from({length:4},(_,i)=>{const block=blocks[i];const isMatch=!confirmed&&observed&&selectedPosition===i+1;return <div className={styles.blockUnit} key={i}>
        <div className={isMatch?styles.selectedHex:styles.pendingHex}>
-        <Honeycomb/>
+        <HexArtwork active={isMatch}/>
         <div className={styles.hexContent}>
          {i===0&&<b>NEXT</b>}
          <strong>#{overview?.btc?.height!=null?number(overview.btc.height+i+1):"—"}</strong>
