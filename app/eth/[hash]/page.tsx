@@ -47,7 +47,7 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
  const tokens=insights?.tokenTransfers??[];
  const hasTokens=tokens.length>0;
  const contract=Boolean(insights?.method&&insights.method!=="transfer")||Boolean(insights?.createdContract);
- const method=insights?.method??(contract?"Contract interaction":hasTokens?"Token activity":BigInt(String(valueWei||"0"))>0n?"ETH transfer":"Ethereum transaction");
+ const method=insights?.method??(contract?"Contract interaction":hasTokens?"Token activity":/^\\d+$/.test(String(valueWei||"0"))&&BigInt(String(valueWei||"0"))>0n?"ETH transfer":"Ethereum transaction");
  const from=insights?.from??tx?.from??null,to=insights?.to??tx?.to??null;
  const gasFee=insights?.fee!=null?amount(insights.fee)+" ETH":"Unavailable";
  const gasUsed=insights?.gasUsed!=null?fmt(insights.gasUsed):"Unavailable";
