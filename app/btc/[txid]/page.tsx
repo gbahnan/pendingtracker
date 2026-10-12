@@ -102,23 +102,26 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <p className="pt-tx-block-caveat">{confirmed?"These are upcoming projected blocks, not the block that confirmed your transaction.":observed?"*The arrow indicates a fee-range match, not a confirmed place in line. Block times average around 10 minutes and can vary.":"Projected blocks describe network activity, not a transaction we can currently locate."}</p>
     </div>
    </section>
-  <div className="pt-tx-desktop-summary pt-tx-summary-redesign">
-  <header className="pt-tx-top pt-tx-status-hero pt-tx-compact-hero">
-   <div className="pt-tx-compact-topline"><span className="pt-eyebrow">YOUR BITCOIN TRANSACTION</span><div className="pt-tx-compact-tools"><button type="button" onClick={()=>setShowLookup(v=>!v)} aria-expanded={showLookup}>⌕ Track another</button><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div></div>
-   <h1>{!observed?"We can't find this Bitcoin transaction":confirmed?"Confirmed on the Bitcoin network":"Waiting for confirmation"}</h1>
-   {result&&<p className="pt-tx-compact-description">{summary}</p>}
-   <div className="pt-tx-hero-hash"><span>Transaction ID</span><code title={txid}>{short(txid)}</code><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div>
-  </header>
-  {showLookup&&<form className="pt-tx-lookup" onSubmit={e=>{e.preventDefault();const v=lookup.trim();if(/^0x[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/eth/"+v)}else if(/^[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/btc/"+v)}else{setLookupError("Enter a valid Bitcoin transaction ID or Ethereum transaction hash.");}}}><label htmlFor="pt-transaction-lookup">TRACK ANOTHER TRANSACTION</label><div className="pt-tx-lookup-controls"><input id="pt-transaction-lookup" value={lookup} onChange={e=>{setLookup(e.target.value);if(lookupError)setLookupError("");}} placeholder="Paste a Bitcoin or Ethereum transaction hash…" autoComplete="off" spellCheck={false}/><button type="submit">Track transaction →</button></div>{lookupError&&<p role="alert">{lookupError}</p>}</form>}
-   <section className="pt-tx-quick-facts" aria-label="Your Bitcoin transaction overview">
-    <div className="pt-tx-quick-facts-heading"><span className="pt-eyebrow">YOUR TRANSACTION DETAILS, EXPLAINED</span></div>
-    <div className="pt-tx-quick-facts-grid">
-     <div className="pt-tx-fact-primary"><span>{confirmed?"CONFIRMATIONS":"ESTIMATED WAIT"}</span><strong>{confirmed?number(confirmations):feeEstimate}</strong><small>{confirmed?"Your transaction is recorded in a Bitcoin block. The recipient may require more confirmations.":"About how long until your transaction may confirm. This can change."}</small></div>
-     <div className="pt-tx-fact-secondary"><span>FEE RATE</span><strong>{rate(feeRate)}</strong><small>How much the sender pays per unit of transaction space (sat/vB). Higher rates can get priority. {confirmed?"Already confirmed.":feeHint+"."}</small></div>
-     <div className="pt-tx-fact-primary"><span>BITCOIN NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>Sats are tiny units of Bitcoin (100 million sats = 1 BTC). This is the fee paid to process the transaction, not necessarily an exchange fee.</small></div>
-     <div className="pt-tx-fact-secondary"><span>{confirmed?"CONFIRMED AT":"CAN THE FEE BE INCREASED?"}</span><strong>{confirmed?(blockTime?new Date(blockTime*1000).toLocaleString():"Confirmed"):rbf?"May be available":"Not signaled"}</strong><small>{confirmed?"When the transaction entered a Bitcoin block.":rbf?"Possibly, if the sending wallet supports fee replacement.":"This transaction does not signal standard opt-in fee replacement. Other options may depend on the wallet."}</small></div>
-    </div>
-   </section>
+  <div className="pt-tx-simple-status">
+   <div className="pt-tx-simple-top">
+    <div className="pt-tx-simple-eyebrow"><span className="pt-eyebrow">YOUR BITCOIN TRANSACTION</span><span className={confirmed?"pt-tx-simple-pill is-confirmed":observed?"pt-tx-simple-pill is-pending":"pt-tx-simple-pill"}>{confirmed?"✓ Confirmed":observed?"● Pending":"Not found"}</span></div>
+    <div className="pt-tx-compact-tools"><button type="button" onClick={()=>setShowLookup(v=>!v)} aria-expanded={showLookup}>⌕ Track another</button><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div>
+   </div>
+   <h1>{!observed?"We couldn't find this transaction":confirmed?"Your transaction is confirmed":"Waiting for confirmation"}</h1>
+   {result&&<p className="pt-tx-simple-description">{summary}</p>}
+   <div className="pt-tx-simple-facts" aria-label="Your transaction essentials">
+    {confirmed?<>
+     <div className="pt-tx-simple-fact"><span>CONFIRMATIONS</span><strong>{number(confirmations)}</strong><small>Recorded on the Bitcoin blockchain. Your exchange may need more confirmations.</small></div>
+     <div className="pt-tx-simple-fact"><span>NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>Sats are tiny units of Bitcoin. This is the network processing fee.</small></div>
+     <div className="pt-tx-simple-fact"><span>CONFIRMED AT</span><strong>{blockTime?new Date(blockTime*1000).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"}):"Confirmed"}</strong><small>{blockTime?new Date(blockTime*1000).toLocaleDateString():"Recorded in a Bitcoin block."}</small></div>
+    </>:observed?<>
+     <div className="pt-tx-simple-fact"><span>ESTIMATED WAIT</span><strong>{feeEstimate}</strong><small>Based on current network conditions. This is not guaranteed.</small></div>
+     <div className="pt-tx-simple-fact"><span>NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>Sats are tiny units of Bitcoin. This fee helps get the transaction processed.</small></div>
+     <div className="pt-tx-simple-fact"><span>FEE RATE</span><strong>{rate(feeRate)}</strong><small>The fee paid per unit of transaction space. Higher rates may confirm sooner.</small></div>
+    </>:<div className="pt-tx-simple-fact"><span>WHAT TO CHECK</span><strong>Transaction ID</strong><small>Check that the transaction ID is correct and that the sender broadcast it.</small></div>}
+   </div>
+   <div className="pt-tx-simple-footer"><div className="pt-tx-hero-hash"><span>Transaction ID</span><code title={txid}>{short(txid)}</code><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div><a href="#btc-clarity-title" className="pt-tx-simple-details-link">Understand your transaction in detail ↓</a></div>
+   {showLookup&&<form className="pt-tx-lookup" onSubmit={e=>{e.preventDefault();const v=lookup.trim();if(/^0x[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/eth/"+v)}else if(/^[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/btc/"+v)}else{setLookupError("Enter a valid Bitcoin transaction ID or Ethereum transaction hash.");}}}><label htmlFor="pt-transaction-lookup">TRACK ANOTHER TRANSACTION</label><div className="pt-tx-lookup-controls"><input id="pt-transaction-lookup" value={lookup} onChange={e=>{setLookup(e.target.value);if(lookupError)setLookupError("");}} placeholder="Paste a Bitcoin or Ethereum transaction hash…" autoComplete="off" spellCheck={false}/><button type="submit">Track transaction →</button></div>{lookupError&&<p role="alert">{lookupError}</p>}</form>}
   </div>
    <section className="pt-tx-clarity" aria-labelledby="btc-clarity-title">
     <div className="pt-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
