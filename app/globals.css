@@ -4178,3 +4178,14 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 /* BTC uses the same full hex geometry as before the glow wrapper was added. */
 .pt-btc-flow.pt-reference-glow .pt-chain-flow-unit{min-width:0!important;}
 .pt-btc-flow.pt-reference-glow .pt-chain-flow-glow-wrap > .pt-chain-flow-hex{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;}
+
+/* Bitcoin-only geometry repair. Ethereum sizing deliberately untouched. */
+.pt-btc-flow.pt-reference-glow .pt-chain-flow-shapes > .pt-chain-flow-unit{
+ flex:1 1 0!important;min-width:0!important;
+}
+.pt-btc-flow.pt-reference-glow .pt-chain-flow-shapes > .pt-chain-flow-unit > .pt-chain-flow-glow-wrap{
+ width:100%!important;min-width:0!important;
+}
+.pt-btc-flow.pt-reference-glow .pt-chain-flow-shapes > .pt-chain-flow-unit > .pt-chain-flow-glow-wrap > .pt-chain-flow-hex{
+ width:100%!important;min-width:0!important;flex-shrink:0!important;
+}
