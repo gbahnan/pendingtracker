@@ -22,6 +22,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const [aiSummary,setAiSummary]=useState<string|null>(null);
  const [aiLoading,setAiLoading]=useState(false);
  const [copied,setCopied]=useState(false);
+ const [lastChecked,setLastChecked]=useState<string|null>(null);
  const refresh=useCallback(async()=>{
   if(!valid)return;
   try{
@@ -29,6 +30,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    const tx=await txRes.json();
    if(!txRes.ok)throw new Error(tx?.error??"Unable to check this transaction right now.");
    setResult(tx as BtcMvpResult);
+   setLastChecked(new Date().toLocaleTimeString());
    if(netRes.ok)setOverview(await netRes.json());
    setError(null);
   }catch(e){setError(e instanceof Error?e.message:"Live network data is unavailable.");}
@@ -80,6 +82,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  return <main className="pt-tx-page pt-tx-detail-v2">
   <div className="pt-tx-back"><a href="/">← Track another transaction</a> · <a href="/explore">Explore blockchain →</a></div>
   <header className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Your transaction is pending"}</h1><p>Follow the live status, understand the numbers, and see what happens next.</p></div><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></header>
+  {lastChecked&&<p className="pt-tx-freshness">Last successful network check: {lastChecked} · Automatically checks every 15 seconds</p>}
   <div className="pt-tx-idbar"><div><span>TRANSACTION ID (TXID)</span><code title={txid}>{txid}</code></div><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div>
   {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
   {loading&&!result&&<div className="pt-tx-loading">Checking the Bitcoin network…</div>}
