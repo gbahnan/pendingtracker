@@ -22,7 +22,6 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const [aiSummary,setAiSummary]=useState<string|null>(null);
  const [aiLoading,setAiLoading]=useState(false);
  const [copied,setCopied]=useState(false);
- const [lastChecked,setLastChecked]=useState<string|null>(null);
  const refresh=useCallback(async()=>{
   if(!valid)return;
   try{
@@ -30,7 +29,6 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    const tx=await txRes.json();
    if(!txRes.ok)throw new Error(tx?.error??"Unable to check this transaction right now.");
    setResult(tx as BtcMvpResult);
-   setLastChecked(new Date().toLocaleTimeString());
    if(netRes.ok)setOverview(await netRes.json());
    setError(null);
   }catch(e){setError(e instanceof Error?e.message:"Live network data is unavailable.");}
@@ -82,7 +80,6 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  return <main className="pt-tx-page pt-tx-detail-v2">
   <div className="pt-tx-back"><a href="/">← Track another transaction</a> · <a href="/explore">Explore blockchain →</a></div>
   <header className="pt-tx-top"><div><div className="pt-eyebrow">BITCOIN TRANSACTION TRACKER</div><h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Your transaction is pending"}</h1><p>Follow the live status, understand the numbers, and see what happens next.</p></div><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></header>
-  {lastChecked&&<p className="pt-tx-freshness">Last successful network check: {lastChecked} · Automatically checks every 15 seconds</p>}
   <div className="pt-tx-idbar"><div><span>TRANSACTION ID (TXID)</span><code title={txid}>{txid}</code></div><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div>
   {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
   {loading&&!result&&<div className="pt-tx-loading">Checking the Bitcoin network…</div>}
@@ -99,23 +96,6 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
     </div>
    </section>
    <section className="pt-tx-summary"><div className="pt-eyebrow">WHAT'S HAPPENING WITH YOUR TRANSACTION?</div><h2>Here’s what’s happening with your Bitcoin</h2><p className="pt-tx-summary-lead">{summary}</p><div className="pt-tx-story">{explanation.map(item=><div className="pt-tx-story-step" key={item.title}><h3>{item.title}</h3><p>{item.body}</p></div>)}</div><div className="pt-tx-summary-actions"><button type="button" onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain this further"}</button><a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">View on mempool.space ↗</a></div>{aiSummary&&<p className="pt-tx-ai" role="status">{aiSummary}</p>}</section>
-   <section className="pt-tx-next"><div className="pt-eyebrow">WHAT SHOULD I DO NOW?</div><h2>{confirmed?"Your transaction is on the blockchain":observed?"Your transaction is still waiting":"Check whether the transaction was sent"}</h2><p>{confirmed?"No fee action is needed. If your exchange or wallet still says pending, check how many confirmations it requires and whether it has completed its own processing.":!observed?"Double-check the transaction ID and ask the sending wallet or exchange whether the transaction was broadcast. Never share a seed phrase or private key.":rbf?"You can wait for a block. If the payment is urgent and you control the sending wallet, check whether its fee-bump feature is available. Do not send a duplicate payment.":"You can wait for confirmation. If it takes unusually long, check your wallet's supported acceleration options or contact the sender. Do not send a duplicate payment."}</p></section>
-   <section className="pt-tx-clarity" aria-labelledby="btc-clarity-title">
-    <div className="pt-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
-    <h2 id="btc-clarity-title">Your Bitcoin transaction, in plain English</h2>
-    <p className="pt-tx-details-intro">Every number below comes from this transaction or the latest available network data. Here's what it actually means for you.</p>
-    <div className="pt-tx-clarity-head"><span>YOUR ACTUAL DATA</span><span>WHAT IT MEANS FOR YOU</span></div>
-    <div className="pt-tx-clarity-rows">
-     <div className="pt-tx-clarity-row"><div><span>Transaction status</span><strong>{confirmed?"Confirmed":observed?"Pending":"Not found"}</strong></div><p>{confirmed?"Your transaction is permanently recorded in a Bitcoin block. The receiving service may still require more confirmations before crediting funds.":observed?"The network has seen your transaction, but a miner has not yet included it in a block. Your funds are not necessarily lost.":"We cannot currently find this transaction on the network. Check that the sender broadcast it and that the ID is correct."}</p></div>
-     <div className="pt-tx-clarity-row"><div><span>Confirmation progress</span><strong>{confirmed?number(confirmations)+" confirmation"+(confirmations===1?"":"s"):"0 confirmations"}</strong></div><p>{confirmed?"Each additional block adds another confirmation. Your exchange or wallet decides how many confirmations it requires.":"Zero confirmations means the transaction has not yet been included in a block. It does not, by itself, mean the payment failed."}</p></div>
-     <div className="pt-tx-clarity-row"><div><span>Transaction fee rate</span><strong>{rate(feeRate)}</strong></div><p>{feeRate==null?"The fee rate is not available, so we cannot assess its priority.":networkFee==null?"This is the fee offered per virtual byte. Miners often prioritize higher-paying transactions, but there is no guaranteed order.":feeRate>=networkFee?"Your fee meets or exceeds the current approximately 30-minute network fee guide. This is encouraging, not a guarantee.":"Your fee is below the current approximately 30-minute network fee guide. Higher-fee transactions may be selected first."}</p></div>
-     <div className="pt-tx-clarity-row"><div><span>Estimated confirmation</span><strong>{feeEstimate}</strong></div><p>{confirmed?"The transaction has already confirmed; no additional mining wait is needed.":selectedPosition?"This estimate is based on a fee-range match to projected block "+selectedPosition+". It is not your verified position in line, and the mempool can change.":"There is not enough reliable information to give you a countdown. Bitcoin blocks average around ten minutes, but individual waits vary."}</p></div>
-     <div className="pt-tx-clarity-row"><div><span>Total network fee</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong></div><p>This is the fee paid to Bitcoin miners, not the amount the recipient receives. Wallet or exchange withdrawal fees may be separate.</p></div>
-     <div className="pt-tx-clarity-row"><div><span>Transaction outputs</span><strong>{number(outputs.length)} output{outputs.length===1?"":"s"}</strong></div><p>Outputs are the new destinations created by this transaction. Some may be payments, and others may be change returned to the sender. The blockchain alone cannot identify the owner of an address.</p></div>
-     <div className="pt-tx-clarity-row"><div><span>Fee adjustment option</span><strong>{!observed?"Unknown":rbf?"RBF signaled":"RBF not signaled"}</strong></div><p>{!observed?"We need a visible transaction before evaluating fee-replacement options.":rbf?"The transaction signals replace-by-fee. If you control the sending wallet, it may offer a way to increase the fee.":"The transaction does not signal opt-in replace-by-fee. Some wallets may support other methods such as CPFP, but do not send a second payment just to try to speed it up."}</p></div>
-    </div>
-    <p className="pt-tx-clarity-note">Pending Tracker shows what the public Bitcoin network can verify. It cannot see whether an exchange has completed its own internal deposit or withdrawal processing.</p>
-   </section>
    <section className="pt-tx-details">
     <div className="pt-eyebrow">THE DATA BEHIND YOUR SUMMARY</div><h2>Your transaction, explained</h2>
     <p className="pt-tx-details-intro">These are the actual numbers behind the explanation above—not generic network averages.</p>
