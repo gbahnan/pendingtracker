@@ -4339,3 +4339,21 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-tx-detail-v2 .pt-tx-hero-hash code{color:#edc478;font-size:13px;overflow-wrap:anywhere}
 .pt-tx-detail-v2 .pt-tx-hero-hash button{border:0!important;background:transparent!important;color:#eac077!important;padding:3px 5px!important;cursor:pointer;font-size:12px}
 @media(max-width:650px){.pt-tx-detail-v2 .pt-tx-firstlook-grid{gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}.pt-tx-detail-v2 .pt-tx-firstlook-grid>div:last-child{grid-column:1/-1}.pt-tx-detail-v2 .pt-tx-firstlook{padding-top:14px!important}.pt-tx-detail-v2 .pt-tx-firstlook-explain>p{font-size:14px}}
+
+/* BTC transaction top-only redesign. No honeycomb or downstream selectors. */
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-compact-hero{display:block!important;padding:18px 0 18px!important;margin-bottom:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.pt-tx-detail-v2 .pt-tx-compact-topline{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:17px}
+.pt-tx-detail-v2 .pt-tx-compact-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pt-tx-detail-v2 .pt-tx-compact-tools button{background:transparent!important;border:0!important;box-shadow:none!important;color:#dfb46d!important;padding:5px!important;font-size:12px;cursor:pointer}
+.pt-tx-detail-v2 .pt-tx-compact-status{margin-bottom:12px}
+.pt-tx-detail-v2 .pt-tx-compact-hero h1{font-size:clamp(23px,2.7vw,36px)!important;line-height:1.22!important;max-width:900px;margin:0 0 14px!important;letter-spacing:-.035em}
+.pt-tx-detail-v2 .pt-tx-compact-description{color:#c7d8e2;font-size:15px;line-height:1.75;max-width:880px;margin:0 0 22px}
+.pt-tx-detail-v2 .pt-tx-compact-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:880px;margin:0 0 17px}
+.pt-tx-detail-v2 .pt-tx-compact-metrics>div{display:flex;flex-direction:column;align-items:flex-start;gap:7px;border-top:1px solid #365164;padding-top:13px;min-width:0}
+.pt-tx-detail-v2 .pt-tx-compact-metrics span{font-size:10px;font-weight:700;letter-spacing:.11em;color:#a8c0cd}
+.pt-tx-detail-v2 .pt-tx-compact-metrics strong{font-size:clamp(19px,2vw,27px);line-height:1.25;color:#f0c373;overflow-wrap:anywhere}
+.pt-tx-detail-v2 .pt-tx-compact-metrics small{font-size:12px;color:#a4bbc8;line-height:1.45}
+.pt-tx-detail-v2 .pt-tx-compact-hero .pt-tx-hero-hash{margin:0!important;gap:10px}
+.pt-tx-detail-v2 .pt-tx-compact-hero .pt-tx-hero-hash code{font-size:12px}
+.pt-tx-detail-v2 .pt-tx-lookup{margin-top:4px!important}
+@media(max-width:650px){.pt-tx-detail-v2 .pt-tx-compact-topline{align-items:flex-start;gap:8px}.pt-tx-detail-v2 .pt-tx-compact-tools{gap:5px;justify-content:flex-end}.pt-tx-detail-v2 .pt-tx-compact-tools button{font-size:11px!important}.pt-tx-detail-v2 .pt-tx-compact-description{font-size:14px;line-height:1.65}.pt-tx-detail-v2 .pt-tx-compact-metrics{gap:14px}.pt-tx-detail-v2 .pt-tx-compact-metrics strong{font-size:19px}}
