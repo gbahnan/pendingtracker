@@ -182,7 +182,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
       </div>
       {Array.from({length:4},(_,i)=>{const block=blocks[i];const isMatch=!confirmed&&observed&&selectedPosition===i+1;return <div className={styles.blockUnit} key={i}>
        <div className={isMatch?styles.selectedHex:styles.pendingHex}>
-        <HexArtwork active={isMatch}/>
+        <HexArtwork active={isMatch}/><Honeycomb/>
         <div className={styles.hexContent}>
          {i===0&&<b>NEXT</b>}
          <strong>#{overview?.btc?.height!=null?number(overview.btc.height+i+1):"—"}</strong>
