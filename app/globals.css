@@ -4742,3 +4742,24 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
  body:has(.pt-tx-page.pt-tx-detail-v2)::before{left:0}
  body:has(.pt-tx-page.pt-tx-detail-v2)::after{right:0;transform:scaleX(-1)}
 }
+
+/* BTC tracker mockup: bring the framed answer immediately under the floating blocks. */
+@media(min-width:980px){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-hero{margin-bottom:2px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-head{margin-bottom:0!important;padding-bottom:0!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-caption{padding-top:3px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-scene{padding-top:0!important;padding-bottom:0!important;margin-bottom:0!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-confirmed{padding-top:3px!important;padding-bottom:2px!important;margin-top:1px!important;margin-bottom:0!important;min-height:0!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-caveat{margin:1px 0 0!important;font-size:10px!important;line-height:1.25!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{margin-top:4px!important;padding-top:15px!important;padding-bottom:9px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-personal-match .pt-chain-tracked-arrow{margin-top:7px!important;padding-top:5px!important;padding-bottom:5px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-shapes{margin-bottom:0!important;padding-bottom:0!important}
+ body:has(.pt-tx-page.pt-tx-detail-v2)::before,
+ body:has(.pt-tx-page.pt-tx-detail-v2)::after{
+  top:80px!important;height:560px!important;
+  width:clamp(110px,12vw,190px)!important;
+  background-size:150px 190px!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='190' viewBox='0 0 150 190'%3E%3Cg stroke='%23bb842c' stroke-width='1.6' fill='none'%3E%3Cpath d='M12 35l24-14 24 14v28L36 77 12 63zM64 12l16-9 16 9v18L80 39 64 30zM101 87l21-12 21 12v24l-21 12-21-12zM18 125l17-10 17 10v20l-17 10-17-10zM76 156l15-9 15 9v18l-15 9-15-9z'/%3E%3C/g%3E%3Cg fill='%23b17c29' opacity='.16'%3E%3Cpath d='M12 35l24-14 24 14v28L36 77 12 63zM101 87l21-12 21 12v24l-21 12-21-12z'/%3E%3C/g%3E%3C/svg%3E")!important;
+  opacity:.43!important;
+ }
+}
