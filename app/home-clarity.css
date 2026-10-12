@@ -1,7 +1,7 @@
 /* Standalone homepage clarity section — scoped; does not style hero or live network panels. */
-.pt-clarity{--clarity-accent:#ffc13e;--clarity-edge:#7e622e;position:relative;isolation:isolate;background:#020c16;color:#f7f9ff;padding:54px 24px 48px;overflow:hidden;border-top:1px solid #1c3140;border-bottom:1px solid #1c3140}
+.pt-clarity{--clarity-accent:#ffc13e;--clarity-edge:#7e622e;position:relative;isolation:isolate;background:transparent;color:#f7f9ff;padding:54px 24px 48px;overflow:visible;border:0}
 .pt-clarity[data-chain="eth"]{--clarity-accent:#4aa5ff;--clarity-edge:#225c99}
-.pt-clarity::before{content:"";position:absolute;pointer-events:none;inset:0;background:radial-gradient(ellipse at -7% 15%,rgba(255,166,0,.12),transparent 29%),radial-gradient(ellipse at 108% 8%,rgba(21,116,255,.13),transparent 29%);z-index:-1}
+.pt-clarity::before{content:none}
 .pt-clarity *{box-sizing:border-box}
 .pt-clarity-inner{max-width:1260px;margin:0 auto}
 .pt-clarity-top{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-bottom:26px}
@@ -31,3 +31,9 @@
 @media(max-width:650px){.pt-clarity{padding:35px 15px}.pt-clarity-top{flex-direction:column;align-items:stretch;gap:20px}.pt-clarity-switch{align-self:center}.pt-clarity-switch button{min-width:128px;font-size:13px}.pt-clarity-cards{gap:10px}.pt-clarity-card{padding:16px 12px;min-height:330px}.pt-clarity-card h3{font-size:16px!important}.pt-clarity-card>p{font-size:12px}.pt-clarity-example{padding:10px}.pt-clarity-example strong{font-size:14px}.pt-clarity-icon{width:62px;height:62px}.pt-clarity-more{min-width:0;width:100%}}
 @media(max-width:370px){.pt-clarity-cards{grid-template-columns:1fr}.pt-clarity-card{min-height:0}}
 @media(prefers-reduced-motion:reduce){.pt-clarity *{scroll-behavior:auto}}
+
+/* Keep only the individual explanation cards and FAQ rows framed; outer sections sit freely on the page. */
+.pt-shell .pt-clarity{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important}
+.pt-shell .pt-clarity::before,.pt-shell .pt-clarity::after{content:none!important}
+.pt-shell .pt-faq-refresh{background:transparent!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important}
+.pt-shell .pt-faq-refresh::before,.pt-shell .pt-faq-refresh::after{content:none!important}
