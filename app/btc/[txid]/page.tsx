@@ -94,6 +94,15 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
   {loading&&!result&&<div className="pt-tx-loading">Checking the Bitcoin network…</div>}
   {result&&<>
+   <div className="pt-tx-mock-hero">
+    <div className="pt-tx-mock-brand" aria-hidden="true">₿</div>
+    <div className="pt-tx-mock-intro">
+     <div className="pt-eyebrow">YOUR BITCOIN TRANSACTION</div>
+     <h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Waiting for confirmation"}</h1>
+     <p>{!observed?"We can't currently locate this transaction on the Bitcoin network. Check the ID or confirm that the sender broadcast it.":confirmed?"Your transaction is recorded on the Bitcoin blockchain with "+number(confirmations)+" confirmation"+(confirmations===1?"":"s")+". Your exchange or wallet may require more confirmations before crediting funds.":selectedPosition?"Your transaction has reached the Bitcoin network and is waiting to be included in a block. Based on current activity, it may confirm in around "+selectedPosition*10+" minutes, but this is only an estimate.":"Your transaction has reached the Bitcoin network and is waiting for confirmation. A reliable confirmation estimate is not currently available."}</p>
+    </div>
+    <span className={confirmed?"pt-tx-mock-state confirmed":observed?"pt-tx-mock-state pending":"pt-tx-mock-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span>
+   </div>
    <section className="pt-tx-stage">
     <div className="pt-tx-block-track">
      {confirmed?<div className="pt-tx-confirmed-message">✓ Confirmed in Bitcoin block #{number(blockHeight)} · {number(confirmations)} confirmation(s). Your transaction is no longer waiting in the mempool.</div>:null}
@@ -102,13 +111,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <p className="pt-tx-block-caveat">{confirmed?"These are upcoming projected blocks, not the block that confirmed your transaction.":observed?"*The arrow indicates a fee-range match, not a confirmed place in line. Block times average around 10 minutes and can vary.":"Projected blocks describe network activity, not a transaction we can currently locate."}</p>
     </div>
    </section>
-  <div className="pt-tx-simple-status">
-   <div className="pt-tx-simple-top">
-    <div className="pt-tx-simple-eyebrow"><span className="pt-eyebrow">YOUR BITCOIN TRANSACTION</span><span className={confirmed?"pt-tx-simple-pill is-confirmed":observed?"pt-tx-simple-pill is-pending":"pt-tx-simple-pill"}>{confirmed?"✓ Confirmed":observed?"● Pending":"Not found"}</span></div>
-    <div className="pt-tx-compact-tools"><button type="button" onClick={()=>setShowLookup(v=>!v)} aria-expanded={showLookup}>⌕ Track another</button><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div>
-   </div>
-   <h1>{!observed?"We couldn't find this transaction":confirmed?"Your transaction is confirmed":"Waiting for confirmation"}</h1>
-   {result&&<p className="pt-tx-simple-description">{summary}</p>}
+  <div className="pt-tx-simple-status pt-tx-mock-summary">
    <div className="pt-tx-simple-facts" aria-label="Your transaction essentials">
     {confirmed?<>
      <div className="pt-tx-simple-fact"><span>CONFIRMATIONS</span><strong>{number(confirmations)}</strong><small>Recorded on the Bitcoin blockchain. Your exchange may need more confirmations.</small></div>
@@ -120,6 +123,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <div className="pt-tx-simple-fact"><span>FEE RATE</span><strong>{rate(feeRate)}</strong><small>The fee paid per unit of transaction space. Higher rates may confirm sooner.</small></div>
     </>:<div className="pt-tx-simple-fact"><span>WHAT TO CHECK</span><strong>Transaction ID</strong><small>Check that the transaction ID is correct and that the sender broadcast it.</small></div>}
    </div>
+   <div className="pt-tx-mock-actions"><span className="pt-tx-mock-actions-icon">{confirmed?"✓":observed?"✓":"!"}</span><div><span>DO I NEED TO DO ANYTHING?</span><strong>{confirmed?"No fee action needed":!observed?"Check the transaction ID":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"You can wait or review fee options":"No action needed right now"}</strong><small>{confirmed?"The transaction is already confirmed.":!observed?"Confirm it was broadcast by the sending wallet.":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee is below the current network guide.":"Your fee appears competitive based on current network conditions."}</small></div></div>
    <div className="pt-tx-simple-footer"><div className="pt-tx-hero-hash"><span>Transaction ID</span><code title={txid}>{short(txid)}</code><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div><a href="#btc-clarity-title" className="pt-tx-simple-details-link">Understand your transaction in detail ↓</a></div>
    {showLookup&&<form className="pt-tx-lookup" onSubmit={e=>{e.preventDefault();const v=lookup.trim();if(/^0x[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/eth/"+v)}else if(/^[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/btc/"+v)}else{setLookupError("Enter a valid Bitcoin transaction ID or Ethereum transaction hash.");}}}><label htmlFor="pt-transaction-lookup">TRACK ANOTHER TRANSACTION</label><div className="pt-tx-lookup-controls"><input id="pt-transaction-lookup" value={lookup} onChange={e=>{setLookup(e.target.value);if(lookupError)setLookupError("");}} placeholder="Paste a Bitcoin or Ethereum transaction hash…" autoComplete="off" spellCheck={false}/><button type="submit">Track transaction →</button></div>{lookupError&&<p role="alert">{lookupError}</p>}</form>}
   </div>
