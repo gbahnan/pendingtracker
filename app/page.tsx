@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./home-2026.css";
+// @ts-ignore JS WebGL component intentionally owns its renderer lifecycle.
+import NetworkScene3D from "./components/NetworkScene3D";
 
 type Overview = {
   btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; confirmedTransactions: string[]; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
@@ -141,40 +143,6 @@ function HeroEmblem({chain}:{chain:"btc"|"eth"}) {
  </svg>;
 }
 
-function HoneycombFloor({chain}:{chain:"btc"|"eth"}) {
- const btc=chain==="btc", accent=btc?"#ffb42d":"#268bff", ice=btc?"#ffe6a4":"#b4e9ff", shade=btc?"#804005":"#103e9b";
- const nodes=[[30,88],[68,48],[103,105],[145,35],[180,83],[224,44],[264,110],[300,49],[344,93],[392,39],[429,100],[111,16],[232,129],[373,133],[45,137],[205,12]] as const;
- const links=[[0,1],[0,2],[0,14],[1,3],[1,11],[2,3],[2,4],[2,14],[3,4],[3,5],[3,11],[4,5],[4,6],[4,12],[5,7],[5,15],[6,7],[6,8],[6,12],[7,8],[7,9],[8,9],[8,10],[8,13],[9,10],[10,13],[11,15],[12,13],[13,14],[5,12],[1,4],[7,10],[3,7],[0,4],[6,10]] as const;
- const cubes=[{id:1,r:14},{id:3,r:20},{id:5,r:12},{id:7,r:23},{id:9,r:16},{id:12,r:11},{id:14,r:12}] as const;
- const polygon=(points:readonly (readonly [number,number])[])=>points.map(([x,y])=>x+","+y).join(" ");
- const cube=(x:number,y:number,r:number)=>{
-   const h=r*.85,w=r*.8,d=r*.46;
-   const top:[[number,number],[number,number],[number,number],[number,number]]=[[x,y-h],[x+w,y-h+d],[x,y-h+2*d],[x-w,y-h+d]];
-   return <g>
-    <polygon points={polygon([[x-w,y-h+d],[x,y-h+2*d],[x,y+2*d],[x-w,y+d]])} fill={shade} stroke={accent} strokeWidth="1.1"/>
-    <polygon points={polygon([[x,y-h+2*d],[x+w,y-h+d],[x+w,y+d],[x,y+2*d]])} fill={accent} fillOpacity=".5" stroke={ice} strokeWidth="1.2"/>
-    <polygon points={polygon(top)} fill={accent} fillOpacity=".6" stroke={ice} strokeWidth="1.6"/>
-    <polygon points={polygon([[x-w*.7,y-h+d],[x,y-h+1.7*d],[x+w*.7,y-h+d],[x,y-h+.3*d]])} fill={ice} fillOpacity=".36"/>
-    <path d={`M ${x-w*.7} ${y-h+d} L ${x-w*.7} ${y+d*.4} M ${x+w*.7} ${y-h+d} L ${x+w*.7} ${y+d*.4}`} stroke={ice} strokeOpacity=".65" fill="none"/>
-   </g>;
- };
- return <svg className="pt26-network-visual" viewBox="0 0 460 160" preserveAspectRatio="xMidYMid meet" role="img" aria-label={btc?"Animated Bitcoin transaction network":"Animated Ethereum transaction network"}>
-  <defs>
-   <radialGradient id={"net-bg-"+chain}><stop stopColor={accent} stopOpacity=".18"/><stop offset="1" stopColor={accent} stopOpacity="0"/></radialGradient>
-   <filter id={"net-glow-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5"/></filter>
-  </defs>
-  <ellipse cx="230" cy="86" rx="220" ry="78" fill={"url(#net-bg-"+chain+")"}/>
-  <g stroke={accent} strokeWidth=".8" strokeOpacity=".55">
-   {links.map(([i,j],k)=><line key={k} x1={nodes[i][0]} y1={nodes[i][1]} x2={nodes[j][0]} y2={nodes[j][1]}/>)}
-  </g>
-  {nodes.map(([x,y],i)=><g key={i}><circle cx={x} cy={y} r={i%4===0?7:4} fill={accent} opacity=".55" filter={"url(#net-glow-"+chain+")"}/><circle cx={x} cy={y} r={i%4===0?3.4:2.1} fill={i%3===0?ice:accent} stroke={ice} strokeWidth=".6"/></g>)}
-  {cubes.map(({id,r},i)=><g key={id} className="pt26-network-cube" style={{animationDelay:-(i*1.4)+"s",animationDuration:(9+i%3*2)+"s"}}>
-   <circle cx={nodes[id][0]} cy={nodes[id][1]} r={r*1.8} fill={accent} opacity=".65" filter={"url(#net-glow-"+chain+")"}/>
-   {cube(nodes[id][0],nodes[id][1],r)}
-  </g>)}
- </svg>;
-}
-
 export default function Page() {
   const router = useRouter();
   const [network, setNetwork] = useState<"btc" | "eth">("btc");
@@ -292,7 +260,7 @@ export default function Page() {
         <article className="pt26-panel btc">
           <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin Network Activity</h2><p>Real-time data from the Bitcoin blockchain</p></div><span className="live">● Live</span></div>
           <div className="pt26-stats"><div><strong>{format(btc?.height)}</strong><small>Latest Block</small></div><div><strong>~10 min</strong><small>Avg. Block Time</small></div><div><strong>{format(btc?.pending)}</strong><small>Pending Txs</small></div><div><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong><small>Priority Fee</small></div></div>
-          <div className="pt26-scene"><HoneycombFloor chain="btc"/></div>
+          <div className="pt26-scene"><NetworkScene3D chain="btc"/></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>₿ &nbsp;Latest Bitcoin Transactions</strong><a href="/bitcoin">View More →</a></div>
             {[...liveBtcTransactions.map(t=>({...t,value:null})),...(btc?.recentTransactions??[]).filter(t=>!liveBtcTransactions.some(l=>l.id===t.id))].slice(0,5).map(t=><a className="pt26-feed-row" href={"/btc/"+t.id} key={t.id}><span className="hash">{t.id.slice(0,7)}…{t.id.slice(-5)}</span><span className="detail">{t.fee!=null&&t.vsize?(t.fee/t.vsize).toFixed(1)+" sat/vB":"Fee pending"}</span><span className="age">Pending</span><b>›</b></a>)}
             {!liveBtcTransactions.length&&!btc?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Bitcoin transactions…</p>:null}
@@ -301,7 +269,7 @@ export default function Page() {
         <article className="pt26-panel eth">
           <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum Network Activity</h2><p>Real-time data from the Ethereum blockchain</p></div><span className="live">● Live</span></div>
           <div className="pt26-stats"><div><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong><small>Latest Block</small></div><div><strong>~12 sec</strong><small>Slot Time</small></div><div><strong>{format(eth?.recentBlocks?.[0]?.transactionsCount)}</strong><small>Latest Block Txs</small></div><div><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</strong><small>Gas Price</small></div></div>
-          <div className="pt26-scene"><HoneycombFloor chain="eth"/></div>
+          <div className="pt26-scene"><NetworkScene3D chain="eth"/></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>◆ &nbsp;Latest Ethereum Transactions</strong><a href="/ethereum">View More →</a></div>
             {(eth?.recentTransactions??[]).slice(0,5).map(t=><a className="pt26-feed-row" href={"/eth/"+t.hash} key={t.hash}><span className="hash">{t.hash.slice(0,7)}…{t.hash.slice(-5)}</span><span className="detail">{t.block==null?"Pending":"Block "+format(t.block)}</span><span className="age">{t.status??"Recorded"}</span><b>›</b></a>)}
             {!eth?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Ethereum transactions…</p>:null}
