@@ -1,0 +1,58 @@
+"use client";
+import {useEffect,useState} from "react";
+import {useRouter} from "next/navigation";
+import Link from "next/link";
+type Tx={id:string;fee:number|null;vsize:number|null;value?:number|null};
+type Block={height:number|null;id:string|null;ageMinutes:number;transactionCount:number|null};
+type Btc={pending?:number|null;height?:number|null;fastestFee?:number|null;halfHourFee?:number|null;hourFee?:number|null;economyFee?:number|null;mempoolVsizeMB?:number|null;congestion?:string;latestBlock?:Block|null;recentTransactions?:Tx[];projectedBlocks?:Array<{position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}>;explanation?:string};
+const number=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(v);
+const fee=(v:number|null|undefined)=>v==null?"—":number(v)+" sat/vB";
+const topics=[
+ {icon:"⬡",title:"Block Height",description:"A block's position in Bitcoin's history. A higher number means a newer block.",value:"Latest confirmed block"},
+ {icon:"⇄",title:"Pending Transactions",description:"Payments waiting in the mempool for miners to include them in a block.",value:"Unconfirmed payments"},
+ {icon:"≋",title:"Fee Rate",description:"The fee paid per virtual byte. Higher rates often compete better for block space.",value:"Satoshis per vB"},
+ {icon:"◷",title:"Block Time",description:"Bitcoin blocks arrive about every ten minutes on average, but any one block can arrive earlier or later.",value:"~10 minute average"},
+ {icon:"▤",title:"Mempool Size",description:"The total virtual size of waiting transactions. A larger queue can mean more competition.",value:"Measured in vMB"},
+ {icon:"₿",title:"Transaction Fee",description:"The total fee miners can collect for including a transaction. It depends on fee rate and virtual size.",value:"Fee rate × virtual size"},
+ {icon:"◇",title:"Confirmations",description:"A transaction gets one confirmation when included in a block; subsequent blocks add more.",value:"Recorded block history"},
+ {icon:"↗",title:"Projected Blocks",description:"An estimate of how waiting transactions could be grouped into future blocks, not a guaranteed schedule.",value:"Live mempool projection"}
+];
+export default function BitcoinExplorerOverview(){
+ const router=useRouter();const [query,setQuery]=useState("");const [error,setError]=useState("");const [btc,setBtc]=useState<Btc|null>(null);const [updated,setUpdated]=useState("");const [expanded,setExpanded]=useState(false);
+ useEffect(()=>{let alive=true;async function refresh(){try{const r=await fetch("/api/network",{cache:"no-store"});if(!r.ok)return;const j=await r.json();if(alive){setBtc(j.btc??null);setUpdated(new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}))}}catch{}}void refresh();const timer=setInterval(refresh,12000);return()=>{alive=false;clearInterval(timer)}},[]);
+ function search(){let q=query.trim();try{if(/^https?:\/\//i.test(q)){const parts=new URL(q).pathname.split("/").filter(Boolean);q=parts[parts.length-1]??q}}catch{}q=q.split(/[?#]/)[0].replace(/\/$/,"");if(/^[a-f0-9]{64}$/i.test(q)){router.push("/btc/"+q);return}if(/^(bc1[a-z0-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(q)){router.push("/btc/address/"+q);return}if(/^\d{1,9}$/.test(q)){setError("Block-number search is coming soon. Search a transaction ID or Bitcoin address for now.");return}setError("Enter a valid Bitcoin transaction ID or address.");}
+ const latest=btc?.latestBlock;
+ const stats=[
+ {icon:"⬡",label:"Latest Block Height",value:latest?.height==null?"—":"#"+number(latest.height),help:"The newest confirmed Bitcoin block."},
+ {icon:"⌁",label:"Pending Transactions",value:number(btc?.pending),help:"Payments waiting to be confirmed."},
+ {icon:"▤",label:"Mempool Size",value:btc?.mempoolVsizeMB==null?"—":number(btc.mempoolVsizeMB)+" vMB",help:"How much transaction data is waiting."},
+ {icon:"⚡",label:"Priority Fee Guide",value:fee(btc?.fastestFee),help:"A competitive fee suggestion, not a guarantee."},
+ {icon:"◷",label:"Average Block Time",value:"~10 min",help:"The long-term average, not a countdown."}
+ ];
+ const feeBands=[{label:"Priority",value:btc?.fastestFee,description:"For faster inclusion when blocks have room."},{label:"Medium",value:btc?.halfHourFee,description:"A balance of fee and waiting time."},{label:"Standard",value:btc?.hourFee,description:"May take longer when demand rises."},{label:"Economy",value:btc?.economyFee,description:"Lower fee; confirmation could take much longer."}];
+ const maxCount=Math.max(1,...(btc?.projectedBlocks??[]).map(x=>x.transactionCount??0));
+ return <div className="bex">
+ <header className="bex-hero">
+  <div className="bex-hero-copy"><div className="bex-eyebrow">BITCOIN BLOCKCHAIN EXPLORER</div><h1>Explore the<br/><span>Bitcoin Blockchain.</span></h1><p>Live blockchain data, clear explanations, and everything you need to understand Bitcoin in one simple place.</p></div>
+  <div className="bex-hero-art" aria-hidden="true"><span className="bex-orbit o1">⬡</span><span className="bex-orbit o2">⬡</span><span className="bex-orbit o3">⬡</span><span className="bex-hero-coin">₿</span></div>
+ </header>
+ <section className="bex-search" aria-label="Search the Bitcoin blockchain">
+  <div className="bex-search-input"><span aria-hidden="true">⌕</span><input aria-label="Bitcoin transaction ID or address" placeholder="Search a Bitcoin transaction or address…" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} onKeyDown={e=>{if(e.key==="Enter")search()}}/><button onClick={search} aria-label="Search Bitcoin">→</button></div>
+  {error&&<p className="bex-error" role="alert">{error}</p>}
+  <div className="bex-search-actions"><button onClick={()=>document.querySelector<HTMLInputElement>(".bex-search-input input")?.focus()}>⇄ &nbsp; Search a Transaction</button><button onClick={()=>document.querySelector<HTMLInputElement>(".bex-search-input input")?.focus()}>▣ &nbsp; Search an Address</button><a href="#bex-blocks">⬡ &nbsp; Explore Blocks</a></div>
+ </section>
+ <section className="bex-estimates"><div className="bex-heading"><div><div className="bex-eyebrow">LIVE BITCOIN MEMPOOL</div><h2>Current Estimated Transaction Times</h2><p>Our original live hexagon timeline shows projected blocks as transactions move toward confirmation.</p></div><span className="bex-live"><i/> {updated?"Live · Updated "+updated:"Connecting to live data"}</span></div><div className="bex-estimates-slot" id="bex-hexagons"/></section>
+ <section className="bex-stats" aria-label="Live network statistics"><div className="bex-heading"><div><h2>Live Network Stats</h2><p>What is happening on Bitcoin right now, explained in everyday language.</p></div></div><div className="bex-stats-grid">{stats.map(x=><article key={x.label} className="bex-stat"><div className="bex-stat-head"><span className="bex-stat-icon">{x.icon}</span><span>{x.label}</span></div><strong>{x.value}</strong><p>{x.help}</p></article>)}</div></section>
+ <div className="bex-duo">
+  <section className="bex-panel"><div className="bex-heading"><div><h2>Projected Mempool Activity</h2><p>Estimated transaction counts in the next possible blocks.</p></div><span className="bex-live"><i/> LIVE</span></div><div className="bex-bars">{(btc?.projectedBlocks??[]).slice(0,5).map((b,i)=><div className="bex-bar-col" key={b.position}><div className="bex-bar-area"><div style={{height:Math.max(8,((b.transactionCount??0)/maxCount)*100)+"%"}}/></div><b>Block {i+1}</b><strong>{number(b.transactionCount)}</strong><small>waiting txs</small></div>)}{!btc?.projectedBlocks?.length&&<p className="bex-empty">Waiting for live mempool projections…</p>}</div><p className="bex-panel-note">These are possible future blocks, not scheduled confirmations. Miners can choose different transactions.</p></section>
+  <section className="bex-panel"><div className="bex-heading"><div><h2>Bitcoin Fee Guide</h2><p>Live fee rates for different urgency levels.</p></div></div><div className="bex-fees">{feeBands.map((f,i)=><div className="bex-fee" key={f.label}><span className="bex-fee-symbol">⬡</span><div><b>{f.label}</b><small>{f.description}</small></div><strong>{fee(f.value)}</strong></div>)}</div><p className="bex-panel-note">Your total fee depends on transaction size. Higher fees do not guarantee a confirmation time.</p></section>
+ </div>
+ <div className="bex-duo" id="bex-blocks">
+  <section className="bex-panel"><div className="bex-heading"><div><h2>Latest Pending Transactions</h2><p>Select a transaction to see its status and plain-English explanation.</p></div></div><div className="bex-table-wrap"><table><thead><tr><th>Transaction ID</th><th>Fee Rate</th><th>Size</th><th>Status</th></tr></thead><tbody>{(btc?.recentTransactions??[]).slice(0,6).map(t=><tr key={t.id}><td><Link href={"/btc/"+t.id}>{t.id.slice(0,8)}…{t.id.slice(-6)}</Link></td><td>{t.fee!=null&&t.vsize?fee(t.fee/t.vsize):"—"}</td><td>{t.vsize==null?"—":number(t.vsize)+" vB"}</td><td><span className="bex-pending">Pending</span></td></tr>)}</tbody></table>{!btc?.recentTransactions?.length&&<p className="bex-empty">Waiting for transactions…</p>}</div></section>
+  <section className="bex-panel"><div className="bex-heading"><div><h2>Latest Confirmed Block</h2><p>The newest recorded batch of Bitcoin transactions.</p></div></div><div className="bex-block-details"><div><small>BLOCK HEIGHT</small><strong>{latest?.height==null?"—":"#"+number(latest.height)}</strong></div><div><small>TRANSACTIONS INCLUDED</small><strong>{number(latest?.transactionCount)}</strong></div><div><small>AGE</small><strong>{latest?.ageMinutes==null?"—":number(latest.ageMinutes)+" min ago"}</strong></div><div><small>BLOCK HASH</small><strong className="bex-hash">{latest?.id?latest.id.slice(0,13)+"…"+latest.id.slice(-9):"—"}</strong></div></div><p className="bex-panel-note">A confirmed block is part of Bitcoin's public history. New blocks typically arrive around every ten minutes on average.</p>{latest?.id&&<a className="bex-external" href={"https://mempool.space/block/"+latest.id} target="_blank" rel="noopener noreferrer">View complete block details ↗</a>}</section>
+ </div>
+ <section className="bex-understand"><div className="bex-heading"><div><div className="bex-eyebrow">THE BLOCKCHAIN, EXPLAINED</div><h2>Understand the <span>Bitcoin Blockchain</span></h2><p>Everything important about the network, explained without technical jargon.</p></div></div><div className="bex-topics">{topics.slice(0,expanded?8:4).map(topic=><article className="bex-topic" key={topic.title}><div className="bex-topic-icon"><span>{topic.icon}</span></div><h3>{topic.title}</h3><p>{topic.description}</p><div className="bex-topic-example"><small>WHAT IT MEANS</small><strong>{topic.value}</strong></div></article>)}</div><button className="bex-more" aria-expanded={expanded} onClick={()=>setExpanded(v=>!v)}>{expanded?"Show Fewer Explanations":"Show 4 More Explanations"} <span>{expanded?"⌃":"⌄"}</span></button></section>
+ <section className="bex-bottom"><h2>Explore more of Bitcoin</h2><div><a href="#bex-blocks">⬡ &nbsp; Recent Blocks</a><a href="#bex-blocks">⇄ &nbsp; Recent Transactions</a><a href="#bex-hexagons">◷ &nbsp; Confirmation Estimates</a><Link href="/">⌕ &nbsp; Track Another Blockchain</Link></div></section>
+ <p className="bex-source">Live network data from mempool.space via Pending Tracker. Mempool figures are estimates, not guarantees. No wallet connection required.</p>
+ </div>
+}
