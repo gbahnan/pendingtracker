@@ -89,15 +89,12 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  return <main className="pt-tx-page pt-tx-detail-v2">
   <div className="pt-tx-back"><a href="/explore">← Bitcoin & Ethereum Explorer</a></div>
   <div className="pt-tx-mobile-status-strip"><div><span className="pt-eyebrow">YOUR BITCOIN TRANSACTION</span><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{!result?"● Checking":confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div><strong>{!result?"Checking the Bitcoin network…":confirmed?number(confirmations)+" confirmation"+(confirmations===1?"":"s"):observed?feeEstimate:"Transaction not visible"}</strong></div>
-  {lastChecked&&<p className="pt-tx-freshness">Last successful check: {lastChecked} · Automatically refreshes every 15 seconds</p>}
+  {lastChecked&&<p className="pt-tx-freshness pt-tx-compact-freshness">Live network · Updated {lastChecked} · Refreshes every 15 seconds</p>}
   {changeNotice&&<p className="pt-tx-change" role="status">{changeNotice}</p>}
   {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
   {loading&&!result&&<div className="pt-tx-loading">Checking the Bitcoin network…</div>}
   {result&&<>
    <section className="pt-tx-stage">
-    <div className="pt-tx-stage-head"><div><div className="pt-eyebrow">LIVE TRANSACTION OUTLOOK</div><h2>{confirmed?"Confirmed in block #"+(blockHeight??"—"):observed?"Where could it confirm?":"Waiting for network data"}</h2></div><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div>
-    <div className="pt-tx-estimate"><span>YOUR TRANSACTION FEE RATE</span><strong>{rate(feeRate)}</strong><span>{confirmed?"CONFIRMATIONS":"POSSIBLE CONFIRMATION TIME"}</span><strong>{confirmed?number(confirmations):feeEstimate}</strong></div>
-    {!confirmed&&observed&&<div className="pt-tx-position-guide">{selectedPosition?"The arrow beneath the matching projected block shows an estimated confirmation window, not an exact queue position.":"Your transaction is pending, but we cannot estimate a block yet."}</div>}
     <div className="pt-tx-block-track">
      {confirmed?<div className="pt-tx-confirmed-message">✓ Confirmed in Bitcoin block #{number(blockHeight)} · {number(confirmations)} confirmation(s). Your transaction is no longer waiting in the mempool.</div>:null}
      {!confirmed&&observed&&!selectedPosition?<p className="pt-tx-position-unknown">No reliable projected block match is available yet.</p>:null}
