@@ -115,12 +115,31 @@ const comparisonExamples = {
 
 
 function HoneycombFloor({chain}:{chain:"btc"|"eth"}) {
-  const points=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const a=Math.PI/3*i-Math.PI/6;return (x+r*Math.cos(a)).toFixed(1)+","+(y+r*Math.sin(a)).toFixed(1)}).join(" ");
-  return <svg viewBox="0 0 460 150" preserveAspectRatio="xMidYMid meet" role="presentation" aria-hidden="true">
-    <g transform="translate(20 17) skewX(-15) scale(1 .75)">
-      {Array.from({length:8},(_,row)=>Array.from({length:14},(_,col)=>{const x=col*32+(row%2)*16;const y=row*23;const bright=(row*13+col*7)%17===0;return <polygon key={row+"-"+col} className={"tile"+(bright?" bright":"")} points={points(x,y,18)}/> }))}
+  const gold=chain==="btc", bright=gold?"#ffc13c":"#459bff", pale=gold?"#ffe7a0":"#b7dcff", dark=gold?"#5b3006":"#092e70";
+  const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const a=Math.PI/3*i-Math.PI/6;return (x+r*Math.cos(a)).toFixed(1)+","+(y+r*Math.sin(a)).toFixed(1)}).join(" ");
+  const tiles=Array.from({length:7},(_,row)=>Array.from({length:12},(_,col)=>({x:37+col*34+(row%2)*17,y:19+row*27,row,col}))).flat();
+  const cubes=[[77,37,11],[147,71,16],[214,42,12],[282,82,17],[353,49,13],[396,93,10],[116,112,10]];
+  return <svg viewBox="0 0 460 164" preserveAspectRatio="xMidYMid meet" role="presentation" aria-hidden="true">
+    <defs>
+      <linearGradient id={"floor-tile-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={dark}/><stop offset=".45" stopColor="#07121f"/><stop offset="1" stopColor="#02070f"/></linearGradient>
+      <linearGradient id={"floor-cube-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={pale}/><stop offset=".45" stopColor={bright}/><stop offset="1" stopColor={dark}/></linearGradient>
+      <filter id={"floor-glow-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
+      <radialGradient id={"floor-light-"+chain}><stop stopColor={bright} stopOpacity=".32"/><stop offset="1" stopColor={bright} stopOpacity="0"/></radialGradient>
+    </defs>
+    <ellipse cx="230" cy="105" rx="200" ry="76" fill={"url(#floor-light-"+chain+")"}/>
+    <g transform="translate(8 29) skewX(-18) scale(1 .61)">
+      {tiles.map(({x,y,row,col})=>{const lit=(row*17+col*11)%19===0;return <g key={row+"-"+col}>
+        {lit&&<polygon points={hex(x,y,19)} fill={bright} opacity=".8" filter={"url(#floor-glow-"+chain+")"}/>}
+        <polygon points={hex(x,y,18)} fill={lit?bright:"url(#floor-tile-"+chain+")"} fillOpacity={lit?".87":"1"} stroke={lit?pale:bright} strokeOpacity={lit?"1":".72"} strokeWidth={lit?"2":"1.15"}/>
+        <polygon points={hex(x,y,14)} fill="none" stroke={pale} strokeOpacity={lit?".55":".08"} strokeWidth=".8"/>
+      </g>})}
     </g>
-    {[[75,48,13],[168,82,20],[285,40,14],[363,96,19],[235,23,10],[102,105,11],[320,112,12]].map(([x,y,r],i)=><g key={i} className="cube"><polygon points={points(x,y,r)} fillOpacity=".9"/><polygon points={points(x,y-r*.8,r*.55)} fill="#ffffff" opacity=".42"/></g>)}
+    {cubes.map(([x,y,r],i)=><g key={i} className="pt26-floating-cube" style={{animationDelay:-(i*1.8)+"s",animationDuration:(9+i%4*2)+"s"}}>
+      <polygon points={hex(x,y,r+6)} fill={bright} opacity=".85" filter={"url(#floor-glow-"+chain+")"}/>
+      <polygon points={hex(x,y,r)} fill={"url(#floor-cube-"+chain+")"} stroke={pale} strokeWidth="1.3"/>
+      <polygon points={x+","+(y-r*.92)+" "+(x-r*.77)+","+(y-r*.12)+" "+x+","+(y+r*.78)+" "+(x+r*.77)+","+(y-r*.12)} fill={pale} opacity=".32"/>
+      <polygon points={hex(x,y,r*.68)} fill="none" stroke={pale} strokeOpacity=".75" strokeWidth=".7"/>
+    </g>)}
   </svg>;
 }
 
