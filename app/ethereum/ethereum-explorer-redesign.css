@@ -1,0 +1,39 @@
+/* Ethereum-only blue version of the Bitcoin explorer design. */
+.pt-ethereum-explorer-redesign{background:#020b15!important;background-image:none!important;max-width:none!important;padding:0 0 35px!important;border:0!important;box-shadow:none!important}
+.eex{--gold:#35b5ff;--gold-muted:#1670c9}
+.eex .bex-eyebrow{color:#83cfff}
+.eex .bex-hero{background:radial-gradient(ellipse at 78% 52%,rgba(24,132,255,.2),transparent 45%)}
+.eex .bex-hero-coin{color:#c3eaff;background:linear-gradient(145deg,rgba(16,132,255,.28),#091524 60%);filter:drop-shadow(0 0 24px #178cff);text-shadow:0 0 26px #35b5ff}
+.eex .bex-hero-art::before{background:linear-gradient(140deg,#d8f7ff,#168fff,#0750cb,#9ce5ff);filter:drop-shadow(0 0 28px #208cff)}
+.eex .bex-orbit{color:#36baff;text-shadow:0 0 20px #167aff}
+.eex .bex-search-input{box-shadow:0 0 24px rgba(18,146,255,.2)}
+.eex .bex-search-input button{border-color:#8be2ff;background:#31baff;box-shadow:0 0 18px rgba(25,147,255,.5)}
+.eex .bex-search-actions a,.eex .bex-search-actions button{border-color:#246d9b;color:#9fddff}
+.eex .bex-projection-hex::before{background:linear-gradient(140deg,#d2f6ff,#269eff,#1255ca,#80dfff)}
+.eex .bex-projection-hex::after{background:radial-gradient(circle at 50% 40%,#102f58,#051321 70%)}
+.eex .bex-projection-hex{color:#91dfff;filter:drop-shadow(0 0 13px rgba(33,138,255,.38))}
+.eex .bex-projection-hex span,.eex .bex-projection-hex small{color:#a4ddff}
+.eex .bex-projection-hex.selected{filter:drop-shadow(0 0 22px rgba(55,169,255,.85))}
+.eex .bex-projection-hex.confirmed::before{background:linear-gradient(140deg,#d8f9ff,#65d6ff,#126bc9,#9ceaff)}
+.eex .bex-projection-hex.confirmed::after{background:radial-gradient(circle at 50% 40%,#124669,#061421 70%)}
+.eex .bex-projection-hex.confirmed span{color:#a5e8ff}
+.eex .bex-projection-note strong,.eex .bex-projection-detail>div strong{color:#7ccfff}
+.eex .bex-projection-detail{border-color:#286eaa;background:linear-gradient(135deg,#0b2441,#061421)}
+.eex .bex-network-summary{border-left-color:#35b5ff;background:linear-gradient(90deg,rgba(15,45,78,.8),rgba(5,17,29,.25))}
+.eex .bex-summary-symbol,.eex .bex-stat-icon,.eex .bex-stat>strong,.eex .bex-fee-symbol,.eex .bex-fee>strong,.eex .bex-bar-col strong,.eex .bex-block-details strong,.eex .bex-advanced>div strong{color:#53c0ff}
+.eex .bex-mode button.active{background:#122c48;color:#a6e1ff;box-shadow:inset 0 0 0 1px #287cb5}
+.eex .bex-glossary summary,.eex .bex-external,.eex .bex-bottom a:hover{color:#69caff}
+.eex .bex-bar-area>div{background:linear-gradient(0deg,#0b376d,#45b9ff)}
+.eex .bex-topic{border-color:#285b88;background:linear-gradient(145deg,#0d1b2e,#05101d 65%,#101d2d)}
+.eex .bex-topic-icon{filter:drop-shadow(0 0 10px rgba(38,149,255,.5))}
+.eex .bex-topic-icon::before{background:#36b5ff}
+.eex .bex-topic-icon::after{background:#071526}
+.eex .bex-topic-icon span{color:#6dcfff}
+.eex .bex-topic-example{border-color:#235b8b;background:rgba(22,107,186,.07)}
+.eex .bex-more{border-color:#35b5ff;color:#74d0ff;box-shadow:0 0 16px rgba(22,133,255,.12)}
+.eex .bex-panel,.eex .bex-panel:first-child{border-color:#254b69}
+.eex .bex-stat,.eex .bex-stat:first-child,.eex .bex-stat:last-child{border-color:#234d6d}
+.eex .bex-bottom a,.eex .bex-bottom a:first-child,.eex .bex-bottom a:last-child{border-color:#254b69}
+.eex .bex-advanced{border-color:#286293}
+.eex .bex-fee>strong{font-size:12px;white-space:normal;text-align:right;max-width:135px}
+@media(max-width:700px){.eex .bex-fee>strong{max-width:105px}}
