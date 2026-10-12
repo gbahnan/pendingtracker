@@ -196,31 +196,31 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      </div>
      <div className={styles.summaryFooter}><div>Transaction ID <code title={txid}>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"▢ Copy"}</button></div><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">View on Mempool.space ↗</a></div>
     </section>
-   <section className="pt-story">
-    <div className="pt-story-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
+   <section className={styles["pt-story"]}>
+    <div className={styles["pt-story-eyebrow"]}>THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
     <h2>Your Bitcoin transaction, <em>in plain English.</em></h2>
-    <p className="pt-story-sub">Real blockchain data. Clear explanations.</p>
-    <div className="pt-story-intro"><h3>✦ &nbsp; Your transaction, explained</h3><p>This transaction uses {inputs.length} existing Bitcoin outputs to create {outputs.length} new outputs worth {btc(outputTotal)}. {tx?.fee!=null?"A network fee of "+number(tx.fee)+" sats was paid to miners.":""} Outputs may include payments and change returned to the sender; their owners cannot be identified from the blockchain alone.</p></div>
-    <div className="pt-story-flow"><h3>TRANSACTION FLOW</h3><div className="pt-story-flowgrid"><div><small>FROM · {inputs.length} INPUTS</small><strong>{btc(inputTotal)}</strong><small>Existing Bitcoin spent</small></div><div className="pt-story-coin">₿</div><div><small>TO · {outputs.length} OUTPUTS</small><strong>{btc(outputTotal)}</strong><small>New Bitcoin outputs</small></div></div><p>Outputs can include a payment and change returned to the sender.</p><details><summary>View addresses and amounts ↓</summary><div className="pt-story-addressgrid"><div><h4>Inputs</h4>{inputs.map((x,i)=><p key={i}>{short(x.prevout?.scriptpubkey_address??x.txid??"Unknown")} · {btc(x.prevout?.value)}</p>)}</div><div><h4>Outputs</h4>{outputs.map((x,i)=><p key={i}>{short(x.scriptpubkey_address??"Non-address output")} · {btc(x.value)}</p>)}</div></div></details></div>
-    <div className="pt-story-data"><h3>UNDERSTANDING YOUR TRANSACTION</h3>
+    <p className={styles["pt-story-sub"]}>Real blockchain data. Clear explanations.</p>
+    <div className={styles["pt-story-intro"]}><h3>✦ &nbsp; Your transaction, explained</h3><p>This transaction uses {inputs.length} existing Bitcoin outputs to create {outputs.length} new outputs worth {btc(outputTotal)}. {tx?.fee!=null?"A network fee of "+number(tx.fee)+" sats was paid to miners.":""} Outputs may include payments and change returned to the sender; their owners cannot be identified from the blockchain alone.</p></div>
+    <div className={styles["pt-story-flow"]}><h3>TRANSACTION FLOW</h3><div className={styles["pt-story-flowgrid"]}><div><small>FROM · {inputs.length} INPUTS</small><strong>{btc(inputTotal)}</strong><small>Existing Bitcoin spent</small></div><div className={styles["pt-story-coin"]}>₿</div><div><small>TO · {outputs.length} OUTPUTS</small><strong>{btc(outputTotal)}</strong><small>New Bitcoin outputs</small></div></div><p>Outputs can include a payment and change returned to the sender.</p><details><summary>View addresses and amounts ↓</summary><div className={styles["pt-story-addressgrid"]}><div><h4>Inputs</h4>{inputs.map((x,i)=><p key={i}>{short(x.prevout?.scriptpubkey_address??x.txid??"Unknown")} · {btc(x.prevout?.value)}</p>)}</div><div><h4>Outputs</h4>{outputs.map((x,i)=><p key={i}>{short(x.scriptpubkey_address??"Non-address output")} · {btc(x.value)}</p>)}</div></div></details></div>
+    <div className={styles["pt-story-data"]}><h3>UNDERSTANDING YOUR TRANSACTION</h3>
      {[
       ["Network fee",tx?.fee==null?"Unavailable":number(tx.fee)+" sats","This is the network fee paid to miners. It is separate from the Bitcoin received in the outputs."],
       ["Fee rate",rate(feeRate),"The fee per virtual byte. Higher rates can improve priority, but confirmation times are not guaranteed."],
       ["Transaction size",tx?.size==null?"Unavailable":number(tx.size)+" bytes","The amount of raw data this transaction occupies on the blockchain."],
       ["Inputs & outputs",inputs.length+" inputs · "+outputs.length+" outputs","Inputs spend earlier Bitcoin outputs; new outputs may include payments and change."]
-     ].map(([label,value,help])=><div className="pt-story-row" key={label}><div><small>{label}</small><strong>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
+     ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
     </div>
-    <details className="pt-story-advanced"><summary><b>Explore additional blockchain data</b><span>Virtual size, weight, version, locktime, transaction ID and raw data — each explained. ↓</span></summary>
+    <details className={styles["pt-story-advanced"]}><summary><b>Explore additional blockchain data</b><span>Virtual size, weight, version, locktime, transaction ID and raw data — each explained. ↓</span></summary>
      {[
       ["Virtual size",tx?.weight==null?"Unavailable":number(Math.ceil(tx.weight/4))+" vB","The fee-paying size calculated from transaction weight."],
       ["Weight",tx?.weight==null?"Unavailable":number(tx.weight)+" WU","Bitcoin's measure of the transaction's use of block capacity."],
       ["Version",String(tx?.version??"Unavailable"),"The transaction format version."],
       ["Locktime",String(tx?.locktime??"Unavailable"),"A block height or time restriction, when enabled."],
       ["Transaction ID",txid,"The unique identifier used to verify this transaction."]
-     ].map(([label,value,help])=><div className="pt-story-row" key={label}><div><small>{label}</small><strong className="pt-story-wrap">{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
-     <details className="pt-story-raw"><summary>View raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details>
+     ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong className={styles["pt-story-wrap"]}>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
+     <details className={styles["pt-story-raw"]}><summary>View raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details>
     </details>
-    <p className="pt-story-source">Live Bitcoin blockchain data · <a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">Verify on Mempool.space ↗</a></p>
+    <p className={styles["pt-story-source"]}>Live Bitcoin blockchain data · <a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">Verify on Mempool.space ↗</a></p>
    </section>
   </>}
   </div>
