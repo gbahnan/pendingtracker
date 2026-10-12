@@ -233,3 +233,22 @@
 .ethPage .pt-story-advanced{border:1px solid #1d355d}
 @media(max-width:900px){.ethPage .summaryGrid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:20px}.ethPage .fact{border-right:0;border-bottom:1px solid #29466e;padding:12px}.ethPage .fact:last-child{grid-column:1/-1}}
 @media(max-width:700px){.ethPage .shell{width:calc(100% - 30px)}.ethPage .pt-story-flowgrid>.pt-story-path{flex-direction:column;height:100px}.ethPage .summaryGrid{grid-template-columns:1fr}.ethPage .fact:last-child{grid-column:auto}}
+
+/* Bitcoin transaction explanation cards — scoped to the understanding dropdown only. */
+.understandingGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-top:20px}
+.understandingCard{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0;min-height:302px;padding:19px 17px 16px;border:1px solid #655333;border-radius:15px;background:linear-gradient(140deg,#131a1f,#06111d 60%,#171b1c);box-shadow:inset 0 1px rgba(255,255,255,.04),0 12px 24px rgba(0,0,0,.18)}
+.understandingIcon{height:65px;width:65px;display:grid;place-items:center;position:relative;margin:0 auto 12px;filter:drop-shadow(0 0 10px rgba(255,193,62,.38))}
+.understandingIcon::before,.understandingIcon::after{content:"";position:absolute;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%)}
+.understandingIcon::before{inset:5px;background:#ffc13e}
+.understandingIcon::after{inset:7px;background:#07111b}
+.understandingIcon span{position:relative;z-index:1;color:#ffc13e;font-size:29px;font-weight:700}
+.understandingCard h4{margin:0 0 9px!important;color:#fff!important;font-size:19px!important;line-height:1.2!important;font-weight:800!important}
+.understandingCard>p{font-size:14px;line-height:1.55;color:#cad8e5;margin:0 0 13px;text-align:left;width:100%;flex:1}
+.understandingExample{width:100%;padding:11px 13px;border:1px solid #685734;border-radius:10px;background:rgba(255,255,255,.035);text-align:left}
+.understandingExample small{display:block;color:#aabdd0;letter-spacing:1px;font-size:10px;font-weight:800;margin-bottom:5px}
+.understandingExample strong{display:block;color:#f7f9fc;font-size:16px;overflow-wrap:anywhere}
+.understandingMore{display:flex;gap:16px;align-items:center;justify-content:center;min-width:290px;margin:20px auto 0;padding:12px 25px;border:1px solid #ffc13e;border-radius:30px;background:#0e1218;color:#ffc13e;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 0 13px rgba(255,193,62,.15)}
+.understandingMore:hover{filter:brightness(1.12)}
+@media(max-width:1050px){.understandingGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.understandingCard{min-height:275px}}
+@media(max-width:650px){.understandingGrid{gap:10px}.understandingCard{padding:15px 12px;min-height:308px}.understandingCard h4{font-size:16px!important}.understandingCard>p{font-size:12px}.understandingExample{padding:10px}.understandingExample strong{font-size:14px}.understandingIcon{height:62px;width:62px}.understandingMore{width:100%;min-width:0}}
+@media(max-width:370px){.understandingGrid{grid-template-columns:1fr}.understandingCard{min-height:0}}
