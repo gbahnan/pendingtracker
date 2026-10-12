@@ -4444,3 +4444,86 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
    padding-bottom:0!important;
  }
 }
+
+/* Redesigned Bitcoin transaction snapshot. Scoped: honeycombs and detailed
+   plain-English explorer remain unchanged. */
+@media(min-width:980px){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign{
+   grid-template-columns:minmax(0,1.04fr) minmax(0,1fr)!important;
+   column-gap:clamp(32px,4.2vw,72px)!important;
+   align-items:center!important;
+   padding-top:17px!important;
+   padding-bottom:27px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-compact-hero{
+   align-self:center!important;
+   padding:0!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-compact-topline{
+   display:flex!important;
+   flex-wrap:wrap!important;
+   align-items:center!important;
+   gap:10px!important;
+   margin-bottom:13px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-compact-hero h1{
+   font-size:clamp(29px,2.65vw,40px)!important;
+   line-height:1.12!important;
+   letter-spacing:-.045em!important;
+   max-width:580px!important;
+   margin:0 0 14px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-compact-description{
+   font-size:clamp(14px,1.05vw,16px)!important;
+   line-height:1.6!important;
+   color:#d0e0e9!important;
+   max-width:590px!important;
+   margin:0 0 17px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-hero-hash{
+   padding-top:12px!important;
+   border-top:1px solid rgba(126,168,186,.22)!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts{
+   padding:0!important;
+   align-self:center!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-heading{
+   margin:0 0 12px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid{
+   display:grid!important;
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;
+   gap:0 22px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid>div{
+   padding:14px 0 15px!important;
+   gap:6px!important;
+   border-top:1px solid rgba(126,168,186,.26)!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid .pt-tx-fact-primary{
+   grid-row:1!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid .pt-tx-fact-secondary{
+   grid-row:2!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid .pt-tx-fact-primary strong{
+   font-size:clamp(23px,1.85vw,29px)!important;
+   line-height:1.12!important;
+   letter-spacing:-.025em!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid .pt-tx-fact-secondary strong{
+   font-size:clamp(17px,1.3vw,20px)!important;
+   line-height:1.2!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid span{
+   font-size:10px!important;
+   letter-spacing:.13em!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary-redesign .pt-tx-quick-facts-grid small{
+   font-size:12px!important;
+   line-height:1.45!important;
+   color:#b7cedb!important;
+   max-width:300px!important;
+ }
+}
