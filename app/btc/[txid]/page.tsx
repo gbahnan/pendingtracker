@@ -102,7 +102,8 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <p className="pt-tx-block-caveat">{confirmed?"These are upcoming projected blocks, not the block that confirmed your transaction.":observed?"*The arrow indicates a fee-range match, not a confirmed place in line. Block times average around 10 minutes and can vary.":"Projected blocks describe network activity, not a transaction we can currently locate."}</p>
     </div>
    </section>
-  <div className="pt-tx-desktop-summary">\n  <header className="pt-tx-top pt-tx-status-hero pt-tx-compact-hero">
+  <div className="pt-tx-desktop-summary">
+  <header className="pt-tx-top pt-tx-status-hero pt-tx-compact-hero">
    <div className="pt-tx-compact-topline"><span className="pt-eyebrow">YOUR BITCOIN TRANSACTION</span><div className="pt-tx-compact-tools"><button type="button" onClick={()=>setShowLookup(v=>!v)} aria-expanded={showLookup}>⌕ Track another</button><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div></div>
    <h1>{!observed?"We can't find this Bitcoin transaction":confirmed?"Your Bitcoin transaction is confirmed":"Your Bitcoin transaction is waiting for confirmation"}</h1>
    {result&&<p className="pt-tx-compact-description">{summary}</p>}
@@ -117,7 +118,9 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <div><span>TOTAL NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>The Bitcoin network fee paid by the sender, not necessarily a fee charged by an exchange.</small></div>
      <div><span>{confirmed?"CONFIRMED AT":"FEE ADJUSTMENT"}</span><strong>{confirmed?(blockTime?new Date(blockTime*1000).toLocaleString():"Confirmed"):rbf?"May be available":"Not signaled"}</strong><small>{confirmed?"The time the transaction was recorded in a block.":rbf?"The sender may be able to increase the fee if their wallet supports it.":"This transaction does not signal opt-in replace-by-fee."}</small></div>
     </div>
-   </section>\n  </div>\n  </div>\n   <section className="pt-tx-clarity" aria-labelledby="btc-clarity-title">
+   </section>
+  </div>
+   <section className="pt-tx-clarity" aria-labelledby="btc-clarity-title">
     <div className="pt-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
     <h2 id="btc-clarity-title">Your Bitcoin transaction, in plain English</h2>
     <div className="pt-tx-clarity-hash"><div><span>TRANSACTION ID (TXID)</span><code title={txid}>{txid}</code></div><button type="button" onClick={copy}> {copied?"✓ Copied":"Copy hash"}</button></div>
