@@ -4230,3 +4230,17 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-tx-clarity-note,.pt-tx-clarity-footnote{margin:18px 0 0;color:#94b1c2;font-size:12px;line-height:1.7}
 .pt-tx-clarity+.pt-tx-summary-actions{margin:0 0 28px}
 @media(max-width:650px){.pt-tx-clarity{padding:18px}.pt-tx-clarity-head{display:none}.pt-tx-clarity-row{grid-template-columns:1fr;gap:10px;padding:18px}.pt-tx-clarity-row>p{font-size:13px}}
+
+
+/* Bitcoin transaction: contextual questions and live update indicators. */
+.pt-tx-freshness{color:#96b5c6;font-size:12px;margin:10px 0 16px}
+.pt-tx-change{padding:13px 18px;border:1px solid #a7833b;background:#172719;border-radius:12px;color:#f2c878;font-size:14px}
+.pt-tx-questions{margin:24px 0;padding:clamp(18px,3vw,28px);background:#071b29;border:1px solid #29475b;border-radius:18px}
+.pt-tx-questions h2{color:#f3f7fa;margin:0 0 8px;font-size:clamp(20px,2vw,26px)}
+.pt-tx-questions>p{color:#a8c0ce;margin:0 0 20px}
+.pt-tx-question-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.pt-tx-question-buttons button{cursor:pointer;background:#0d2939;border:1px solid #3a5362;color:#e6eff4;padding:11px 15px;border-radius:10px;font:inherit;font-size:13px;text-align:left}
+.pt-tx-question-buttons button:hover,.pt-tx-question-buttons button[aria-pressed="true"]{border-color:#f3bd56;color:#f3bd56;background:#152c3b}
+.pt-tx-question-answer{margin-top:16px;padding:18px;border-left:3px solid #f3bd56;border-radius:10px;background:#0b2434}
+.pt-tx-question-answer strong{color:#f3bd56}
+.pt-tx-question-answer p{color:#d4e2e9;line-height:1.7;margin:8px 0 0}
