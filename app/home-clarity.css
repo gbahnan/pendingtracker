@@ -37,3 +37,9 @@
 .pt-shell .pt-clarity::before,.pt-shell .pt-clarity::after{content:none!important}
 .pt-shell .pt-faq-refresh{background:transparent!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important}
 .pt-shell .pt-faq-refresh::before,.pt-shell .pt-faq-refresh::after{content:none!important}
+
+/* The remaining blue field came from the parent .pt-shell radial gradient,
+   not from the section borders. Use one continuous page canvas instead. */
+main.pt-shell:has(> .pt-clarity){background:#020b15!important;background-image:none!important}
+main.pt-shell:has(> .pt-clarity) > .pt-clarity,
+main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important}
