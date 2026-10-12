@@ -4417,9 +4417,11 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
    actually moves upward instead of leaving an invisible blank gap. */
 @media (min-width:980px){
  .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow.pt-btc-flow{
+   /* Scale both axes together. Never enlarge width to compensate: that
+      previously stretched the flex layout and clipped the last block. */
    zoom:.86;
-   width:116.279%!important;
-   max-width:none!important;
+   width:100%!important;
+   max-width:100%!important;
    margin-top:0!important;
    margin-bottom:0!important;
  }
