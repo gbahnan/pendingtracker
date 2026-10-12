@@ -172,5 +172,4 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   </div>
   <p className="pt-tx-footnote">Live data refreshes every 15 seconds · No wallet connection needed · Fee estimates are not guarantees.</p>
  </main>;
-}   <div className="pt-tx-mock-actions pt-tx-mock-actions-fourth"><span className="pt-tx-mock-actions-icon">{confirmed?"✓":observed?"✓":"!"}</span><div><span>DO I NEED TO DO ANYTHING?</span><strong>{confirmed?"No fee action needed":!observed?"Check the transaction ID":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"You can wait or review fee options":"No action needed right now"}</strong><small>{confirmed?"The transaction is already confirmed.":!observed?"Confirm it was broadcast by the sending wallet.":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee is below the current network guide.":"Your fee appears competitive based on current network conditions."}</small></div></div>
-
+}
