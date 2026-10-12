@@ -4853,3 +4853,17 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
  .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact{padding:0 0 12px!important;border-right:0!important;border-bottom:1px solid #54718755!important}
  .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-mock-actions-fourth{padding:0!important}
 }
+
+/* Canonical hexagon artwork shared by BTC tracker, Bitcoin Explorer and Ethereum Explorer.
+   Replace the legacy CSS hexagon surface, retaining live honeycomb animation and data. */
+.pt-shared-hex-artwork{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;overflow:visible!important;z-index:0!important;pointer-events:none!important}
+.pt-reference-glow .pt-chain-flow-hex{background:transparent!important;border:0!important;box-shadow:none!important;filter:none!important;clip-path:none!important;overflow:visible!important;transform:none!important;isolation:isolate!important}
+.pt-reference-glow .pt-chain-flow-hex::before,.pt-reference-glow .pt-chain-flow-hex::after{content:none!important;display:none!important}
+.pt-reference-glow .pt-chain-flow-hex .pt-chain-honeycomb{clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)!important;opacity:.8!important;z-index:1!important}
+.pt-reference-glow .pt-chain-flow-hex .pt-chain-flow-shine{z-index:1!important}
+.pt-reference-glow .pt-chain-flow-hex>span,.pt-reference-glow .pt-chain-flow-hex>strong,.pt-reference-glow .pt-chain-flow-hex>small,.pt-reference-glow .pt-chain-flow-hex>em{position:relative!important;z-index:3!important}
+.pt-reference-glow .pt-chain-flow-glow-wrap{filter:none!important}
+.pt-reference-glow .pt-chain-flow-glow-next{filter:drop-shadow(0 0 7px #ffe6a2) drop-shadow(0 0 18px #ffb842aa) drop-shadow(0 0 28px #d9913888)!important}
+.pt-reference-glow .pt-chain-flow-glow-confirmed{filter:drop-shadow(0 0 7px #8cfce6) drop-shadow(0 0 16px #48d6c2a0)!important}
+.pt-reference-glow .pt-chain-flow-hex .pt-honeycomb-cell-live{fill:#071924!important;stroke:#785629!important}
+.pt-reference-glow .pt-chain-flow-hex .pt-honeycomb-traveler{fill:#e8af4b!important;stroke:#ffda82!important}
