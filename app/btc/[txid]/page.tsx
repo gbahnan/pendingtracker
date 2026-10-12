@@ -38,11 +38,48 @@ function HexArtwork({active=false,confirmed=false}:{active?:boolean;confirmed?:b
  </svg>;
 }
 function EdgeLights({right=false}:{right?:boolean}){
- const coords=right?[[146,28,20,1],[182,63,14,0],[133,97,12,0],[176,134,23,1],[116,163,12,0],[159,200,17,1],[190,240,12,0],[129,279,22,1],[175,317,13,0],[117,360,17,0],[164,400,20,1],[132,445,12,0]]:[[36,26,22,1],[71,59,15,0],[17,101,13,0],[82,131,18,1],[41,171,15,0],[15,208,24,1],[95,245,14,0],[47,287,20,1],[106,329,12,0],[28,372,17,0],[84,410,21,1],[38,458,14,0]];
- return <svg className={right?styles.edgeRight:styles.edgeLeft} viewBox="0 0 220 500" aria-hidden="true">
-  <defs><filter id={right?"edge-r-blur":"edge-l-blur"} x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="12"/></filter><linearGradient id={right?"edge-r-gold":"edge-l-gold"} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#fff1b0"/><stop offset=".55" stopColor="#e7a638"/><stop offset="1" stopColor="#8a4c16"/></linearGradient></defs>
-  {coords.map(([x,y,r,lit],i)=>{const p=Array.from({length:6},(_,k)=>{const a=(k*60-30)*Math.PI/180;return `${x+Math.cos(a)*r},${y+Math.sin(a)*r}`}).join(" ");return <g key={i}>{lit===1&&<polygon points={p} fill="#e6a039" opacity=".82" filter={`url(#${right?"edge-r-blur":"edge-l-blur"})`}/>}<polygon points={p} fill={lit===1?`url(#${right?"edge-r-gold":"edge-l-gold"})`:"#b17a2b"} fillOpacity={lit===1?.95:.025} stroke={lit===1?"#ffe1a1":"#a87532"} strokeOpacity={lit===1?.95:.38} strokeWidth={lit===1?1.7:1}/></g>})}
- </svg>
+ // Coordinates deliberately cluster around the block baseline, like the reference artwork.
+ const points=right?[
+ [185,24,21,0],[134,63,13,0],[175,112,17,1],[116,137,13,0],
+ [198,173,25,1],[146,202,15,0],[108,225,12,0],[168,250,19,1],
+ [121,291,16,0],[190,315,25,1],[151,356,15,0],[112,380,18,1],
+ [175,420,15,0],[133,455,11,0],[206,477,20,1]
+ ]:[
+ [19,24,21,0],[72,61,14,0],[24,113,21,1],[92,144,13,0],
+ [51,177,23,1],[8,214,16,0],[107,237,17,1],[68,267,14,0],
+ [26,294,25,1],[112,315,16,0],[74,350,18,1],[16,388,19,0],
+ [100,417,16,1],[46,454,12,0],[5,481,20,1]
+ ];
+ const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const a=(i*60-30)*Math.PI/180;return `${x+Math.cos(a)*r},${y+Math.sin(a)*r}`}).join(" ");
+ const prefix=right?"edge-r":"edge-l";
+ return <svg className={right?styles.edgeRight:styles.edgeLeft} viewBox="0 0 220 510" aria-hidden="true">
+  <defs>
+   <filter id={prefix+"-glow"} x="-220%" y="-220%" width="540%" height="540%"><feGaussianBlur stdDeviation="10"/></filter>
+   <linearGradient id={prefix+"-metal"} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#fff6bb"/><stop offset=".42" stopColor="#ffc857"/><stop offset="1" stopColor="#9a5618"/></linearGradient>
+  </defs>
+  {points.map(([x,y,r,lit],i)=><g key={i}>
+   {lit===1&&<polygon points={hex(x,y,r*1.65)} fill="#e69c28" opacity=".64" filter={`url(#${prefix}-glow)`}/>}
+   <polygon points={hex(x,y,r)} fill={lit===1?`url(#${prefix}-metal)`:"#a5742c"} fillOpacity={lit===1?.93:.035} stroke={lit===1?"#ffe09a":"#a87532"} strokeOpacity={lit===1?.98:.32} strokeWidth={lit===1?1.6:1.05}/>
+   {lit===1&&<polygon points={hex(x,y,r*.76)} fill="none" stroke="#fff0af" strokeOpacity=".3" strokeWidth=".7"/>}
+  </g>)}
+ </svg>;
+}
+function AmbientHoneycomb(){
+ const tiles=[] as Array<{x:number;y:number;r:number;bright:boolean}>;
+ for(let row=0;row<5;row++)for(let col=0;col<27;col++){
+  const x=col*46+(row%2?23:0)-12,y=row*27+9;
+  const center=Math.abs(x-590)/590;
+  const bright=(row===2&&col%6===1)||(row===3&&col%5===2)||(row===4&&col%4===0);
+  tiles.push({x,y,r:23,bright:bright&&center>.16});
+ }
+ const polygon=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const a=(i*60-30)*Math.PI/180;return `${x+Math.cos(a)*r},${y+Math.sin(a)*r}`}).join(" ");
+ return <div className={styles.ambientFloor} aria-hidden="true">
+  <svg viewBox="0 0 1180 160" preserveAspectRatio="xMidYMax slice">
+   <defs><linearGradient id="pt-floor-fade" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#d18a26" stopOpacity=".32"/><stop offset="1" stopColor="#c07d22" stopOpacity="0"/></linearGradient><filter id="pt-floor-blur"><feGaussianBlur stdDeviation="8"/></filter></defs>
+   {tiles.map((t,i)=><polygon key={i} points={polygon(t.x,t.y,t.r)} fill={t.bright?"#d58a26":"#5d411c"} fillOpacity={t.bright?.24:.10} stroke="#c18a39" strokeOpacity={t.bright?.5:.13} strokeWidth=".8"/>)}
+   <ellipse cx="590" cy="53" rx="530" ry="21" fill="url(#pt-floor-fade)" filter="url(#pt-floor-blur)"/>
+  </svg>
+ </div>;
 }
 function Fact({label,value,help}:{label:string;value:string;help:string}){return <div className="pt-tx-fact"><span>{label}</span><strong>{value}</strong><small>{help}</small></div>}
 
@@ -138,7 +175,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <div className={confirmed?styles.confirmedPill:styles.pendingPill}><i/>{confirmed?"Confirmed":observed?"Pending":"Not found"}</div>
     </header>
     <section className={styles.network} aria-label="Your transaction's projected position in the live Bitcoin network">
-     <div className={styles.blockRow}>
+     <AmbientHoneycomb/><div className={styles.blockRow}>
       <div className={styles.blockUnit}>
        <div className={styles.confirmedHex}><HexArtwork confirmed/><div className={styles.check}>✓</div><b>CONFIRMED</b><strong>#{number(overview?.btc?.height)}</strong><small>{number(blocks[0]?.transactionCount)} transactions</small><small>Latest confirmed block</small></div>
        <div className={styles.confirmedCaption}>Latest block<br/><span>Just confirmed</span></div>
