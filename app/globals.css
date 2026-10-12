@@ -4867,3 +4867,14 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
 .pt-reference-glow .pt-chain-flow-glow-confirmed{filter:drop-shadow(0 0 7px #8cfce6) drop-shadow(0 0 16px #48d6c2a0)!important}
 .pt-reference-glow .pt-chain-flow-hex .pt-honeycomb-cell-live{fill:#071924!important;stroke:#785629!important}
 .pt-reference-glow .pt-chain-flow-hex .pt-honeycomb-traveler{fill:#e8af4b!important;stroke:#ffda82!important}
+
+/* Single canonical transaction-tracker block renderer across explorer views. */
+.pt-standard-tracker-flow{position:relative;width:100%;max-width:1110px;margin:0 auto;padding:10px 0 0;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+.pt-standard-tracker-flow .pt-chain-flow-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 13px!important}
+.pt-standard-tracker-flow .pt-chain-flow-confirmed{display:flex;justify-content:space-between;gap:20px;margin-top:6px;padding:9px 0 0;border-top:1px solid #31506455;font-size:12px;color:#91b1c2}
+.pt-standard-tracker-flow .pt-chain-honeycomb{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important;opacity:.7;pointer-events:none;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+.pt-standard-tracker-flow .pt-honeycomb-cell-live{stroke:#86652e!important;fill:#0b1920!important}
+.pt-standard-tracker-flow .pt-honeycomb-traveler{fill:#e9af4d!important;stroke:#ffd986!important}
+.pt-standard-tracker-flow .pt-chain-flow-head span:last-child{font-size:11px;color:#9eb4c5}
+.pt-standard-tracker-flow .pt-chain-flow-status{font-size:11px;letter-spacing:.1em}
+@media(max-width:700px){.pt-standard-tracker-flow{overflow-x:auto!important}.pt-standard-tracker-flow [class*="blockRow"]{min-width:710px!important}.pt-standard-tracker-flow .pt-chain-flow-confirmed{min-width:710px}}
