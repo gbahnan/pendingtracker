@@ -32,3 +32,22 @@
 @media(max-width:950px){.bex-stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.bex-topics{grid-template-columns:repeat(2,minmax(0,1fr))}.bex-bottom>div{grid-template-columns:repeat(2,minmax(0,1fr))}.bex-hero-art{width:240px;transform:scale(.8)}}
 @media(max-width:700px){.bex{padding:0 13px}.bex-hero{padding:30px 8px 18px;min-height:215px}.bex-hero-art{position:absolute;right:-135px;top:0;opacity:.35}.bex-hero-copy{max-width:100%}.bex-hero h1{font-size:35px!important}.bex-hero p{font-size:14px;max-width:340px}.bex-search{margin:6px auto 25px}.bex-search-actions{gap:7px}.bex-search-actions a,.bex-search-actions button{padding:8px 10px;font-size:11px}.bex-heading{flex-wrap:wrap;gap:8px}.bex-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.bex-stat{padding:13px 11px}.bex-duo{grid-template-columns:1fr}.bex-panel{padding:16px}.bex-topic{min-height:300px;padding:16px 12px}.bex-topic h3{font-size:16px!important}.bex-topic>p{font-size:12px}.bex-estimates-slot{padding:8px 4px;overflow-x:auto}.bex-estimates-slot .pt-standard-tracker-flow{min-width:650px}.bex-estimates-slot .pt-bitcoin-projection-insight{min-width:0}.bex-bottom>div{gap:8px}}
 @media(max-width:370px){.bex-topics{grid-template-columns:1fr}.bex-topic{min-height:0}.bex-stats-grid{grid-template-columns:1fr}}
+
+/* Standalone projection hexagons; no legacy ChainDashboard dependency. */
+.bex-projection-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px;align-items:start;padding:16px 4px 7px}
+.bex-projection-item{min-width:0;text-align:center}
+.bex-projection-hex{position:relative;isolation:isolate;width:100%;max-width:188px;aspect-ratio:1.05;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#ffcf69;filter:drop-shadow(0 0 13px rgba(255,167,27,.28))}
+.bex-projection-hex::before,.bex-projection-hex::after{content:"";position:absolute;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);z-index:-1}
+.bex-projection-hex::before{inset:0;background:linear-gradient(140deg,#fff2a2,#ffb31c,#e0800c,#ffd36d)}
+.bex-projection-hex::after{inset:3px;background:radial-gradient(circle at 50% 40%,#29301c,#08121b 68%)}
+.bex-projection-hex span{font-size:10px;font-weight:900;letter-spacing:.1em;color:#ffd989}
+.bex-projection-hex strong{font-size:clamp(19px,2vw,30px);font-weight:850;color:#fff}
+.bex-projection-hex small{font-size:11px;color:#c4d0d7}
+.bex-projection-hex.confirmed{filter:drop-shadow(0 0 13px rgba(19,200,195,.25))}
+.bex-projection-hex.confirmed::before{background:linear-gradient(140deg,#c4ffed,#25c7b9,#1a7386,#9cf4dc)}
+.bex-projection-hex.confirmed::after{background:radial-gradient(circle at 50% 40%,#113c42,#07141d 70%)}
+.bex-projection-hex.confirmed span{color:#6ef5d9}
+.bex-projection-item>p{font-size:11px;color:#b9c9d5;margin:12px 0 0}
+.bex-projection-note{margin:16px 7px 4px;border-top:1px solid #2d3d49;padding-top:13px;color:#b6c9d5;font-size:12px;line-height:1.55}
+.bex-projection-note strong{color:#ffce65}
+@media(max-width:700px){.bex-projection-row{min-width:625px;gap:8px}.bex-projection-hex span{font-size:9px}.bex-projection-hex small{font-size:10px}.bex-projection-note{padding:13px 8px 0}}
