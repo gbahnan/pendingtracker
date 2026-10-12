@@ -4321,3 +4321,21 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
   border:0!important;
   box-shadow:none!important;
 }
+
+/* Transaction-only first-screen answer: minimal, premium and responsive. */
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-firstlook{background:transparent!important;border:0!important;box-shadow:none!important;padding:20px 0 36px!important;margin:0!important}
+.pt-tx-detail-v2 .pt-tx-firstlook-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:16px 0 28px}
+.pt-tx-detail-v2 .pt-tx-firstlook-grid>div{border-top:1px solid #395267;padding:16px 0 0;min-width:0;display:flex;flex-direction:column;gap:10px}
+.pt-tx-detail-v2 .pt-tx-firstlook-grid span{font-size:10px;letter-spacing:.12em;color:#a2b9c8;font-weight:750}
+.pt-tx-detail-v2 .pt-tx-firstlook-grid strong{color:#f0c373;font-size:clamp(16px,1.7vw,23px);line-height:1.3;overflow-wrap:anywhere}
+.pt-tx-detail-v2 .pt-tx-firstlook-explain{max-width:850px}
+.pt-tx-detail-v2 .pt-tx-firstlook-explain h2{font-size:clamp(20px,2.2vw,28px);color:#f3f6f8;letter-spacing:-.025em;margin:0 0 12px}
+.pt-tx-detail-v2 .pt-tx-firstlook-explain>p{font-size:15px;line-height:1.8;color:#c7d8e2;margin:0 0 17px}
+.pt-tx-detail-v2 .pt-tx-nextstep{padding-left:16px;border-left:2px solid #d6a552}
+.pt-tx-detail-v2 .pt-tx-nextstep strong{font-size:14px;color:#e9bd6d}
+.pt-tx-detail-v2 .pt-tx-nextstep p{font-size:14px;line-height:1.7;color:#bcd1de;margin:6px 0 0}
+.pt-tx-detail-v2 .pt-tx-hero-hash{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:16px 0 0;color:#9eb7c6}
+.pt-tx-detail-v2 .pt-tx-hero-hash span{font-size:11px;letter-spacing:.1em}
+.pt-tx-detail-v2 .pt-tx-hero-hash code{color:#edc478;font-size:13px;overflow-wrap:anywhere}
+.pt-tx-detail-v2 .pt-tx-hero-hash button{border:0!important;background:transparent!important;color:#eac077!important;padding:3px 5px!important;cursor:pointer;font-size:12px}
+@media(max-width:650px){.pt-tx-detail-v2 .pt-tx-firstlook-grid{gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}.pt-tx-detail-v2 .pt-tx-firstlook-grid>div:last-child{grid-column:1/-1}.pt-tx-detail-v2 .pt-tx-firstlook{padding-top:14px!important}.pt-tx-detail-v2 .pt-tx-firstlook-explain>p{font-size:14px}}
