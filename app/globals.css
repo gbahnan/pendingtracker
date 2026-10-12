@@ -4410,3 +4410,35 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-tx-detail-v2 .pt-tx-desktop-summary .pt-tx-compact-topline{margin-bottom:6px!important}
 .pt-tx-detail-v2 .pt-tx-block-caveat{margin:0!important}
 }
+
+/* Bitcoin transaction results ONLY — proportional desktop reduction of the
+   existing live honeycomb scene. No changes to the SVG, motion, colors or data.
+   zoom participates in layout (unlike transform:scale), so the next section
+   actually moves upward instead of leaving an invisible blank gap. */
+@media (min-width:980px){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow.pt-btc-flow{
+   zoom:.86;
+   width:116.279%!important;
+   max-width:none!important;
+   margin-top:0!important;
+   margin-bottom:0!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track{
+   margin-bottom:0!important;
+   padding-bottom:0!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-caveat{
+   margin:0!important;
+   padding:0!important;
+   line-height:1.3!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-desktop-summary{
+   padding-top:0!important;
+   padding-bottom:12px!important;
+   row-gap:0!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-stage{
+   margin-bottom:0!important;
+   padding-bottom:0!important;
+ }
+}
