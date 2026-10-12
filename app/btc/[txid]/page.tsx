@@ -170,20 +170,29 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      </div>
      <p className={styles.projectionNote}>{confirmed?"Your transaction is already confirmed. The gold blocks show upcoming network projections.":observed?"Your highlighted block is a fee-based estimate, not a guaranteed place in line. Bitcoin block times vary.":"The blocks show network estimates; we haven't located your transaction yet."}</p>
     </section>
-    <section className={styles.summary} aria-label="Where is my Bitcoin? Transaction summary">
-     <div className={styles.summaryIntro}>
-      <div><span className={styles.summaryEyebrow}>YOUR TRANSACTION AT A GLANCE</span><h2>Where is my Bitcoin?</h2>
-      <p>{confirmed?"Your transaction has been included in a Bitcoin block. It is confirmed on the network, although your wallet or exchange may wait for additional confirmations.":observed?"Your transaction has reached the Bitcoin network and is waiting to be included in a block. "+(selectedPosition?"Based on current network activity, it may confirm in around "+selectedPosition*10+" minutes. This is an estimate, not a guarantee.":"We cannot reliably estimate when it will confirm yet."):"We could not find this transaction on the Bitcoin network. Check the transaction ID or ask the sender whether it was broadcast."}</p></div>
-      <span className={styles.summaryStatus+(confirmed?" "+styles.summaryStatusConfirmed:"")}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span>
-     </div>
+    <section className={styles.summary} aria-label="Bitcoin transaction status and confirmation details">
+     <div className={styles.summarySectionHeading}><span className={styles.summarySectionNumber}>1</span><h2>WHERE IS MY TRANSACTION?</h2></div>
      <div className={styles.summaryGrid}>
-      <div className={styles.fact}><div className={styles.factLabel}>ESTIMATED WAIT</div><div className={styles.factValue}><span className={styles.factIcon}>◷</span><strong>{confirmed?"Confirmed":selectedPosition?"~"+selectedPosition*10+" min":"Unavailable"}</strong></div><p>{confirmed?"Already recorded in a block.":"An estimate based on live network activity."}</p></div>
-      <div className={styles.fact}><div className={styles.factLabel}>CONFIRMATIONS</div><div className={styles.factValue}><span className={styles.factIcon}>✓</span><strong>{confirmed?number(confirmations):"0"}</strong></div><p>{confirmed?"Each new block adds another confirmation.":"Waiting for its first Bitcoin block."}</p></div>
-      <div className={styles.fact}><div className={styles.factLabel}>NETWORK FEE</div><div className={styles.factValue}><span className={styles.factIcon}>≋</span><strong>{tx?.fee==null?"—":number(tx.fee)+" sats"}</strong></div><p>The fee paid to process this transaction.</p></div>
-     </div>
-     <div className={styles.summaryAction}>
-      <span className={styles.summaryActionIcon}>{!observed?"!":networkFee!=null&&feeRate!=null&&feeRate<networkFee&&!confirmed?"!":"✓"}</span>
-      <div><span className={styles.summaryActionLabel}>DO I NEED TO DO ANYTHING?</span><strong>{!observed?"Check the transaction ID":confirmed?"No action needed":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee may be low":"No action needed right now"}</strong><p>{!observed?"Confirm the ID and ask the sender if the transaction was broadcast.":confirmed?"Your transaction is confirmed. The recipient may still require more confirmations.":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee is below the current network guide. The sender may have options to increase it.":"Your fee appears competitive based on current network conditions."}</p></div>
+      <div className={styles.fact}>
+       <div className={styles.factTop}><span className={styles.factIcon}>⌛</span><div><div className={styles.factLabel}>STATUS</div><div className={styles.factValue}><strong>{confirmed?"Confirmed":observed?"Pending":"Not found"}</strong></div></div></div>
+       <p>{confirmed?"Your transaction has been included in a Bitcoin block.":observed?"Your transaction has been seen on the Bitcoin network but is not yet included in a block.":"We could not find this transaction on the network. Check its ID."}</p>
+      </div>
+      <div className={styles.fact}>
+       <div className={styles.factTop}><span className={styles.factIcon+" "+styles.factIconTeal}>✓</span><div><div className={styles.factLabel}>CONFIRMATIONS</div><div className={styles.factValue}><strong>{confirmed?number(confirmations):"0"} / 6</strong></div></div></div>
+       <p>{confirmed?"Each new block adds another confirmation. Some recipients may require six.":"Zero confirmations means it has not yet been included in a block. Each new block adds a confirmation."}</p>
+      </div>
+      <div className={styles.fact}>
+       <div className={styles.factTop}><span className={styles.factIcon}>◷</span><div><div className={styles.factLabel}>ESTIMATED CONFIRMATION</div><div className={styles.factValue}><strong>{confirmed?"Confirmed":selectedPosition?"~"+selectedPosition*10+" minutes":"Unavailable"}</strong></div></div></div>
+       <p>{confirmed?"Already recorded on the blockchain.":selectedPosition?"Based on current network activity. This is an estimate, not a guarantee.":"There is not enough information for a reliable estimate."}</p>
+      </div>
+      <div className={styles.fact}>
+       <div className={styles.factTop}><span className={styles.factIcon}>≋</span><div><div className={styles.factLabel}>FEE RATE</div><div className={styles.factValue}><strong>{rate(feeRate)}</strong></div></div></div>
+       <p>{feeRate==null?"Fee-rate data is unavailable.":"This is your fee per unit of transaction size. Higher fees typically confirm faster."}</p>
+      </div>
+      <div className={styles.fact}>
+       <div className={styles.factTop}><span className={styles.factIcon}>▥</span><div><div className={styles.factLabel}>COMPETITIVENESS</div><div className={styles.factValue}><strong>{!observed?"Unknown":confirmed?"Confirmed":networkFee==null||feeRate==null?"Unavailable":feeRate>=networkFee?"At or above":"Below"}{observed&&!confirmed&&networkFee!=null&&feeRate!=null?<small>{feeRate>=networkFee?"network fee guide":"network fee guide"}</small>:null}</strong></div></div></div>
+       <p>{!observed?"We need to find the transaction before comparing its fee.":confirmed?"The transaction has already confirmed.":networkFee==null||feeRate==null?"A current network fee comparison is unavailable.":feeRate>=networkFee?"Your fee meets or exceeds the current network fee guide for new transactions.":"Your fee is below the current network guide and may take longer to confirm."}</p>
+      </div>
      </div>
      <div className={styles.summaryFooter}><div>Transaction ID <code title={txid}>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"▢ Copy"}</button></div><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">View on Mempool.space ↗</a></div>
     </section>
