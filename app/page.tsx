@@ -142,25 +142,37 @@ function HeroEmblem({chain}:{chain:"btc"|"eth"}) {
 }
 
 function HoneycombFloor({chain}:{chain:"btc"|"eth"}) {
- const gold=chain==="btc", glow=gold?"#ffae21":"#348dff", edge=gold?"#b87513":"#1d5bb5", light=gold?"#ffe29a":"#b5dcff";
- const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const t=Math.PI/3*i-Math.PI/6;return [x+r*Math.cos(t),y+r*Math.sin(t)] as const});
- const pts=(p:readonly (readonly [number,number])[])=>p.map(([x,y])=>x.toFixed(1)+","+y.toFixed(1)).join(" ");
- const cells=Array.from({length:7},(_,row)=>Array.from({length:13},(_,col)=>({x:19+col*33+(row%2)*16.5,y:13+row*29,row,col}))).flat();
- const raised=[[3,2,20],[8,1,14],[5,4,27],[10,4,20],[2,5,12],[7,5,17],[11,2,15]];
- return <svg viewBox="0 0 460 160" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
- <defs><radialGradient id={"halo-"+chain}><stop stopColor={glow} stopOpacity=".46"/><stop offset="1" stopColor={glow} stopOpacity="0"/></radialGradient><linearGradient id={"top-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={light}/><stop offset=".45" stopColor={glow}/><stop offset="1" stopColor={edge}/></linearGradient><filter id={"bloom-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5"/></filter></defs>
- <ellipse cx="230" cy="108" rx="205" ry="63" fill={"url(#halo-"+chain+")"}/>
- <g transform="translate(20 18) skewX(-17) scale(1 .62)">
- {cells.map(({x,y,row,col})=><polygon key={row+"-"+col} points={pts(hex(x,y,18))} fill={(row*7+col*3)%17===0?edge:"#061321"} fillOpacity=".85" stroke={edge} strokeWidth="1.3"/>)}
- {raised.map(([col,row,height],i)=>{const x=19+col*33+(row%2)*16.5,y=13+row*29;const top=hex(x,y-height,15),base=hex(x,y,15);return <g key={i} className="pt26-prism" style={{animationDelay:-(i*1.7)+"s",animationDuration:(9+i%3*2)+"s"}}>
- <polygon points={pts(hex(x,y,22))} fill={glow} opacity=".8" filter={"url(#bloom-"+chain+")"}/>
- <polygon points={pts([top[1],top[2],base[2],base[1]])} fill={edge} stroke={glow} strokeWidth="1.5"/>
- <polygon points={pts([top[2],top[3],base[3],base[2]])} fill={glow} fillOpacity=".62" stroke={light} strokeWidth="1"/>
- <polygon points={pts([top[3],top[4],base[4],base[3]])} fill={edge} fillOpacity=".85" stroke={glow} strokeWidth="1"/>
- <polygon points={pts(top)} fill={"url(#top-"+chain+")"} stroke={light} strokeWidth="1.8"/>
- <polygon points={pts(hex(x,y-height,10))} fill="none" stroke={light} strokeOpacity=".85" strokeWidth="1.2"/>
- </g>})}
- </g></svg>;
+ const btc=chain==="btc", accent=btc?"#ffb42d":"#268bff", ice=btc?"#ffe6a4":"#b4e9ff", shade=btc?"#804005":"#103e9b";
+ const nodes=[[30,88],[68,48],[103,105],[145,35],[180,83],[224,44],[264,110],[300,49],[344,93],[392,39],[429,100],[111,16],[232,129],[373,133],[45,137],[205,12]] as const;
+ const links=[[0,1],[0,2],[0,14],[1,3],[1,11],[2,3],[2,4],[2,14],[3,4],[3,5],[3,11],[4,5],[4,6],[4,12],[5,7],[5,15],[6,7],[6,8],[6,12],[7,8],[7,9],[8,9],[8,10],[8,13],[9,10],[10,13],[11,15],[12,13],[13,14],[5,12],[1,4],[7,10],[3,7],[0,4],[6,10]] as const;
+ const cubes=[{id:1,r:14},{id:3,r:20},{id:5,r:12},{id:7,r:23},{id:9,r:16},{id:12,r:11},{id:14,r:12}] as const;
+ const polygon=(points:readonly (readonly [number,number])[])=>points.map(([x,y])=>x+","+y).join(" ");
+ const cube=(x:number,y:number,r:number)=>{
+   const h=r*.85,w=r*.8,d=r*.46;
+   const top:[[number,number],[number,number],[number,number],[number,number]]=[[x,y-h],[x+w,y-h+d],[x,y-h+2*d],[x-w,y-h+d]];
+   return <g>
+    <polygon points={polygon([[x-w,y-h+d],[x,y-h+2*d],[x,y+2*d],[x-w,y+d]])} fill={shade} stroke={accent} strokeWidth="1.1"/>
+    <polygon points={polygon([[x,y-h+2*d],[x+w,y-h+d],[x+w,y+d],[x,y+2*d]])} fill={accent} fillOpacity=".5" stroke={ice} strokeWidth="1.2"/>
+    <polygon points={polygon(top)} fill={accent} fillOpacity=".6" stroke={ice} strokeWidth="1.6"/>
+    <polygon points={polygon([[x-w*.7,y-h+d],[x,y-h+1.7*d],[x+w*.7,y-h+d],[x,y-h+.3*d]])} fill={ice} fillOpacity=".36"/>
+    <path d={`M ${x-w*.7} ${y-h+d} L ${x-w*.7} ${y+d*.4} M ${x+w*.7} ${y-h+d} L ${x+w*.7} ${y+d*.4}`} stroke={ice} strokeOpacity=".65" fill="none"/>
+   </g>;
+ };
+ return <svg className="pt26-network-visual" viewBox="0 0 460 160" preserveAspectRatio="xMidYMid meet" role="img" aria-label={btc?"Animated Bitcoin transaction network":"Animated Ethereum transaction network"}>
+  <defs>
+   <radialGradient id={"net-bg-"+chain}><stop stopColor={accent} stopOpacity=".18"/><stop offset="1" stopColor={accent} stopOpacity="0"/></radialGradient>
+   <filter id={"net-glow-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <ellipse cx="230" cy="86" rx="220" ry="78" fill={"url(#net-bg-"+chain+")"}/>
+  <g stroke={accent} strokeWidth=".8" strokeOpacity=".55">
+   {links.map(([i,j],k)=><line key={k} x1={nodes[i][0]} y1={nodes[i][1]} x2={nodes[j][0]} y2={nodes[j][1]}/>)}
+  </g>
+  {nodes.map(([x,y],i)=><g key={i}><circle cx={x} cy={y} r={i%4===0?7:4} fill={accent} opacity=".55" filter={"url(#net-glow-"+chain+")"}/><circle cx={x} cy={y} r={i%4===0?3.4:2.1} fill={i%3===0?ice:accent} stroke={ice} strokeWidth=".6"/></g>)}
+  {cubes.map(({id,r},i)=><g key={id} className="pt26-network-cube" style={{animationDelay:-(i*1.4)+"s",animationDuration:(9+i%3*2)+"s"}}>
+   <circle cx={nodes[id][0]} cy={nodes[id][1]} r={r*1.8} fill={accent} opacity=".65" filter={"url(#net-glow-"+chain+")"}/>
+   {cube(nodes[id][0],nodes[id][1],r)}
+  </g>)}
+ </svg>;
 }
 
 export default function Page() {
