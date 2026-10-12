@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import "./home-refresh.css";
+import "./home-2026.css";
 
 type Overview = {
   btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; confirmedTransactions: string[]; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
@@ -113,6 +113,17 @@ const comparisonExamples = {
   }
 } as const;
 
+
+function HoneycombFloor({chain}:{chain:"btc"|"eth"}) {
+  const points=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const a=Math.PI/3*i-Math.PI/6;return (x+r*Math.cos(a)).toFixed(1)+","+(y+r*Math.sin(a)).toFixed(1)}).join(" ");
+  return <svg viewBox="0 0 460 150" preserveAspectRatio="xMidYMid meet" role="presentation" aria-hidden="true">
+    <g transform="translate(20 17) skewX(-15) scale(1 .75)">
+      {Array.from({length:8},(_,row)=>Array.from({length:14},(_,col)=>{const x=col*32+(row%2)*16;const y=row*23;const bright=(row*13+col*7)%17===0;return <polygon key={row+"-"+col} className={"tile"+(bright?" bright":"")} points={points(x,y,18)}/> }))}
+    </g>
+    {[[75,48,13],[168,82,20],[285,40,14],[363,96,19],[235,23,10],[102,105,11],[320,112,12]].map(([x,y,r],i)=><g key={i} className="cube"><polygon points={points(x,y,r)} fillOpacity=".9"/><polygon points={points(x,y-r*.8,r*.55)} fill="#ffffff" opacity=".42"/></g>)}
+  </svg>;
+}
+
 export default function Page() {
   const router = useRouter();
   const [network, setNetwork] = useState<"btc" | "eth">("btc");
@@ -211,38 +222,41 @@ export default function Page() {
 
   const btc = overview?.btc, eth = overview?.eth;
   return <main className="pt-shell">
-    <div className="pt-hero pt-hero-reference">
-      <div className="pt-hero-ambient pt-hero-ambient-btc" aria-hidden="true"><span/><span/><span/><span/><span/><span/></div>
-      <div className="pt-hero-ambient pt-hero-ambient-eth" aria-hidden="true"><span/><span/><span/><span/><span/><span/></div>
-      <div className="pt-hero-intro">
-        <h1>Track. <span className="pt-hero-gold">Explore.</span> <span className="pt-hero-blue">Understand.</span></h1>
-        <h2 className="pt-hero-subtitle">A simpler blockchain explorer.</h2>
-        <p className="pt-lead">We decode confusing blockchain data into clear, easy-to-understand summaries<br className="pt-hero-desktop-break"/> so you can track transactions, explore the network, and know what’s happening.</p>
-      </div>
-      <div className="pt-searchbox" id="transaction-search">
-        <div className="pt-search-top"><div><h2>Track Your Transaction</h2><p className="pt-search-explain">Paste a Bitcoin or Ethereum transaction ID and we’ll turn the complex data<br className="pt-hero-desktop-break"/> into a simple, easy-to-understand summary.</p></div></div>
-        <div className="pt-searchrow">
-          <div className="pt-search-input-wrap"><span className="pt-search-magnifier" aria-hidden="true">⌕</span><input aria-label="Transaction hash or wallet address" placeholder="Enter a Bitcoin or Ethereum transaction hash..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("");}} onKeyDown={e=>{if(e.key==="Enter") search();}} spellCheck={false}/></div>
-          <button onClick={search}>Track Transaction <span aria-hidden="true">→</span></button>
-        </div>
-        {ambiguousHash?<div className="pt-chain-choice" role="group" aria-label="Select blockchain"><p>This transaction ID could belong to more than one network. Which blockchain are you tracking?</p><div><button type="button" onClick={()=>router.push("/btc/"+ambiguousHash)}>₿ Bitcoin →</button><button type="button" onClick={()=>router.push("/eth/0x"+ambiguousHash)}>◆ Ethereum →</button></div></div>:null}
-        {error ? <p className="pt-error" role="alert">{error}</p> : null}
-        <div className="pt-hero-benefits">
-          <div><span className="pt-benefit-icon" aria-hidden="true">▤</span><span><strong>Clear summaries</strong><small>No confusing technical jargon.</small></span></div>
-          <div><span className="pt-benefit-icon" aria-hidden="true">◷</span><span><strong>Real-time status</strong><small>See what’s happening now.</small></span></div>
-          <div><span className="pt-benefit-icon" aria-hidden="true">↗</span><span><strong>Understand delays</strong><small>Get insights and estimated timing.</small></span></div>
-        </div>
-        <p className="pt-hero-safety">No signup or wallet connection required. Never enter a seed phrase or private key.</p>
-      </div>
-    </div>
 
-    
-    <section className="pt-home-live" aria-labelledby="pt-home-live-title">
-      <div className="pt-home-live-head"><div><h2 id="pt-home-live-title">Live Network Activity <span className="pt-live-pill">● LIVE</span></h2><p>Real-time Bitcoin and Ethereum network activity. Click into either explorer for full details.</p></div><a className="pt-live-dashboard-link" href="#network">View live dashboard →</a></div>
-      <div className="pt-home-live-grid">
-        <div className="pt-home-live-panel pt-live-btc"><div className="pt-live-panel-heading"><span className="pt-live-coin">₿</span><h3>Bitcoin</h3><a className="pt-live-explore-link" href="/bitcoin" aria-label="Open Bitcoin Explorer">Explore Bitcoin <span aria-hidden="true">↗</span></a></div><div className="pt-live-network-top"><div className="pt-live-chart"><NetworkHoneycomb chain="btc"/></div><div className="pt-live-facts"><span>Latest block<b>{btc?.height==null?"—":"#"+format(btc.height)}</b></span><span>Transactions waiting<b>{format(btc?.pending)}</b></span><span>Priority fee<b>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</b></span></div></div><div className="pt-reference-table"><div className="pt-reference-table-title"><h3>Recent Bitcoin Transactions</h3><a href="/bitcoin">View all →</a></div><div className="pt-reference-table-head"><span>TXID</span><span>Network fee</span><span>Size</span><span>Status</span></div>{(liveBtcTransactions.length?liveBtcTransactions.map(t=>({id:t.id,fee:t.fee,vsize:t.vsize})):btc?.recentTransactions??[]).slice(0,4).map(t=><a className="pt-reference-table-row" key={t.id} href={"/btc/"+t.id}><span>{t.id.slice(0,12)}…{t.id.slice(-7)}</span><span>{t.fee==null?"—":format(t.fee)+" sats"}</span><span>{t.vsize==null?"—":format(t.vsize)+" vB"}</span><span><em>Pending</em></span></a>)}{!liveBtcTransactions.length&&!btc?.recentTransactions?.length?<p className="pt-reference-empty">Waiting for Bitcoin transactions…</p>:null}</div></div>
-        <div className="pt-home-live-panel pt-live-eth"><div className="pt-live-panel-heading"><span className="pt-live-coin">◆</span><h3>Ethereum</h3><a className="pt-live-explore-link" href="/ethereum" aria-label="Open Ethereum Explorer">Explore Ethereum <span aria-hidden="true">↗</span></a></div><div className="pt-live-network-top"><div className="pt-live-chart"><NetworkHoneycomb chain="eth"/></div><div className="pt-live-facts"><span>Latest block<b>{eth?.latestBlock==null?"—":"#"+format(Number(eth.latestBlock))}</b></span><span>Gas price<b>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</b></span><span>Block interval<b>~12 sec</b></span></div></div><div className="pt-reference-table"><div className="pt-reference-table-title"><h3>Recent Ethereum Transactions</h3><a href="/ethereum">View all →</a></div><div className="pt-reference-table-head"><span>TX Hash</span><span>Block</span><span>Type</span><span>Status</span></div>{(eth?.recentTransactions??[]).slice(0,4).map(t=><a className="pt-reference-table-row" key={t.hash} href={"/eth/"+t.hash}><span>{t.hash.slice(0,12)}…{t.hash.slice(-7)}</span><span>{t.block==null?"—":"#"+format(t.block)}</span><span>Transaction</span><span><em>{t.status??"Unknown"}</em></span></a>)}{!eth?.recentTransactions?.length?<p className="pt-reference-empty">Waiting for Ethereum transactions…</p>:null}</div></div>
-      </div><p className="pt-home-live-source">Network data from mempool.space and Blockscout. Animated visuals are decorative, not historical measurements.</p>
+    <section className="pt26-hero">
+      <div className="pt26-hero-art btc" aria-hidden="true"><div className="core">₿</div>{Array.from({length:6},(_,i)=><i key={i} className="float"/>)}</div>
+      <div className="pt26-hero-art eth" aria-hidden="true"><div className="core">◆</div>{Array.from({length:6},(_,i)=><i key={i} className="float"/>)}</div>
+      <div className="pt26-hero-content">
+        <div className="pt26-kicker">TRACK &nbsp; • &nbsp; <b>EXPLORE</b> &nbsp; • &nbsp; <em>UNDERSTAND</em></div>
+        <h1>A simpler <span>blockchain explorer.</span></h1>
+        <p>We decode confusing blockchain data into clear, easy-to-understand summaries so you can track transactions, explore the network, and know what’s happening.</p>
+        <form className="pt26-search" onSubmit={e=>{e.preventDefault();search()}}><span className="magnify" aria-hidden="true">⌕</span><input aria-label="Search transaction or address" placeholder="Search a Bitcoin or Ethereum address, transaction, or block..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("")}}/><button type="submit" aria-label="Search blockchain">→</button></form>
+        <div className="pt26-chain-select"><button type="button" className={"btc"+(network==="btc"?" active":"")} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button><button type="button" className={"eth"+(network==="eth"?" active":"")} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button></div>
+        {ambiguousHash?<div className="pt26-chain-choice">Choose the blockchain: <button onClick={()=>router.push("/btc/"+ambiguousHash)}>Bitcoin →</button><button onClick={()=>router.push("/eth/0x"+ambiguousHash)}>Ethereum →</button></div>:null}
+        {error?<p className="pt26-search-error" role="alert">{error}</p>:null}
+      </div>
+    </section>
+    <section className="pt26-live" aria-label="Live Bitcoin and Ethereum network activity">
+      <div className="pt26-grid">
+        <article className="pt26-panel btc">
+          <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin Network Activity</h2><p>Real-time data from the Bitcoin blockchain</p></div><span className="live">● Live</span></div>
+          <div className="pt26-stats"><div><strong>{format(btc?.height)}</strong><small>Latest Block</small></div><div><strong>~10 min</strong><small>Avg. Block Time</small></div><div><strong>{format(btc?.pending)}</strong><small>Pending Txs</small></div><div><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong><small>Priority Fee</small></div></div>
+          <div className="pt26-scene"><HoneycombFloor chain="btc"/></div>
+          <div className="pt26-feed"><div className="pt26-feed-head"><strong>₿ &nbsp;Latest Bitcoin Transactions</strong><a href="/bitcoin">View More →</a></div>
+            {[...liveBtcTransactions.map(t=>({...t,value:null})),...(btc?.recentTransactions??[]).filter(t=>!liveBtcTransactions.some(l=>l.id===t.id))].slice(0,5).map(t=><a className="pt26-feed-row" href={"/btc/"+t.id} key={t.id}><span className="hash">{t.id.slice(0,7)}…{t.id.slice(-5)}</span><span className="detail">{t.fee!=null&&t.vsize?(t.fee/t.vsize).toFixed(1)+" sat/vB":"Fee pending"}</span><span className="age">Pending</span><b>›</b></a>)}
+            {!liveBtcTransactions.length&&!btc?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Bitcoin transactions…</p>:null}
+          </div><a className="pt26-cta" href="/bitcoin">Explore Bitcoin Blockchain →</a>
+        </article>
+        <article className="pt26-panel eth">
+          <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum Network Activity</h2><p>Real-time data from the Ethereum blockchain</p></div><span className="live">● Live</span></div>
+          <div className="pt26-stats"><div><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong><small>Latest Block</small></div><div><strong>~12 sec</strong><small>Slot Time</small></div><div><strong>{format(eth?.recentBlocks?.[0]?.transactionsCount)}</strong><small>Latest Block Txs</small></div><div><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</strong><small>Gas Price</small></div></div>
+          <div className="pt26-scene"><HoneycombFloor chain="eth"/></div>
+          <div className="pt26-feed"><div className="pt26-feed-head"><strong>◆ &nbsp;Latest Ethereum Transactions</strong><a href="/ethereum">View More →</a></div>
+            {(eth?.recentTransactions??[]).slice(0,5).map(t=><a className="pt26-feed-row" href={"/eth/"+t.hash} key={t.hash}><span className="hash">{t.hash.slice(0,7)}…{t.hash.slice(-5)}</span><span className="detail">{t.block==null?"Pending":"Block "+format(t.block)}</span><span className="age">{t.status??"Recorded"}</span><b>›</b></a>)}
+            {!eth?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Ethereum transactions…</p>:null}
+          </div><a className="pt26-cta" href="/ethereum">Explore Ethereum Blockchain →</a>
+        </article>
+      </div>
     </section>
     <section className="pt-section pt-journey pt-comparison" id="how-it-works" data-chain={comparisonChain}>
       <div className="pt-comparison-heading">
