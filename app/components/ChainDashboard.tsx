@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from "react";
 import Link from "next/link";
 import HexArtwork from "./SharedHexArtwork";
+import trackerStyles from "../btc/[txid]/BitcoinTracker.module.css";
 type Net={btc?:{pending?:number|null;fastestFee?:number|null;halfHourFee?:number|null;hourFee?:number|null;economyFee?:number|null;minimumFee?:number|null;projectedBlocks?:Array<{position:number;transactionCount:number|null;feeRange:number[]|null;medianFee:number|null}>;latestBlock?:{height:number|null;id:string|null;ageMinutes:number;transactionCount:number|null}|null;recentTransactions?:Array<{id:string;fee:number|null;vsize:number|null}>;congestion?:string;explanation?:string};eth?:{gasGwei?:number|null;latestBlock?:string|number|null;recentBlocks?:Array<{height:number|string|null;hash:string|null;transactionsCount:number|null;timestamp:string|null}>;recentTransactions?:Array<{hash:string;status:string|null;block:number|null}>;explanation?:string}};const fmt=(v:number|null|undefined)=>v==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(v);
 
 // Most cells remain visible. One transaction-like cell changes at a time;
@@ -118,46 +119,21 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
  const displayBtc=blockFlash&&queueFrame?queueFrame:btc;
  const flowBlocks=(displayBtc?.projectedBlocks??[]).slice(0,5).map(b=>({id:"p"+b.position,median:b.medianFee,count:b.transactionCount==null?"Transactions unavailable":fmt(b.transactionCount)+" transactions"}));
  const feeLevels=isBtc?[{label:"Higher priority",fee:btc?.fastestFee,wait:"Often next block (~10 min)",note:"A current fee recommendation, not a guarantee"},{label:"Medium priority",fee:btc?.halfHourFee,wait:"Around 30 minutes",note:"Guide for roughly three average Bitcoin blocks"},{label:"Lower priority",fee:btc?.hourFee,wait:"Around 60 minutes",note:"May take longer if the network gets busier"},{label:"Economy",fee:btc?.economyFee,wait:"No dependable time",note:"Lower fees can wait much longer"}]:[{label:"Typical gas price",fee:eth?.gasGwei,wait:"Blocks usually ~12 seconds apart",note:"Actual inclusion depends on your transaction's max fee, priority fee and nonce"}];
- const flowVisualization=<div className="pt-chain-flow pt-btc-flow pt-reference-glow" aria-label="Animated illustration of transactions moving toward projected Bitcoin blocks">
-        <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> {liveConnected?"LIVE MEMPOOL FLOW":"LIVE DATA · RECONNECTING"}</span><span className="pt-flow-legend"><span><i className="pt-flow-gold-key"/> PROJECTED BLOCK</span><span><i className="pt-flow-teal-key"/> CONFIRMED BLOCK</span></span></div>
-        <div className="pt-chain-flow-scene">
-          <div className="pt-chain-flow-stream" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{animationDelay:(i*.43)+"s",top:(16+(i*31)%69)+"%"}}/>)}</div>
-          <div className={"pt-chain-flow-shapes"+(blockFlash?" pt-chain-flow-shift":"")} >
-            <div className={"pt-chain-flow-unit pt-chain-flow-confirmed-unit"+(blockFlash?" pt-chain-flow-new-confirmation":"")}>
-              <div className="pt-chain-flow-glow-wrap pt-chain-flow-glow-confirmed"><div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><HexArtwork confirmed/><span className="pt-flow-confirmed-check">✓</span><span>CONFIRMED</span><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>✓ on chain</small></div></div>
-              <div className="pt-chain-flow-caption"><span className="pt-chain-flow-timeline-dot"/><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
-            </div>
-            {(tracking&&trackedPosition!==5?flowBlocks.slice(0,4):flowBlocks).map((b,i)=><div className={"pt-chain-flow-unit"+(tracking&&trackedPosition===i+1?" pt-chain-flow-personal-match":"")} key={b.id}>
-              <div className={"pt-chain-flow-glow-wrap"+(i===0?" pt-chain-flow-glow-next":"")}><div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><HexArtwork active={i===0}/><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span>{tracking?<><strong>{"#"+fmt((displayBtc?.latestBlock?.height??0)+i+1)}</strong><em className="pt-tracker-hex-wait">~{(i+1)*10} min</em><small>{b.median==null?"Fee unavailable":fmt(b.median)+" sat/vB"}</small></>:<><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></>}</div></div>
-              <div className="pt-chain-flow-caption">
-                <span className="pt-chain-flow-timeline-dot"/><span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
-                <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
-                <span className="pt-chain-flow-tx">{b.count} transactions projected</span>{tracking&&trackedPosition===i+1&&<div className="pt-chain-tracked-arrow"><span className="pt-chain-tracked-arrow-tip" aria-hidden="true"/><strong>YOUR TRANSACTION</strong><small>May confirm here</small></div>}
-              </div>
-            </div>)}
-            {blockFlash&&<div className="pt-chain-flow-unit pt-chain-flow-incoming" aria-hidden="true">
-              <div className="pt-chain-flow-glow-wrap"><div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><HexArtwork/><Honeycomb/><span>NEW</span><strong>→</strong><small>pending</small></div></div>
-              <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">New projection</span></div>
-            </div>}
-          </div>
-        </div>
-        <div className="pt-chain-flow-confirmed"><span className={blockFlash?"pt-chain-confirmed-flash":""}>● {blockFlash?"NEW BLOCK CONFIRMED":"LATEST CONFIRMED BLOCK"} {btc?.latestBlock?.height==null?"":("#"+fmt(btc.latestBlock.height))}</span><span>Queue advances when a new block is detected; projections are recalculated from the live mempool.</span></div>
-      </div>;
- const ethereumVisualization=<div className="pt-chain-flow pt-eth-flow pt-reference-glow" aria-label="Live Ethereum blocks and transaction status">
-  <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> LIVE ETHEREUM BLOCKS</span><span>New blocks approximately every 12 seconds · live data</span></div>
-  <div className="pt-chain-flow-scene">
-   <div className={"pt-chain-flow-shapes"+(ethShift?" pt-chain-flow-shift":"")}>
-    {(eth?.recentBlocks??[]).slice(0,5).map((b,i)=><div className="pt-chain-flow-unit" key={String(b.hash??b.height??i)}>
-     <div className={"pt-chain-flow-glow-wrap"+(i===0?" pt-chain-flow-glow-next":"")}><div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(ethShift&&i===0?" pt-chain-flow-mined":"")}><HexArtwork active={i===0}/><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"LATEST":"CONFIRMED"}</span><strong>#{b.height==null?"—":fmt(Number(b.height))}</strong><small>ETH BLOCK</small></div></div>
-     <div className="pt-chain-flow-caption"><span className="pt-chain-flow-time">{i===0?"Latest block":"Previous block"}</span><span className="pt-chain-flow-tx">{b.transactionsCount==null?"Transactions unavailable":fmt(b.transactionsCount)+" transactions"}</span>
-     {tracking&&trackedEthBlock!=null&&Number(b.height)===trackedEthBlock&&<div className="pt-chain-tracked-arrow"><span>↑</span><strong>YOUR TRANSACTION</strong></div>}
-     </div>
-    </div>)}
-    {!(eth?.recentBlocks?.length)&&<div className="pt-chain-flow-unit"><div className="pt-chain-flow-glow-wrap"><div className="pt-chain-flow-hex pt-chain-flow-hex-pending"><HexArtwork/><Honeycomb/><span>ETHEREUM</span><strong>—</strong><small>loading blocks</small></div></div></div>}
-   </div>
-  </div>
-  {tracking&&ethPending&&<div className="pt-eth-pending-locator"><span>↑ YOUR TRANSACTION</span><strong>Pending in the network · future block unknown</strong><small>Ethereum transactions are not assigned a guaranteed upcoming block. Gas settings and account nonce can affect inclusion.</small></div>}
-  <div className="pt-chain-flow-confirmed"><span className={ethShift?"pt-chain-confirmed-flash":""}>● {ethShift?"NEW ETHEREUM BLOCK":"LATEST ETHEREUM BLOCK"} {eth?.latestBlock==null?"":"#"+eth.latestBlock}</span><span>Confirmed blocks advance when the network reports a new block; these are historical blocks, not a future queue.</span></div>
+ const flowVisualization=<div className="pt-standard-tracker-flow" aria-label="Live Bitcoin mempool blocks">
+ <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> {liveConnected?"LIVE MEMPOOL FLOW":"LIVE DATA · RECONNECTING"}</span><span>PROJECTED BLOCKS · CONFIRMED BLOCK</span></div>
+ <div className={trackerStyles.network}><div className={trackerStyles.blockRow}>
+  <div className={trackerStyles.blockUnit}><div className={trackerStyles.confirmedHex}><HexArtwork confirmed/><span className={trackerStyles.check}>✓</span><b>CONFIRMED</b><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>✓ on chain</small></div><div className={trackerStyles.confirmedCaption}>Latest block<br/><span>{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div></div>
+  {(tracking&&trackedPosition!==5?flowBlocks.slice(0,4):flowBlocks).map((b,i)=>{const matched=tracking&&trackedPosition===i+1;return <div className={trackerStyles.blockUnit} key={b.id}><div className={matched?trackerStyles.selectedHex:trackerStyles.pendingHex}><HexArtwork active={matched||i===0}/><Honeycomb/><div className={trackerStyles.hexContent}><b>{i===0?"NEXT":String(i+1).padStart(2,"0")}</b><strong>{tracking?"#"+fmt((displayBtc?.latestBlock?.height??0)+i+1):(b.median==null?"—":fmt(b.median))}</strong>{tracking&&<em>~{(i+1)*10} min</em>}<small>{b.median==null?"Fee unavailable":fmt(b.median)+" sat/vB"}</small></div></div>{matched?<div className={trackerStyles.matchLabel}><span>YOUR TRANSACTION</span><small>May confirm here</small></div>:<div className={trackerStyles.confirmedCaption}>~{(i+1)*10} min<br/><span>{b.count} transactions projected</span></div>}</div>})}
+ </div></div>
+ <div className="pt-chain-flow-confirmed"><span className={blockFlash?"pt-chain-confirmed-flash":""}>● {blockFlash?"NEW BLOCK CONFIRMED":"LATEST CONFIRMED BLOCK"} {btc?.latestBlock?.height==null?"":"#"+fmt(btc.latestBlock.height)}</span><span>Projections are recalculated from the live mempool when a new block is detected.</span></div>
+ </div>;
+ const ethereumVisualization=<div className="pt-standard-tracker-flow pt-standard-eth-flow" aria-label="Live Ethereum blocks">
+ <div className="pt-chain-flow-head"><span className="pt-chain-flow-status"><span className="pt-chain-live-dot"/> LIVE ETHEREUM BLOCKS</span><span>New blocks approximately every 12 seconds · live data</span></div>
+ <div className={trackerStyles.network}><div className={trackerStyles.blockRow}>
+ {(eth?.recentBlocks?.length?eth.recentBlocks.slice(0,5):[{height:null,hash:null,transactionsCount:null,timestamp:null}]).map((b,i)=>{const matched=tracking&&trackedEthBlock!=null&&Number(b.height)===trackedEthBlock;return <div className={trackerStyles.blockUnit} key={String(b.hash??b.height??i)}><div className={matched?trackerStyles.selectedHex:trackerStyles.pendingHex}><HexArtwork active={i===0||matched}/><Honeycomb/><div className={trackerStyles.hexContent}><b>{i===0?"LATEST":"CONFIRMED"}</b><strong>{b.height==null?"—":"#"+fmt(Number(b.height))}</strong><small>ETH BLOCK</small></div></div>{matched?<div className={trackerStyles.matchLabel}><span>YOUR TRANSACTION</span><small>Confirmed in this block</small></div>:<div className={trackerStyles.confirmedCaption}>{i===0?"Latest block":"Previous block"}<br/><span>{b.transactionsCount==null?"Transactions unavailable":fmt(b.transactionsCount)+" transactions"}</span></div>}</div>})}
+ </div></div>
+ {tracking&&ethPending&&<div className="pt-eth-pending-locator"><span>↑ YOUR TRANSACTION</span><strong>Pending in the network · future block unknown</strong><small>Ethereum transactions are not assigned a guaranteed upcoming block.</small></div>}
+ <div className="pt-chain-flow-confirmed"><span>● LATEST ETHEREUM BLOCK {eth?.latestBlock==null?"":"#"+eth.latestBlock}</span><span>These are historical confirmed blocks, not predictions of future transaction waiting times.</span></div>
  </div>;
  if(view==="estimates"&&!tracking)return <div className="pt-dash pt-dash-estimates-only">
   <section className="pt-dash-blocks">
