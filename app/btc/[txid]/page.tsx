@@ -102,7 +102,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <p className="pt-tx-block-caveat">{confirmed?"These are upcoming projected blocks, not the block that confirmed your transaction.":observed?"*The arrow indicates a fee-range match, not a confirmed place in line. Block times average around 10 minutes and can vary.":"Projected blocks describe network activity, not a transaction we can currently locate."}</p>
     </div>
    </section>
-  <div className="pt-tx-desktop-summary">
+  <div className="pt-tx-desktop-summary pt-tx-summary-redesign">
   <header className="pt-tx-top pt-tx-status-hero pt-tx-compact-hero">
    <div className="pt-tx-compact-topline"><span className="pt-eyebrow">YOUR BITCOIN TRANSACTION</span><div className="pt-tx-compact-tools"><button type="button" onClick={()=>setShowLookup(v=>!v)} aria-expanded={showLookup}>⌕ Track another</button><button type="button" onClick={refresh} disabled={loading}>{loading?"Checking…":"↻ Refresh"}</button></div></div>
    <h1>{!observed?"We can't find this Bitcoin transaction":confirmed?"Confirmed on the Bitcoin network":"Waiting for confirmation"}</h1>
@@ -113,10 +113,10 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    <section className="pt-tx-quick-facts" aria-label="Your Bitcoin transaction overview">
     <div className="pt-tx-quick-facts-heading"><span className="pt-eyebrow">YOUR TRANSACTION DETAILS, EXPLAINED</span></div>
     <div className="pt-tx-quick-facts-grid">
-     <div><span>{confirmed?"CONFIRMATIONS":"ESTIMATED WAIT"}</span><strong>{confirmed?number(confirmations):feeEstimate}</strong><small>{confirmed?"Your transaction is recorded in a Bitcoin block. The recipient may require more confirmations.":"About how long until your transaction may confirm. This can change."}</small></div>
-     <div><span>FEE RATE</span><strong>{rate(feeRate)}</strong><small>How much the sender pays per unit of transaction space (sat/vB). Higher rates can get priority. {confirmed?"Already confirmed.":feeHint+"."}</small></div>
-     <div><span>BITCOIN NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>Sats are tiny units of Bitcoin (100 million sats = 1 BTC). This is the fee paid to process the transaction, not necessarily an exchange fee.</small></div>
-     <div><span>{confirmed?"CONFIRMED AT":"CAN THE FEE BE INCREASED?"}</span><strong>{confirmed?(blockTime?new Date(blockTime*1000).toLocaleString():"Confirmed"):rbf?"May be available":"Not signaled"}</strong><small>{confirmed?"When the transaction entered a Bitcoin block.":rbf?"Possibly, if the sending wallet supports fee replacement.":"This transaction does not signal standard opt-in fee replacement. Other options may depend on the wallet."}</small></div>
+     <div className="pt-tx-fact-primary"><span>{confirmed?"CONFIRMATIONS":"ESTIMATED WAIT"}</span><strong>{confirmed?number(confirmations):feeEstimate}</strong><small>{confirmed?"Your transaction is recorded in a Bitcoin block. The recipient may require more confirmations.":"About how long until your transaction may confirm. This can change."}</small></div>
+     <div className="pt-tx-fact-secondary"><span>FEE RATE</span><strong>{rate(feeRate)}</strong><small>How much the sender pays per unit of transaction space (sat/vB). Higher rates can get priority. {confirmed?"Already confirmed.":feeHint+"."}</small></div>
+     <div className="pt-tx-fact-primary"><span>BITCOIN NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>Sats are tiny units of Bitcoin (100 million sats = 1 BTC). This is the fee paid to process the transaction, not necessarily an exchange fee.</small></div>
+     <div className="pt-tx-fact-secondary"><span>{confirmed?"CONFIRMED AT":"CAN THE FEE BE INCREASED?"}</span><strong>{confirmed?(blockTime?new Date(blockTime*1000).toLocaleString():"Confirmed"):rbf?"May be available":"Not signaled"}</strong><small>{confirmed?"When the transaction entered a Bitcoin block.":rbf?"Possibly, if the sending wallet supports fee replacement.":"This transaction does not signal standard opt-in fee replacement. Other options may depend on the wallet."}</small></div>
     </div>
    </section>
   </div>
