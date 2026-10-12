@@ -4211,3 +4211,22 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-tx-next>p{color:#cbdce6;line-height:1.75}
 .pt-tx-next .pt-tx-more{margin-top:16px}
 @media(max-width:650px){.pt-tx-plain-header{display:none}.pt-tx-plain-row{grid-template-columns:1fr;gap:10px;padding:18px}.pt-tx-plain-row p{font-size:13px}}
+
+
+/* Restored original transaction explanation presentation. */
+.pt-tx-clarity{margin:28px 0;padding:clamp(20px,3vw,36px);background:linear-gradient(135deg,#071b29,#041421);border:1px solid #29475b;border-radius:22px;box-shadow:0 16px 45px rgba(0,0,0,.15)}
+.pt-tx-clarity h2{color:#f3f7fa;margin:10px 0 8px;font-size:clamp(24px,2.3vw,34px)}
+.pt-tx-clarity .pt-tx-details-intro,.pt-tx-clarity-intro{color:#aec3d0;line-height:1.65;margin:0 0 24px}
+.pt-tx-clarity-head,.pt-tx-clarity-row{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);gap:clamp(18px,3vw,40px)}
+.pt-tx-clarity-head{padding:0 18px 12px;color:#f8bd4b;font-size:11px;letter-spacing:.12em;font-weight:800}
+.pt-tx-clarity-rows{border:1px solid #254252;border-radius:15px;overflow:hidden}
+.pt-tx-clarity-row{align-items:center;padding:20px 18px;border-bottom:1px solid #254252;background:#071c2a}
+.pt-tx-clarity-row:nth-child(even){background:#091f2e}
+.pt-tx-clarity-row:last-child{border-bottom:0}
+.pt-tx-clarity-row>div{min-width:0;display:flex;flex-direction:column;gap:7px}
+.pt-tx-clarity-row>div>span{color:#9eb8c7;font-size:12px}
+.pt-tx-clarity-row>div>strong{color:#f6bd4d;font-size:clamp(16px,1.5vw,21px);overflow-wrap:anywhere}
+.pt-tx-clarity-row>p{margin:0;color:#d0dee7;line-height:1.65;font-size:14px}
+.pt-tx-clarity-note,.pt-tx-clarity-footnote{margin:18px 0 0;color:#94b1c2;font-size:12px;line-height:1.7}
+.pt-tx-clarity+.pt-tx-summary-actions{margin:0 0 28px}
+@media(max-width:650px){.pt-tx-clarity{padding:18px}.pt-tx-clarity-head{display:none}.pt-tx-clarity-row{grid-template-columns:1fr;gap:10px;padding:18px}.pt-tx-clarity-row>p{font-size:13px}}
