@@ -1,11 +1,12 @@
 /* Pending Tracker homepage — rebuilt design system. No layered legacy overrides. */
 .pt26-hero,.pt26-live{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;color:#f4f8ff}
 .pt26-hero *,.pt26-live *{box-sizing:border-box}
-.pt26-hero{position:relative;isolation:isolate;overflow:hidden;min-height:408px;padding:48px 20px 38px;background:radial-gradient(ellipse at 0% 47%,#5b350f3b,transparent 31%),radial-gradient(ellipse at 100% 47%,#094c9635,transparent 31%),#020b15;border-bottom:1px solid #1b3447}
-.pt26-hero-art{position:absolute;top:0;bottom:0;width:37%;z-index:0;pointer-events:none;border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;background:none!important;overflow:visible;mask-image:linear-gradient(90deg,#000 0%,#000 77%,transparent 100%)}
-.pt26-hero-art.btc{left:-6%}.pt26-hero-art.eth{right:-6%;mask-image:linear-gradient(270deg,#000 0%,#000 77%,transparent 100%)}
+.pt26-hero{position:relative;isolation:isolate;overflow:hidden;min-height:408px;padding:48px 20px 38px;background:radial-gradient(ellipse at 0% 47%,#5b350f3b,transparent 31%),radial-gradient(ellipse at 100% 47%,#094c9635,transparent 31%),#020b15;border-bottom:0}
+.pt26-hero-art{position:absolute;inset:0 auto 0 0;width:42%;z-index:0;pointer-events:none;overflow:visible!important;background:transparent!important;border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;filter:none!important;mask-image:radial-gradient(ellipse 73% 63% at 31% 50%,#000 45%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 73% 63% at 31% 50%,#000 45%,transparent 100%)}
+.pt26-hero-art.btc{left:-4%;right:auto}
+.pt26-hero-art.eth{left:auto;right:-4%;mask-image:radial-gradient(ellipse 73% 63% at 69% 50%,#000 45%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 73% 63% at 69% 50%,#000 45%,transparent 100%)}
 .pt26-hero-graphic{display:block;overflow:visible}
-.pt26-hero-art img{position:absolute;top:50%;height:auto;width:580px;max-width:none;transform:translateY(-50%);opacity:.96;display:block;mix-blend-mode:screen}
+.pt26-hero-art img{position:absolute;top:50%;height:auto;width:580px;max-width:none;transform:translateY(-50%);opacity:.96;display:block;mix-blend-mode:screen;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
 .pt26-hero-art.btc img{left:0}
 .pt26-hero-art.eth img{right:0}
 .pt26-hero-satellite{animation:pt26float 16s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
@@ -68,3 +69,8 @@
 .pt26-live-title h2 span{background:#064a37!important;color:#2eeab2!important}
 @media(max-width:1100px){.pt26-hero-art img{width:490px}.pt26-hero-art.btc{left:-13%}.pt26-hero-art.eth{right:-13%}}
 @media(max-width:750px){.pt26-hero-art img{width:450px}.pt26-hero-art{opacity:.28}.pt26-hero-art.btc{left:-35%}.pt26-hero-art.eth{right:-35%}}
+
+/* Hero-only: blend the artwork into one uninterrupted background. */
+.pt26-hero{background-color:#020b15;background-image:radial-gradient(ellipse at 12% 50%,rgba(96,55,7,.11),transparent 39%),radial-gradient(ellipse at 88% 50%,rgba(0,65,125,.12),transparent 39%);border:0!important;box-shadow:none!important}
+.pt26-hero::before,.pt26-hero::after{content:none!important}
+.pt26-hero-art::before,.pt26-hero-art::after{content:none!important}
