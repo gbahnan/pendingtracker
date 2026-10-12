@@ -1,13 +1,13 @@
 /* Pending Tracker homepage — rebuilt design system. No layered legacy overrides. */
 .pt26-hero,.pt26-live{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;color:#f4f8ff}
 .pt26-hero *,.pt26-live *{box-sizing:border-box}
-.pt26-hero{position:relative;isolation:isolate;overflow:hidden;min-height:394px;padding:48px 20px 38px;background:radial-gradient(ellipse at 0% 47%,#5b350f3b,transparent 31%),radial-gradient(ellipse at 100% 47%,#094c9635,transparent 31%),#020b15;border-bottom:1px solid #1b3447}
-.pt26-hero-art{position:absolute;top:0;bottom:0;width:33%;z-index:0;pointer-events:none;overflow:visible;border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;clip-path:none!important;mask-image:linear-gradient(to right,black 0%,black 70%,transparent 100%)}
-.pt26-hero-art.btc{left:-8%}.pt26-hero-art.eth{right:-8%;mask-image:linear-gradient(to left,black 0%,black 70%,transparent 100%)}
+.pt26-hero{position:relative;isolation:isolate;overflow:hidden;min-height:408px;padding:48px 20px 38px;background:radial-gradient(ellipse at 0% 47%,#5b350f3b,transparent 31%),radial-gradient(ellipse at 100% 47%,#094c9635,transparent 31%),#020b15;border-bottom:1px solid #1b3447}
+.pt26-hero-art{position:absolute;top:0;bottom:0;width:37%;z-index:0;pointer-events:none;border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;background:none!important;overflow:visible;mask-image:linear-gradient(90deg,#000 0%,#000 77%,transparent 100%)}
+.pt26-hero-art.btc{left:-6%}.pt26-hero-art.eth{right:-6%;mask-image:linear-gradient(270deg,#000 0%,#000 77%,transparent 100%)}
 .pt26-hero-graphic{display:block;overflow:visible}
-.pt26-hero-art .pt26-hero-graphic{position:absolute;top:50%;width:min(100%,450px);height:auto;transform:translateY(-50%);opacity:.84}
-.pt26-hero-art.btc .pt26-hero-graphic{left:0;filter:drop-shadow(0 0 9px #d78d3155)}
-.pt26-hero-art.eth .pt26-hero-graphic{right:0;filter:drop-shadow(0 0 9px #167dff55)}
+.pt26-hero-art img{position:absolute;top:50%;height:auto;width:580px;max-width:none;transform:translateY(-50%);opacity:.96;display:block;mix-blend-mode:screen}
+.pt26-hero-art.btc img{left:0}
+.pt26-hero-art.eth img{right:0}
 .pt26-hero-satellite{animation:pt26float 16s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
 @keyframes pt26float{from{transform:translate(0,5px)}to{transform:translate(7px,-12px)}}
 .pt26-hero-content{position:relative;z-index:1;max-width:680px;margin:0 auto;text-align:center}
@@ -27,11 +27,11 @@
 .pt26-search-error{color:#ff9898!important;margin:10px!important}
 .pt26-chain-choice{margin:12px;color:#d9e7f7}.pt26-chain-choice button{margin:5px;padding:7px 12px;border:1px solid #58738e;border-radius:20px;background:#0b1c30;color:white}
 .pt26-live{background:#020b15;padding:21px 18px 32px}
-.pt26-live-title{max-width:1140px;margin:0 auto 13px}
+.pt26-live-title{max-width:1315px;margin:0 auto 13px}
 .pt26-live-title h2{margin:0 0 5px!important;color:#f6f8fc!important;font-size:26px!important;line-height:1.2!important;font-weight:800!important}
 .pt26-live-title h2 span{display:inline-block;vertical-align:middle;margin-left:9px;padding:5px 11px;border-radius:20px;background:#064b38;color:#29e5a8;font-size:10px;letter-spacing:.4px}
 .pt26-live-title p{margin:0;color:#b9cddd;font-size:12px}
-.pt26-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:1140px;margin:0 auto}
+.pt26-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:1315px;margin:0 auto}
 .pt26-panel{--accent:#ffc02e;--glow:#ffb32260;min-width:0;padding:14px;border:1px solid #bb871c;border-radius:14px;background:linear-gradient(150deg,#07121d,#020a13 83%);box-shadow:inset 0 1px #ffffff0c}
 .pt26-panel.eth{--accent:#399dff;--glow:#1987ff60;border-color:#237bd8}
 .pt26-panel-head{display:flex;align-items:center;gap:10px}
@@ -42,7 +42,7 @@
 .pt26-panel.eth .pt26-explore{background:#126ee5;color:#fff!important}
 .pt26-card-visual{display:grid;grid-template-columns:minmax(0,1fr) 145px;align-items:center;gap:0;min-height:205px;margin:7px 0 9px}
 .pt26-scene{height:205px;min-width:0;display:flex;align-items:center;justify-content:center;overflow:visible;background:radial-gradient(ellipse at center,var(--glow),transparent 61%)}
-.pt26-scene .pt26-hero-graphic{position:static!important;transform:none!important;width:100%;max-width:390px;height:100%;filter:drop-shadow(0 0 8px var(--glow))}
+.pt26-scene img{display:block;width:100%;max-width:580px;height:100%;object-fit:contain;mix-blend-mode:screen}
 .pt26-side-stats{border-left:1px solid #38516a;padding:2px 0 2px 20px;display:flex;flex-direction:column;gap:15px;justify-content:center;min-height:155px}
 .pt26-side-stats>div{display:flex;flex-direction:column;gap:4px}
 .pt26-side-stats small{font-size:11px;color:#c0d1e0}
@@ -57,3 +57,14 @@
 @media(max-width:900px){.pt26-grid{grid-template-columns:1fr;max-width:580px}.pt26-live-title{max-width:580px}.pt26-hero-art{opacity:.38}.pt26-hero{padding:45px 14px}}
 @media(max-width:600px){.pt26-hero-art{opacity:.17;width:45%}.pt26-hero-art.btc{left:-20%}.pt26-hero-art.eth{right:-20%}.pt26-kicker{letter-spacing:2px;font-size:10px}.pt26-hero-content h1{font-size:32px!important}.pt26-live{padding:18px 12px}.pt26-panel{padding:11px}.pt26-side-stats strong{font-size:14px}.pt26-feed-row{font-size:10px}.pt26-scene{height:165px}.pt26-card-visual{grid-template-columns:minmax(0,1fr) 110px;min-height:170px}.pt26-side-stats{padding-left:10px;gap:12px}.pt26-side-stats small{font-size:9px}.pt26-explore{font-size:10px;padding:9px}}
 @media(prefers-reduced-motion:reduce){.pt26-hero-satellite{animation:none!important}}
+
+/* Reference-matched transparent artwork, separate from all live UI. */
+.pt26-hero-art,.pt26-hero-art img{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:none!important}
+.pt26-hero-content{position:relative;z-index:2}
+.pt26-card-visual{position:relative}
+.pt26-scene{background:none!important;overflow:hidden}
+.pt26-scene img{max-height:210px;filter:none!important}
+.pt26-panel{border-color:var(--accent)!important}
+.pt26-live-title h2 span{background:#064a37!important;color:#2eeab2!important}
+@media(max-width:1100px){.pt26-hero-art img{width:490px}.pt26-hero-art.btc{left:-13%}.pt26-hero-art.eth{right:-13%}}
+@media(max-width:750px){.pt26-hero-art img{width:450px}.pt26-hero-art{opacity:.28}.pt26-hero-art.btc{left:-35%}.pt26-hero-art.eth{right:-35%}}
