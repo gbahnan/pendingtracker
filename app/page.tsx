@@ -114,6 +114,33 @@ const comparisonExamples = {
 } as const;
 
 
+function HeroEmblem({chain}:{chain:"btc"|"eth"}) {
+ const btc=chain==="btc",a=btc?"#ffb521":"#238dff",b=btc?"#fff2c0":"#b6eaff",shade=btc?"#65320a":"#082d74";
+ const hp=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const t=i*Math.PI/3-Math.PI/6;return (x+r*Math.cos(t)).toFixed(1)+","+(y+r*Math.sin(t)).toFixed(1)}).join(" ");
+ const satellites=[[36,42,19],[90,14,12],[252,31,17],[267,119,13],[40,184,16],[242,207,22],[110,225,10],[18,112,9]];
+ return <svg className={"pt26-hero-graphic "+chain} viewBox="0 0 300 250" aria-hidden="true">
+ <defs>
+ <linearGradient id={"hero-metal-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={b}/><stop offset=".16" stopColor={a}/><stop offset=".48" stopColor={shade}/><stop offset=".72" stopColor={a}/><stop offset="1" stopColor={b}/></linearGradient>
+ <radialGradient id={"hero-halo-"+chain}><stop stopColor={a} stopOpacity=".46"/><stop offset=".45" stopColor={a} stopOpacity=".15"/><stop offset="1" stopColor={a} stopOpacity="0"/></radialGradient>
+ <filter id={"hero-blur-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="8"/></filter>
+ </defs>
+ <ellipse cx="149" cy="125" rx="145" ry="121" fill={"url(#hero-halo-"+chain+")"}/>
+ {satellites.map(([x,y,r],i)=><g key={i} className="pt26-hero-satellite" style={{animationDelay:-(i*2.3)+"s",animationDuration:(12+i%3*4)+"s"}}>
+ <polygon points={hp(x,y,r+3)} fill={a} opacity=".4" filter={"url(#hero-blur-"+chain+")"}/>
+ <polygon points={hp(x,y,r)} fill="#071426" stroke={a} strokeWidth="1.4"/>
+ <polygon points={hp(x,y,r-3)} fill={"url(#hero-metal-"+chain+")"} fillOpacity=".55" stroke={b} strokeOpacity=".5" strokeWidth=".6"/>
+ <path d={`M ${x-r*.65} ${y} L ${x} ${y-r*.75} L ${x+r*.65} ${y}`} fill="none" stroke={b} strokeOpacity=".6" strokeWidth="1"/>
+ </g>)}
+ <polygon points={hp(148,122,100)} fill={a} opacity=".45" filter={"url(#hero-blur-"+chain+")"}/>
+ <polygon points={hp(148,122,88)} fill={"url(#hero-metal-"+chain+")"} stroke={b} strokeWidth="2"/>
+ <polygon points={hp(148,122,80)} fill="#020a13" stroke={shade} strokeWidth="3"/>
+ <polygon points={hp(148,122,72)} fill="#05101d" stroke={a} strokeWidth="1.6"/>
+ <polygon points={hp(148,122,66)} fill="none" stroke={b} strokeOpacity=".5" strokeWidth="1"/>
+ <path d="M 104 70 L 148 46 L 192 70" fill="none" stroke={b} strokeOpacity=".8" strokeWidth="2.5"/>
+ {btc?<text x="148" y="156" textAnchor="middle" fill={b} fontSize="105" fontWeight="800" style={{filter:"drop-shadow(0 0 9px #ff9b15)"}}>₿</text>:<g><polygon points="148,55 112,120 148,142" fill="#b9e1ff"/><polygon points="148,55 184,120 148,142" fill="#488bff"/><polygon points="112,130 148,185 148,151" fill="#9fd1ff"/><polygon points="184,130 148,185 148,151" fill="#2863dc"/><path d="M148 55 L148 142 L184 120" fill="none" stroke="#e1f5ff" strokeOpacity=".65"/></g>}
+ </svg>;
+}
+
 function HoneycombFloor({chain}:{chain:"btc"|"eth"}) {
  const gold=chain==="btc", glow=gold?"#ffae21":"#348dff", edge=gold?"#b87513":"#1d5bb5", light=gold?"#ffe29a":"#b5dcff";
  const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const t=Math.PI/3*i-Math.PI/6;return [x+r*Math.cos(t),y+r*Math.sin(t)] as const});
@@ -236,8 +263,8 @@ export default function Page() {
   return <main className="pt-shell">
 
     <section className="pt26-hero">
-      <div className="pt26-hero-art btc" aria-hidden="true"><div className="core">₿</div>{Array.from({length:6},(_,i)=><i key={i} className="float"/>)}</div>
-      <div className="pt26-hero-art eth" aria-hidden="true"><div className="core">◆</div>{Array.from({length:6},(_,i)=><i key={i} className="float"/>)}</div>
+      <div className="pt26-hero-art btc"><HeroEmblem chain="btc"/></div>
+      <div className="pt26-hero-art eth"><HeroEmblem chain="eth"/></div>
       <div className="pt26-hero-content">
         <div className="pt26-kicker">TRACK &nbsp; • &nbsp; <b>EXPLORE</b> &nbsp; • &nbsp; <em>UNDERSTAND</em></div>
         <h1>A simpler <span>blockchain explorer.</span></h1>
