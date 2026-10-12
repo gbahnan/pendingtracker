@@ -1,5 +1,6 @@
 "use client";
-import ChainDashboard from "../../components/ChainDashboard";
+import {Honeycomb} from "../../components/ChainDashboard";
+import styles from "./BitcoinTracker.module.css";
 import {useCallback,useEffect,useMemo,useState} from "react";
 import type {BtcMvpResult} from "@/lib/btc/types";
 import {isLikelyTxid} from "@/lib/btc/validate";
@@ -86,46 +87,54 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  }
  function copy(){if(typeof navigator!=="undefined"&&navigator.clipboard){navigator.clipboard.writeText(txid).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),1800);}).catch(()=>{});}}
  if(!valid)return <main className="pt-tx-page"><a href="/">← Back to explorer</a><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID is 64 hexadecimal characters.</p></main>;
- return <main className="pt-tx-page pt-tx-detail-v2">
-  <div className="pt-tx-back"><a href="/explore">← Bitcoin & Ethereum Explorer</a></div>
-  <div className="pt-tx-mobile-status-strip"><div><span className="pt-eyebrow">YOUR BITCOIN TRANSACTION</span><span className={confirmed?"pt-tx-state good":"pt-tx-state"}>{!result?"● Checking":confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span></div><strong>{!result?"Checking the Bitcoin network…":confirmed?number(confirmations)+" confirmation"+(confirmations===1?"":"s"):observed?feeEstimate:"Transaction not visible"}</strong></div>
-  {lastChecked&&<p className="pt-tx-freshness pt-tx-compact-freshness">Live network · Updated {lastChecked} · Refreshes every 15 seconds</p>}
-  {changeNotice&&<p className="pt-tx-change" role="status">{changeNotice}</p>}
-  {error&&<div className="pt-tx-error" role="alert">{error} {result?"Showing the last available data.":""}</div>}
-  {loading&&!result&&<div className="pt-tx-loading">Checking the Bitcoin network…</div>}
-  {result&&<>
-   <div className="pt-tx-mock-hero">
-    <div className="pt-tx-mock-brand" aria-hidden="true">₿</div>
-    <div className="pt-tx-mock-intro">
-     <div className="pt-eyebrow">YOUR BITCOIN TRANSACTION</div>
-     <h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":"Waiting for confirmation"}</h1>
-     <p>{!observed?"We can't currently locate this transaction on the Bitcoin network. Check the ID or confirm that the sender broadcast it.":confirmed?"Your transaction is recorded on the Bitcoin blockchain with "+number(confirmations)+" confirmation"+(confirmations===1?"":"s")+". Your exchange or wallet may require more confirmations before crediting funds.":selectedPosition?"Your transaction has reached the Bitcoin network and is waiting to be included in a block. Based on current activity, it may confirm in around "+selectedPosition*10+" minutes, but this is only an estimate.":"Your transaction has reached the Bitcoin network and is waiting for confirmation. A reliable confirmation estimate is not currently available."}</p>
-    </div>
-    <span className={confirmed?"pt-tx-mock-state confirmed":observed?"pt-tx-mock-state pending":"pt-tx-mock-state"}>{confirmed?"● Confirmed":observed?"● Pending":"● Not found"}</span>
-   </div>
-   <section className="pt-tx-stage">
-    <div className="pt-tx-block-track">
-     {confirmed?<div className="pt-tx-confirmed-message">✓ Confirmed in Bitcoin block #{number(blockHeight)} · {number(confirmations)} confirmation(s). Your transaction is no longer waiting in the mempool.</div>:null}
-     {!confirmed&&observed&&!selectedPosition?<p className="pt-tx-position-unknown">No reliable projected block match is available yet.</p>:null}
-     <ChainDashboard chain="bitcoin" tracking trackedPosition={!confirmed&&observed?selectedPosition:null}/>
-     <p className="pt-tx-block-caveat">{confirmed?"These are upcoming projected blocks, not the block that confirmed your transaction.":observed?"*The arrow indicates a fee-range match, not a confirmed place in line. Block times average around 10 minutes and can vary.":"Projected blocks describe network activity, not a transaction we can currently locate."}</p>
-    </div>
-   </section>
-  <div className="pt-tx-simple-status pt-tx-mock-summary">
-   <div className="pt-tx-simple-facts" aria-label="Your transaction essentials">
-    {confirmed?<>
-     <div className="pt-tx-simple-fact"><span>CONFIRMATIONS</span><strong>{number(confirmations)}</strong><small>Recorded on the Bitcoin blockchain. Your exchange may need more confirmations.</small></div>
-     <div className="pt-tx-simple-fact"><span>NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>Sats are tiny units of Bitcoin. This is the network processing fee.</small></div>
-     <div className="pt-tx-simple-fact"><span>CONFIRMED AT</span><strong>{blockTime?new Date(blockTime*1000).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"}):"Confirmed"}</strong><small>{blockTime?new Date(blockTime*1000).toLocaleDateString():"Recorded in a Bitcoin block."}</small></div>
-    </>:observed?<>
-     <div className="pt-tx-simple-fact"><span>ESTIMATED WAIT</span><strong>{feeEstimate}</strong><small>Based on current network conditions. This is not guaranteed.</small></div>
-     <div className="pt-tx-simple-fact"><span>NETWORK FEE</span><strong>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</strong><small>Sats are tiny units of Bitcoin. This fee helps get the transaction processed.</small></div>
-     <div className="pt-tx-simple-fact"><span>FEE RATE</span><strong>{rate(feeRate)}</strong><small>The fee paid per unit of transaction space. Higher rates may confirm sooner.</small></div>
-    </>:<div className="pt-tx-simple-fact"><span>WHAT TO CHECK</span><strong>Transaction ID</strong><small>Check that the transaction ID is correct and that the sender broadcast it.</small></div>}
-   </div>
+ return <main className={"pt-tx-page "+styles.page}>
 
-   <div className="pt-tx-simple-footer"><div className="pt-tx-hero-hash"><span>Transaction ID</span><code title={txid}>{short(txid)}</code><button type="button" onClick={copy}>{copied?"✓ Copied":"Copy ID"}</button></div><a href="#btc-clarity-title" className="pt-tx-simple-details-link">Understand your transaction in detail ↓</a></div>
-   {showLookup&&<form className="pt-tx-lookup" onSubmit={e=>{e.preventDefault();const v=lookup.trim();if(/^0x[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/eth/"+v)}else if(/^[a-fA-F0-9]{64}$/.test(v)){window.location.assign("/btc/"+v)}else{setLookupError("Enter a valid Bitcoin transaction ID or Ethereum transaction hash.");}}}><label htmlFor="pt-transaction-lookup">TRACK ANOTHER TRANSACTION</label><div className="pt-tx-lookup-controls"><input id="pt-transaction-lookup" value={lookup} onChange={e=>{setLookup(e.target.value);if(lookupError)setLookupError("");}} placeholder="Paste a Bitcoin or Ethereum transaction hash…" autoComplete="off" spellCheck={false}/><button type="submit">Track transaction →</button></div>{lookupError&&<p role="alert">{lookupError}</p>}</form>}
+  <div className={styles.shell}>
+   <div className={styles.edgeLeft} aria-hidden="true"/><div className={styles.edgeRight} aria-hidden="true"/>
+   <a className={styles.back} href="/bitcoin">← &nbsp; Bitcoin Explorer</a>
+   {error&&<p role="alert" className={styles.error}>{error}{result?" Showing the last available data.":""}</p>}
+   {loading&&!result&&<p className={styles.loading}>Checking the Bitcoin network…</p>}
+   {result&&<>
+    <header className={styles.hero}>
+     <div className={styles.coin} aria-hidden="true">₿</div>
+     <div className={styles.heroText}>
+      <div className={styles.eyebrow}>YOUR BITCOIN TRANSACTION</div>
+      <h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":<>Waiting for <span>confirmation</span></>}</h1>
+      <p>{!observed?"We couldn't locate this transaction on the Bitcoin network. Check its ID and confirm the sender has broadcast it.":confirmed?"Your transaction has been recorded in Bitcoin block #"+number(blockHeight)+". Your wallet or exchange may require more confirmations before crediting it.":selectedPosition?"Your transaction has reached the Bitcoin network and is waiting to be included in a block. Based on current activity, it may confirm in about "+selectedPosition*10+" minutes.":"Your transaction is on the Bitcoin network and is waiting for confirmation. A reliable estimated confirmation time is not available yet."}</p>
+     </div>
+     <div className={confirmed?styles.confirmedPill:styles.pendingPill}><i/>{confirmed?"Confirmed":observed?"Pending":"Not found"}</div>
+    </header>
+    <section className={styles.network} aria-label="Your transaction's projected position in the live Bitcoin network">
+     <div className={styles.blockRow}>
+      <div className={styles.blockUnit}>
+       <div className={styles.confirmedHex}><div className={styles.check}>✓</div><b>CONFIRMED</b><strong>#{number(overview?.btc?.height)}</strong><small>{number(blocks[0]?.transactionCount)} transactions</small><small>Latest confirmed block</small></div>
+       <div className={styles.confirmedCaption}>Latest block<br/><span>Just confirmed</span></div>
+      </div>
+      {Array.from({length:4},(_,i)=>{const block=blocks[i];const isMatch=!confirmed&&observed&&selectedPosition===i+1;return <div className={styles.blockUnit} key={i}>
+       <div className={isMatch?styles.selectedHex:styles.pendingHex}>
+        <Honeycomb/>
+        <div className={styles.hexContent}>
+         {i===0&&<b>NEXT</b>}
+         <strong>#{overview?.btc?.height!=null?number(overview.btc.height+i+1):"—"}</strong>
+         <em>~{(i+1)*10} min</em>
+         <small>{block?.feeRange?.length===2?number(block.feeRange[0])+"–"+number(block.feeRange[1])+" sat/vB":block?.feeRange?.length===1?number(block.feeRange[0])+" sat/vB":"Fee range unavailable"}</small>
+        </div>
+       </div>
+       {isMatch?<div className={styles.matchLabel}><span>YOUR TRANSACTION</span><small>May confirm here</small></div>:<div className={styles.blankLabel}/>}
+      </div>})}
+     </div>
+     <p className={styles.projectionNote}>{confirmed?"Your transaction is already confirmed. The gold blocks show upcoming network projections.":observed?"Your highlighted block is a fee-based estimate, not a guaranteed place in line. Bitcoin block times vary.":"The blocks show network estimates; we haven't located your transaction yet."}</p>
+    </section>
+    <section className={styles.summary} aria-label="Your Bitcoin transaction summary">
+     <div className={styles.summaryGrid}>
+      <div className={styles.fact}><div className={styles.factLabel}>ESTIMATED CONFIRMATION</div><div className={styles.factValue}><span className={styles.factIcon}>◷</span><strong>{confirmed?"Confirmed":selectedPosition?"~"+selectedPosition*10+" minutes":"Unavailable"}</strong></div><p>Based on current network activity.<br/>This is an estimate, not a guarantee.</p></div>
+      <div className={styles.fact}><div className={styles.factLabel}>TRANSACTION FEE</div><div className={styles.factValue}><span className={styles.factIcon}>≋</span><strong>{tx?.fee==null?"—":number(tx.fee)+" sats"}</strong></div><p>Total Bitcoin network fee for this transaction.</p></div>
+      <div className={styles.fact}><div className={styles.factLabel}>FEE RATE</div><div className={styles.factValue}><span className={styles.factIcon}>◴</span><strong>{rate(feeRate)}</strong></div><p>Higher rates are usually confirmed faster.</p></div>
+      <div className={styles.fact}><div className={styles.factLabel}>DO I NEED TO DO ANYTHING?</div><div className={styles.factValue+" "+styles.actionValue}><span className={styles.actionIcon}>{!observed?"!":"✓"}</span><strong>{!observed?"Check transaction ID":confirmed?"No action needed":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Consider your options":"No action needed"}</strong></div><p>{!observed?"Verify the ID and ask the sender if it was broadcast.":confirmed?"The transaction is already on the blockchain.":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee is below the current network guide.":"Your fee appears competitive for the network."}</p></div>
+     </div>
+     <div className={styles.summaryFooter}><div>Transaction ID <code title={txid}>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"▢ Copy"}</button></div><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">View on Mempool.space ↗</a></div>
+    </section>
+   </>}
   </div>
    <section className="pt-tx-clarity" aria-labelledby="btc-clarity-title">
     <div className="pt-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
