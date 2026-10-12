@@ -4691,3 +4691,54 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-personal-match .pt-chain-tracked-arrow-tip{position:absolute!important;display:block!important;left:50%!important;top:-12px!important;width:17px!important;height:17px!important;border-top:2px solid #ffd17b!important;border-left:2px solid #ffd17b!important;background:#30220e!important;transform:translateX(-50%) rotate(45deg)!important;box-shadow:-3px -3px 9px #e8a43c55!important}
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-unit .pt-chain-flow-glow-wrap>.pt-chain-flow-hex{clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)!important}
 @media(max-width:700px){.pt-tx-page.pt-tx-detail-v2::before{opacity:.3;background-size:auto 100%}.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-personal-match .pt-chain-tracked-arrow{padding:6px 10px!important}.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-personal-match .pt-chain-tracked-arrow strong{font-size:10px!important}}
+
+/* BTC transaction: unbox network visualization; put decorative hexes at viewport edges. */
+.pt-tx-page.pt-tx-detail-v2{
+ background:transparent!important;
+ isolation:auto!important;
+ position:relative;
+}
+.pt-tx-page.pt-tx-detail-v2::before{display:none!important}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-stage,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-dash-estimates-only,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-scene,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-shapes{
+ background:transparent!important;background-image:none!important;
+ border:0!important;border-radius:0!important;
+ box-shadow:none!important;
+ outline:0!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-stage{
+ padding:0!important;margin:0!important;
+ overflow:visible!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track{
+ padding:0!important;margin:0!important;
+ overflow:visible!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-scene{
+ overflow:visible!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-shapes{
+ overflow:visible!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-head,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow-confirmed{
+ background:transparent!important;
+}
+@media(min-width:980px){
+ body:has(.pt-tx-page.pt-tx-detail-v2){position:relative;isolation:isolate}
+ body:has(.pt-tx-page.pt-tx-detail-v2)::before,
+ body:has(.pt-tx-page.pt-tx-detail-v2)::after{
+  content:"";position:absolute;pointer-events:none;z-index:-1;
+  width:clamp(80px,10vw,175px);height:660px;top:185px;
+  opacity:.55;background-repeat:repeat-y;background-position:center top;
+  background-size:110px 142px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='142' viewBox='0 0 110 142'%3E%3Cg fill='none' stroke='%23bd852f' stroke-width='1.5'%3E%3Cpath d='M11 21L27 12 43 21 43 39 27 48 11 39Z'/%3E%3Cpath d='M59 76L77 66 95 76 95 96 77 106 59 96Z'/%3E%3Cpath d='M5 113L18 106 31 113 31 127 18 134 5 127Z'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image:linear-gradient(to bottom,transparent,#000 9%,#000 80%,transparent);
+ }
+ body:has(.pt-tx-page.pt-tx-detail-v2)::before{left:0}
+ body:has(.pt-tx-page.pt-tx-detail-v2)::after{right:0;transform:scaleX(-1)}
+}
