@@ -4597,3 +4597,51 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 @media(max-width:390px){
  .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-facts{grid-template-columns:1fr!important;gap:12px!important}
 }
+
+/* Desktop BTC tx: compact single-screen honeycomb + personal status.
+   Only compress the summary and inter-section whitespace, never distort SVGs. */
+@media(min-width:980px){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-status{
+  padding:8px 0 12px!important;
+  margin:0!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-top{gap:8px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-status h1{
+  font-size:clamp(25px,2.2vw,33px)!important;
+  line-height:1.12!important;
+  margin:9px 0 6px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-description{
+  font-size:13px!important;
+  line-height:1.42!important;
+  max-width:1150px!important;
+  margin:0 0 12px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-facts{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:24px!important;
+  margin:0 0 10px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact{
+  padding:8px 0 0!important;
+  gap:3px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact>strong{
+  font-size:clamp(18px,1.55vw,24px)!important;
+  line-height:1.1!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-fact>small{
+  font-size:11px!important;
+  line-height:1.3!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer{
+  padding-top:8px!important;
+  gap:8px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer .pt-tx-hero-hash{
+  font-size:12px!important;
+ }
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-details-link{font-size:12px!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-stage{padding-bottom:0!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track{padding-bottom:0!important;margin-bottom:0!important}
+}
