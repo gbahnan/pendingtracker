@@ -4189,3 +4189,25 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-btc-flow.pt-reference-glow .pt-chain-flow-shapes > .pt-chain-flow-unit > .pt-chain-flow-glow-wrap > .pt-chain-flow-hex{
  width:100%!important;min-width:0!important;flex-shrink:0!important;
 }
+
+
+/* Transaction pages: plain-English data comparison and distinct next-step guidance. */
+.pt-tx-plain{margin:28px 0;padding:clamp(18px,3vw,34px);background:linear-gradient(140deg,#091d2a,#061622);border:1px solid #304b5d;border-radius:20px;box-shadow:0 12px 38px rgba(0,0,0,.14)}
+.pt-tx-plain h2{color:#f2f5f6;font-size:clamp(24px,2.5vw,34px);letter-spacing:-.03em;margin:10px 0}
+.pt-tx-plain-intro{color:#b5cad7;line-height:1.65;margin:0 0 22px}
+.pt-tx-plain-header,.pt-tx-plain-row{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);gap:clamp(18px,3vw,40px)}
+.pt-tx-plain-header{padding:0 18px 12px;color:#eeb953;font-size:11px;font-weight:800;letter-spacing:.12em}
+.pt-tx-plain-rows{border:1px solid #2b4757;border-radius:14px;overflow:hidden}
+.pt-tx-plain-row{align-items:center;padding:20px 18px;border-bottom:1px solid #2b4757;background:#0a2030}
+.pt-tx-plain-row:nth-child(even){background:#0b2333}
+.pt-tx-plain-row:last-child{border-bottom:0}
+.pt-tx-plain-value{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pt-tx-plain-value span{font-size:12px;color:#9cb8c7}
+.pt-tx-plain-value strong{font-size:clamp(16px,1.6vw,21px);color:#f4bd51;overflow-wrap:anywhere}
+.pt-tx-plain-row p{color:#d4e0e8;line-height:1.65;margin:0;font-size:14px}
+.pt-tx-plain-footnote{color:#9db6c4;font-size:12px;line-height:1.6;margin:16px 0 0}
+.pt-tx-next{margin:24px 0;padding:clamp(18px,3vw,30px);border:1px solid #304b5d;border-left:3px solid #eeb953;border-radius:18px;background:#091b29}
+.pt-tx-next h2{color:#f2f5f6;margin:10px 0}
+.pt-tx-next>p{color:#cbdce6;line-height:1.75}
+.pt-tx-next .pt-tx-more{margin-top:16px}
+@media(max-width:650px){.pt-tx-plain-header{display:none}.pt-tx-plain-row{grid-template-columns:1fr;gap:10px;padding:18px}.pt-tx-plain-row p{font-size:13px}}
