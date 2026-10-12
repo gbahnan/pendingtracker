@@ -27,6 +27,19 @@ export default function EthTxPage({params}:{params:{hash:string}}){
     </div>
    </section>
    <section className="pt-tx-summary"><div className="pt-eyebrow">THE SHORT ANSWER</div><h2>{failed?"What happened?":confirmed?"Good news—it's confirmed.":"Here's what's happening."}</h2><p>{summary}</p><div className="pt-tx-summary-actions"><button onClick={explain} disabled={aiLoading}>{aiLoading?"Explaining…":"✦ Explain more with AI"}</button><a href={"https://eth.blockscout.com/tx/"+hash} target="_blank" rel="noopener noreferrer">Verify on Blockscout ↗</a></div>{ai&&<p className="pt-tx-ai" role="status">{ai}</p>}</section>
+   <section className="pt-tx-clarity">
+    <div className="pt-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div><h2>Your Ethereum transaction, explained</h2>
+    <p>Actual blockchain data on the left. What it means for you on the right.</p>
+    <div className="pt-tx-clarity-head"><span>YOUR DATA</span><span>WHAT IT MEANS</span></div>
+    <div className="pt-tx-clarity-row"><div><span>Status</span><strong>{failed?"Failed":confirmed?"Confirmed":"Pending"}</strong></div><p>{failed?"The operation failed even though it was included in a block. Gas may still have been charged.":confirmed?"Ethereum recorded this transaction in a block. Your exchange may still need additional time to credit funds.":"The transaction is waiting to be included in a block. Do not send a duplicate payment without checking your wallet."}</p></div>
+    <div className="pt-tx-clarity-row"><div><span>Confirmations</span><strong>{String(data.confirmations??0)}</strong></div><p>Each confirmation is another block added since inclusion. Receiving services decide how many they require.</p></div>
+    <div className="pt-tx-clarity-row"><div><span>Direct ETH amount</span><strong>{weiToEth(String(data.valueWei??data.value??"0"))} ETH</strong></div><p>This is the native ETH value, not necessarily the total assets moved. Token transfers and swaps can occur with zero direct ETH.</p></div>
+    <div className="pt-tx-clarity-row"><div><span>Transaction action</span><strong>{String(insights?.method??"Not identified")}</strong></div><p>The contract method, if recognized. A method name alone does not prove the transaction was safe or successful.</p></div>
+    <div className="pt-tx-clarity-row"><div><span>Network fee</span><strong>{insights?.fee!=null?weiToEth(String(insights.fee))+" ETH":"Unavailable"}</strong></div><p>Gas is paid for Ethereum processing, separate from transferred funds. A failed transaction may still cost gas.</p></div>
+    <div className="pt-tx-clarity-row"><div><span>Token transfers</span><strong>{insights?.tokenTransfersAvailable?String(insights.tokenTransfers?.length??0)+(insights.tokenTransfersHasMore?"+":""):"Unavailable"}</strong></div><p>These are the reported token movements. A single swap or contract call can create multiple transfers.</p></div>
+    <div className="pt-tx-clarity-row"><div><span>Nonce</span><strong>{insights?.nonce??"Unavailable"}</strong></div><p>This orders transactions from the same account. An earlier pending transaction can delay a later one.</p></div>
+    <p className="pt-tx-clarity-note">Public blockchain confirmations are separate from exchange deposit or withdrawal processing.</p>
+   </section>
    <section className="pt-tx-details pt-eth-interpretation">
     <div className="pt-eyebrow">UNDERSTAND THE TRANSACTION</div><h2>What actually happened?</h2>
     <p className="pt-tx-details-intro">{failed?"The transaction was included in a block but its execution failed. A failed contract operation can still consume gas.":confirmed?"The transaction was recorded on Ethereum. Here's what the public blockchain data tells us.":"The transaction has not yet been included in a block. Its final outcome is not known."}</p>
