@@ -115,32 +115,25 @@ const comparisonExamples = {
 
 
 function HoneycombFloor({chain}:{chain:"btc"|"eth"}) {
-  const gold=chain==="btc", bright=gold?"#ffc13c":"#459bff", pale=gold?"#ffe7a0":"#b7dcff", dark=gold?"#5b3006":"#092e70";
-  const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const a=Math.PI/3*i-Math.PI/6;return (x+r*Math.cos(a)).toFixed(1)+","+(y+r*Math.sin(a)).toFixed(1)}).join(" ");
-  const tiles=Array.from({length:7},(_,row)=>Array.from({length:12},(_,col)=>({x:37+col*34+(row%2)*17,y:19+row*27,row,col}))).flat();
-  const cubes=[[77,37,11],[147,71,16],[214,42,12],[282,82,17],[353,49,13],[396,93,10],[116,112,10]];
-  return <svg viewBox="0 0 460 164" preserveAspectRatio="xMidYMid meet" role="presentation" aria-hidden="true">
-    <defs>
-      <linearGradient id={"floor-tile-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={dark}/><stop offset=".45" stopColor="#07121f"/><stop offset="1" stopColor="#02070f"/></linearGradient>
-      <linearGradient id={"floor-cube-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={pale}/><stop offset=".45" stopColor={bright}/><stop offset="1" stopColor={dark}/></linearGradient>
-      <filter id={"floor-glow-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
-      <radialGradient id={"floor-light-"+chain}><stop stopColor={bright} stopOpacity=".32"/><stop offset="1" stopColor={bright} stopOpacity="0"/></radialGradient>
-    </defs>
-    <ellipse cx="230" cy="105" rx="200" ry="76" fill={"url(#floor-light-"+chain+")"}/>
-    <g transform="translate(8 29) skewX(-18) scale(1 .61)">
-      {tiles.map(({x,y,row,col})=>{const lit=(row*17+col*11)%19===0;return <g key={row+"-"+col}>
-        {lit&&<polygon points={hex(x,y,19)} fill={bright} opacity=".8" filter={"url(#floor-glow-"+chain+")"}/>}
-        <polygon points={hex(x,y,18)} fill={lit?bright:"url(#floor-tile-"+chain+")"} fillOpacity={lit?".87":"1"} stroke={lit?pale:bright} strokeOpacity={lit?"1":".72"} strokeWidth={lit?"2":"1.15"}/>
-        <polygon points={hex(x,y,14)} fill="none" stroke={pale} strokeOpacity={lit?".55":".08"} strokeWidth=".8"/>
-      </g>})}
-    </g>
-    {cubes.map(([x,y,r],i)=><g key={i} className="pt26-floating-cube" style={{animationDelay:-(i*1.8)+"s",animationDuration:(9+i%4*2)+"s"}}>
-      <polygon points={hex(x,y,r+6)} fill={bright} opacity=".85" filter={"url(#floor-glow-"+chain+")"}/>
-      <polygon points={hex(x,y,r)} fill={"url(#floor-cube-"+chain+")"} stroke={pale} strokeWidth="1.3"/>
-      <polygon points={x+","+(y-r*.92)+" "+(x-r*.77)+","+(y-r*.12)+" "+x+","+(y+r*.78)+" "+(x+r*.77)+","+(y-r*.12)} fill={pale} opacity=".32"/>
-      <polygon points={hex(x,y,r*.68)} fill="none" stroke={pale} strokeOpacity=".75" strokeWidth=".7"/>
-    </g>)}
-  </svg>;
+ const gold=chain==="btc", glow=gold?"#ffae21":"#348dff", edge=gold?"#b87513":"#1d5bb5", light=gold?"#ffe29a":"#b5dcff";
+ const hex=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const t=Math.PI/3*i-Math.PI/6;return [x+r*Math.cos(t),y+r*Math.sin(t)] as const});
+ const pts=(p:readonly (readonly [number,number])[])=>p.map(([x,y])=>x.toFixed(1)+","+y.toFixed(1)).join(" ");
+ const cells=Array.from({length:7},(_,row)=>Array.from({length:13},(_,col)=>({x:19+col*33+(row%2)*16.5,y:13+row*29,row,col}))).flat();
+ const raised=[[3,2,20],[8,1,14],[5,4,27],[10,4,20],[2,5,12],[7,5,17],[11,2,15]];
+ return <svg viewBox="0 0 460 160" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+ <defs><radialGradient id={"halo-"+chain}><stop stopColor={glow} stopOpacity=".46"/><stop offset="1" stopColor={glow} stopOpacity="0"/></radialGradient><linearGradient id={"top-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={light}/><stop offset=".45" stopColor={glow}/><stop offset="1" stopColor={edge}/></linearGradient><filter id={"bloom-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+ <ellipse cx="230" cy="108" rx="205" ry="63" fill={"url(#halo-"+chain+")"}/>
+ <g transform="translate(20 18) skewX(-17) scale(1 .62)">
+ {cells.map(({x,y,row,col})=><polygon key={row+"-"+col} points={pts(hex(x,y,18))} fill={(row*7+col*3)%17===0?edge:"#061321"} fillOpacity=".85" stroke={edge} strokeWidth="1.3"/>)}
+ {raised.map(([col,row,height],i)=>{const x=19+col*33+(row%2)*16.5,y=13+row*29;const top=hex(x,y-height,15),base=hex(x,y,15);return <g key={i} className="pt26-prism" style={{animationDelay:-(i*1.7)+"s",animationDuration:(9+i%3*2)+"s"}}>
+ <polygon points={pts(hex(x,y,22))} fill={glow} opacity=".8" filter={"url(#bloom-"+chain+")"}/>
+ <polygon points={pts([top[1],top[2],base[2],base[1]])} fill={edge} stroke={glow} strokeWidth="1.5"/>
+ <polygon points={pts([top[2],top[3],base[3],base[2]])} fill={glow} fillOpacity=".62" stroke={light} strokeWidth="1"/>
+ <polygon points={pts([top[3],top[4],base[4],base[3]])} fill={edge} fillOpacity=".85" stroke={glow} strokeWidth="1"/>
+ <polygon points={pts(top)} fill={"url(#top-"+chain+")"} stroke={light} strokeWidth="1.8"/>
+ <polygon points={pts(hex(x,y-height,10))} fill="none" stroke={light} strokeOpacity=".85" strokeWidth="1.2"/>
+ </g>})}
+ </g></svg>;
 }
 
 export default function Page() {
