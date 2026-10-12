@@ -67,3 +67,15 @@
 .ambientFloor{position:absolute;z-index:0;left:50%;bottom:-5px;width:min(1500px,110vw);height:155px;transform:translateX(-50%);opacity:.75;pointer-events:none;overflow:hidden;mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 60%,transparent 100%)}
 .ambientFloor svg{display:block;width:100%;height:100%}
 @media(max-width:1050px){.ambientFloor{opacity:.28;width:110%;height:95px}}
+
+/* Shared explorer block appearance: same honeycomb animation, shape and gold/teal palette.
+   Preserve the compact transaction-result dimensions. */
+.pendingHex,.selectedHex,.confirmedHex{aspect-ratio:1.28/1}
+.hexArtwork{z-index:0}
+.pendingHex :global(.pt-chain-honeycomb),.selectedHex :global(.pt-chain-honeycomb){position:absolute!important;inset:2px!important;width:calc(100% - 4px)!important;height:calc(100% - 4px)!important;z-index:1!important;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)!important;opacity:.88!important}
+.pendingHex :global(.pt-honeycomb-cell-live),.selectedHex :global(.pt-honeycomb-cell-live){fill:#071924!important;stroke:#785629!important;stroke-opacity:.8!important}
+.pendingHex :global(.pt-honeycomb-traveler),.selectedHex :global(.pt-honeycomb-traveler){fill:#e8af4b!important;stroke:#ffda82!important;filter:drop-shadow(0 0 5px #ffc45b)!important}
+.hexContent{z-index:3}
+.pendingHex{filter:drop-shadow(0 0 5px #b7812750)}
+.selectedHex{filter:drop-shadow(0 0 6px #ffe8afdd) drop-shadow(0 0 14px #ffc45dbb) drop-shadow(0 0 26px #ffac3c85)}
+.confirmedHex{filter:drop-shadow(0 0 5px #9bffecc9) drop-shadow(0 0 13px #65e9d5a6) drop-shadow(0 0 24px #37cbb77a)}
