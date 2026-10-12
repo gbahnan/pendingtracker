@@ -187,3 +187,41 @@
 .pt-story-data{padding-top:18px}
 @media(max-width:700px){.pt-story-intro{padding:19px 16px;gap:12px}.pt-story-introicon{width:38px;height:38px;flex-basis:38px;font-size:19px}.pt-story-flowgrid{grid-template-columns:1fr;gap:0}.pt-story-path{height:90px;flex-direction:column}.pt-story-linegold,.pt-story-lineteal{width:2px;height:auto;min-height:8px;flex:1}.pt-story-path .pt-story-coin{width:60px;height:60px;flex-basis:60px;font-size:39px}.pt-story-flowendpoint{min-height:105px}.pt-story-flowfooter{flex-direction:column;align-items:flex-start}.pt-story-addressrow{align-items:flex-start;flex-direction:column;gap:6px}.pt-story-addressrow strong{white-space:normal}}
 @media(prefers-reduced-motion:reduce){.pt-story-linegold:after,.pt-story-lineteal:after{animation:none}}
+
+
+/* Ethereum-specific blue/indigo treatment; Bitcoin gold remains unchanged. */
+.ethPage{background:radial-gradient(ellipse 80% 58% at 50% 24%,#0a1e3d 0%,#071226 57%,#020915 100%)!important}
+.ethPage .eyebrow,.ethPage .pt-story-eyebrow,.ethPage .pt-story-data>h3,.ethPage .pt-story-flow h3{color:#7cbcff}
+.ethPage .hero h1 span,.ethPage .pt-story h2 em{color:#9cbcff}
+.ethCoin{width:76px;height:76px;flex:0 0 76px;border:2px solid #9bbcff;border-radius:50%;display:grid;place-items:center;font-size:45px;color:#dce7ff;background:linear-gradient(135deg,#4767c9,#26396d);box-shadow:0 0 30px #527cff77,inset 0 0 18px #b0c6ff44}
+.ethStatus{align-self:flex-start;margin-top:12px;border:1px solid #81a9ff;border-radius:40px;padding:12px 22px;color:#bcd1ff;background:#111e3a;box-shadow:0 0 17px #547cff44;font-weight:800;white-space:nowrap}
+.ethNetwork{margin:22px 0 18px;position:relative;z-index:2}
+.ethNetwork :global(.pt-chain-dashboard){border-color:#4568a5}
+.ethCaveat{color:#8eaaca;font-size:12px;text-align:center;margin:12px 0}
+.ethPage .summary{border-color:#385b88;background:linear-gradient(135deg,#07162ae8,#09152aed)}
+.ethPage .summarySectionNumber{border-color:#85afff;color:#b7d0ff;box-shadow:0 0 16px #688fff66}
+.ethPage .summarySectionHeading h2{color:#9cc8ff}
+.ethPage .fact{border-color:#2c456b}
+.ethFactIcon{display:grid;place-items:center;flex:0 0 43px;width:43px;height:43px;border:1.5px solid #749eff;border-radius:50%;color:#a8c4ff;font-size:21px;box-shadow:0 0 12px #527cff55}
+.ethPage .factValue strong,.ethPage .summaryFooter code,.ethPage .summaryFooter button{color:#a8c6ff}
+.ethPage .summaryFooter a{border-color:#5276a8;color:#b4d4ff}
+.ethPage .pt-story-intro{background:linear-gradient(110deg,#0b1f3e,#08152b);box-shadow:inset 0 1px #719fff33,0 15px 44px #0003}
+.ethPage .pt-story-introicon{color:#d3e3ff;border-color:#668de9;background:#1a2851;box-shadow:0 0 18px #6489ff55}
+.ethPage .pt-story-takeaway{color:#a9d8ff!important;border-color:#304d77}
+.ethPage .pt-story-row{border-color:#2b4365}
+.ethPage .pt-story-row>div:nth-child(2){border-color:#385780}
+.ethPage .pt-story-row strong{color:#a9c6ff}
+.ethPage .pt-story-advanced{background:#0b1b36bd}
+.ethPage .pt-story-flowendpoint{border-color:#31538c;background:linear-gradient(135deg,#0d2a50,#0a1934)!important}
+.ethPage .pt-story-flowgrid strong{color:#a9c7ff}
+.ethPage .pt-story-coin{border-color:#a2bdff;color:#e4edff;background:linear-gradient(145deg,#5478da,#243d87);box-shadow:0 0 32px #668aff88,0 0 55px #628aff35}
+.ethPage .pt-story-linegold{background:linear-gradient(90deg,#3658b8,#8bb7ff)}
+.ethPage .pt-story-lineteal{background:linear-gradient(90deg,#8bb7ff,#54d8fa)}
+.ethPage .pt-story-linegold:after{background:linear-gradient(90deg,transparent,#e3edff,transparent)}
+.ethPage .pt-story-lineteal:after{background:linear-gradient(90deg,transparent,#c6faff,transparent)}
+.ethPage .pt-story-flowfooter b,.ethPage .pt-story-addressrow strong{color:#aac9ff}
+.ethPage .pt-story-addressgrid>div{background:#0a1d39b0}
+.ethPage .pt-story-addressgrid h4 span,.ethPage .pt-story-addressrow a,.ethPage .pt-story-source a{color:#85c4ff}
+.ethAddressValue{font-size:clamp(16px,1.65vw,21px)!important;overflow-wrap:anywhere}
+.ethFailure{color:#ffc0b6;background:#371b29;border-radius:10px;padding:12px 16px;overflow-wrap:anywhere}
+@media(max-width:700px){.ethCoin{width:52px;height:52px;flex-basis:52px;font-size:32px}.ethStatus{margin:0 0 0 68px;padding:8px 15px;font-size:12px}.ethPage .fact{border-bottom:1px solid #2c456b}.ethPage .factValue strong{font-size:21px}}
