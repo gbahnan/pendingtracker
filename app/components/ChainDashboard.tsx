@@ -5,7 +5,7 @@ type Net={btc?:{pending?:number|null;fastestFee?:number|null;halfHourFee?:number
 
 // Most cells remain visible. One transaction-like cell changes at a time;
 // occasionally a cell travels to a neighboring slot while another takes its place.
-function Honeycomb(){
+export function Honeycomb(){
  const [hidden,setHidden]=useState<number[]>([]);
  const [moving,setMoving]=useState<Array<{from:number;to:number;id:number}>>([]);
  const sequence=useRef(0);
