@@ -4,12 +4,11 @@
 .pt26-hero *,.pt26-live *{box-sizing:border-box}
 .pt26-hero{position:relative;isolation:isolate;overflow:hidden;min-height:375px;padding:48px 20px 37px;background:radial-gradient(ellipse at 6% 55%,rgba(196,101,7,.36),transparent 39%),radial-gradient(ellipse at 94% 55%,rgba(14,90,221,.36),transparent 39%),linear-gradient(#020912,#030c16);border-bottom:1px solid #203246}
 .pt26-hero:after{content:"";position:absolute;bottom:0;left:0;right:0;height:35px;background:linear-gradient(transparent,#020912);pointer-events:none}
-.pt26-hero-art{position:absolute;top:0;bottom:0;width:31%;overflow:hidden;pointer-events:none}
-.pt26-hero-art.btc{left:0;color:#ffb423}.pt26-hero-art.eth{right:0;color:#328dff}
-.pt26-hero-art .core{position:absolute;top:24%;left:13%;width:160px;height:178px;display:grid;place-items:center;font-size:94px;font-weight:800;color:currentColor;background:linear-gradient(140deg,currentColor 0%,#1d1b1b 9%,#030d18 27%,#030d18 70%,currentColor 100%);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);filter:drop-shadow(0 0 28px currentColor);text-shadow:0 0 16px currentColor}
-.pt26-hero-art.eth .core{left:auto;right:13%;font-size:75px}
-.pt26-hero-art .float{position:absolute;width:27px;height:30px;background:linear-gradient(140deg,currentColor,#081323 75%);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);filter:drop-shadow(0 0 8px currentColor);animation:pt26drift 15s ease-in-out infinite alternate}
-.pt26-hero-art .float:nth-child(2){left:6%;top:8%;width:40px;height:46px}.pt26-hero-art .float:nth-child(3){left:70%;top:15%;width:19px;height:22px;animation-delay:-3s}.pt26-hero-art .float:nth-child(4){left:8%;top:74%;width:35px;height:40px;animation-delay:-6s}.pt26-hero-art .float:nth-child(5){left:81%;top:69%;width:32px;height:36px;animation-delay:-9s}.pt26-hero-art .float:nth-child(6){left:45%;top:4%;width:17px;height:20px;animation-delay:-4s}.pt26-hero-art .float:nth-child(7){left:54%;top:89%;width:21px;height:24px;animation-delay:-8s}
+.pt26-hero-art{position:absolute;top:-7%;bottom:-7%;width:36%;overflow:hidden;pointer-events:none;z-index:0}
+.pt26-hero-art.btc{left:-4%;color:#ffb423}.pt26-hero-art.eth{right:-4%;color:#328dff}
+.pt26-hero-graphic{position:absolute;top:50%;width:min(100%,440px);height:auto;transform:translateY(-50%);overflow:visible;filter:drop-shadow(0 0 18px #ff9e1459)}
+.pt26-hero-graphic.btc{left:0}.pt26-hero-graphic.eth{right:0;filter:drop-shadow(0 0 18px #258bff6b)}
+.pt26-hero-satellite{animation:pt26drift 14s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
 .pt26-hero-content{position:relative;z-index:2;text-align:center;max-width:760px;margin:auto}
 .pt26-kicker{font-size:12px;letter-spacing:5px;font-weight:700;color:#e7eff9}.pt26-kicker b{color:#ffc13e}.pt26-kicker em{font-style:normal;color:#3da5ff}
 .pt26-hero-content h1{font-size:clamp(31px,3.8vw,46px)!important;font-weight:800!important;line-height:1.13!important;letter-spacing:-1px;margin:15px 0 13px!important;color:#fff!important}.pt26-hero-content h1 span{color:#ffb932}
@@ -43,4 +42,13 @@
 .pt26-cta{display:block;max-width:300px;margin:13px auto 0;padding:10px;border:1px solid var(--accent);border-radius:25px;text-align:center;text-decoration:none;color:var(--accent);font-size:12px;box-shadow:0 0 13px var(--glow)}
 @keyframes pt26drift{to{transform:translate(14px,-20px) rotate(12deg)}}@keyframes pt26cube{to{transform:translateY(-7px);opacity:.85}}
 @media(max-width:850px){.pt26-grid{grid-template-columns:1fr;max-width:550px}.pt26-hero-art{opacity:.38}.pt26-hero{padding:43px 13px}.pt26-live{padding:15px 12px}}
-@media(max-width:500px){.pt26-kicker{letter-spacing:2px}.pt26-hero-content h1{font-size:32px!important}.pt26-hero-art{opacity:.19}.pt26-hero-art .core{width:125px;height:140px;font-size:60px}.pt26-stats strong{font-size:11px}.pt26-panel{padding:12px}.pt26-feed-row{font-size:10px}.pt26-search input{font-size:11px!important}}
+@media(max-width:500px){.pt26-kicker{letter-spacing:2px}.pt26-hero-content h1{font-size:32px!important}.pt26-hero-art{opacity:.19}.pt26-hero-graphic{width:300px}.pt26-stats strong{font-size:11px}.pt26-panel{padding:12px}.pt26-feed-row{font-size:10px}.pt26-search input{font-size:11px!important}}
+
+/* Dimensional honeycomb prisms: soft ground reflections and raised face lighting */
+.pt26-scene{height:154px;margin:0 -4px 4px;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.pt26-prism{transform-box:fill-box;transform-origin:center;animation:pt26raise 10s cubic-bezier(.45,0,.25,1) infinite alternate;filter:drop-shadow(0 0 3px var(--accent))}
+@keyframes pt26raise{0%,12%{transform:translateY(7px);opacity:.5}35%,70%{transform:translateY(-8px);opacity:1}100%{transform:translateY(4px);opacity:.7}}
+@media(min-width:900px){.pt26-hero{min-height:370px;padding-top:45px}.pt26-hero-content{max-width:680px}.pt26-hero-art{width:33%}.pt26-hero-graphic{width:410px}}
+@media(max-width:850px){.pt26-hero-art{width:38%;opacity:.5}.pt26-hero-graphic{width:340px}}
+@media(max-width:600px){.pt26-hero-art{opacity:.22}.pt26-hero-graphic{width:270px}.pt26-hero-art.btc{left:-110px}.pt26-hero-art.eth{right:-110px}}
+@media(prefers-reduced-motion:reduce){.pt26-prism,.pt26-hero-satellite{animation:none!important}}
