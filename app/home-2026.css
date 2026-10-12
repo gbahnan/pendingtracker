@@ -52,3 +52,11 @@
 @media(max-width:850px){.pt26-hero-art{width:38%;opacity:.5}.pt26-hero-graphic{width:340px}}
 @media(max-width:600px){.pt26-hero-art{opacity:.22}.pt26-hero-graphic{width:270px}.pt26-hero-art.btc{left:-110px}.pt26-hero-art.eth{right:-110px}}
 @media(prefers-reduced-motion:reduce){.pt26-prism,.pt26-hero-satellite{animation:none!important}}
+
+/* Network activity visual: floating dimensional nodes and fine connections,
+   replaces the former honeycomb floor without changing live-data panels. */
+.pt26-scene{height:154px;margin:1px -5px 6px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.pt26-network-visual{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 5px var(--glow))}
+.pt26-network-cube{transform-box:fill-box;transform-origin:center;animation:pt26nodefloat 10s ease-in-out infinite alternate}
+@keyframes pt26nodefloat{0%,100%{transform:translateY(3px)}50%{transform:translateY(-6px)}}
+@media(prefers-reduced-motion:reduce){.pt26-network-cube{animation:none}}
