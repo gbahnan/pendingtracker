@@ -116,34 +116,6 @@ const comparisonExamples = {
 } as const;
 
 
-function HeroEmblem({chain,variant="hero"}:{chain:"btc"|"eth";variant?:"hero"|"network"}) {
- const uid=chain+"-"+variant;
- const btc=chain==="btc",a=btc?"#ffb521":"#238dff",b=btc?"#fff2c0":"#b6eaff",shade=btc?"#65320a":"#082d74";
- const hp=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const t=i*Math.PI/3-Math.PI/6;return (x+r*Math.cos(t)).toFixed(1)+","+(y+r*Math.sin(t)).toFixed(1)}).join(" ");
- const satellites=variant==="hero"?[[36,42,19],[90,14,12],[252,31,17],[267,119,13],[40,184,16],[242,207,22],[110,225,10],[18,112,9]]:[[34,53,13],[77,22,9],[245,34,13],[260,104,9],[40,190,12],[245,193,14],[107,225,8],[20,117,7]];
- return <svg className={"pt26-hero-graphic "+chain+" "+variant} viewBox="0 0 300 250" aria-hidden="true">
- <defs>
- <linearGradient id={"hero-metal-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={b}/><stop offset=".16" stopColor={a}/><stop offset=".48" stopColor={shade}/><stop offset=".72" stopColor={a}/><stop offset="1" stopColor={b}/></linearGradient>
- <radialGradient id={"hero-halo-"+chain}><stop stopColor={a} stopOpacity=".46"/><stop offset=".45" stopColor={a} stopOpacity=".15"/><stop offset="1" stopColor={a} stopOpacity="0"/></radialGradient>
- <filter id={"hero-blur-"+chain} x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="8"/></filter>
- </defs>
- <ellipse cx="149" cy="125" rx="145" ry="121" fill={"url(#hero-halo-"+chain+")"}/>
- {satellites.map(([x,y,r],i)=><g key={i} className="pt26-hero-satellite" style={{animationDelay:-(i*2.3)+"s",animationDuration:(12+i%3*4)+"s"}}>
- <polygon points={hp(x,y,r+3)} fill={a} opacity=".4" filter={"url(#hero-blur-"+chain+")"}/>
- <polygon points={hp(x,y,r)} fill="#071426" stroke={a} strokeWidth="1.4"/>
- <polygon points={hp(x,y,r-3)} fill={"url(#hero-metal-"+chain+")"} fillOpacity=".55" stroke={b} strokeOpacity=".5" strokeWidth=".6"/>
- <path d={`M ${x-r*.65} ${y} L ${x} ${y-r*.75} L ${x+r*.65} ${y}`} fill="none" stroke={b} strokeOpacity=".6" strokeWidth="1"/>
- </g>)}
- <polygon points={hp(148,122,100)} fill={a} opacity=".45" filter={"url(#hero-blur-"+chain+")"}/>
- <polygon points={hp(148,122,88)} fill={"url(#hero-metal-"+chain+")"} stroke={b} strokeWidth="2"/>
- <polygon points={hp(148,122,80)} fill="#020a13" stroke={shade} strokeWidth="3"/>
- <polygon points={hp(148,122,72)} fill="#05101d" stroke={a} strokeWidth="1.6"/>
- <polygon points={hp(148,122,66)} fill="none" stroke={b} strokeOpacity=".5" strokeWidth="1"/>
- <path d="M 104 70 L 148 46 L 192 70" fill="none" stroke={b} strokeOpacity=".8" strokeWidth="2.5"/>
- {btc?<text x="148" y="156" textAnchor="middle" fill={b} fontSize="105" fontWeight="800" style={{filter:"drop-shadow(0 0 9px #ff9b15)"}}>₿</text>:<g><polygon points="148,55 112,120 148,142" fill="#b9e1ff"/><polygon points="148,55 184,120 148,142" fill="#488bff"/><polygon points="112,130 148,185 148,151" fill="#9fd1ff"/><polygon points="184,130 148,185 148,151" fill="#2863dc"/><path d="M148 55 L148 142 L184 120" fill="none" stroke="#e1f5ff" strokeOpacity=".65"/></g>}
- </svg>;
-}
-
 export default function Page() {
   const router = useRouter();
   const [network, setNetwork] = useState<"btc" | "eth">("btc");
@@ -244,8 +216,8 @@ export default function Page() {
   return <main className="pt-shell">
 
     <section className="pt26-hero">
-      <div className="pt26-hero-art btc" aria-hidden="true"><HeroEmblem chain="btc"/></div>
-      <div className="pt26-hero-art eth" aria-hidden="true"><HeroEmblem chain="eth"/></div>
+      <div className="pt26-hero-art btc" aria-hidden="true"><img src="/artwork/btc-hero.svg" alt="" decoding="async"/></div>
+      <div className="pt26-hero-art eth" aria-hidden="true"><img src="/artwork/eth-hero.svg" alt="" decoding="async"/></div>
       <div className="pt26-hero-content">
         <div className="pt26-kicker">TRACK &nbsp; • &nbsp; <b>EXPLORE</b> &nbsp; • &nbsp; <em>UNDERSTAND</em></div>
         <h1>A simpler <span>blockchain explorer.</span></h1>
@@ -261,7 +233,7 @@ export default function Page() {
       <div className="pt26-grid">
         <article className="pt26-panel btc">
           <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin</h2></div><a className="pt26-explore" href="/bitcoin">Explore Bitcoin ↗</a></div>
-          <div className="pt26-card-visual"><div className="pt26-scene"><HeroEmblem chain="btc" variant="network"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{format(btc?.height)}</strong></div><div><small>Transactions waiting</small><strong>{format(btc?.pending)}</strong></div><div><small>Priority fee</small><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong></div></div></div>
+          <div className="pt26-card-visual"><div className="pt26-scene"><img src="/artwork/btc-network.svg" alt="" decoding="async"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{format(btc?.height)}</strong></div><div><small>Transactions waiting</small><strong>{format(btc?.pending)}</strong></div><div><small>Priority fee</small><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong></div></div></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>₿ &nbsp;Latest Bitcoin Transactions</strong><a href="/bitcoin">View More →</a></div>
             {[...liveBtcTransactions.map(t=>({...t,value:null})),...(btc?.recentTransactions??[]).filter(t=>!liveBtcTransactions.some(l=>l.id===t.id))].slice(0,5).map(t=><a className="pt26-feed-row" href={"/btc/"+t.id} key={t.id}><span className="hash">{t.id.slice(0,7)}…{t.id.slice(-5)}</span><span className="detail">{t.fee!=null&&t.vsize?(t.fee/t.vsize).toFixed(1)+" sat/vB":"Fee pending"}</span><span className="age">Pending</span><b>›</b></a>)}
             {!liveBtcTransactions.length&&!btc?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Bitcoin transactions…</p>:null}
@@ -269,7 +241,7 @@ export default function Page() {
         </article>
         <article className="pt26-panel eth">
           <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum</h2></div><a className="pt26-explore" href="/ethereum">Explore Ethereum ↗</a></div>
-          <div className="pt26-card-visual"><div className="pt26-scene"><HeroEmblem chain="eth" variant="network"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong></div><div><small>Gas price</small><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</strong></div><div><small>Slot time</small><strong>~12 sec</strong></div></div></div>
+          <div className="pt26-card-visual"><div className="pt26-scene"><img src="/artwork/eth-network.svg" alt="" decoding="async"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong></div><div><small>Gas price</small><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</strong></div><div><small>Slot time</small><strong>~12 sec</strong></div></div></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>◆ &nbsp;Latest Ethereum Transactions</strong><a href="/ethereum">View More →</a></div>
             {(eth?.recentTransactions??[]).slice(0,5).map(t=><a className="pt26-feed-row" href={"/eth/"+t.hash} key={t.hash}><span className="hash">{t.hash.slice(0,7)}…{t.hash.slice(-5)}</span><span className="detail">{t.block==null?"Pending":"Block "+format(t.block)}</span><span className="age">{t.status??"Recorded"}</span><b>›</b></a>)}
             {!eth?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Ethereum transactions…</p>:null}
