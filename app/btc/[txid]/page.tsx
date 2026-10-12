@@ -74,6 +74,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const [lastChecked,setLastChecked]=useState<string|null>(null);
  const [changeNotice,setChangeNotice]=useState<string|null>(null);
  const [question,setQuestion]=useState<string|null>(null);
+ const [understandingExpanded,setUnderstandingExpanded]=useState(false);
  const refresh=useCallback(async()=>{
   if(!valid)return;
   try{
@@ -208,26 +209,37 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
       <p className={styles["pt-story-takeaway"]}>{!observed?"What to do: verify the ID and broadcast status with the sender. Never share your recovery phrase.":confirmed?"What to do: no fee action is needed. If the recipient has not credited the deposit, check its confirmation requirements.":rbf?"What to do: you can usually wait. If the payment is urgent and you control the sending wallet, check whether it supports increasing the fee. Avoid sending a duplicate payment.":"What to do: you can usually wait. If it is delayed, ask your sending wallet about available acceleration options; avoid sending a duplicate payment."}</p>
      </div>
     </div>
-    <div className={styles["pt-story-data"]}><h3>UNDERSTANDING YOUR TRANSACTION</h3>
-     {[
-      ["Network fee",tx?.fee==null?"Unavailable":number(tx.fee)+" sats","The amount this transaction pays to Bitcoin miners. It is not an exchange withdrawal fee, which may be charged separately."],
-      ["Fee rate",rate(feeRate),"The fee paid per virtual byte of transaction data. Miners often prioritize transactions paying higher rates, but the rate alone cannot guarantee a confirmation time."],
-      ["Total Bitcoin in outputs",btc(outputTotal),"The combined value of all new outputs. This is not necessarily what one person receives, because an output may return change to the sender."],
-      ["Transaction size",tx?.size==null?"Unavailable":number(tx.size)+" bytes","How much raw data this transaction occupies. Its fee-paying virtual size may be different, because Bitcoin discounts some witness data."]
-     ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
+    <div className={styles["pt-story-data"]}>
+     <h3>UNDERSTANDING YOUR TRANSACTION</h3>
+     <div className={styles.understandingGrid}>
+      {[
+       {icon:"₿",label:"Network Fee",value:tx?.fee==null?"Unavailable":number(tx.fee)+" sats",help:"The amount this transaction pays to Bitcoin miners. It is separate from any withdrawal fee charged by a wallet or exchange."},
+       {icon:"≋",label:"Fee Rate",value:rate(feeRate),help:"How many satoshis are paid per virtual byte. A higher fee rate can improve confirmation priority, but cannot guarantee timing."},
+       {icon:"⇄",label:"Bitcoin in Outputs",value:btc(outputTotal),help:"The total Bitcoin in the transaction's new outputs. Some may be change returned to the sender, not a single recipient's payment."},
+       {icon:"⬡",label:"Transaction Size",value:tx?.size==null?"Unavailable":number(tx.size)+" bytes",help:"The transaction's raw size in bytes. Its fee-paying virtual size can differ because Bitcoin discounts some witness data."},
+       ...(understandingExpanded?[
+        {icon:"↗",label:"Inputs & Outputs",value:inputs.length+" inputs · "+outputs.length+" outputs",help:"Inputs spend earlier Bitcoin outputs. New outputs can represent payments or change returned to the sender."},
+        {icon:"▤",label:"Virtual Size",value:tx?.vsize!=null?number(tx.vsize)+" vB":tx?.weight==null?"Unavailable":number(Math.ceil(tx.weight/4))+" vB",help:"The fee-paying size of this transaction, calculated from its weight. Bitcoin fee rates use virtual bytes."},
+        {icon:"◈",label:"Weight",value:tx?.weight==null?"Unavailable":number(tx.weight)+" WU",help:"Bitcoin's measure of how much block capacity this transaction consumes."},
+        {icon:"↻",label:"Fee Replacement",value:!observed?"Unknown":rbf?"RBF signaled":"Opt-in RBF not signaled",help:"Replace-by-fee signaling can allow a sending wallet to replace an unconfirmed transaction with a higher-fee version. Wallet policies vary."}
+       ]:[])
+      ].map(topic=><article className={styles.understandingCard} key={topic.label}>
+       <div className={styles.understandingIcon} aria-hidden="true"><span>{topic.icon}</span></div>
+       <h4>{topic.label}</h4>
+       <p>{topic.help}</p>
+       <div className={styles.understandingExample}><small>YOUR TRANSACTION</small><strong>{topic.value}</strong></div>
+      </article>)}
+     </div>
+     <button type="button" className={styles.understandingMore} aria-expanded={understandingExpanded} onClick={()=>setUnderstandingExpanded(v=>!v)}>{understandingExpanded?"Show Fewer Explanations":"Show 4 More Explanations"} <span aria-hidden="true">{understandingExpanded?"⌃":"⌄"}</span></button>
+     {understandingExpanded&&<details className={styles["pt-story-advanced"]}><summary><b>Explore additional technical details</b><span>Version, locktime, transaction ID, and raw blockchain data ↓</span></summary>
+      {[
+       ["Version",String(tx?.version??"Unavailable"),"The version field used by Bitcoin's transaction validation rules."],
+       ["Locktime",String(tx?.locktime??"Unavailable"),"A value that can restrict when a transaction becomes eligible for inclusion, depending on input sequence settings. Zero means no locktime restriction."],
+       ["Transaction ID",txid,"The unique transaction identifier used to look up and verify this payment on Bitcoin."]
+      ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong className={styles["pt-story-wrap"]}>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
+      <details className={styles["pt-story-raw"]}><summary>View raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details>
+     </details>}
     </div>
-    <details className={styles["pt-story-advanced"]}><summary><b>Explore additional blockchain data</b><span>Inputs and outputs, virtual size, weight, version, locktime, fee replacement, transaction ID and raw data — each explained. ↓</span></summary>
-     {[
-      ["Inputs & outputs",inputs.length+" inputs · "+outputs.length+" outputs","Inputs spend earlier Bitcoin outputs and new outputs may represent payments or change. The complete addresses and amounts are shown below."],
-      ["Virtual size",tx?.vsize!=null?number(tx.vsize)+" vB":tx?.weight==null?"Unavailable":number(Math.ceil(tx.weight/4))+" vB","The fee-paying size of this transaction, calculated from its weight. The fee rate uses virtual bytes, not raw bytes."],
-      ["Weight",tx?.weight==null?"Unavailable":number(tx.weight)+" WU","Bitcoin's measure of the transaction's use of block capacity."],
-      ["Version",String(tx?.version??"Unavailable"),"The version field used by Bitcoin's transaction validation rules."],
-      ["Locktime",String(tx?.locktime??"Unavailable"),"A value that can restrict when a transaction becomes eligible for inclusion, depending on input sequence settings. Zero means no locktime restriction."],
-      ["Fee replacement",!observed?"Unknown":rbf?"RBF signaled":"Opt-in RBF not signaled","A transaction signaling replace-by-fee may be eligible for a higher-fee replacement from the sending wallet. Wallet and miner policies vary."],
-      ["Transaction ID",txid,"The unique transaction identifier used to look up and verify this payment on Bitcoin."]
-     ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong className={styles["pt-story-wrap"]}>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
-     <details className={styles["pt-story-raw"]}><summary>View raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details>
-    </details>
     <section className={styles["pt-story-flow"]} aria-label="Bitcoin transaction inputs and outputs">
      <h3>WHERE DID THE BITCOIN GO?</h3>
      <p className={styles["pt-story-flowlead"]}>Follow the Bitcoin from earlier outputs into the new outputs created by this transaction. These are blockchain movements, not verified identities of senders or recipients.</p>
