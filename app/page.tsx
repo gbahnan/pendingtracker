@@ -244,8 +244,6 @@ export default function Page() {
   return <main className="pt-shell">
 
     <section className="pt26-hero">
-      <div className="pt26-hero-art btc" aria-hidden="true"><HeroEmblem chain="btc"/></div>
-      <div className="pt26-hero-art eth" aria-hidden="true"><HeroEmblem chain="eth"/></div>
       <div className="pt26-hero-content">
         <div className="pt26-kicker">TRACK &nbsp; • &nbsp; <b>EXPLORE</b> &nbsp; • &nbsp; <em>UNDERSTAND</em></div>
         <h1>A simpler <span>blockchain explorer.</span></h1>
