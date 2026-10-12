@@ -126,12 +126,12 @@ export default function ChainDashboard({chain,trackedPosition,tracking=false,tra
               <div className="pt-chain-flow-glow-wrap pt-chain-flow-glow-confirmed"><div className="pt-chain-flow-hex pt-chain-flow-hex-confirmed"><span className="pt-flow-confirmed-check">✓</span><span>CONFIRMED</span><strong>{displayBtc?.latestBlock?.height==null?"—":"#"+fmt(displayBtc.latestBlock.height)}</strong><small>✓ on chain</small></div></div>
               <div className="pt-chain-flow-caption"><span className="pt-chain-flow-timeline-dot"/><span className="pt-chain-flow-time">Latest block</span><span className="pt-chain-flow-tx">{displayBtc?.latestBlock?.transactionCount==null?"Confirmed":fmt(displayBtc.latestBlock.transactionCount)+" transactions"}</span></div>
             </div>
-            {flowBlocks.map((b,i)=><div className="pt-chain-flow-unit" key={b.id}>
+            {flowBlocks.map((b,i)=><div className={"pt-chain-flow-unit"+(tracking&&trackedPosition===i+1?" pt-chain-flow-personal-match":"")} key={b.id}>
               <div className={"pt-chain-flow-glow-wrap"+(i===0?" pt-chain-flow-glow-next":"")}><div className={"pt-chain-flow-hex pt-chain-flow-hex-pending"+(blockFlash&&i===0?" pt-chain-flow-mined":"")}><Honeycomb/><div className="pt-chain-flow-shine"/><span>{i===0?"NEXT":String(i+1).padStart(2,"0")}</span><strong>{b.median==null?"—":fmt(b.median)}</strong><small>sat/vB</small></div></div>
               <div className="pt-chain-flow-caption">
                 <span className="pt-chain-flow-timeline-dot"/><span className="pt-chain-flow-time">~{(i+1)*10} min <small>estimated</small></span>
                 <strong className="pt-chain-flow-fee">{b.median==null?"—":fmt(b.median)} <small>sat/vB</small></strong>
-                <span className="pt-chain-flow-tx">{b.count} transactions projected</span>{tracking&&trackedPosition===i+1&&<div className="pt-chain-tracked-arrow"><span>↑</span><strong>YOUR TRANSACTION</strong></div>}
+                <span className="pt-chain-flow-tx">{b.count} transactions projected</span>{tracking&&trackedPosition===i+1&&<div className="pt-chain-tracked-arrow"><span className="pt-chain-tracked-arrow-tip" aria-hidden="true"/><strong>YOUR TRANSACTION</strong><small>May confirm here</small></div>}
               </div>
             </div>)}
             {blockFlash&&<div className="pt-chain-flow-unit pt-chain-flow-incoming" aria-hidden="true">
