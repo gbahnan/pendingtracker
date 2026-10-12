@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./home-2026.css";
-// @ts-ignore JS WebGL component intentionally owns its renderer lifecycle.
-import NetworkScene3D from "./components/NetworkScene3D";
 
 type Overview = {
   btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; confirmedTransactions: string[]; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
@@ -255,21 +253,22 @@ export default function Page() {
         {error?<p className="pt26-search-error" role="alert">{error}</p>:null}
       </div>
     </section>
-    <section className="pt26-live" aria-label="Live Bitcoin and Ethereum network activity">
+    <section className="pt26-live pt26-original-live" aria-label="Live Bitcoin and Ethereum network activity">
+      <header className="pt26-live-title"><h2>Live Network Activity <span>● LIVE</span></h2><p>Real-time Bitcoin and Ethereum network activity. Click into either explorer for full details.</p></header>
       <div className="pt26-grid">
         <article className="pt26-panel btc">
-          <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin Network Activity</h2><p>Real-time data from the Bitcoin blockchain</p></div><span className="live">● Live</span></div>
+          <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin</h2></div><a className="pt26-original-explore" href="/bitcoin">Explore Bitcoin ↗</a></div>
           <div className="pt26-stats"><div><strong>{format(btc?.height)}</strong><small>Latest Block</small></div><div><strong>~10 min</strong><small>Avg. Block Time</small></div><div><strong>{format(btc?.pending)}</strong><small>Pending Txs</small></div><div><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong><small>Priority Fee</small></div></div>
-          <div className="pt26-scene"><NetworkScene3D chain="btc"/></div>
+          <div className="pt26-scene pt26-original-scene"><HeroEmblem chain="btc"/></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>₿ &nbsp;Latest Bitcoin Transactions</strong><a href="/bitcoin">View More →</a></div>
             {[...liveBtcTransactions.map(t=>({...t,value:null})),...(btc?.recentTransactions??[]).filter(t=>!liveBtcTransactions.some(l=>l.id===t.id))].slice(0,5).map(t=><a className="pt26-feed-row" href={"/btc/"+t.id} key={t.id}><span className="hash">{t.id.slice(0,7)}…{t.id.slice(-5)}</span><span className="detail">{t.fee!=null&&t.vsize?(t.fee/t.vsize).toFixed(1)+" sat/vB":"Fee pending"}</span><span className="age">Pending</span><b>›</b></a>)}
             {!liveBtcTransactions.length&&!btc?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Bitcoin transactions…</p>:null}
           </div><a className="pt26-cta" href="/bitcoin">Explore Bitcoin Blockchain →</a>
         </article>
         <article className="pt26-panel eth">
-          <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum Network Activity</h2><p>Real-time data from the Ethereum blockchain</p></div><span className="live">● Live</span></div>
+          <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum</h2></div><a className="pt26-original-explore" href="/ethereum">Explore Ethereum ↗</a></div>
           <div className="pt26-stats"><div><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong><small>Latest Block</small></div><div><strong>~12 sec</strong><small>Slot Time</small></div><div><strong>{format(eth?.recentBlocks?.[0]?.transactionsCount)}</strong><small>Latest Block Txs</small></div><div><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</strong><small>Gas Price</small></div></div>
-          <div className="pt26-scene"><NetworkScene3D chain="eth"/></div>
+          <div className="pt26-scene pt26-original-scene"><HeroEmblem chain="eth"/></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>◆ &nbsp;Latest Ethereum Transactions</strong><a href="/ethereum">View More →</a></div>
             {(eth?.recentTransactions??[]).slice(0,5).map(t=><a className="pt26-feed-row" href={"/eth/"+t.hash} key={t.hash}><span className="hash">{t.hash.slice(0,7)}…{t.hash.slice(-5)}</span><span className="detail">{t.block==null?"Pending":"Block "+format(t.block)}</span><span className="age">{t.status??"Recorded"}</span><b>›</b></a>)}
             {!eth?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Ethereum transactions…</p>:null}
