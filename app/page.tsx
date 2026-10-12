@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./home-2026.css";
 // @ts-ignore JS WebGL component intentionally owns its renderer lifecycle.
-import NetworkScene3D from "./components/NetworkScene3D";
+
 
 type Overview = {
   btc: { available: boolean; pending: number | null; congestion: string; fastestFee: number | null; hourFee: number | null; halfHourFee: number | null; economyFee: number | null; confirmedTransactions: string[]; recentTransactions: {id:string;fee:number|null;vsize:number|null;value:number|null}[]; projectedBlocks: {position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}[]; height: number | null; latestBlock: {height:number|null; ageMinutes:number; transactionCount:number|null; id:string|null}|null; explanation: string };
@@ -116,11 +116,12 @@ const comparisonExamples = {
 } as const;
 
 
-function HeroEmblem({chain}:{chain:"btc"|"eth"}) {
+function HeroEmblem({chain,variant="hero"}:{chain:"btc"|"eth";variant?:"hero"|"network"}) {
+ const uid=chain+"-"+variant;
  const btc=chain==="btc",a=btc?"#ffb521":"#238dff",b=btc?"#fff2c0":"#b6eaff",shade=btc?"#65320a":"#082d74";
  const hp=(x:number,y:number,r:number)=>Array.from({length:6},(_,i)=>{const t=i*Math.PI/3-Math.PI/6;return (x+r*Math.cos(t)).toFixed(1)+","+(y+r*Math.sin(t)).toFixed(1)}).join(" ");
  const satellites=[[36,42,19],[90,14,12],[252,31,17],[267,119,13],[40,184,16],[242,207,22],[110,225,10],[18,112,9]];
- return <svg className={"pt26-hero-graphic "+chain} viewBox="0 0 300 250" aria-hidden="true">
+ return <svg className={"pt26-hero-graphic "+chain+" "+variant} viewBox="0 0 300 250" aria-hidden="true">
  <defs>
  <linearGradient id={"hero-metal-"+chain} x1="0" y1="0" x2="1" y2="1"><stop stopColor={b}/><stop offset=".16" stopColor={a}/><stop offset=".48" stopColor={shade}/><stop offset=".72" stopColor={a}/><stop offset="1" stopColor={b}/></linearGradient>
  <radialGradient id={"hero-halo-"+chain}><stop stopColor={a} stopOpacity=".46"/><stop offset=".45" stopColor={a} stopOpacity=".15"/><stop offset="1" stopColor={a} stopOpacity="0"/></radialGradient>
@@ -256,20 +257,21 @@ export default function Page() {
       </div>
     </section>
     <section className="pt26-live" aria-label="Live Bitcoin and Ethereum network activity">
+      <header className="pt26-live-title"><h2>Live Network Activity <span>● LIVE</span></h2><p>Real-time Bitcoin and Ethereum network activity. Click into either explorer for full details.</p></header>
       <div className="pt26-grid">
         <article className="pt26-panel btc">
-          <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin Network Activity</h2><p>Real-time data from the Bitcoin blockchain</p></div><span className="live">● Live</span></div>
+          <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin</h2></div><a className="pt26-explore" href="/bitcoin">Explore Bitcoin ↗</a></div>
           <div className="pt26-stats"><div><strong>{format(btc?.height)}</strong><small>Latest Block</small></div><div><strong>~10 min</strong><small>Avg. Block Time</small></div><div><strong>{format(btc?.pending)}</strong><small>Pending Txs</small></div><div><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong><small>Priority Fee</small></div></div>
-          <div className="pt26-scene"><NetworkScene3D chain="btc"/></div>
+          <div className="pt26-scene"><HeroEmblem chain="btc" variant="network"/></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>₿ &nbsp;Latest Bitcoin Transactions</strong><a href="/bitcoin">View More →</a></div>
             {[...liveBtcTransactions.map(t=>({...t,value:null})),...(btc?.recentTransactions??[]).filter(t=>!liveBtcTransactions.some(l=>l.id===t.id))].slice(0,5).map(t=><a className="pt26-feed-row" href={"/btc/"+t.id} key={t.id}><span className="hash">{t.id.slice(0,7)}…{t.id.slice(-5)}</span><span className="detail">{t.fee!=null&&t.vsize?(t.fee/t.vsize).toFixed(1)+" sat/vB":"Fee pending"}</span><span className="age">Pending</span><b>›</b></a>)}
             {!liveBtcTransactions.length&&!btc?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Bitcoin transactions…</p>:null}
           </div><a className="pt26-cta" href="/bitcoin">Explore Bitcoin Blockchain →</a>
         </article>
         <article className="pt26-panel eth">
-          <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum Network Activity</h2><p>Real-time data from the Ethereum blockchain</p></div><span className="live">● Live</span></div>
+          <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum</h2></div><a className="pt26-explore" href="/ethereum">Explore Ethereum ↗</a></div>
           <div className="pt26-stats"><div><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong><small>Latest Block</small></div><div><strong>~12 sec</strong><small>Slot Time</small></div><div><strong>{format(eth?.recentBlocks?.[0]?.transactionsCount)}</strong><small>Latest Block Txs</small></div><div><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</strong><small>Gas Price</small></div></div>
-          <div className="pt26-scene"><NetworkScene3D chain="eth"/></div>
+          <div className="pt26-scene"><HeroEmblem chain="eth" variant="network"/></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>◆ &nbsp;Latest Ethereum Transactions</strong><a href="/ethereum">View More →</a></div>
             {(eth?.recentTransactions??[]).slice(0,5).map(t=><a className="pt26-feed-row" href={"/eth/"+t.hash} key={t.hash}><span className="hash">{t.hash.slice(0,7)}…{t.hash.slice(-5)}</span><span className="detail">{t.block==null?"Pending":"Block "+format(t.block)}</span><span className="age">{t.status??"Recorded"}</span><b>›</b></a>)}
             {!eth?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Ethereum transactions…</p>:null}
