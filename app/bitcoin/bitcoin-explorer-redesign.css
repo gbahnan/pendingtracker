@@ -74,3 +74,38 @@
 .bex-understand{padding-top:25px}
 @media(max-width:950px){.bex-stats-grid{gap:9px}.bex-stat{border:0;border-bottom:1px solid rgba(85,120,143,.33);padding:14px 10px}.bex-stat:first-child{padding-left:10px}.bex-stat:last-child{border-bottom:1px solid rgba(85,120,143,.33)}}
 @media(max-width:700px){.bex-duo{gap:6px;margin-bottom:12px}.bex-panel:first-child{border-right:0;border-bottom:1px solid rgba(86,120,145,.3);padding-right:0;padding-bottom:24px}.bex-panel{padding:15px 0}.bex-stats-grid{gap:0}.bex-stat{padding:14px 11px}.bex-bottom>div{gap:0}.bex-bottom a{padding:14px 10px;border-bottom:1px solid rgba(85,120,143,.3)}.bex-bottom a:first-child{padding-left:10px}.bex-bottom a:nth-child(2){border-right:0}}
+
+/* Balanced explorer hierarchy: open hero and timeline, softly framed data groups. */
+.bex-stats-grid{gap:12px}
+.bex-stat,.bex-stat:first-child,.bex-stat:last-child{background:linear-gradient(145deg,#0b1c2b,#06111d);border:1px solid #294255;border-radius:12px;padding:15px 14px;box-shadow:inset 0 1px rgba(255,255,255,.035)}
+.bex-stat>strong{color:#fff}
+.bex-duo{gap:16px;margin-bottom:17px}
+.bex-panel,.bex-panel:first-child{background:linear-gradient(145deg,rgba(11,25,38,.91),rgba(4,13,23,.94));border:1px solid #304658;border-radius:14px;padding:20px;box-shadow:inset 0 1px rgba(255,255,255,.025)}
+.bex-block-details>div{border:1px solid #263b4c;border-radius:10px;background:#091726;padding:14px}
+.bex-bottom>div{gap:12px}
+.bex-bottom a,.bex-bottom a:first-child,.bex-bottom a:last-child{border:1px solid #2e4557;border-radius:11px;background:#071421;padding:16px 14px}
+.bex-network-summary{display:flex;align-items:center;gap:15px;padding:15px 19px;margin:0 0 24px;background:linear-gradient(90deg,rgba(16,34,40,.8),rgba(5,17,29,.25));border-left:3px solid #3cd5b3;border-radius:0 12px 12px 0}
+.bex-summary-symbol{font-size:24px;color:#49dfb8}
+.bex-network-summary strong{display:block;color:#f7fbff;font-size:16px;margin-bottom:5px}
+.bex-network-summary p{color:#c0d2df;font-size:13px;line-height:1.5;margin:0}
+.bex-mode{display:flex;gap:4px;border:1px solid #395063;border-radius:28px;background:#06121d;padding:4px;white-space:nowrap}
+.bex-mode button{border:0;border-radius:24px;background:transparent;color:#aec3d2;padding:8px 15px;font-size:12px;font-weight:800;cursor:pointer}
+.bex-mode button.active{background:#302819;color:#ffd06a;box-shadow:inset 0 0 0 1px #b78937}
+.bex-glossary{margin:13px 0 0;color:#a9c2d2;font-size:12px}
+.bex-glossary summary{cursor:pointer;color:#f0c778;font-weight:700}
+.bex-glossary p{line-height:1.6;margin:8px 0 0;max-width:830px}
+.bex-projection-hex:is(button){font:inherit;border:0;padding:0;cursor:pointer;background:transparent}
+.bex-projection-hex:is(button):focus-visible{outline:2px solid #fff;outline-offset:5px}
+.bex-projection-hex.selected{filter:drop-shadow(0 0 22px rgba(255,194,63,.8))}
+.bex-projection-detail{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;padding:15px 19px;margin:14px 0 0;border:1px solid #725a30;border-radius:12px;background:linear-gradient(135deg,#161c1c,#071522)}
+.bex-projection-detail>div small{display:block;font-size:10px;letter-spacing:.09em;color:#c3b58e;margin-bottom:7px}
+.bex-projection-detail>div strong{color:#fff;font-size:17px}
+.bex-projection-detail>p{grid-column:1/-1;margin:0;color:#bdceda;font-size:12px;line-height:1.6}
+.bex-advanced{margin:0 0 20px;padding:17px 19px;border:1px solid #3a5364;border-radius:13px;background:#091825}
+.bex-advanced h2{font-size:21px!important;margin:0 0 7px!important}
+.bex-advanced>p{font-size:13px;color:#aec4d3}
+.bex-advanced>div{display:flex;flex-wrap:wrap;gap:14px}
+.bex-advanced>div span{flex:1;min-width:180px;font-size:12px;color:#b4c8d6}
+.bex-advanced>div strong{display:block;margin-top:7px;color:#ffd06a;font-size:15px}
+@media(max-width:950px){.bex-stats-grid{gap:10px}.bex-stat,.bex-stat:first-child,.bex-stat:last-child{border:1px solid #294255;padding:14px 12px}}
+@media(max-width:700px){.bex-duo{gap:12px;margin-bottom:12px}.bex-panel,.bex-panel:first-child{border:1px solid #304658;border-radius:12px;padding:16px}.bex-stats-grid{gap:9px}.bex-stat,.bex-stat:first-child,.bex-stat:last-child{padding:13px 11px}.bex-bottom>div{gap:8px}.bex-bottom a,.bex-bottom a:first-child,.bex-bottom a:last-child{border:1px solid #2e4557;padding:14px 10px}.bex-network-summary{padding:13px 12px}.bex-mode{margin-top:7px}.bex-projection-detail{padding:13px}}
