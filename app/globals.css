@@ -4303,3 +4303,21 @@ body:has(.pt-bitcoin-explorer) .pt-bitcoin-explorer{
 .pt-tx-detail-v2 .pt-tx-clarity-row{grid-template-columns:1fr!important;gap:9px!important}
 .pt-tx-detail-v2 section.pt-tx-stage{padding-bottom:28px!important}
 }
+
+/* Bitcoin transaction only: let the live honeycomb visualization sit directly
+   on the page rather than inside the inherited ChainDashboard frame. */
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-btc-flow,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow.pt-reference-glow{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow::before,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-block-track .pt-chain-flow::after{
+  border:0!important;
+  box-shadow:none!important;
+}
