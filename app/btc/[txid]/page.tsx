@@ -134,8 +134,6 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      </div>
      <div className={styles.summaryFooter}><div>Transaction ID <code title={txid}>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"▢ Copy"}</button></div><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">View on Mempool.space ↗</a></div>
     </section>
-   </>}
-  </div>
    <section className="pt-tx-clarity" aria-labelledby="btc-clarity-title">
     <div className="pt-eyebrow">THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
     <h2 id="btc-clarity-title">Your Bitcoin transaction, in plain English</h2>
@@ -171,6 +169,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    </section>
    <section className="pt-tx-details pt-tx-tech"><details className="pt-tx-more"><summary>More transaction details <span>＋</span></summary><div className="pt-tx-tech-grid"><p><b>Transaction ID:</b> <code>{txid}</code></p><p><b>Block height:</b> {blockHeight==null?"Not confirmed":number(blockHeight)}</p><p><b>Raw size:</b> {tx?.size==null?"Unavailable":number(tx.size)+" bytes"}</p><p><b>Weight:</b> {tx?.weight==null?"Unavailable":number(tx.weight)+" WU"}</p><p><b>Version:</b> {tx?.version??"—"}</p><p><b>Locktime:</b> {tx?.locktime??"—"}</p><p><b>Data source:</b> {result.provider}</p><details><summary>Raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details></div></details></section>
   </>}
+  </div>
   <p className="pt-tx-footnote">Live data refreshes every 15 seconds · No wallet connection needed · Fee estimates are not guarantees.</p>
  </main>;
 }   <div className="pt-tx-mock-actions pt-tx-mock-actions-fourth"><span className="pt-tx-mock-actions-icon">{confirmed?"✓":observed?"✓":"!"}</span><div><span>DO I NEED TO DO ANYTHING?</span><strong>{confirmed?"No fee action needed":!observed?"Check the transaction ID":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"You can wait or review fee options":"No action needed right now"}</strong><small>{confirmed?"The transaction is already confirmed.":!observed?"Confirm it was broadcast by the sending wallet.":networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee is below the current network guide.":"Your fee appears competitive based on current network conditions."}</small></div></div>
