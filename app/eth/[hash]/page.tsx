@@ -1,3 +1,4 @@
+import ExplorerHexScene from "../../components/ExplorerHexScene";
 "use client";
 import {useCallback,useEffect,useMemo,useState} from "react";
 
@@ -84,7 +85,7 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
  ];
  if(!valid)return <main className="etr"><div className="etr-shell"><a href="/ethereum">← Ethereum Explorer</a><h1>Invalid Ethereum transaction hash</h1><p>Enter 0x followed by 64 hexadecimal characters.</p></div></main>;
  return <main className="etr">
-  <div className="etr-ambient" aria-hidden="true"><div className="etr-ambient-grid"/><div className="etr-ambient-coin"><span>◆</span></div><i className="etr-spark s1"/><i className="etr-spark s2"/><i className="etr-spark s3"/></div>
+  <ExplorerHexScene chain="eth" kind="transaction"/>
   <div className="etr-shell">
    <div className="etr-breadcrumb"><a href="/ethereum">Ethereum Explorer</a><span>›</span>Transaction</div>
    <header className="etr-title"><h1>Ethereum <em>Transaction</em></h1><div className="etr-hash"><code title={hash}>{hash}</code><button type="button" onClick={copy} aria-label="Copy transaction hash">{copied?"✓ Copied":"▢"}</button></div></header>
