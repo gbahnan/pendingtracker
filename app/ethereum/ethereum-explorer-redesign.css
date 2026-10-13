@@ -72,3 +72,31 @@
 .eth-fresh .fresh-hero-hex{filter:drop-shadow(0 0 9px #347dfa50)!important;text-shadow:0 0 8px #a4dcff70!important}
 .eth-fresh .fresh-explore-decoration{text-shadow:0 0 8px #347dfa50!important}
 .eth-fresh .fresh-tabs button:focus-visible,.eth-fresh .fresh-now-metric:focus-visible{outline-color:#79b6ff!important}
+
+/* Final Ethereum Obsidian Black + Sapphire refinement: neutral surfaces, selective blue. */
+.pt-ethereum-explorer-redesign{background:#05070b!important;background-image:none!important}
+.eth-fresh{--gold:#387ef5;--muted:#adb6c3}
+.eth-fresh:before,.eth-fresh .fresh-journey:before,.eth-fresh .fresh-explore-premium:before{background:none!important}
+.eth-fresh .fresh-hero{background:transparent!important}
+.eth-fresh .fresh-now-snapshot{background:#111419!important;border-color:#29313b!important;box-shadow:0 12px 32px #0005!important}
+.eth-fresh .fresh-data-premium,.eth-fresh .fresh-explainer-premium{background:#111419!important;border-color:#29313b!important;box-shadow:0 10px 27px #0004!important}
+.eth-fresh .fresh-search form{background:#111419!important;border-color:#35404b!important;box-shadow:0 8px 22px #0004!important}
+.eth-fresh .fresh-search form:focus-within{border-color:#387ef5!important;box-shadow:0 0 0 2px #387ef51c!important}
+.eth-fresh .fresh-tabs-six{background:#111419!important;border-color:#29313b!important}
+.eth-fresh .fresh-tabs-six button{background:#111419!important;border-color:#29313b!important}
+.eth-fresh .fresh-tabs-six button.active{background:#19202b!important;color:#a4c8ff!important;box-shadow:inset 0 -2px #387ef5!important}
+.eth-fresh .fresh-faq details{background:#111419!important;border-color:#29313b!important;box-shadow:0 5px 16px #0003!important}
+.eth-fresh .fresh-faq details:hover,.eth-fresh .fresh-faq details[open]{background:#171b22!important;border-color:#3d4e63!important}
+.eth-fresh .fresh-metric-icon,.eth-fresh .fresh-explain-sub-icon{background:#1b222b!important;border-color:#37404d!important;color:#9fc4ff!important}
+.eth-fresh .fresh-now-metric.active,.eth-fresh .fresh-now-metric:hover{background:#1a2028!important}
+.eth-fresh .fresh-explain-learn{background:#171d25!important;border-color:#364355!important}
+.eth-fresh .fresh-search form button{background:#387ef5!important;color:#fff!important}
+.eth-fresh .fresh-kicker,.eth-fresh .fresh-hero h1 em,.eth-fresh .fresh-explore-title h2 em,.eth-fresh .fresh-metric-more,.eth-fresh .fresh-search-help a,.eth-fresh .fresh-table-link,.eth-fresh .fresh-table-row a,.eth-fresh .fresh-advanced-button,.eth-fresh .fresh-explain-learn summary{color:#86b2ff!important}
+.eth-fresh .motion-pool{background:radial-gradient(ellipse,#1b222d,#111720 68%,#0a1018)!important;border-color:#3978c5!important;box-shadow:inset 0 0 9px #0008,0 0 3px #387ef52b!important}
+.eth-fresh .motion-hex:before,.eth-fresh .motion-hex.blue:before{background:linear-gradient(145deg,#1b2430,#0e141d 65%,#080e15)!important}
+.eth-fresh .motion-halo{filter:drop-shadow(0 0 2px #387ef548)!important}
+.eth-fresh .motion-halo.blue{filter:drop-shadow(0 0 3px #6bbcff62)!important}
+.eth-fresh .motion-halo:after{background:transparent!important}
+.eth-fresh .motion-pool-glow{opacity:.02!important}
+.eth-fresh .fresh-hero-hex{filter:drop-shadow(0 0 6px #387ef53a)!important;text-shadow:0 0 5px #a4dcff4a!important}
+.eth-fresh .fresh-explore-decoration{text-shadow:none!important}
