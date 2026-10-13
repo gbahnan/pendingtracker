@@ -118,3 +118,20 @@
 .txr-top,.txr-overview-grid,.txr-cards,.txr-io-grid{backdrop-filter:blur(3px)}
 @media(max-width:900px){.txr-ambient-art{width:65vw;right:-95px;top:-20px;opacity:.47}.txr-ambient-coin{width:180px;height:205px}.txr-ambient-coin span{font-size:110px}}
 @media(max-width:650px){.txr-ambient-art{width:90vw;height:300px;top:0;right:-90px;opacity:.25}.txr-ambient-coin{right:0;top:35px;width:125px;height:145px}.txr-ambient-coin span{font-size:78px}.txr-summary{padding:19px 2px 24px!important}}
+
+/* Transaction status carousel: phone only, ~3 cells plus a fourth peek. */
+.txr-hexscroll{min-width:0;max-width:100%}
+.txr-swipe-hint{display:none}
+@media(max-width:700px){
+ .txr-hexscroll{width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-padding-inline:7px;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#ad7c31 transparent}
+ .txr-hexscroll:focus-visible{outline:2px solid #ffd06a;outline-offset:2px;border-radius:10px}
+ .txr-hexrow{display:flex!important;flex-wrap:nowrap!important;width:max-content!important;min-width:max-content!important;gap:7px!important;padding:13px 7px 12px!important;align-items:start!important}
+ .txr-hexunit{flex:0 0 clamp(91px,27vw,116px)!important;width:clamp(91px,27vw,116px)!important;scroll-snap-align:start;min-width:0!important}
+ .txr-hex{width:100%!important;max-width:none!important;aspect-ratio:1.07!important}
+ .txr-hex span{font-size:clamp(20px,5vw,29px)!important}
+ .txr-hexunit>strong{font-size:clamp(10px,2.7vw,13px)!important;line-height:1.25!important;margin-top:7px}
+ .txr-hexunit>small{font-size:clamp(9px,2.25vw,11px)!important;line-height:1.35!important}
+ .txr-hexrow:before{left:calc(7px + clamp(91px,27vw,116px)/2)!important;right:calc(7px + clamp(91px,27vw,116px)/2)!important;top:calc(13px + clamp(91px,27vw,116px)/2.14)!important;height:4px!important}
+ .txr-marker{position:relative!important;top:auto!important;margin-top:6px!important;max-width:100%;font-size:9px!important;line-height:1.2!important;white-space:normal!important}
+ .txr-swipe-hint{display:block;text-align:center;color:#e8bc69;font-size:11px;font-weight:700;letter-spacing:.03em;margin:0 0 10px}
+}
