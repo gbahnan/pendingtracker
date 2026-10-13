@@ -50,3 +50,15 @@
 .motion-pool{background:radial-gradient(ellipse at 48% 43%,#2c251d 0%,#171c22 53%,#081421 100%);border-color:#b58b50;box-shadow:inset 0 0 15px #070b10, inset 0 0 9px #bd853322,0 0 6px #a476344d}
 .motion-pool:before{border-color:#d0a76732}
 .motion-pool-glow{opacity:.17;animation:none}
+
+/* Obsidian Space: crisp glass-metal edges, recessed chambers, restrained starlight. */
+.motion-halo{filter:drop-shadow(0 0 2px #e8b767ab) drop-shadow(0 0 8px #a86b2866)}
+.motion-hex{background:linear-gradient(138deg,#ffeac0 0%,#e2ad60 19%,#a66c31 49%,#704923 73%,#e5b56e 100%)}
+.motion-hex:before{background:radial-gradient(ellipse at 46% 46%,#30281f 0%,#1b2530 37%,#0c1b2b 70%,#06111e 100%)}
+.motion-hex:after{border-color:#e3af6142}
+.motion-halo:after{background:#e7a34a0b;filter:blur(6px)}
+.motion-halo.blue{filter:drop-shadow(0 0 3px #8ed9ffb3) drop-shadow(0 0 8px #247eaf70)}
+.motion-hex.blue{background:linear-gradient(138deg,#d9f5ff,#85c5e7 22%,#387da9 52%,#1b496d 75%,#9ad6f3)}
+.motion-hex.blue:before{background:radial-gradient(ellipse at 46% 45%,#213c51 0%,#122b43 50%,#071727 100%)}
+.motion-pool{background:radial-gradient(ellipse at 48% 45%,#30271e,#162230 61%,#071320 100%);border-color:#c69a59;box-shadow:inset 0 0 18px #050b14,0 0 8px #a16a2e54}
+.motion-pool-glow{opacity:.13}
