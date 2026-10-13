@@ -9,7 +9,7 @@ import {useCallback,useEffect,useMemo,useState} from "react";
 import type {BtcMvpResult} from "@/lib/btc/types";
 import {isLikelyTxid} from "@/lib/btc/validate";
 
-type ProjectedBlock={position:number;transactionCount:number|null;feeRange:number[]|null;medianFee?:number|null};
+type ProjectedBlock={position:number;transactionCount:number|null;feeRange:number[]|null;medianFee:number|null};
 type Overview={btc?:{projectedBlocks?:ProjectedBlock[];height?:number|null;pending?:number|null;recentBlocks?:Array<{height:number|null;ageMinutes:number;transactionCount:number|null;id:string|null}>}};
 const number=(n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(n);
 const btc=(sats:number|null|undefined)=>sats==null?"—":(sats/100000000).toLocaleString("en-US",{maximumFractionDigits:8})+" BTC";
