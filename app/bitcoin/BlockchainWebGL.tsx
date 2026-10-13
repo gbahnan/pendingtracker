@@ -4,12 +4,12 @@ type Block={height:number|null;ageMinutes:number;transactionCount:number|null;id
 type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined};
 const fmt=(n:number|null|undefined)=>n==null?"—":Math.round(n).toLocaleString("en-US");
 const stages=[{time:"40 MIN",desc:"Longer wait"},{time:"30 MIN",desc:"Moderate wait"},{time:"20 MIN",desc:"Higher priority"},{time:"10 MIN",desc:"Next in line"}];
-const particles=Array.from({length:30},(_,i)=>({id:i,offset:(i*37)%100,vertical:((i*29)%76)+12,delay:-((i*7.7)%56),duration:52+(i%5)*4}));
+const particles=Array.from({length:26},(_,i)=>({id:i,delay:-((i*4.9)%92),duration:84+(i%4)*5,vertical:(i%7-3)*4}));
 function Hex({blue=false,featured=false}:{blue?:boolean;featured?:boolean}){return <div className={"journey-hex"+(blue?" journey-hex-blue":"")+(featured?" journey-hex-featured":"")}><div className="journey-hex-core">{featured?"₿":blue?"₿":""}</div></div>}
 export default function BlockchainWebGL({pending,fee,blocks,projectedCount}:Props){
  const viewport=useRef<HTMLDivElement>(null);const firstConfirmed=useRef<HTMLButtonElement>(null);const pointer=useRef<{x:number;left:number;id:number;moved:boolean}|null>(null);const [selected,setSelected]=useState<number|null>(null);const [info,setInfo]=useState(false);const [dragging,setDragging]=useState(false);
  const recent=blocks.slice(0,10);
- useEffect(()=>{const node=viewport.current,anchor=firstConfirmed.current;if(!node||!anchor)return;const raf=requestAnimationFrame(()=>{const left=anchor.offsetLeft-node.clientWidth*.70;node.scrollLeft=Math.max(0,left)});return()=>cancelAnimationFrame(raf)},[recent.length]);
+ useEffect(()=>{const node=viewport.current;if(!node)return;node.scrollLeft=0},[]);
  function down(e:React.PointerEvent<HTMLDivElement>){if(e.pointerType==="touch")return;if(e.button!==0)return;const node=viewport.current;if(!node)return;pointer.current={x:e.clientX,left:node.scrollLeft,id:e.pointerId,moved:false};setDragging(true)}
  function move(e:React.PointerEvent<HTMLDivElement>){const p=pointer.current,node=viewport.current;if(!p||!node||p.id!==e.pointerId)return;const delta=e.clientX-p.x;if(Math.abs(delta)>5){p.moved=true;if(!node.hasPointerCapture(e.pointerId))node.setPointerCapture(e.pointerId)}node.scrollLeft=p.left-delta}
  function up(e:React.PointerEvent<HTMLDivElement>){if(pointer.current?.id===e.pointerId){pointer.current=null;setDragging(false);if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId)}}
@@ -20,7 +20,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projectedCount}:Prop
  <div className="journey-controls"><span>← Drag left for longer waits</span><div><button type="button" onClick={()=>slide(-1)} aria-label="Scroll toward longer waiting times">←</button><button type="button" onClick={()=>slide(1)} aria-label="Scroll toward older confirmed blocks">→</button></div><span>Drag right for confirmed blocks →</span></div>
  <div className={"journey-viewport"+(dragging?" is-dragging":"")} ref={viewport} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} tabIndex={0} aria-label="Scrollable confirmation journey from mempool through 40, 30, 20, 10 minute estimates to confirmed blocks">
  <div className="journey-track">
- <div className="journey-tube" aria-hidden="true"><div className="journey-tube-glow"/>{particles.map(p=><i className="journey-travel-particle" key={p.id} style={{top:p.vertical+"%",animationDelay:p.delay+"s",animationDuration:p.duration+"s"}}/>)}</div>
+ <div className="journey-tube" aria-hidden="true"><div className="journey-tube-glow"/></div><div className="journey-particle-layer" aria-hidden="true">{particles.map(p=><i className="journey-travel-particle" key={p.id} style={{top:`calc(50% + ${p.vertical}px)`,animationDelay:p.delay+"s",animationDuration:p.duration+"s"}}/>)}</div>
  <div className="journey-node journey-mempool"><div className="journey-label"><strong>MEMPOOL</strong><span>{fmt(pending)} waiting transactions</span></div><div className="journey-chamber">{Array.from({length:115},(_,i)=><i key={i} style={{left:(5+(i*47)%87)+"%",top:(7+(i*31)%83)+"%",animationDelay:-(i%17)*.41+"s",animationDuration:(4+(i%7))+"s"}}/>)}</div><div className="journey-node-footer">Unconfirmed transactions</div></div>
  {stages.map((stage,i)=><div className="journey-node journey-wait" key={stage.time}><div className="journey-label"><strong>~ {stage.time}</strong><span>Estimated confirmation</span></div><Hex/><div className="journey-node-footer">{i===3?"Next block estimate":stage.desc}{i===3&&fee!=null&&<small>Fee estimate: {fee.toFixed(1)} sat/vB</small>}</div></div>)}
  
