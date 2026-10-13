@@ -25,9 +25,15 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   const canvas=canvasRef.current,track=trackRef.current;
   if(!canvas||!track)return;
   const ctx=canvas.getContext("2d");if(!ctx)return;
-  type Ball={phase:number;lane:number;speed:number;offset:number;radius:number;seed:number};
-  const balls:Ball[]=Array.from({length:108},(_,i)=>({phase:(i*0.61803398875)%1,lane:(i*0.754877666)%1,speed:0.018+(i%9)*0.003,offset:i*1.73,radius:2.3+(i%5)*.45,seed:i*2.39996}));
-  let raf=0,last=0,elapsed=0,layout:{x:number;y:number;w:number;h:number;kind:string}[]=[];
+  type Chamber={x:number;y:number;w:number;h:number;kind:string};
+  const particles=Array.from({length:82},(_,i)=>({
+   offset:(i*0.618033988749895)%1,
+   speed:.0035+(i%6)*.00065,
+   angle:i*2.39996,
+   radius:1.7+(i%4)*.42,
+   lane:(i*.754877666)%1
+  }));
+  let raf=0,last=0,elapsed=0,layout:Chamber[]=[];
   const measure=()=>{
    const rect=track.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
    canvas.width=Math.round(track.clientWidth*dpr);canvas.height=Math.round(track.clientHeight*dpr);
@@ -36,45 +42,59 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
    layout=Array.from(track.querySelectorAll<HTMLElement>(".motion-pool,.motion-hex")).map(el=>{const r=el.getBoundingClientRect();return {x:r.left-rect.left,y:r.top-rect.top,w:r.width,h:r.height,kind:el.classList.contains("motion-pool")?"pool":el.classList.contains("blue")?"blue":"gold"}});
   };
   const observer=new ResizeObserver(measure);observer.observe(track);measure();
-  const point=(box:{x:number;y:number;w:number;h:number;kind:string},u:number,v:number)=>{
+  const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
+   const rgb=blue?"95,197,255":"255,193,99";
+   ctx.globalAlpha=opacity;
+   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.30)";ctx.shadowColor="rgba("+rgb+",.75)";ctx.shadowBlur=7;ctx.arc(x,y,r*1.65,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle=blue?"#c3edff":"#ffdf9e";ctx.shadowBlur=3;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+   ctx.shadowBlur=0;ctx.globalAlpha=1;
+  };
+  const point=(box:Chamber,u:number,v:number)=>{
    const cx=box.x+box.w/2,cy=box.y+box.h/2;
-   if(box.kind==="pool")return {x:cx+(u-.5)*box.w*.79,y:cy+(v-.5)*box.h*.70};
-   const yy=(v-.5)*box.h*.74;const limit=(box.w*.38)*(1-Math.abs(yy)/(box.h*.92));
-   return {x:cx+(u*2-1)*limit,y:cy+yy};
+   if(box.kind==="pool")return {x:cx+(u-.5)*box.w*.78,y:cy+(v-.5)*box.h*.69};
+   const dy=(v-.5)*box.h*.68;
+   const horizontal=box.w*.34*(1-Math.abs(dy)/(box.h*.8));
+   return {x:cx+(u*2-1)*horizontal,y:cy+dy};
   };
   const draw=(now:number)=>{
    const dt=Math.min((now-last)/1000||0,.05);last=now;elapsed+=dt;
    ctx.clearRect(0,0,track.clientWidth,track.clientHeight);
    if(layout.length){
-    balls.forEach((b,i)=>{
-     const journey=(b.phase+elapsed*b.speed)%1;
-     const scaled=journey*layout.length;
-     const index=Math.min(layout.length-1,Math.floor(scaled));
-     const local=scaled-index;
-     const box=layout[index];
-     const angle=elapsed*(.95+(i%7)*.19)+b.seed;
-     const u=.5+Math.sin(angle)*(.24+(b.lane*.12));
-     const v=.5+Math.cos(angle*1.27)*(.25+((i%4)*.025));
-     let pos=point(box,u,v),alpha=.86;
-     // Balls spend most of their time bouncing inside a chamber, then travel across open space.
-     if(local>.79&&index<layout.length-1){
-      const next=layout[index+1],t=(local-.79)/.21;
-      const exit=point(box,.94,.5+Math.sin(angle)*.08);
-      const entry=point(next,.06,.5+Math.cos(angle)*.08);
-      const smooth=t*t*(3-2*t);
-      pos={x:exit.x+(entry.x-exit.x)*smooth,y:exit.y+(entry.y-exit.y)*smooth+Math.sin(t*Math.PI)*Math.sin(b.seed)*8};
+    // Most balls remain visibly bouncing in the mempool, not streaming like a cannon.
+    const pool=layout[0];
+    for(let i=0;i<67;i++){
+     const p=particles[i],a=elapsed*(.43+(i%7)*.045)+p.angle;
+     const u=.5+Math.sin(a)*(.22+p.lane*.15);
+     const v=.5+Math.cos(a*.83)*(.24+(i%4)*.024);
+     const pos=point(pool,u,v);
+     drawBall(pos.x,pos.y,p.radius,false,.73);
+    }
+    // A smaller independent population makes the journey slowly, with long pauses
+    // bouncing in each hexagon and a short, gently curved crossing between them.
+    for(let i=0;i<15;i++){
+     const p=particles[i+67];
+     const progress=(p.offset+elapsed*p.speed)%1;
+     const scaled=progress*(layout.length-1);
+     const index=Math.min(layout.length-2,Math.floor(scaled));
+     const local=scaled-index,box=layout[index];
+     const a=elapsed*(.48+(i%5)*.09)+p.angle;
+     const u=.5+Math.sin(a)*(.19+p.lane*.11);
+     const v=.5+Math.cos(a*1.17)*(.19+(i%3)*.035);
+     let pos=point(box,u,v),blue=box.kind==="blue";
+     if(local>.86){
+      const next=layout[index+1],t=(local-.86)/.14;
+      const from=point(box,.86,.5+Math.sin(a)*.07);
+      const to=point(next,.14,.5+Math.sin(a+.6)*.07);
+      const eased=t*t*(3-2*t);
+      pos={x:from.x+(to.x-from.x)*eased,y:from.y+(to.y-from.y)*eased+Math.sin(t*Math.PI)*Math.sin(p.angle)*5};
+      blue=t>.55?next.kind==="blue":blue;
      }
-     const blue=box.kind==="blue" || (local>.79&&layout[index+1]?.kind==="blue"&&local>.91);
-     const rgb=blue?"99,206,255":"255,190,79";
-     ctx.beginPath();ctx.fillStyle="rgba("+rgb+","+(alpha*.17)+")";ctx.shadowColor="rgba("+rgb+",.9)";ctx.shadowBlur=13;ctx.arc(pos.x,pos.y,b.radius*2.2,0,Math.PI*2);ctx.fill();
-     ctx.beginPath();ctx.fillStyle=blue?"#c9f4ff":"#fff1c6";ctx.shadowBlur=7;ctx.arc(pos.x,pos.y,b.radius,0,Math.PI*2);ctx.fill();
-    });
-    ctx.shadowBlur=0;
+     drawBall(pos.x,pos.y,p.radius,blue,.84);
+    }
    }
    raf=requestAnimationFrame(draw);
   };
-  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(!reduced)raf=requestAnimationFrame(draw);
+  if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)raf=requestAnimationFrame(draw);
   return()=>{cancelAnimationFrame(raf);observer.disconnect()};
  },[blocks.length]);
 
