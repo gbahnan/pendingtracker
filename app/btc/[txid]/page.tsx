@@ -137,9 +137,9 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  if(!valid)return <main className="pt-tx-page"><a href="/bitcoin">← Bitcoin Explorer</a><h1>Enter a valid Bitcoin transaction ID</h1><p>A Bitcoin transaction ID contains 64 hexadecimal characters.</p></main>;
  const keyDetails=[
   {icon:"≋",title:"Fee Rate",value:rate(feeRate),help:feeRate==null?"Fee data is unavailable.":confirmed?"The fee rate paid for this confirmed transaction.":feeHint+". This affects how transactions compete for block space."},
-  {icon:"◷",title:confirmed?"Confirmations":"Estimated Wait",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"This transaction is included in a block. Each additional block adds another confirmation.":"A fee-based projection, not a countdown or guarantee."},
-  {icon:"⬡",title:"Block Height",value:confirmed?"#"+number(blockHeight):"Not confirmed",help:confirmed?"The Bitcoin block that included this transaction.":"A block number will appear once a miner includes the transaction."},
-  {icon:"▤",title:"Virtual Size",value:tx?.vsize!=null?number(tx.vsize)+" vB":tx?.weight!=null?number(Math.ceil(tx.weight/4))+" vB":"—",help:"The fee-paying size of this transaction. It helps determine the total network fee."},
+  {icon:"◷",title:"Transaction Size",value:tx?.vsize!=null?number(tx.vsize)+" vB":tx?.weight!=null?number(Math.ceil(tx.weight/4))+" vB":"—",help:"The virtual size used to calculate transaction fees."},
+  {icon:"⬡",title:confirmed?"Confirmations":"Estimated Wait",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"Each additional block adds a confirmation.":"A fee-based estimate, not a guaranteed time."},
+  {icon:"▤",title:"Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",help:confirmed?"Included in a Bitcoin block.":observed?"Waiting for a miner to include it in a block.":"Check whether the transaction was broadcast."},
   ...(understandingExpanded?[
    {icon:"₿",title:"Network Fee",value:tx?.fee==null?"—":number(tx.fee)+" sats",help:"The amount paid to miners, separate from an exchange withdrawal fee."},
    {icon:"⇄",title:"Inputs & Outputs",value:inputs.length+" in · "+outputs.length+" out",help:"Earlier Bitcoin outputs are spent to create new outputs, including possible change."},
