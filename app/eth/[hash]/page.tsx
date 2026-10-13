@@ -93,7 +93,7 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
    {tx&&<>
     <section className="etr-tracker" aria-label="Ethereum transaction status">
      <div className="etr-tracker-heading"><div><h2>{failed?"Transaction Included · Execution Failed":confirmed?"Your Transaction Is Confirmed":"Your Transaction Is Pending"}</h2><p>{failed?"Ethereum included the transaction, but its execution reverted.":confirmed?"Your transaction is recorded in an Ethereum block.":"Ethereum transactions are included by validators; there is no reliable fixed position in a future block."}</p></div><span className="etr-live"><i/> Live Ethereum data</span></div>
-     <div className="etr-hexrow">
+     <div className="etr-hexscroll" role="region" aria-label="Swipe horizontally to explore transaction stages" tabIndex={0}><div className="etr-hexrow">
       {[
        {label:failed?"Execution failed":confirmed?"Included in block":"Transaction seen",sub:confirmed?"Block #"+fmt(block):"Broadcast to network",state:"first"},
        {label:"Block inclusion",sub:confirmed?"Completed":"Awaiting validator",state:confirmed?"complete":"waiting"},
@@ -101,7 +101,8 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
        {label:"Finality",sub:"Separate network milestone",state:"waiting"},
        {label:"Receiving service",sub:"May have its own checks",state:"waiting"}
       ].map((x,i)=><div className="etr-hexunit" key={i}><div className={"etr-hex "+x.state}><span>{i===0?"✓":i===1?"⬡":i===2?"◷":i===3?"◆":"⇄"}</span></div><strong>{x.label}</strong><small>{x.sub}</small></div>)}
-     </div>
+     </div></div>
+     <p className="etr-swipe-hint">Swipe to explore stages <span aria-hidden="true">→</span></p>
      <p className="etr-timeline-note">{confirmed?"Block inclusion is confirmed. This diagram shows stages, not measured timestamps or finality verification.":failed?"A reverted transaction can be included in a block and still incur a gas fee.":"Ethereum slots are typically 12 seconds, but inclusion, confirmation and finality are not guaranteed by a countdown."}</p>
      <div className="etr-overview">{metric.map(m=><article className="etr-overview-item" key={m.label}><div className="etr-metric-icon">{m.icon}</div><div><small>{m.label}</small><strong>{m.value}</strong><p>{m.help}</p></div></article>)}</div>
     </section>
