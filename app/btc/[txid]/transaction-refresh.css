@@ -222,3 +222,21 @@
 .txr-snapshot-v2 .txr-id{max-width:100%;margin:0!important}
 .txr-snapshot-v2 .txr-snapshot-v2-head{margin-top:0!important}
 @media(max-width:650px){.txr-snapshot-v2 .txr-page-title{padding-bottom:12px!important;margin-bottom:12px!important}}
+
+/* Transaction-only visual cleanup: no decorative hero, aligned animation, no footer clutter. */
+.txr .txr-network-v2 .motion-footer,
+.txr .txr-network-v2 .motion-note{display:none!important}
+.txr .txr-network-v2 .motion-window{scrollbar-width:none!important;-ms-overflow-style:none!important}
+.txr .txr-network-v2 .motion-window::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+.txr .txr-network-v2 .motion-track{align-items:flex-start!important;padding-bottom:8px!important}
+.txr .txr-network-v2 .motion-label{height:42px!important;min-height:42px!important;flex-shrink:0!important}
+.txr .txr-network-v2 .motion-halo{margin-top:0!important;transform:none!important;transform-origin:center center!important}
+.txr .txr-network-v2 .motion-cell:hover .motion-halo{transform:translateY(-2px)!important}
+.txr .txr-network-v2 .motion-pool{margin-top:13px!important}
+.txr .txr-network-v2 .motion-cell.confirmed .motion-halo{margin-top:0!important}
+.txr .txr-network-v2 .motion-divider{top:42px!important}
+.txr .txr-network-v2 .motion-arrows{margin-top:2px!important}
+.txr .txr-network-v2 .motion-window{margin-top:0!important}
+.txr .txr-network-v2 .motion{padding-bottom:0!important}
+.txr .txr-snapshot-v2{margin-top:10px!important}
+@media(max-width:700px){.txr .txr-network-v2 .motion-pool{margin-top:20px!important}}
