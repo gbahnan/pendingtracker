@@ -6,3 +6,14 @@
 .motion-cell.motion-stage:after,.motion-cell.mempool:after{content:none!important;display:none!important}
 .motion-hex-content{z-index:6;pointer-events:none}
 .motion-pool{overflow:hidden}
+
+/* Calmer, cleaner 2D palette: concentrated edge glow rather than bright halos. */
+.motion-canvas{z-index:2}
+.motion-hex-content{z-index:7;background:radial-gradient(ellipse,#081725ef 20%,#081725bb 60%,transparent 82%);padding:9px 5px;border-radius:20px;text-shadow:0 1px 4px #000}
+.motion-hex.blue .motion-hex-content{background:radial-gradient(ellipse,#0a2845bb 10%,transparent 80%)}
+.motion-halo{filter:drop-shadow(0 0 3px #c4873670) drop-shadow(0 0 6px #b6762c40)}
+.motion-halo.blue{filter:drop-shadow(0 0 4px #2f9bdc80) drop-shadow(0 0 8px #168fcb55)}
+.motion-hex{background:linear-gradient(145deg,#e4b96c,#b47a30 55%,#e0b266)}
+.motion-hex.blue{background:linear-gradient(145deg,#8dd6ff,#2789c9 65%,#77c9fa)}
+.motion-pool{background:radial-gradient(ellipse at 50% 45%,#25241f,#101c29 68%,#081321);box-shadow:inset 0 0 11px #bd883c28,0 0 8px #c98c4030;border-color:#b98a48}
+.motion-pool-glow{opacity:.32}
