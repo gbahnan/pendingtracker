@@ -145,7 +145,7 @@
 @media(prefers-reduced-motion:reduce){.fresh-faq details,.fresh-search form{transition:none}}
 
 /* Precision spacing and responsive network sizing — October 2026. */
-.fresh-btc{width:100%;max-width:1440px;padding:clamp(22px,2.5vw,38px) clamp(18px,3vw,44px) 52px}
+.fresh-btc{width:100%;max-width:1320px;padding:clamp(22px,2.5vw,38px) clamp(20px,2.7vw,38px) 52px}
 .fresh-hero{min-height:clamp(215px,19vw,270px)}
 .fresh-hero h1{font-size:clamp(43px,4.8vw,67px)}
 .fresh-search{max-width:980px;margin-bottom:clamp(27px,3.3vw,42px)}
