@@ -34,3 +34,36 @@
 .fresh-journey{overflow:hidden;background:radial-gradient(ellipse at 45% 70%,#0b2033 0%,#06111e 70%);border-color:#31404d}
 
 /* Previous journey animation styles removed; the new motion component owns its own styles. */
+
+/* Compact live Bitcoin snapshot; all styles scoped to the snapshot. */
+.fresh-now-snapshot{display:block;padding:25px 28px 23px;gap:0;background:linear-gradient(120deg,#081b29,#05121e);border-color:#255063}
+.fresh-now-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.fresh-now-top .fresh-kicker{margin:0}
+.fresh-now-live{font-size:10px;font-weight:800;letter-spacing:.12em;color:#5cdeb0;white-space:nowrap}
+.fresh-now-main{display:grid;grid-template-columns:minmax(260px,1.1fr) minmax(0,2.1fr);align-items:stretch;gap:22px}
+.fresh-now-price{min-width:0;padding:8px 14px 0 0}
+.fresh-price-line{display:flex;align-items:center;gap:15px}
+.fresh-btc-coin{display:grid;place-items:center;flex:0 0 52px;height:52px;border-radius:50%;background:linear-gradient(145deg,#ffcf67,#e78c1b);box-shadow:0 0 18px #e89a264b;color:#fff;font-size:35px;font-weight:800}
+.fresh-price-label{font-size:12px;color:#adc0d0}
+.fresh-price-values{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:4px}
+.fresh-price-values strong{font-size:clamp(25px,2.7vw,38px);letter-spacing:-.04em;line-height:1.2;color:#fff}
+.fresh-price-values>span{font-size:14px;font-weight:800;white-space:nowrap}.fresh-price-values .up{color:#58d9a7}.fresh-price-values .down{color:#ff917e}
+.fresh-price-values small{font-size:10px;font-weight:500}
+.fresh-price-chart{display:block;width:100%;height:43px;margin-top:9px}
+.fresh-price-range{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:#9fb3c4;margin-top:7px}.fresh-price-range b{color:#e7edf5;margin-left:4px}
+.fresh-now-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.fresh-now-metric{background:transparent;border:0;border-left:1px solid #294451;padding:4px 10px 0 16px;text-align:left;min-width:0;display:flex;flex-direction:column;align-items:flex-start;color:inherit;transition:background .2s}
+.fresh-now-metric:hover,.fresh-now-metric.active{background:#10273875;border-radius:8px}
+.fresh-metric-icon{width:31px;height:34px;display:grid;place-items:center;clip-path:polygon(50% 0,95% 25%,95% 75%,50% 100%,5% 75%,5% 25%);background:#3a2a13;color:#ffc04b;font-size:22px;margin-bottom:9px}
+.fresh-metric-label{font-size:11px;color:#adbfce;line-height:1.35;min-height:29px}
+.fresh-now-metric strong{font-size:clamp(16px,1.65vw,23px);color:#f5f8ff;letter-spacing:-.03em;margin:6px 0 8px;line-height:1.3;overflow-wrap:anywhere}
+.fresh-now-metric .fresh-congestion-value{color:#ffbd4d}
+.fresh-now-metric>small{font-size:11px;line-height:1.4;color:#a6bac9;min-height:32px}
+.fresh-congestion-bars{display:flex;gap:3px;width:100%;margin:0 0 9px}.fresh-congestion-bars i{height:6px;flex:1;border-radius:4px;background:#19374b}.fresh-congestion-bars i.lit{background:#f6b644}
+.fresh-metric-more{font-size:11px;color:#ffc34b;font-weight:700;margin-top:auto;padding-top:9px}
+.fresh-now-expanded{position:relative;border-top:1px solid #294655;margin-top:20px;padding:17px 32px 0 2px;animation:freshNowReveal .2s ease-out}
+.fresh-now-expanded .fresh-kicker{margin-bottom:7px}.fresh-now-expanded h3{font-size:18px;margin-bottom:6px}.fresh-now-expanded p{font-size:13px;max-width:1000px;line-height:1.6}
+.fresh-now-close{position:absolute;right:0;top:12px;background:transparent;border:0;color:#a9bdca;font-size:24px}
+@keyframes freshNowReveal{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1050px){.fresh-now-main{grid-template-columns:1fr;gap:18px}.fresh-now-price{padding:0}.fresh-now-metrics{border-top:1px solid #294451;padding-top:15px}.fresh-now-metric:first-child{border-left:0}.fresh-now-metric{padding-left:13px}.fresh-price-chart{max-width:380px}}
+@media(max-width:620px){.fresh-now-snapshot{padding:20px 16px}.fresh-now-top{align-items:flex-start}.fresh-now-live{font-size:9px}.fresh-now-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 0}.fresh-now-metric:nth-child(odd){border-left:0}.fresh-now-metric:nth-child(n+3){border-top:1px solid #294451;padding-top:14px}.fresh-now-metric strong{font-size:20px}.fresh-price-values strong{font-size:32px}}
