@@ -240,3 +240,18 @@
 .txr .txr-network-v2 .motion{padding-bottom:0!important}
 .txr .txr-snapshot-v2{margin-top:10px!important}
 @media(max-width:700px){.txr .txr-network-v2 .motion-pool{margin-top:20px!important}}
+
+/* Align every chamber on one axis: earlier :empty rule collapsed gold labels,
+   pushing gold hexagons above the confirmed blue hexagons. */
+.txr .txr-network-v2 .motion-cell.motion-stage .motion-label:empty{display:flex!important;height:42px!important;min-height:42px!important}
+.txr .txr-network-v2 .motion-cell.mempool .motion-label,
+.txr .txr-network-v2 .motion-cell.confirmed .motion-label{height:42px!important;min-height:42px!important}
+.txr .txr-network-v2 .motion-cell .motion-halo{margin-top:0!important}
+.txr .txr-network-v2 .motion-cell.mempool .motion-pool{margin-top:13px!important}
+@media(min-width:900px){
+ /* Six slightly wider estimate slots reveal only part of the first blue
+    confirmed hexagon at the right edge, not several blue blocks at once. */
+ .txr .txr-network-v2 .motion-cell.motion-stage{width:clamp(136px,10.6vw,147px)!important}
+ .txr .txr-network-v2 .motion-cell.confirmed{width:clamp(124px,9.4vw,138px)!important}
+ .txr .txr-network-v2 .motion-track{gap:5px!important}
+}
