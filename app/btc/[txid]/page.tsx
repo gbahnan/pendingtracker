@@ -157,13 +157,17 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    {error&&<p className="txr-error" role="alert">{error}{result?" Showing the last available data.":""}</p>}
    {loading&&!result&&<div className="txr-loading">Checking your Bitcoin transaction against the live network…</div>}
    {result&&<>
+    <section className="txr-network-v2" aria-label="Live Bitcoin network and transaction position">
+     <div className="txr-v2-network-head"><div><span className="txr-v2-kicker">LIVE BITCOIN NETWORK</span><h2>Where is <em>your transaction?</em></h2></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
+     <div className="txr-explorer-motion fresh-journey"><BlockchainWebGL compactTransactionLabels pending={overview?.btc?.pending} fee={blocks[0]?.medianFee??null} projectedCount={blocks[0]?.transactionCount??null} projections={blocks} blocks={overview?.btc?.recentBlocks??[]} trackedPosition={!confirmed&&observed?selectedPosition:null} trackedConfirmedHeight={confirmed?blockHeight??null:null}/></div>
+    </section>
     <section className="txr-snapshot-v2" aria-label="Your transaction snapshot">
      <div className="txr-snapshot-v2-head"><div><span className="txr-v2-kicker">YOUR TRANSACTION</span><h2>Your Transaction <em>Snapshot</em></h2><p>{confirmed?"Your transaction is included in a Bitcoin block.":observed?"Your transaction is pending and waiting for confirmation.":"This transaction has not yet been located on the Bitcoin network."}</p></div><div className="txr-v2-status"><strong>{confirmed?"✓ Confirmed":observed?"⬡ Pending":"? Not found"}</strong><small>{confirmed?"Block #"+number(blockHeight):observed?"Waiting to be included in a block":"Verify transaction broadcast"}</small></div></div>
      <div className="txr-v2-primary">
       {[
        {icon:"₿",label:"Amount in Outputs",value:btc(outputTotal),help:"Total sent to new outputs; may include change."},
        {icon:"≋",label:"Transaction Fee",value:btc(tx?.fee),help:tx?.fee==null?"Fee unavailable":rate(feeRate)+" · "+number(tx.fee)+" sats paid to miners"},
-       {icon:"◷",label:confirmed?"Confirmations":"Estimated Confirmation",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"Confirmed in block #"+number(blockHeight):"Fee-based estimate, not a guarantee."},
+       {icon:"◷",label:confirmed?"Confirmations":"ETA",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"Confirmed in block #"+number(blockHeight):"Fee-based estimate; timing may change."},
        {icon:"⬡",label:"Transaction Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",help:confirmed?"Included in the Bitcoin blockchain.":observed?"Waiting for a miner to include it in a block.":"Check whether it was broadcast."}
       ].map(x=><article className="txr-v2-primary-card" key={x.label}><span className="txr-v2-icon">{x.icon}</span><div><small>{x.label}</small><strong>{x.value}</strong><p>{x.help}</p></div></article>)}
      </div>
@@ -174,11 +178,6 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
        ["Total Input",btc(inputTotal)],["Total Output",btc(outputTotal)]
       ].map(([label,value])=><div className="txr-v2-secondary-item" key={label}><small>{label}</small><strong>{value}</strong></div>)}
      </div>
-    </section>
-    <section className="txr-network-v2" aria-label="Live Bitcoin network and transaction position">
-     <div className="txr-v2-network-head"><div><span className="txr-v2-kicker">LIVE BITCOIN NETWORK</span><h2>Where is <em>your transaction?</em></h2><p>Follow the same live Bitcoin Explorer visualization. Your arrow marks an estimated fee-based position.</p></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
-     <div className="txr-explorer-motion fresh-journey"><BlockchainWebGL pending={overview?.btc?.pending} fee={blocks[0]?.medianFee??null} projectedCount={blocks[0]?.transactionCount??null} projections={blocks} blocks={overview?.btc?.recentBlocks??[]} trackedPosition={!confirmed&&observed?selectedPosition:null} trackedConfirmedHeight={confirmed?blockHeight??null:null}/></div>
-     <p className="txr-timeline-note">{confirmed?"Your transaction has been confirmed. Blue hexagons represent real confirmed blocks.":!observed?"Your transaction has not been located on the network yet.":"The highlighted hexagon estimates your transaction's fee band, not a guaranteed queue position."}</p>
     </section>
     <section className="txr-understand-v2 fresh-explore fresh-explore-premium">
      <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker">GO DEEPER, ONLY IF YOU WANT TO</div><h2>Understanding Your <em>Transaction</em></h2><p>Explore the actual transaction data. Choose a topic and we'll explain what it means.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
