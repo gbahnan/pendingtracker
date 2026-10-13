@@ -161,12 +161,12 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
       {Array.from({length:4},(_,i)=>{const b=blocks[i];const active=!confirmed&&observed&&selectedPosition===i+1;return <div className="txr-hexunit" key={i}><div className={"txr-hex"+(active?" active":"")}><span>⬡</span></div><strong>~{(i+1)*10} min</strong><small>{b?.feeRange?.length===2?number(b.feeRange[0])+"–"+number(b.feeRange[1])+" sat/vB":"Fee range unavailable"}</small><small>{number(b?.transactionCount)} waiting txs</small>{active&&<b className="txr-marker">↑ Your transaction</b>}</div>})}
      </div>
      <p className="txr-timeline-note">{confirmed?"Your transaction is already confirmed. The gold hexagons show projected future blocks.":!observed?"Your transaction has not been located on the network yet.":"The highlighted hexagon is a fee-based estimate, not a guaranteed queue position."}</p>
-     <div className="txr-overview"><h2>Transaction Overview</h2><div className="txr-overview-grid">
+     <div className="txr-overview"><div className="txr-overview-grid">
       {[
-       {icon:"⬡",label:"Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",help:confirmed?"Included in a block.":observed?"Waiting for a block.":"Not seen on network."},
-       {icon:"◷",label:confirmed?"Confirmations":"Estimated Wait",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"Additional blocks add confirmations.":"Based on current fees."},
-       {icon:"≋",label:"Fee Rate",value:rate(feeRate),help:"Fee paid per virtual byte."},
-       {icon:"₿",label:"Total Outputs",value:btc(outputTotal),help:"May include change back to sender."}
+       {icon:"₿",label:"Amount in Outputs",value:btc(outputTotal),help:"Total sent to new outputs; may include change."},
+       {icon:"≋",label:"Network Fee",value:tx?.fee==null?"—":btc(tx.fee),help:"The fee paid to miners for this transaction."},
+       {icon:"◷",label:confirmed?"Confirmations":"Estimated Wait",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"Each new block adds a confirmation.":"Fee-based estimate, not a guarantee."},
+       {icon:"⬡",label:confirmed?"Block Height":"Status",value:confirmed?"#"+number(blockHeight):observed?"Pending":"Not found",help:confirmed?"The block that confirmed this transaction.":observed?"Waiting to be included in a block.":"Verify the transaction ID."}
       ].map(x=><div className="txr-overview-item" key={x.label}><span className="txr-metric-icon">{x.icon}</span><div><small>{x.label}</small><strong>{x.value}</strong><p>{x.help}</p></div></div>)}
      </div></div>
     </section>
