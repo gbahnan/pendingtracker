@@ -27,6 +27,24 @@ export async function GET(req:Request,{params}:{params:{address:string}}){
     return NextResponse.json({samples,days,source:"Alchemy",note:"Exact ETH balances at sampled blocks; sample dates approximate. Excludes tokens."},{headers:{"Cache-Control":"public, s-maxage=300"}});
    }catch{return NextResponse.json({error:"Historical state not available"},{status:503})}
   }
+  if(mode==="alchemy-insights"){
+   if(!process.env.ALCHEMY_API_KEY)return NextResponse.json({error:"Alchemy not configured"},{status:503});
+   const transferParams=(direction:"from"|"to")=>({[direction==="from"?"fromAddress":"toAddress"]:address,category:["external","internal","erc20","erc721","erc1155"],withMetadata:true,excludeZeroValue:false,maxCount:"0x32",order:"desc"});
+   const [sent,received,balances,nfts]=await Promise.allSettled([
+    alchemy("alchemy_getAssetTransfers",[transferParams("from")]),
+    alchemy("alchemy_getAssetTransfers",[transferParams("to")]),
+    alchemy("alchemy_getTokenBalances",[address,"erc20"]),
+    (async()=>{const key=process.env.ALCHEMY_API_KEY;const response=await fetch("https://eth-mainnet.g.alchemy.com/nft/v3/"+encodeURIComponent(key!)+"/getNFTsForOwner?owner="+encodeURIComponent(address)+"&pageSize=12&withMetadata=true",{signal:AbortSignal.timeout(8000),cache:"no-store"});if(!response.ok)throw Error("NFT API unavailable");return response.json()})()
+   ]);
+   const rawTokens=balances.status==="fulfilled"&&Array.isArray(balances.value?.tokenBalances)?balances.value.tokenBalances.filter((x:any)=>x.tokenBalance&&BigInt(x.tokenBalance)!==0n).slice(0,15):[];
+   const tokenInfo=await Promise.allSettled(rawTokens.map(async(x:any)=>({contract:x.contractAddress,balanceWei:BigInt(x.tokenBalance).toString(),metadata:await alchemy("alchemy_getTokenMetadata",[x.contractAddress])})));
+   const tokenHoldings=tokenInfo.filter(x=>x.status==="fulfilled").map(x=>(x as PromiseFulfilledResult<any>).value).map(x=>({contract:x.contract,balanceWei:x.balanceWei,name:x.metadata?.name??"Unknown token",symbol:x.metadata?.symbol??"TOKEN",decimals:typeof x.metadata?.decimals==="number"?x.metadata.decimals:18,logo:x.metadata?.logo??null}));
+   const items=[...(sent.status==="fulfilled"?sent.value?.transfers??[]:[]),...(received.status==="fulfilled"?received.value?.transfers??[]:[])];
+   const seen=new Set<string>();
+   const transfers=items.filter((x:any)=>{const id=[x.hash,x.uniqueId,x.category].join(":");if(seen.has(id))return false;seen.add(id);return true}).sort((a:any,b:any)=>Date.parse(b.metadata?.blockTimestamp??"")-Date.parse(a.metadata?.blockTimestamp??"")).slice(0,50).map((x:any)=>({hash:x.hash,category:x.category,asset:x.asset??null,value:x.value??null,from:x.from??null,to:x.to??null,contract:x.rawContract?.address??null,time:x.metadata?.blockTimestamp??null}));
+   const owned=nfts.status==="fulfilled"&&Array.isArray(nfts.value?.ownedNfts)?nfts.value.ownedNfts:[];
+   return NextResponse.json({transfers,tokenHoldings,nfts:owned.slice(0,12).map((n:any)=>({contract:n.contract?.address??null,name:n.name??n.contract?.name??"NFT",tokenId:n.tokenId??null,collection:n.collection?.name??null,image:n.image?.thumbnailUrl??null,spam:!!n.isSpam})),coverage:{transfers:sent.status==="fulfilled"&&received.status==="fulfilled"?"Latest 50 incoming and outgoing transfers; more may exist":"Partial transfer coverage",tokens:balances.status==="fulfilled"?"Up to 15 nonzero ERC-20 holdings":"Unavailable",nfts:nfts.status==="fulfilled"?"Up to 12 NFTs":"Unavailable"},updatedAt:Date.now(),source:"Alchemy"},{headers:{"Cache-Control":"public, s-maxage=60, stale-while-revalidate=120"}});
+  }
   if(mode==="history"){
    const days=Math.min(365,Math.max(1,Number(u.searchParams.get("days"))||30)),cutoff=Date.now()-days*86400000;
    let next:Record<string,string|number>|null=null;const items:any[]=[];let complete=false,coverageStart:number|null=null,reason="Page limit reached";
