@@ -195,3 +195,19 @@
 .txr-v2-address-list{max-height:400px;overflow:auto}.txr-v2-address-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 3px;border-bottom:1px solid #294051;font-size:13px}.txr-v2-address-row>span{min-width:0}.txr-v2-address-row small{display:block;color:#9fb4c6;font-size:10px;margin-bottom:4px}.txr-v2-address-row a{color:#f1b648;overflow-wrap:anywhere}.txr-v2-address-row strong{color:#f5f8fb;white-space:nowrap}.txr-v2-raw{white-space:pre-wrap;overflow-wrap:anywhere;max-height:350px;overflow:auto;font-size:11px}
 @media(max-width:950px){.txr-understand-v2 .fresh-explore-body{grid-template-columns:1fr}}
 @media(max-width:650px){.txr-understand-v2.fresh-explore-premium{padding:19px 12px!important}.txr-understand-v2 .fresh-tabs-six{grid-template-columns:repeat(3,minmax(0,1fr))}.txr-understand-v2 .fresh-data-premium,.txr-understand-v2 .fresh-explainer-premium{padding:17px 13px}.txr-v2-address-row{align-items:flex-start;flex-direction:column}}
+
+/* Transaction-first hierarchy: live tracker above snapshot, no repeated ETA copy. */
+.txr-network-v2{margin:4px 0 14px!important}
+.txr-network-v2 .txr-v2-network-head{margin-bottom:0!important;align-items:center}
+.txr-network-v2 .txr-v2-network-head h2{margin:2px 0 0!important;font-size:clamp(22px,2.3vw,29px)!important}
+.txr-network-v2 .txr-explorer-motion{margin:0!important}
+.txr-network-v2 .motion{margin-top:0!important}
+.txr-network-v2 .motion-label:empty,.txr-network-v2 .motion-caption:empty{display:none!important}
+.txr-network-v2 .motion-label{min-height:0!important}
+.txr-network-v2 .motion-cell.motion-stage .motion-caption{min-height:0!important;margin:0!important}
+.txr-network-v2 .motion-top{padding-top:0!important;margin-top:0!important}
+.txr-snapshot-v2{margin:10px 0 23px!important;padding:18px 22px!important}
+.txr-snapshot-v2 .txr-snapshot-v2-head{margin-bottom:13px!important}
+.txr-snapshot-v2 .txr-v2-primary-card{min-height:118px!important;padding:12px 10px!important}
+.txr-snapshot-v2 .txr-v2-secondary{margin-top:13px!important;padding-top:13px!important}
+@media(max-width:650px){.txr-network-v2{margin-top:8px!important}.txr-network-v2 .txr-v2-network-head{align-items:flex-start}.txr-snapshot-v2{padding:15px 12px!important}}
