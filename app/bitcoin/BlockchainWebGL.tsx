@@ -26,7 +26,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   if(!canvas||!track)return;
   const ctx=canvas.getContext("2d");if(!ctx)return;
   type Chamber={x:number;y:number;w:number;h:number;kind:string};
-  const particles=Array.from({length:280},(_,i)=>({
+  const particles=Array.from({length:310},(_,i)=>({
    offset:(i*0.618033988749895)%1,
    speed:.0032+(i%7)*.00043,
    angle:i*2.39996,
@@ -51,10 +51,10 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   };
   const observer=new ResizeObserver(measure);observer.observe(track);measure();
   const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
-   const rgb=blue?"95,197,255":"255,193,99";
+   const rgb=blue?"73,190,255":"255,139,29";
    ctx.globalAlpha=opacity;
-   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.30)";ctx.shadowColor="rgba("+rgb+",.75)";ctx.shadowBlur=7;ctx.arc(x,y,r*1.65,0,Math.PI*2);ctx.fill();
-   ctx.beginPath();ctx.fillStyle=blue?"#c3edff":"#ffdf9e";ctx.shadowBlur=3;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.23)";ctx.shadowColor="rgba("+rgb+",.88)";ctx.shadowBlur=9;ctx.arc(x,y,r*1.9,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle=blue?"#dcf7ff":"#fff4cb";ctx.shadowBlur=5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
    ctx.shadowBlur=0;ctx.globalAlpha=1;
   };
   const point=(box:Chamber,u:number,v:number)=>{
@@ -90,7 +90,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
     }
     // Many simultaneous crossings, with slower free-floating motion and
     // independently offset paths so there is no cannon-like stream.
-    for(let i=0;i<70;i++){
+    for(let i=0;i<82;i++){
      const p=particles[i+205];
      const progress=(p.offset+elapsed*p.speed)%1;
      const scaled=progress*(layout.length-1);
@@ -100,9 +100,9 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
      let pos=point(box,uv.u,uv.v),blue=box.kind==="blue";
      if(local>.46){
       const next=layout[index+1],t=(local-.46)/.54;
-      const from=point(box,.93,.20+p.lane*.60);
-      const to=point(next,.07,.20+p.lane*.60);
-      pos={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t+Math.sin(t*Math.PI)*Math.sin(p.angle)*6};
+      const from=point(box,.90,.20+p.lane*.60);
+      const to=point(next,.10,.20+p.lane*.60);
+      const blend=Math.min(1,(local-.46)/.09);const departure={x:pos.x+(from.x-pos.x)*blend,y:pos.y+(from.y-pos.y)*blend};const travel=Math.max(0,(local-.55)/.45);pos=local<.55?departure:{x:from.x+(to.x-from.x)*travel,y:from.y+(to.y-from.y)*travel+Math.sin(travel*Math.PI)*Math.sin(p.angle)*6};
       blue=t>.55?next.kind==="blue":blue;
      }
      drawBall(pos.x,pos.y,p.radius,blue,.82);
