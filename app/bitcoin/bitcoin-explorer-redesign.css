@@ -422,3 +422,26 @@
 @media(max-width:1050px){.bex-borderless-explorer .bex-rev-three{grid-template-columns:repeat(3,minmax(0,1fr))}.bex-borderless-explorer .bex-rev-three .bex-rev-panel:last-child{grid-column:auto}}
 @media(max-width:800px){.bex-borderless-explorer .bex-rev-three,.bex-borderless-explorer .bex-rev-three + .bex-rev-three{grid-template-columns:1fr!important;padding:12px 0!important}.bex-borderless-explorer .bex-rev-three .bex-rev-panel{padding:18px 0!important;border-right:0!important;border-bottom:1px solid rgba(93,125,143,.26)!important}.bex-borderless-explorer .bex-rev-three .bex-rev-panel:last-child{border-bottom:0!important}.bex-borderless-explorer .bex-unified-network .bex-rev-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.bex-hero{padding:22px 5px 10px}.bex-hero-art{opacity:.25}.bex-borderless-explorer .bex-unified-network .bex-projection-row{min-width:580px}.bex-borderless-explorer .bex-unified-network .bex-projection-hex{max-width:110px!important}}
 @media(prefers-reduced-motion:reduce){.bex-borderless-explorer *{scroll-behavior:auto}}
+
+/* Approved refinement: one continuous gold outline around the network snapshot
+   and confirmation hexagons only. Keep the explorer sections below borderless. */
+.bex-borderless-explorer .bex-unified-network{
+  border:1px solid #d69a2c!important;
+  border-radius:19px!important;
+  padding:19px 24px 17px!important;
+  background:linear-gradient(135deg,rgba(7,26,43,.52),rgba(2,13,24,.35))!important;
+  box-shadow:0 0 0 1px rgba(255,185,53,.045),0 0 23px rgba(222,141,19,.065)!important;
+  margin:0 0 18px!important;
+}
+.bex-borderless-explorer .bex-unified-network .bex-rev-network,
+.bex-borderless-explorer .bex-unified-network .bex-rev-confirm{
+  border-left:0!important;border-right:0!important;border-bottom:0!important;
+  background:transparent!important;box-shadow:none!important;
+}
+@media(max-width:800px){
+  .bex-borderless-explorer .bex-unified-network{
+    border-radius:14px!important;
+    padding:14px 12px 12px!important;
+    margin-bottom:12px!important;
+  }
+}
