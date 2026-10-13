@@ -104,3 +104,42 @@
 .fresh-insights-note{font-size:11px!important;color:#91a7b9!important;margin-top:12px!important}
 @media(max-width:1050px){.fresh-explore-premium .fresh-explore-body{grid-template-columns:1fr}.fresh-tabs-six button{gap:5px;font-size:12px}.fresh-tab-icon{font-size:17px}}
 @media(max-width:650px){.fresh-explore-premium{padding:23px 14px}.fresh-explore-decoration{width:55px;height:60px;font-size:32px}.fresh-tabs-six{grid-template-columns:repeat(3,minmax(0,1fr))}.fresh-tabs-six button{padding:12px 4px;border-bottom:1px solid #254252}.fresh-data-premium,.fresh-explainer-premium{padding:19px 15px}.fresh-explore-title h2{font-size:28px}}
+
+/* Obsidian Gold page-wide visual refinement — layout and functionality preserved. */
+.pt-bitcoin-explorer-redesign{
+ background:
+ radial-gradient(ellipse 56% 17% at 91% 4%,rgba(158,91,21,.14),transparent 78%),
+ radial-gradient(ellipse 54% 21% at 4% 40%,rgba(30,74,108,.18),transparent 80%),
+ radial-gradient(ellipse 55% 22% at 96% 76%,rgba(106,65,20,.12),transparent 80%),
+ #030a12!important;
+}
+.fresh-btc{--gold:#f5b741;--muted:#a6b9c9;position:relative;isolation:isolate}
+.fresh-btc:before{content:"";position:absolute;z-index:-1;pointer-events:none;top:0;left:-6%;right:-6%;height:690px;background:radial-gradient(ellipse 44% 39% at 90% 18%,rgba(193,115,26,.115),transparent 85%);opacity:.85}
+.fresh-hero{background:radial-gradient(ellipse at 80% 45%,rgba(149,83,19,.21),transparent 52%)}
+.fresh-hero-hex{filter:drop-shadow(0 0 17px rgba(207,126,26,.38));text-shadow:0 0 17px rgba(255,171,45,.55)}
+.fresh-search form{background:linear-gradient(100deg,#061321,#081725);border-color:#b48947;box-shadow:0 8px 32px #0006,0 0 22px #b8791817;transition:border-color .2s,box-shadow .2s}
+.fresh-search form:focus-within{border-color:#e5b35e;box-shadow:0 9px 34px #0007,0 0 0 3px #d8a34c18}
+.fresh-now-snapshot{background:linear-gradient(120deg,rgba(11,31,44,.97),rgba(5,18,29,.96));border-color:#294657;box-shadow:0 17px 42px #00000038, inset 0 1px #e2c18612}
+.fresh-now-metric{border-left-color:#304856}
+.fresh-journey{background:transparent;border:0;border-radius:0;box-shadow:none;padding:35px 0 25px;overflow:visible;position:relative;margin-bottom:20px}
+.fresh-journey:before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:8% -4% 1%;background:radial-gradient(ellipse 56% 50% at 46% 52%,rgba(22,57,84,.30),transparent 88%),radial-gradient(ellipse 38% 36% at 75% 57%,rgba(141,85,24,.09),transparent 86%)}
+.fresh-journey .webgl-stage{background:radial-gradient(ellipse at 43% 44%,#102335 0%,#061523 64%,#030b15 100%)}
+.fresh-explore-premium{background:transparent;border:0;border-radius:0;box-shadow:none;padding:38px 0 32px;position:relative;margin-bottom:12px}
+.fresh-explore-premium:before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:0 -4%;background:radial-gradient(ellipse 55% 35% at 92% 24%,rgba(145,88,26,.095),transparent 90%)}
+.fresh-tabs-six{border-color:#30485a;background:linear-gradient(90deg,#081725,#0a1b29);box-shadow:0 9px 28px #00000026}
+.fresh-tabs-six button.active{background:linear-gradient(180deg,#3d2c18,#171d22);box-shadow:inset 0 -3px #f2b648,0 0 18px #b7812718}
+.fresh-data-premium{background:linear-gradient(155deg,rgba(9,28,42,.97),rgba(5,17,28,.98));border-color:#284354;box-shadow:0 14px 36px #00000028,inset 0 1px #d8ebff08}
+.fresh-explainer-premium{background:radial-gradient(ellipse at 100% 0%,rgba(163,101,26,.13),transparent 53%),linear-gradient(145deg,#102535,#071622);border-color:#2b4756;box-shadow:0 14px 36px #0000002e,inset 0 1px #f5cf8312}
+.fresh-data-premium .fresh-table-row:hover{background:#1b344341}
+.fresh-learn{background:transparent;border:0;border-radius:0;box-shadow:none;padding:35px 0 30px;margin-bottom:10px}
+.fresh-faq details{background:linear-gradient(115deg,rgba(11,30,44,.92),rgba(7,21,33,.96));border-color:#294556;box-shadow:0 7px 20px #00000020;transition:border-color .2s,background .2s}
+.fresh-faq details:hover,.fresh-faq details[open]{border-color:#9d7843;background:linear-gradient(115deg,#10293b,#0b1b29)}
+.fresh-faq summary:focus-visible,.fresh-tabs button:focus-visible,.fresh-now-metric:focus-visible{outline:2px solid #e9b75d;outline-offset:3px}
+.fresh-footer{border-top:1px solid #1a3544;padding-top:19px}
+@media(max-width:650px){
+ .fresh-journey{padding:26px 0 18px}
+ .fresh-explore-premium{padding:27px 0 24px}
+ .fresh-learn{padding:27px 0}
+ .fresh-now-snapshot{box-shadow:0 10px 30px #0004}
+}
+@media(prefers-reduced-motion:reduce){.fresh-faq details,.fresh-search form{transition:none}}
