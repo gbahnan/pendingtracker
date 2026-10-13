@@ -101,6 +101,8 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
  const firstMatch=matching[0]?.position;
  const selectedPosition=firstMatch??(feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1]?1:null);
+ const selectedBand=blocks.find(b=>b.position===selectedPosition)?.feeRange;
+ const trackedFraction=selectedBand&&feeRate!=null&&selectedBand[1]>selectedBand[0]?Math.max(0,Math.min(1,(feeRate-selectedBand[0])/(selectedBand[1]-selectedBand[0]))):0.5;
  const feeEstimate=!observed?"Not available":confirmed?"Already confirmed":selectedPosition?"Possible ~"+selectedPosition*10+" min*":"Not enough data";
  const blockHeight=result?.status?.block_height??tx?.status?.block_height;
  const confirmations=confirmed&&blockHeight!=null&&overview?.btc?.height!=null?Math.max(1,overview.btc.height-blockHeight+1):confirmed?1:0;
@@ -158,7 +160,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    {result&&<>
     <section className="txr-network-v2" aria-label="Live Bitcoin network and transaction position">
      
-     <div className="txr-explorer-motion fresh-journey"><BlockchainWebGL compactTransactionLabels pending={overview?.btc?.pending} fee={blocks[0]?.medianFee??null} projectedCount={blocks[0]?.transactionCount??null} projections={blocks} blocks={overview?.btc?.recentBlocks??[]} trackedPosition={!confirmed&&observed?selectedPosition:null} trackedConfirmedHeight={confirmed?blockHeight??null:null}/></div>
+     <div className="txr-explorer-motion fresh-journey"><BlockchainWebGL compactTransactionLabels pending={overview?.btc?.pending} fee={blocks[0]?.medianFee??null} projectedCount={blocks[0]?.transactionCount??null} projections={blocks} blocks={overview?.btc?.recentBlocks??[]} trackedPosition={!confirmed&&observed?selectedPosition:null} trackedFraction={trackedFraction} trackedConfirmedHeight={confirmed?blockHeight??null:null}/></div>
     </section>
     <section className="txr-snapshot-v2" aria-label="Your transaction snapshot">
      <header className="txr-page-title"><h1>Bitcoin <em>Transaction</em></h1><div className="txr-id"><code title={txid}>{txid}</code><button type="button" onClick={copy} aria-label="Copy transaction ID">{copied?"✓ Copied":"▢"}</button></div></header>
