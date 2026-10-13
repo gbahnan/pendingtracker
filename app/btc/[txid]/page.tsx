@@ -2,6 +2,7 @@
 import {Honeycomb} from "../../components/ChainDashboard";
 import HexArtwork from "../../components/SharedHexArtwork";
 import styles from "./BitcoinTracker.module.css";
+import "./transaction-refresh.css";
 import {useCallback,useEffect,useMemo,useState} from "react";
 import type {BtcMvpResult} from "@/lib/btc/types";
 import {isLikelyTxid} from "@/lib/btc/validate";
@@ -132,132 +133,54 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   }catch{setAiSummary("Extra explanation is unavailable.");}finally{setAiLoading(false);}
  }
  function copy(){if(typeof navigator!=="undefined"&&navigator.clipboard){navigator.clipboard.writeText(txid).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),1800);}).catch(()=>{});}}
- if(!valid)return <main className="pt-tx-page"><a href="/">← Back to explorer</a><h1>Check your Bitcoin transaction ID</h1><p>A Bitcoin transaction ID is 64 hexadecimal characters.</p></main>;
- return <main className={"pt-tx-page "+styles.page}>
 
-  <div className={styles.shell}>
-   <EdgeLights/><EdgeLights right/>
-   <a className={styles.back} href="/bitcoin">← &nbsp; Bitcoin Explorer</a>
-   {error&&<p role="alert" className={styles.error}>{error}{result?" Showing the last available data.":""}</p>}
-   {loading&&!result&&<p className={styles.loading}>Checking the Bitcoin network…</p>}
+ if(!valid)return <main className="pt-tx-page"><a href="/bitcoin">← Bitcoin Explorer</a><h1>Enter a valid Bitcoin transaction ID</h1><p>A Bitcoin transaction ID contains 64 hexadecimal characters.</p></main>;
+ const keyDetails=[
+  {icon:"≋",title:"Fee Rate",value:rate(feeRate),help:feeRate==null?"Fee data is unavailable.":confirmed?"The fee rate paid for this confirmed transaction.":feeHint+". This affects how transactions compete for block space."},
+  {icon:"◷",title:confirmed?"Confirmations":"Estimated Wait",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"This transaction is included in a block. Each additional block adds another confirmation.":"A fee-based projection, not a countdown or guarantee."},
+  {icon:"⬡",title:"Block Height",value:confirmed?"#"+number(blockHeight):"Not confirmed",help:confirmed?"The Bitcoin block that included this transaction.":"A block number will appear once a miner includes the transaction."},
+  {icon:"▤",title:"Virtual Size",value:tx?.vsize!=null?number(tx.vsize)+" vB":tx?.weight!=null?number(Math.ceil(tx.weight/4))+" vB":"—",help:"The fee-paying size of this transaction. It helps determine the total network fee."},
+  ...(understandingExpanded?[
+   {icon:"₿",title:"Network Fee",value:tx?.fee==null?"—":number(tx.fee)+" sats",help:"The amount paid to miners, separate from an exchange withdrawal fee."},
+   {icon:"⇄",title:"Inputs & Outputs",value:inputs.length+" in · "+outputs.length+" out",help:"Earlier Bitcoin outputs are spent to create new outputs, including possible change."},
+   {icon:"◈",title:"Transaction Weight",value:tx?.weight==null?"—":number(tx.weight)+" WU",help:"How much Bitcoin block capacity this transaction consumes."},
+   {icon:"↻",title:"Fee Replacement",value:!observed?"Unknown":rbf?"RBF signaled":"Opt-in RBF not signaled",help:"Replace-by-fee signaling may allow supported wallets to increase a pending fee."}
+  ]:[])
+ ];
+ return <main className="pt-tx-page txr">
+  <div className="txr-shell">
+   <div className="txr-breadcrumb"><a href="/bitcoin">Bitcoin Explorer</a><span>›</span>Transaction</div>
+   {error&&<p className="txr-error" role="alert">{error}{result?" Showing the last available data.":""}</p>}
+   {loading&&!result&&<div className="txr-loading">Checking your Bitcoin transaction against the live network…</div>}
    {result&&<>
-    <header className={styles.hero}>
-     <div className={styles.coin} aria-hidden="true">₿</div>
-     <div className={styles.heroText}>
-      <div className={styles.eyebrow}>YOUR BITCOIN TRANSACTION</div>
-      <h1>{!observed?"Transaction not found":confirmed?"Your transaction is confirmed":<>Waiting for <span>confirmation</span></>}</h1>
-      <p>{!observed?"We couldn't locate this transaction on the Bitcoin network. Check its ID and confirm the sender has broadcast it.":confirmed?"Your transaction has been recorded in Bitcoin block #"+number(blockHeight)+". Your wallet or exchange may require more confirmations before crediting it.":selectedPosition?"Your transaction has reached the Bitcoin network and is waiting to be included in a block. Based on current activity, it may confirm in about "+selectedPosition*10+" minutes.":"Your transaction is on the Bitcoin network and is waiting for confirmation. A reliable estimated confirmation time is not available yet."}</p>
+    <section className="txr-top">
+     <div className="txr-tophead"><div><span className="txr-eyebrow">LIVE BITCOIN TRANSACTION TRACKER</span><h1>Transaction <em>Status</em></h1><p>See where your Bitcoin is and what happens next.</p></div><div className="txr-topcoin" aria-hidden="true">₿</div></div>
+     <div className="txr-livehead"><div><h2>Estimated Confirmation Time</h2><p>Based on live mempool data. Bitcoin blocks average about ten minutes, but timing varies.</p></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
+     <div className="txr-hexrow">
+      <div className="txr-hexunit"><div className="txr-hex confirmed"><span>✓</span></div><strong>Latest Block</strong><small>#{number(overview?.btc?.height)}</small><small>Confirmed on network</small></div>
+      {Array.from({length:4},(_,i)=>{const b=blocks[i];const active=!confirmed&&observed&&selectedPosition===i+1;return <div className="txr-hexunit" key={i}><div className={"txr-hex"+(active?" active":"")}><span>⬡</span></div><strong>~{(i+1)*10} min</strong><small>{b?.feeRange?.length===2?number(b.feeRange[0])+"–"+number(b.feeRange[1])+" sat/vB":"Fee range unavailable"}</small><small>{number(b?.transactionCount)} waiting txs</small>{active&&<b className="txr-marker">↑ Your transaction</b>}</div>})}
      </div>
-     <div className={confirmed?styles.confirmedPill:styles.pendingPill}><i/>{confirmed?"Confirmed":observed?"Pending":"Not found"}</div>
-    </header>
-    <section className={styles.network} aria-label="Your transaction's projected position in the live Bitcoin network">
-     <AmbientHoneycomb/><div className={styles.blockRow}>
-      <div className={styles.blockUnit}>
-       <div className={styles.confirmedHex}><HexArtwork confirmed/><div className={styles.check}>✓</div><b>CONFIRMED</b><strong>#{number(overview?.btc?.height)}</strong><small>{number(blocks[0]?.transactionCount)} transactions</small><small>Latest confirmed block</small></div>
-       <div className={styles.confirmedCaption}>Latest block<br/><span>Just confirmed</span></div>
-      </div>
-      {Array.from({length:4},(_,i)=>{const block=blocks[i];const isMatch=!confirmed&&observed&&selectedPosition===i+1;return <div className={styles.blockUnit} key={i}>
-       <div className={isMatch?styles.selectedHex:styles.pendingHex}>
-        <HexArtwork active={isMatch}/><Honeycomb/>
-        <div className={styles.hexContent}>
-         {i===0&&<b>NEXT</b>}
-         <strong>#{overview?.btc?.height!=null?number(overview.btc.height+i+1):"—"}</strong>
-         <em>~{(i+1)*10} min</em>
-         <small>{block?.feeRange?.length===2?number(block.feeRange[0])+"–"+number(block.feeRange[1])+" sat/vB":block?.feeRange?.length===1?number(block.feeRange[0])+" sat/vB":"Fee range unavailable"}</small>
-        </div>
-       </div>
-       {isMatch?<div className={styles.matchLabel}><span>YOUR TRANSACTION</span><small>May confirm here</small></div>:<div className={styles.blankLabel}/>}
-      </div>})}
-     </div>
-     <p className={styles.projectionNote}>{confirmed?"Your transaction is already confirmed. The gold blocks show upcoming network projections.":observed?"Your highlighted block is a fee-based estimate, not a guaranteed place in line. Bitcoin block times vary.":"The blocks show network estimates; we haven't located your transaction yet."}</p>
-    </section>
-    <section className={styles.summary} aria-label="Bitcoin transaction status and confirmation details">
-     <div className={styles.summarySectionHeading}><span className={styles.summarySectionNumber}>1</span><h2>WHERE IS MY TRANSACTION?</h2></div>
-     <div className={styles.summaryGrid}>
-      <div className={styles.fact}>
-       <div className={styles.factTop}><span className={styles.factIcon}>⌛</span><div><div className={styles.factLabel}>STATUS</div><div className={styles.factValue}><strong>{confirmed?"Confirmed":observed?"Pending":"Not found"}</strong></div></div></div>
-       <p>{confirmed?"Your transaction has been included in a Bitcoin block.":observed?"Your transaction has been seen on the Bitcoin network but is not yet included in a block.":"We could not find this transaction on the network. Check its ID."}</p>
-      </div>
-      <div className={styles.fact}>
-       <div className={styles.factTop}><span className={styles.factIcon+" "+styles.factIconTeal}>✓</span><div><div className={styles.factLabel}>CONFIRMATIONS</div><div className={styles.factValue}><strong>{confirmed?number(confirmations):"0"} / 6</strong></div></div></div>
-       <p>{confirmed?"Each new block adds another confirmation. Some recipients may require six.":"Zero confirmations means it has not yet been included in a block. Each new block adds a confirmation."}</p>
-      </div>
-      <div className={styles.fact}>
-       <div className={styles.factTop}><span className={styles.factIcon}>◷</span><div><div className={styles.factLabel}>ESTIMATED CONFIRMATION</div><div className={styles.factValue}><strong>{confirmed?"Confirmed":selectedPosition?"~"+selectedPosition*10+" minutes":"Unavailable"}</strong></div></div></div>
-       <p>{confirmed?"Already recorded on the blockchain.":selectedPosition?"Based on current network activity. This is an estimate, not a guarantee.":"There is not enough information for a reliable estimate."}</p>
-      </div>
-      <div className={styles.fact}>
-       <div className={styles.factTop}><span className={styles.factIcon}>≋</span><div><div className={styles.factLabel}>FEE RATE</div><div className={styles.factValue}><strong>{rate(feeRate)}</strong></div></div></div>
-       <p>{feeRate==null?"Fee-rate data is unavailable.":"This is your fee per unit of transaction size. Higher fees typically confirm faster."}</p>
-      </div>
-      <div className={styles.fact}>
-       <div className={styles.factTop}><span className={styles.factIcon}>▥</span><div><div className={styles.factLabel}>COMPETITIVENESS</div><div className={styles.factValue}><strong>{!observed?"Unknown":confirmed?"Confirmed":networkFee==null||feeRate==null?"Unavailable":feeRate>=networkFee?"At or above":"Below"}{observed&&!confirmed&&networkFee!=null&&feeRate!=null?<small>{feeRate>=networkFee?"network fee guide":"network fee guide"}</small>:null}</strong></div></div></div>
-       <p>{!observed?"We need to find the transaction before comparing its fee.":confirmed?"The transaction has already confirmed.":networkFee==null||feeRate==null?"A current network fee comparison is unavailable.":feeRate>=networkFee?"Your fee meets or exceeds the current network fee guide for new transactions.":"Your fee is below the current network guide and may take longer to confirm."}</p>
-      </div>
-     </div>
-     <div className={styles.summaryFooter}><div>Transaction ID <code title={txid}>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"▢ Copy"}</button></div><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">View on Mempool.space ↗</a></div>
-    </section>
-   <section className={styles["pt-story"]}>
-    <div className={styles["pt-story-eyebrow"]}>THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
-    <h2>Your Bitcoin transaction, <em>in plain English.</em></h2>
-    <p className={styles["pt-story-sub"]}>Real blockchain data. Clear explanations.</p>
-    <div className={styles["pt-story-intro"]}>
-     <div className={styles["pt-story-introicon"]} aria-hidden="true">✦</div>
-     <div><h3>Your transaction, explained</h3>
-      <p>{!observed?"We cannot currently find this transaction on the public Bitcoin network. This does not by itself mean your Bitcoin is lost. Check the transaction ID and ask the sending wallet or exchange whether it was broadcast.":confirmed?"Good news: this transaction has been included in Bitcoin block #"+number(blockHeight)+" and now has "+confirmations+" confirmation"+(confirmations===1?"":"s")+". The Bitcoin network has recorded it. If your wallet or exchange still shows pending, it may be waiting for additional confirmations or its own processing.":"Your transaction has been seen on the Bitcoin network and is waiting for a miner to include it in a block. This is a normal part of sending Bitcoin. "+(selectedPosition?"Based on the current fee ranges, it may be included in approximately "+selectedPosition*10+" minutes, although that estimate can change.":"We cannot give a dependable confirmation time from the current network data.")}</p>
-      {observed&&<p>{inputTotal!=null&&outputTotal!=null?"The transaction spends "+btc(inputTotal)+" from "+inputs.length+" earlier Bitcoin output"+(inputs.length===1?"":"s")+" and creates "+outputs.length+" new output"+(outputs.length===1?"":"s")+" totaling "+btc(outputTotal)+".":"The transaction uses "+inputs.length+" input"+(inputs.length===1?"":"s")+" and creates "+outputs.length+" new output"+(outputs.length===1?"":"s")+"."} {tx?.fee!=null?"The difference includes a Bitcoin network fee of "+number(tx.fee)+" sats paid to miners.":""} Some outputs may be payments while others may return change to the sender; public blockchain data cannot reliably identify their owners.</p>}
-      <p className={styles["pt-story-takeaway"]}>{!observed?"What to do: verify the ID and broadcast status with the sender. Never share your recovery phrase.":confirmed?"What to do: no fee action is needed. If the recipient has not credited the deposit, check its confirmation requirements.":rbf?"What to do: you can usually wait. If the payment is urgent and you control the sending wallet, check whether it supports increasing the fee. Avoid sending a duplicate payment.":"What to do: you can usually wait. If it is delayed, ask your sending wallet about available acceleration options; avoid sending a duplicate payment."}</p>
-     </div>
-    </div>
-    <div className={styles["pt-story-data"]}>
-     <h3>UNDERSTANDING YOUR TRANSACTION</h3>
-     <div className={styles.understandingGrid}>
+     <p className="txr-timeline-note">{confirmed?"Your transaction is already confirmed. The gold hexagons show projected future blocks.":!observed?"Your transaction has not been located on the network yet.":"The highlighted hexagon is a fee-based estimate, not a guaranteed queue position."}</p>
+     <div className="txr-overview"><h2>Transaction Overview</h2><div className="txr-overview-grid">
       {[
-       {icon:"₿",label:"Network Fee",value:tx?.fee==null?"Unavailable":number(tx.fee)+" sats",help:"The amount this transaction pays to Bitcoin miners. It is separate from any withdrawal fee charged by a wallet or exchange."},
-       {icon:"≋",label:"Fee Rate",value:rate(feeRate),help:"How many satoshis are paid per virtual byte. A higher fee rate can improve confirmation priority, but cannot guarantee timing."},
-       {icon:"⇄",label:"Bitcoin in Outputs",value:btc(outputTotal),help:"The total Bitcoin in the transaction's new outputs. Some may be change returned to the sender, not a single recipient's payment."},
-       {icon:"⬡",label:"Transaction Size",value:tx?.size==null?"Unavailable":number(tx.size)+" bytes",help:"The transaction's raw size in bytes. Its fee-paying virtual size can differ because Bitcoin discounts some witness data."},
-       ...(understandingExpanded?[
-        {icon:"↗",label:"Inputs & Outputs",value:inputs.length+" inputs · "+outputs.length+" outputs",help:"Inputs spend earlier Bitcoin outputs. New outputs can represent payments or change returned to the sender."},
-        {icon:"▤",label:"Virtual Size",value:tx?.vsize!=null?number(tx.vsize)+" vB":tx?.weight==null?"Unavailable":number(Math.ceil(tx.weight/4))+" vB",help:"The fee-paying size of this transaction, calculated from its weight. Bitcoin fee rates use virtual bytes."},
-        {icon:"◈",label:"Weight",value:tx?.weight==null?"Unavailable":number(tx.weight)+" WU",help:"Bitcoin's measure of how much block capacity this transaction consumes."},
-        {icon:"↻",label:"Fee Replacement",value:!observed?"Unknown":rbf?"RBF signaled":"Opt-in RBF not signaled",help:"Replace-by-fee signaling can allow a sending wallet to replace an unconfirmed transaction with a higher-fee version. Wallet policies vary."}
-       ]:[])
-      ].map(topic=><article className={styles.understandingCard} key={topic.label}>
-       <div className={styles.understandingIcon} aria-hidden="true"><span>{topic.icon}</span></div>
-       <h4>{topic.label}</h4>
-       <p>{topic.help}</p>
-       <div className={styles.understandingExample}><small>YOUR TRANSACTION</small><strong>{topic.value}</strong></div>
-      </article>)}
-     </div>
-     <button type="button" className={styles.understandingMore} aria-expanded={understandingExpanded} onClick={()=>setUnderstandingExpanded(v=>!v)}>{understandingExpanded?"Show Fewer Explanations":"Show 4 More Explanations"} <span aria-hidden="true">{understandingExpanded?"⌃":"⌄"}</span></button>
-     {understandingExpanded&&<details className={styles["pt-story-advanced"]}><summary><b>Explore additional technical details</b><span>Version, locktime, transaction ID, and raw blockchain data ↓</span></summary>
-      {[
-       ["Version",String(tx?.version??"Unavailable"),"The version field used by Bitcoin's transaction validation rules."],
-       ["Locktime",String(tx?.locktime??"Unavailable"),"A value that can restrict when a transaction becomes eligible for inclusion, depending on input sequence settings. Zero means no locktime restriction."],
-       ["Transaction ID",txid,"The unique transaction identifier used to look up and verify this payment on Bitcoin."]
-      ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong className={styles["pt-story-wrap"]}>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
-      <details className={styles["pt-story-raw"]}><summary>View raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details>
-     </details>}
-    </div>
-    <section className={styles["pt-story-flow"]} aria-label="Bitcoin transaction inputs and outputs">
-     <h3>WHERE DID THE BITCOIN GO?</h3>
-     <p className={styles["pt-story-flowlead"]}>Follow the Bitcoin from earlier outputs into the new outputs created by this transaction. These are blockchain movements, not verified identities of senders or recipients.</p>
-     <div className={styles["pt-story-flowgrid"]}>
-      <div className={styles["pt-story-flowendpoint"]}><small>FROM · {inputs.length} INPUT{inputs.length===1?"":"S"}</small><strong>{btc(inputTotal)}</strong><small>Earlier Bitcoin outputs spent</small></div>
-      <div className={styles["pt-story-path"]} aria-hidden="true"><span className={styles["pt-story-linegold"]}/><div className={styles["pt-story-coin"]}>₿</div><span className={styles["pt-story-lineteal"]}/></div>
-      <div className={styles["pt-story-flowendpoint"]}><small>TO · {outputs.length} OUTPUT{outputs.length===1?"":"S"}</small><strong>{btc(outputTotal)}</strong><small>New Bitcoin outputs created</small></div>
-     </div>
-     <div className={styles["pt-story-flowfooter"]}><span>Network fee: <b>{tx?.fee==null?"Unavailable":number(tx.fee)+" sats"}</b></span><span>Outputs can include payments and change returned to the sender.</span></div>
-     <div className={styles["pt-story-addressgrid"]}>
-      <div><h4>Inputs <span>({inputs.length})</span></h4><p className={styles["pt-story-addresshelp"]}>Where the Bitcoin came from</p>{inputs.slice(0,8).map((x,i)=><div className={styles["pt-story-addressrow"]} key={i}><span>Input {i+1}{x.prevout?.scriptpubkey_address?<a href={"/btc/address/"+x.prevout.scriptpubkey_address} title={x.prevout.scriptpubkey_address}>{short(x.prevout.scriptpubkey_address)} ↗</a>:<small>{short(x.txid??"Source unavailable")}</small>}</span><strong>{btc(x.prevout?.value)}</strong></div>)}{inputs.length>8&&<details className={styles["pt-story-showall"]}><summary>Show all {inputs.length} inputs ↓</summary>{inputs.slice(8).map((x,i)=><div className={styles["pt-story-addressrow"]} key={i+8}><span>Input {i+9}{x.prevout?.scriptpubkey_address?<a href={"/btc/address/"+x.prevout.scriptpubkey_address}>{short(x.prevout.scriptpubkey_address)} ↗</a>:<small>{short(x.txid??"Source unavailable")}</small>}</span><strong>{btc(x.prevout?.value)}</strong></div>)}</details>}{inputs.length===0&&<p>Input details unavailable.</p>}</div>
-      <div><h4>Outputs <span>({outputs.length})</span></h4><p className={styles["pt-story-addresshelp"]}>Where the Bitcoin was directed</p>{outputs.slice(0,8).map((x,i)=><div className={styles["pt-story-addressrow"]} key={i}><span>Output {i+1}{x.scriptpubkey_address?<a href={"/btc/address/"+x.scriptpubkey_address} title={x.scriptpubkey_address}>{short(x.scriptpubkey_address)} ↗</a>:<small>Non-address output</small>}</span><strong>{btc(x.value)}</strong></div>)}{outputs.length>8&&<details className={styles["pt-story-showall"]}><summary>Show all {outputs.length} outputs ↓</summary>{outputs.slice(8).map((x,i)=><div className={styles["pt-story-addressrow"]} key={i+8}><span>Output {i+9}{x.scriptpubkey_address?<a href={"/btc/address/"+x.scriptpubkey_address}>{short(x.scriptpubkey_address)} ↗</a>:<small>Non-address output</small>}</span><strong>{btc(x.value)}</strong></div>)}</details>}{outputs.length===0&&<p>Output details unavailable.</p>}</div>
-     </div>
+       {icon:"⬡",label:"Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",help:confirmed?"Included in a block.":observed?"Waiting for a block.":"Not seen on network."},
+       {icon:"◷",label:confirmed?"Confirmations":"Estimated Wait",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"Additional blocks add confirmations.":"Based on current fees."},
+       {icon:"≋",label:"Fee Rate",value:rate(feeRate),help:"Fee paid per virtual byte."},
+       {icon:"₿",label:"Total Outputs",value:btc(outputTotal),help:"May include change back to sender."}
+      ].map(x=><div className="txr-overview-item" key={x.label}><span className="txr-metric-icon">{x.icon}</span><div><small>{x.label}</small><strong>{x.value}</strong><p>{x.help}</p></div></div>)}
+     </div></div>
     </section>
-    <p className={styles["pt-story-source"]}>Live Bitcoin blockchain data · <a href={"https://mempool.space/tx/"+txid} target="_blank" rel="noopener noreferrer">Verify on Mempool.space ↗</a></p>
-   </section>
-  </>}
-  </div>
-  <p className="pt-tx-footnote">Live data checks for updates every second · No wallet connection needed · Fee estimates are not guarantees.</p>
+    <section className="txr-summary"><div className="txr-summary-copy"><span className="txr-section-icon">✦</span><div><h2>Your Transaction, Explained</h2><p>{summary}</p><p className="txr-next">{confirmed?"Next step: if your deposit still shows pending, check your wallet or exchange's required confirmations.":!observed?"Next step: verify the transaction ID and whether the sender broadcast it.":rbf?"Next step: you can wait, or check whether your sending wallet supports increasing the fee.":"Next step: you can usually wait; contact your sending wallet if it remains delayed."}</p></div></div><div className="txr-summary-status"><span className={confirmed?"is-confirmed":""}>{confirmed?"✓":observed?"◷":"?"}</span><strong>{confirmed?"Confirmed":observed?"Pending":"Not found"}</strong><small>{confirmed?"Recorded in block #"+number(blockHeight):observed?"Waiting for confirmation":"Check broadcast status"}</small></div></section>
+    <section className="txr-details"><div className="txr-sectionhead"><div><h2>Understanding Your Transaction</h2><p>The four most useful details, explained in plain English.</p></div><button type="button" className="txr-more" aria-expanded={understandingExpanded} onClick={()=>setUnderstandingExpanded(v=>!v)}>{understandingExpanded?"Show Fewer Details":"Show 4 More Details"} <span aria-hidden="true">{understandingExpanded?"⌃":"⌄"}</span></button></div>
+     <div className="txr-cards">{keyDetails.map(x=><article className="txr-card" key={x.title}><div className="txr-card-icon">{x.icon}</div><h3>{x.title}</h3><strong>{x.value}</strong><p>{x.help}</p></article>)}</div>
+     {understandingExpanded&&<details className="txr-technical"><summary>View technical transaction details and raw data</summary><div><span>Transaction ID</span><code>{txid}</code></div><div><span>Version</span><strong>{String(tx?.version??"Unavailable")}</strong></div><div><span>Locktime</span><strong>{String(tx?.locktime??"Unavailable")}</strong></div><details><summary>Raw blockchain data</summary><pre>{JSON.stringify(result,null,2)}</pre></details></details>}
+    </section>
+    <section className="txr-io"><div className="txr-sectionhead"><div><h2>Inputs &amp; Outputs</h2><p>Where the Bitcoin came from and where the new outputs go. Addresses do not identify their owners.</p></div></div><div className="txr-io-grid">
+     <div className="txr-io-panel"><div className="txr-io-heading"><h3>Inputs <span>({inputs.length})</span></h3><strong>{btc(inputTotal)}</strong></div><p>Earlier Bitcoin outputs used in this transaction</p>{inputs.slice(0,8).map((x,i)=><div className="txr-io-row" key={i}><span><small>INPUT {i+1}</small>{x.prevout?.scriptpubkey_address?<a href={"/btc/address/"+x.prevout.scriptpubkey_address}>{short(x.prevout.scriptpubkey_address)} ↗</a>:<span>{short(x.txid??"Source unavailable")}</span>}</span><strong>{btc(x.prevout?.value)}</strong></div>)}{inputs.length>8&&<details className="txr-extra"><summary>Show all {inputs.length} inputs</summary>{inputs.slice(8).map((x,i)=><div className="txr-io-row" key={i+8}><span>{x.prevout?.scriptpubkey_address?<a href={"/btc/address/"+x.prevout.scriptpubkey_address}>{short(x.prevout.scriptpubkey_address)} ↗</a>:"Source unavailable"}</span><strong>{btc(x.prevout?.value)}</strong></div>)}</details>}{inputs.length===0&&<p>Input data unavailable.</p>}</div>
+     <div className="txr-io-panel"><div className="txr-io-heading"><h3>Outputs <span>({outputs.length})</span></h3><strong>{btc(outputTotal)}</strong></div><p>New Bitcoin outputs, including possible change</p>{outputs.slice(0,8).map((x,i)=><div className="txr-io-row" key={i}><span><small>OUTPUT {i+1}</small>{x.scriptpubkey_address?<a href={"/btc/address/"+x.scriptpubkey_address}>{short(x.scriptpubkey_address)} ↗</a>:<span>Non-address output</span>}</span><strong>{btc(x.value)}</strong></div>)}{outputs.length>8&&<details className="txr-extra"><summary>Show all {outputs.length} outputs</summary>{outputs.slice(8).map((x,i)=><div className="txr-io-row" key={i+8}><span>{x.scriptpubkey_address?<a href={"/btc/address/"+x.scriptpubkey_address}>{short(x.scriptpubkey_address)} ↗</a>:"Non-address output"}</span><strong>{btc(x.value)}</strong></div>)}</details>}{outputs.length===0&&<p>Output data unavailable.</p>}</div>
+    </div></section>
+    <footer className="txr-footer"><span>Transaction ID: <code>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"Copy"}</button></span><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">Verify on Mempool.space ↗</a></footer>
+   </>}
+  </div><p className="txr-disclaimer">Live Bitcoin data refreshes automatically. Confirmation estimates are not guarantees. Never share a recovery phrase.</p>
  </main>;
 }
