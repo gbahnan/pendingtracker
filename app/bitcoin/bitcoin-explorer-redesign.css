@@ -67,3 +67,40 @@
 @keyframes freshNowReveal{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:1050px){.fresh-now-main{grid-template-columns:1fr;gap:18px}.fresh-now-price{padding:0}.fresh-now-metrics{border-top:1px solid #294451;padding-top:15px}.fresh-now-metric:first-child{border-left:0}.fresh-now-metric{padding-left:13px}.fresh-price-chart{max-width:380px}}
 @media(max-width:620px){.fresh-now-snapshot{padding:20px 16px}.fresh-now-top{align-items:flex-start}.fresh-now-live{font-size:9px}.fresh-now-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 0}.fresh-now-metric:nth-child(odd){border-left:0}.fresh-now-metric:nth-child(n+3){border-top:1px solid #294451;padding-top:14px}.fresh-now-metric strong{font-size:20px}.fresh-price-values strong{font-size:32px}}
+
+/* Premium simplified explorer tabs: isolated to the lower explorer section. */
+.fresh-explore-premium{background:radial-gradient(ellipse at 92% 2%,#2a1b0c55,transparent 35%),#05131f;border-color:#254252;padding:30px 28px 32px}
+.fresh-explore-title{position:relative;overflow:hidden;align-items:center}
+.fresh-explore-title h2 em{font-style:normal;color:#f7b63f}
+.fresh-explore-decoration{width:88px;height:92px;flex-shrink:0;display:grid;place-items:center;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);background:linear-gradient(135deg,#e7a637,#3b280e 50%,#b77819);font-size:49px;color:#ffd276;opacity:.8;text-shadow:0 0 18px #f3ae39}
+.fresh-tabs-six{grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-bottom:18px;border-color:#284659;background:#061522}
+.fresh-tabs-six button{display:flex;align-items:center;justify-content:center;gap:10px;padding:15px 6px;min-width:0;transition:background .2s,color .2s;font-weight:600}
+.fresh-tabs-six button.active{background:linear-gradient(180deg,#3a2b17,#171d21);color:#ffcc67;box-shadow:inset 0 -3px #ffbb43,0 4px 14px #d68d1e1f}
+.fresh-tabs-six button:hover:not(.active){background:#102538;color:#f5f8fc}
+.fresh-tab-icon{font-size:20px;color:#efb343;line-height:1}
+.fresh-explore-premium .fresh-explore-body{grid-template-columns:minmax(0,1.95fr) minmax(280px,.94fr);gap:18px}
+.fresh-data-premium,.fresh-explainer-premium{border-radius:15px;border-color:#254252;background:#061622;padding:25px 23px}
+.fresh-data-premium>h3{font-size:23px;letter-spacing:-.035em}
+.fresh-data-premium>p{margin-top:6px;margin-bottom:19px}
+.fresh-explore-scroll{width:100%;overflow-x:auto}
+.fresh-block-table .fresh-table-head,.fresh-block-table .fresh-table-row{grid-template-columns:1.05fr .9fr 1fr .8fr 1fr 1fr;min-width:660px;gap:10px}
+.fresh-block-table .fresh-table-row{display:grid;text-decoration:none;color:#e2eaf3;transition:background .18s;border-radius:4px}
+.fresh-block-table .fresh-table-row:hover{background:#24301f80}
+.fresh-block-table .fresh-table-link{color:#ffbd49;font-weight:700}
+.fresh-data-premium .fresh-table-head{color:#8fa9bb}
+.fresh-data-premium .fresh-advanced-button{margin-top:18px}
+.fresh-explainer-premium{background:radial-gradient(ellipse at 100% 0,#a46d1c1e,transparent 45%),linear-gradient(145deg,#0d2230,#071723)}
+.fresh-explainer-premium .fresh-explainer-icon{margin-bottom:9px;font-size:23px}
+.fresh-explainer-premium h3{font-size:25px;letter-spacing:-.04em;margin:12px 0 10px}
+.fresh-explainer-premium>p{font-size:13px;line-height:1.65}
+.fresh-explain-divider{height:1px;background:#2b4552;margin:18px 0}
+.fresh-explain-sub{display:flex;align-items:flex-start;gap:13px}
+.fresh-explain-sub-icon{display:grid;place-items:center;flex-shrink:0;width:34px;height:37px;border:1px solid #9c7138;border-radius:10px;background:#3b2b175e;color:#ffc04d;font-size:20px}
+.fresh-explain-sub h4{font-size:14px;margin:0 0 5px;color:#f1f5fb}
+.fresh-explain-sub p{font-size:12px;line-height:1.65}
+.fresh-explain-learn{margin-top:19px!important;padding:13px 14px;border:1px solid #ae7b2c;border-radius:10px;background:#a26a1714}
+.fresh-explain-learn summary{display:flex;justify-content:space-between;gap:10px;color:#ffc04b;font-size:13px}
+.fresh-explain-learn p{font-size:12px!important}
+.fresh-insights-note{font-size:11px!important;color:#91a7b9!important;margin-top:12px!important}
+@media(max-width:1050px){.fresh-explore-premium .fresh-explore-body{grid-template-columns:1fr}.fresh-tabs-six button{gap:5px;font-size:12px}.fresh-tab-icon{font-size:17px}}
+@media(max-width:650px){.fresh-explore-premium{padding:23px 14px}.fresh-explore-decoration{width:55px;height:60px;font-size:32px}.fresh-tabs-six{grid-template-columns:repeat(3,minmax(0,1fr))}.fresh-tabs-six button{padding:12px 4px;border-bottom:1px solid #254252}.fresh-data-premium,.fresh-explainer-premium{padding:19px 15px}.fresh-explore-title h2{font-size:28px}}
