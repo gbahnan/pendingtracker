@@ -4,7 +4,7 @@ import {useCallback,useEffect,useMemo,useState} from "react";
 import "./ethereum-transaction.css";
 
 type TokenTransfer={from?:string|null;to?:string|null;symbol?:string|null;name?:string|null;decimals?:number|null;amount?:string|null;tokenId?:string|null;type?:string|null};
-type Insights={available?:boolean;status?:string|null;method?:string|null;from?:string|null;to?:string|null;createdContract?:string|null;blockNumber?:number|string|null;gasUsed?:number|string|null;gasPrice?:number|string|null;fee?:string|null;nonce?:number|string|null;revertReason?:string|null;tokenTransfers?:TokenTransfer[];tokenTransfersHasMore?:boolean;tokenTransfersAvailable?:boolean};
+type Insights={available?:boolean;status?:string|null;method?:string|null;from?:string|null;to?:string|null;createdContract?:string|null;blockNumber?:number|string|null;gasUsed?:number|string|null;gasPrice?:number|string|null;fee?:string|null;nonce?:number|string|null;revertReason?:string|null;receiptVerified?:boolean;networkConfirmations?:number|null;maxFeePerGas?:string|null;maxPriorityFeePerGas?:string|null;tokenTransfers?:TokenTransfer[];tokenTransfersHasMore?:boolean;tokenTransfersAvailable?:boolean};
 type Tx={confirmed?:boolean;failed?:boolean;confirmations?:number|string;valueWei?:string;value?:string;from?:string;to?:string;blockNumber?:number|string;block_number?:number|string;diagnosis?:{summary?:string}};
 const short=(s:string)=>s.length>26?s.slice(0,14)+"…"+s.slice(-9):s;
 const amount=(value:unknown,decimals=18,digits=8)=>{try{const n=BigInt(String(value??"0"));const negative=n<0n?"-":"";const raw=(n<0n?-n:n).toString().padStart(decimals+1,"0");const whole=decimals?raw.slice(0,-decimals):raw;const fraction=decimals?raw.slice(-decimals).slice(0,digits).replace(/0+$/,""):"";return negative+whole+(fraction?"."+fraction:"")}catch{return "Unavailable"}};
@@ -39,10 +39,10 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
   finally{setLoading(false)}
  },[hash,valid]);
  useEffect(()=>{void refresh();const id=setInterval(()=>void refresh(),15000);return()=>clearInterval(id)},[refresh]);
- const confirmed=Boolean(tx?.confirmed??(Number(tx?.confirmations??0)>0));
+ const confirmed=Boolean(insights?.receiptVerified||(tx?.confirmed??(Number(tx?.confirmations??0)>0)));
  const failed=Boolean(tx?.failed||(/error|fail/i.test(insights?.status??"")&&confirmed));
  const status=!tx?"Unavailable":failed?"Failed":confirmed?"Confirmed":"Pending";
- const count=Number(tx?.confirmations??0);
+ const count=Number(insights?.networkConfirmations??tx?.confirmations??0);
  const valueWei=tx?.valueWei??tx?.value??"0";
  const ethAmount=amount(valueWei)+" ETH";
  const tokens=insights?.tokenTransfers??[];
@@ -56,7 +56,7 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
  const totalTokens=hasTokens?tokens.length+(insights?.tokenTransfersHasMore?"+":""):insights?.tokenTransfersAvailable?"0":"Unavailable";
  const explanation=!tx?"Transaction details are unavailable at the moment. Please try again shortly."
   :failed?"This transaction was included in an Ethereum block, but the requested operation did not complete successfully. This can happen when a smart contract rejects an operation or runs into an execution problem. Ethereum may still charge gas for the work performed, even when the operation fails."
-  :confirmed?"Your transaction has been recorded in an Ethereum block and currently has "+fmt(tx.confirmations??1)+" confirmation"+(count===1?"":"s")+". The network has processed it successfully. If a wallet or exchange still says pending, that service may be waiting for more confirmations or completing its own internal checks."
+  :confirmed?"Your transaction has been recorded in an Ethereum block and currently has "+fmt(insights?.networkConfirmations??tx.confirmations??1)+" confirmation"+(count===1?"":"s")+". The network has processed it successfully. If a wallet or exchange still says pending, that service may be waiting for more confirmations or completing its own internal checks."
   :"Your transaction has been broadcast and is awaiting inclusion in an Ethereum block. New blocks are typically proposed about every 12 seconds, but that does not guarantee when your transaction will be included. Gas settings, network activity and earlier pending transactions from the same account can affect the wait.";
  const activity=hasTokens?"The transaction includes "+tokens.length+(insights?.tokenTransfersHasMore?" or more":"")+" reported token movement"+(tokens.length===1&&!insights?.tokenTransfersHasMore?"":"s")+". Token movements are separate from any ETH sent directly.":contract?"This transaction interacts with an Ethereum contract. Contract calls can perform actions without sending ETH directly, and the method name alone does not establish everything that happened.":"The direct ETH amount is "+ethAmount+". This is the value attached to the transaction, not the gas fee.";
  const next=failed?"What to do next: check the reported failure reason and your wallet activity before retrying. Avoid repeating a transaction without understanding why it failed.":confirmed?"What to do next: no acceleration is needed. If the receiving service has not credited your funds, check its deposit requirements using this transaction hash.":"What to do next: you can usually wait. If it is urgent, check whether your wallet supports speeding up or replacing this transaction with the same nonce. Avoid sending a duplicate payment.";
@@ -67,7 +67,7 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
  const metric=[
  {icon:"◆",label:"Direct ETH Value",value:ethAmount,help:"ETH attached to this transaction. Token transfers are shown below."},
  {icon:"≋",label:"Network Fee (Gas)",value:gasFee,help:"Gas paid for network processing; this can apply even if execution fails."},
- {icon:"◷",label:confirmed?"Confirmations":"Confirmation Status",value:confirmed?fmt(tx?.confirmations??1):"Waiting",help:confirmed?"New blocks add confirmations. Finality is a separate milestone.":"No guaranteed confirmation time; gas settings and nonce matter."},
+ {icon:"◷",label:confirmed?"Confirmations":"Confirmation Status",value:confirmed?fmt(insights?.networkConfirmations??tx?.confirmations??1):"Waiting",help:confirmed?"New blocks add confirmations. Finality is a separate milestone.":"No guaranteed confirmation time; gas settings and nonce matter."},
  {icon:"⬡",label:confirmed?"Block Number":"Transaction Status",value:confirmed?fmt(block):status,help:confirmed?"The block where this transaction was included.":"Waiting to be included in a block."}
  ];
  const details=[
