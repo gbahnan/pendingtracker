@@ -28,7 +28,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   type Chamber={x:number;y:number;w:number;h:number;kind:string};
   const particles=Array.from({length:180},(_,i)=>({
    offset:(i*0.618033988749895)%1,
-   speed:.006+(i%6)*.001,
+   speed:.0045+(i%6)*.00065,
    angle:i*2.39996,
    radius:1.7+(i%4)*.42,
    lane:(i*.754877666)%1
@@ -52,9 +52,12 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   const point=(box:Chamber,u:number,v:number)=>{
    const cx=box.x+box.w/2,cy=box.y+box.h/2;
    if(box.kind==="pool")return {x:cx+(u-.5)*box.w*.78,y:cy+(v-.5)*box.h*.69};
-   const dy=(v-.5)*box.h*.68;
-   const horizontal=box.w*.34*(1-Math.abs(dy)/(box.h*.8));
-   return {x:cx+(u*2-1)*horizontal,y:cy+dy};
+   // Cover the usable hexagon interior, including upper/lower and side regions.
+   const ny=Math.max(-1,Math.min(1,(v-.5)*2));
+   const nx=Math.max(-1,Math.min(1,(u-.5)*2));
+   const dy=ny*box.h*.43;
+   const halfWidth=box.w*.42*(1-.48*Math.abs(ny));
+   return {x:cx+nx*halfWidth,y:cy+dy};
   };
   const draw=(now:number)=>{
    const dt=Math.min((now-last)/1000||0,.05);last=now;elapsed+=dt;
@@ -75,8 +78,8 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
      for(let j=0;j<7;j++){
       const p=particles[65+(chamber*7+j)%105];
       const a=elapsed*(.72+(j%4)*.12)+p.angle+chamber*.73;
-      const u=.5+Math.sin(a)*(.18+p.lane*.12);
-      const v=.5+Math.cos(a*1.13)*(.18+(j%3)*.035);
+      const u=.5+Math.sin(a)*(.37+p.lane*.075);
+      const v=.5+Math.cos(a*1.13)*(.36+(j%3)*.03);
       const pos=point(box,u,v);
       drawBall(pos.x,pos.y,p.radius*.82,box.kind==="blue",.69);
      }
@@ -90,15 +93,16 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
      const index=Math.min(layout.length-2,Math.floor(scaled));
      const local=scaled-index,box=layout[index];
      const a=elapsed*(.7+(i%5)*.12)+p.angle;
-     const u=.5+Math.sin(a)*(.19+p.lane*.11);
-     const v=.5+Math.cos(a*1.17)*(.19+(i%3)*.035);
+     const u=.5+Math.sin(a)*(.35+p.lane*.08);
+     const v=.5+Math.cos(a*1.17)*(.34+(i%3)*.035);
      let pos=point(box,u,v),blue=box.kind==="blue";
-     if(local>.90){
-      const next=layout[index+1],t=(local-.90)/.10;
-      const from=point(box,.86,.5+Math.sin(a)*.07);
-      const to=point(next,.14,.5+Math.sin(a+.6)*.07);
-      const eased=t*t*(3-2*t);
-      pos={x:from.x+(to.x-from.x)*eased,y:from.y+(to.y-from.y)*eased+Math.sin(t*Math.PI)*Math.sin(p.angle)*5};
+     if(local>.58){
+      // Spend 42% of each stage's lifetime drifting to the next chamber.
+      // Linear interpolation avoids the cannon-like acceleration of smoothstep.
+      const next=layout[index+1],t=(local-.58)/.42;
+      const from=point(box,.94,.5+Math.sin(p.angle)*.12);
+      const to=point(next,.06,.5+Math.sin(p.angle+.6)*.12);
+      pos={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t+Math.sin(t*Math.PI)*Math.sin(p.angle)*8};
       blue=t>.55?next.kind==="blue":blue;
      }
      drawBall(pos.x,pos.y,p.radius,blue,.84);
