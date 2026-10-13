@@ -177,3 +177,18 @@
 .bex-wallet-row button[aria-pressed=true]{border-color:#57ae93;color:#7fe1bf}
 .bex-wallet-note{font-size:11px;line-height:1.6;color:#96b0c2;margin:12px 0 0}
 @media(max-width:700px){.bex-glance-metrics{gap:13px;grid-template-columns:repeat(2,minmax(0,1fr))}.bex-glance-metrics strong{font-size:21px}.bex-wallets .bex-heading{flex-wrap:wrap}.bex-wallet-row{align-items:flex-start}.bex-wallet-row button{padding:7px 9px}}
+
+/* Single connected live-network experience: preserve existing gold theme and hexagon timeline. */
+.bex-network-flow{margin:0 0 24px;padding:0 0 12px;border-bottom:1px solid #294051}
+.bex-network-flow .bex-at-a-glance{margin:0;padding:13px 0 0;border-bottom:0}
+.bex-network-flow .bex-glance-metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:14px 0 10px}
+.bex-network-flow .bex-glance-metrics>div{padding:2px 15px 4px 0;border-right:1px solid #203747}
+.bex-network-flow .bex-glance-metrics>div:last-child{border-right:0}
+.bex-network-flow .bex-glance-explain{padding:10px 0 15px;border-top:0}
+.bex-network-flow .bex-estimates{margin:0;padding-top:18px;border-top:1px solid #294051}
+.bex-network-flow .bex-estimates-slot{border:0;border-radius:0;background:transparent;padding:8px 0 0}
+.bex-network-flow .bex-estimates .bex-heading h2{font-size:clamp(22px,2.1vw,29px)!important}
+.bex-flow-controls{display:flex;align-items:center;gap:17px;flex-wrap:wrap;justify-content:flex-end}
+.bex-flow-controls .bex-live{padding-top:0}
+.bex-network-flow .bex-stats{margin:17px 0 0;padding-top:18px;border-top:1px solid #294051}
+@media(max-width:700px){.bex-network-flow .bex-glance-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 9px}.bex-network-flow .bex-glance-metrics>div:nth-child(2){border-right:0}.bex-flow-controls{justify-content:flex-start;gap:10px}.bex-network-flow .bex-at-a-glance .bex-heading{flex-wrap:wrap}}
