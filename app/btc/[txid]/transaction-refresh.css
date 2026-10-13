@@ -154,3 +154,35 @@
  .txr-explorer-motion .motion-halo{transform:scale(.91);transform-origin:center top}
  .txr-explorer-motion .motion-cell:hover .motion-halo{transform:scale(.91) translateY(-3px)}
 }
+
+/* 2026 unified transaction snapshot + unboxed network + expandable explanations */
+.txr-snapshot-v2,.txr-understand-v2{border:1px solid #946521;border-radius:17px;background:linear-gradient(145deg,#0b1721,#07121b 72%,#10140f);padding:23px 24px;margin:24px 0;box-shadow:0 10px 35px #0003}
+.txr-v2-kicker{font-size:10px;font-weight:850;letter-spacing:.16em;color:#efb44d}
+.txr-snapshot-v2-head,.txr-v2-network-head,.txr-v2-understand-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:20px}
+.txr-snapshot-v2 h2,.txr-network-v2 h2,.txr-understand-v2 h2{font-size:clamp(22px,2.5vw,30px)!important;margin:5px 0 7px!important;color:#f5f7fa!important}
+.txr-snapshot-v2 h2 em,.txr-network-v2 h2 em,.txr-understand-v2 h2 em{font-style:normal;color:#f7b843}
+.txr-snapshot-v2-head p,.txr-v2-network-head p,.txr-v2-understand-head p{font-size:13px;color:#b5c5d3;margin:0}
+.txr-v2-status{text-align:right;flex-shrink:0}.txr-v2-status strong{display:block;padding:8px 14px;border:1px solid #9c6b22;border-radius:13px;color:#ffce71;background:#22180b}.txr-v2-status small{display:block;font-size:11px;color:#b6c7d3;margin-top:7px}
+.txr-v2-primary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.txr-v2-primary-card{display:flex;gap:11px;align-items:flex-start;border:1px solid #59441f;border-radius:11px;padding:16px 12px;min-width:0;background:linear-gradient(135deg,#111b22,#09141d);min-height:148px}
+.txr-v2-icon{width:43px;height:43px;display:grid;place-items:center;flex-shrink:0;border-radius:10px;background:radial-gradient(circle at 50% 35%,#624113,#211a0e 75%);color:#ffbe43;font-size:25px;box-shadow:0 0 15px #c583191c}
+.txr-v2-primary-card small,.txr-v2-secondary-item small{display:block;color:#bbcedb;font-size:12px}
+.txr-v2-primary-card strong{display:block;color:#fff;font-size:clamp(15px,1.45vw,21px);margin:6px 0;overflow-wrap:anywhere}
+.txr-v2-primary-card p{color:#adbfcd;font-size:12px;line-height:1.5;margin:0}
+.txr-v2-secondary{border-top:1px solid #425361;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-top:19px;padding-top:19px}
+.txr-v2-secondary-item{padding:0 11px;border-right:1px solid #2f4251;min-width:0}.txr-v2-secondary-item:first-child{padding-left:0}.txr-v2-secondary-item:last-child{border:0}.txr-v2-secondary-item strong{display:block;font-size:13px;color:#fff;margin-top:5px;overflow-wrap:anywhere}
+.txr-network-v2{margin:38px 0 34px;padding:0;background:transparent!important;border:0!important;box-shadow:none!important}
+.txr-network-v2 .txr-explorer-motion{margin:8px 0 10px}
+.txr-network-v2 .fresh-journey{background:transparent!important;border:0!important;box-shadow:none!important}
+.txr-network-v2 .txr-timeline-note{color:#a7b9c8;text-align:center;font-size:12px;margin:14px 0 0}
+.txr-understand-v2{margin-top:25px}
+.txr-v2-expand{border:1px solid #7d5c29;border-radius:20px;padding:9px 13px;color:#ffd07a;background:#101b23;cursor:pointer;white-space:nowrap}
+.txr-v2-explain-row{border:1px solid #5b421e;border-radius:10px;background:linear-gradient(120deg,#101b23,#0a151e);margin-top:9px;overflow:hidden}
+.txr-v2-explain-row summary{display:flex;align-items:center;gap:15px;padding:13px 15px;cursor:pointer;list-style:none}.txr-v2-explain-row summary::-webkit-details-marker{display:none}
+.txr-v2-explain-title{display:flex;flex-direction:column;gap:4px;flex:0 0 31%}.txr-v2-explain-title strong{color:#f4f6f9;font-size:15px}.txr-v2-explain-title small{color:#b6c7d6;font-size:12px}
+.txr-v2-explain-answer{flex:1;color:#c2d0db;font-size:12px;line-height:1.55;border-left:1px solid #344552;padding-left:20px}
+.txr-v2-chevron{font-size:21px;color:#f2b84d;margin-left:auto}.txr-v2-explain-row[open] .txr-v2-chevron{transform:rotate(180deg)}
+.txr-v2-explain-expanded{padding:15px 21px 19px 75px;border-top:1px solid #354351;color:#c3d1db;font-size:13px;line-height:1.7}
+.txr-understand-v2 .txr-technical{margin-top:17px}
+@media(max-width:1000px){.txr-v2-primary{grid-template-columns:repeat(2,minmax(0,1fr))}.txr-v2-secondary{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:17px}.txr-v2-secondary-item:nth-child(3){border:0}}
+@media(max-width:650px){.txr-snapshot-v2,.txr-understand-v2{padding:17px 12px}.txr-snapshot-v2-head,.txr-v2-network-head,.txr-v2-understand-head{flex-wrap:wrap}.txr-v2-status{text-align:left}.txr-v2-primary{gap:8px}.txr-v2-primary-card{padding:11px 9px;flex-direction:column}.txr-v2-primary-card strong{font-size:16px}.txr-v2-secondary{grid-template-columns:repeat(2,minmax(0,1fr))}.txr-v2-secondary-item:nth-child(3){border-right:1px solid #2f4251}.txr-v2-secondary-item:nth-child(2n){border:0}.txr-v2-explain-row summary{gap:10px;flex-wrap:wrap}.txr-v2-explain-title{flex:1}.txr-v2-explain-answer{flex:1 0 100%;border-left:0;border-top:1px solid #344552;padding:10px 0 0}.txr-v2-explain-expanded{padding:13px}}
