@@ -3,7 +3,7 @@ import {useEffect,useRef,useState} from "react";
 import "./BlockchainMotion.css";
 type Block={height:number|null;ageMinutes:number;transactionCount:number|null;id:string|null};
 type Projection={medianFee:number|null;feeRange:number[]|null};
-type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined;projections?:Projection[];trackedPosition?:number|null;trackedConfirmedHeight?:number|null};
+type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined;projections?:Projection[];trackedPosition?:number|null;trackedConfirmedHeight?:number|null;compactTransactionLabels?:boolean};
 const fmt=(n:number|null|undefined)=>n==null?"—":Math.round(n).toLocaleString("en-US");
 const times=[60,50,40,30,20,10];
 
@@ -13,7 +13,7 @@ function Hex({blue=false,time,feeText,seed=0}:{blue?:boolean;time?:number;feeTex
   <div className="motion-hex-content">{blue?<strong>₿</strong>:<><strong>~{time} MIN</strong><small>{feeText||"— sat/vB"}</small></>}</div>
  </div></div>
 }
-export default function BlockchainWebGL({pending,fee,blocks,projections=[],trackedPosition=null,trackedConfirmedHeight=null}:Props){
+export default function BlockchainWebGL({pending,fee,blocks,projections=[],trackedPosition=null,trackedConfirmedHeight=null,compactTransactionLabels=false}:Props){
  const viewport=useRef<HTMLDivElement>(null);
  const trackRef=useRef<HTMLDivElement>(null);
  const canvasRef=useRef<HTMLCanvasElement>(null);
@@ -134,7 +134,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
    <div ref={trackRef} className={"motion-track"+(newBlock?" motion-new":"")}><canvas ref={canvasRef} className="motion-canvas" aria-hidden="true"/>
     
     <div className="motion-cell mempool"><div className="motion-label"><strong>MEMPOOL</strong><span>{fmt(pending)} waiting transactions</span></div><div className="motion-pool"><span className="motion-pool-glow"/></div><div className="motion-caption"><strong>Unconfirmed transactions</strong></div></div>
-    {times.map((t,i)=><div className={"motion-cell motion-stage"+(trackedPosition===6-i?" motion-your-transaction":"")} key={t}><div className="motion-label"><span>Estimated confirmation</span></div><Hex time={t} feeText={stageFees[i]} seed={i+1}/>{trackedPosition===6-i&&<span className="motion-tracked-arrow" aria-label="Estimated position of your transaction">↑ YOUR TRANSACTION</span>}<div className="motion-caption">{i===5?"Next projected block":"Estimated wait · not guaranteed"}</div></div>)}
+    {times.map((t,i)=><div className={"motion-cell motion-stage"+(trackedPosition===6-i?" motion-your-transaction":"")} key={t}><div className="motion-label">{!compactTransactionLabels&&<span>Estimated confirmation</span>}</div><Hex time={t} feeText={stageFees[i]} seed={i+1}/>{trackedPosition===6-i&&<span className="motion-tracked-arrow" aria-label="Estimated position of your transaction">↑ YOUR TRANSACTION</span>}<div className="motion-caption">{compactTransactionLabels?"":i===5?"Next projected block":"Estimated wait · not guaranteed"}</div></div>)}
     {recent.map((b,i)=><button type="button" className="motion-cell confirmed" key={b.id||i} onClick={()=>{if(!dragging)setSelected(selected===i?null:i)}}><div className="motion-label"><strong>CONFIRMED</strong><span>{fmt(b.ageMinutes)} min ago</span></div>{i===0&&<div className="motion-divider"/>}<Hex blue seed={i+8}/>{trackedConfirmedHeight!=null&&b.height===trackedConfirmedHeight&&<span className="motion-tracked-arrow" aria-label="Block containing your transaction">↑ YOUR TRANSACTION</span>}<div className="motion-caption"><strong>#{fmt(b.height)}</strong>{fmt(b.transactionCount)} transactions</div></button>)}
    </div>
   </div>
