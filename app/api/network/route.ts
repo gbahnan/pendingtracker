@@ -10,6 +10,8 @@ async function json(url: string) {
 }
 
 export async function GET() {
+  const alchemyRpc=async(method:string,params:unknown[])=>{const key=process.env.ALCHEMY_API_KEY;if(!key)return null;try{const r=await fetch("https://eth-mainnet.g.alchemy.com/v2/"+encodeURIComponent(key),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method,params}),signal:AbortSignal.timeout(6500),next:{revalidate:2}});if(!r.ok)return null;const d=await r.json();return d.error?null:d.result}catch{return null}};
+  const [alchemyBlock,alchemyGas,alchemyPriority]=await Promise.all([alchemyRpc("eth_getBlockByNumber",["latest",false]),alchemyRpc("eth_gasPrice",[]),alchemyRpc("eth_maxPriorityFeePerGas",[])]);
   const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks, recentTransactions, ethTransactions] = await Promise.allSettled([
     json("https://mempool.space/api/v1/fees/recommended"),
     json("https://mempool.space/api/mempool"),
@@ -67,17 +69,23 @@ export async function GET() {
       ? "Bitcoin has a noticeable backlog. Higher-fee transactions are generally prioritized by miners."
       : "Bitcoin's waiting area is relatively light. Fees still matter, and confirmation times are never guaranteed."
   };
+  const alchemyGasGwei=typeof alchemyGas==="string"?Number(BigInt(alchemyGas))/1e9:null;
+  const alchemyBaseGwei=typeof alchemyBlock?.baseFeePerGas==="string"?Number(BigInt(alchemyBlock.baseFeePerGas))/1e9:null;
+  const alchemyTipGwei=typeof alchemyPriority==="string"?Number(BigInt(alchemyPriority))/1e9:null;
   const eth = {
-    available: !!e,
-    gasGwei: Number.isFinite(gasGwei) ? gasGwei : null,
-    latestBlock: eb?.items?.[0]?.height ?? null,
+    available: !!(e||alchemyBlock),
+    gasGwei: alchemyGasGwei!=null&&Number.isFinite(alchemyGasGwei)?alchemyGasGwei:Number.isFinite(gasGwei)?gasGwei:null,
+    baseFeeGwei:alchemyBaseGwei,
+    priorityFeeGwei:alchemyTipGwei,
+    gasSource:alchemyGasGwei!=null?"Alchemy":"Blockscout",
+    latestBlock:alchemyBlock?.number?Number(BigInt(alchemyBlock.number)):eb?.items?.[0]?.height ?? null,
     totalTransactions: e?.total_transactions ?? null,
     recentBlocks: Array.isArray(eb?.items) ? eb.items.slice(0, 6).map((block: any) => ({ height: block.height ?? null, hash: block.hash ?? null, timestamp: block.timestamp ?? null, transactionsCount: block.tx_count ?? block.transactions_count ?? null })) : [],
     recentTransactions: Array.isArray(etxs?.items) ? etxs.items.slice(0, 10).filter((tx: any) => /^0x[a-f0-9]{64}$/i.test(tx.hash ?? "")).map((tx: any) => ({ hash: tx.hash, status: tx.status ?? null, timestamp: tx.timestamp ?? null, block: tx.block ?? null })) : [],
     explanation: !e ? "Ethereum network data is temporarily unavailable."
       : "Ethereum gas is the cost of processing transactions. It changes with demand and the work a transaction requires. A transaction can also wait because of its fee settings or an earlier pending transaction from the same wallet."
   };
-  return NextResponse.json({ btc, eth, updatedAt: new Date().toISOString(), sources: ["mempool.space", "Blockscout"] }, {
+  return NextResponse.json({ btc, eth, updatedAt: new Date().toISOString(), sources: ["mempool.space", "Blockscout", ...(alchemyBlock||alchemyGas?["Alchemy"]:[])] }, {
     headers: { "Cache-Control": "public, s-maxage=2, stale-while-revalidate=2" }
   });
 }
