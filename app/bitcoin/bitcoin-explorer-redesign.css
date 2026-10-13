@@ -128,3 +128,25 @@
 }
 @media(max-width:700px){.journey-track{--journey-step:128px!important}.journey-node.journey-wait,.journey-node.journey-confirmed{width:128px;min-width:128px}.journey-mempool{width:230px;min-width:230px}.journey-tube{left:190px;top:125px}.journey-travel-particle{animation-name:journey-six-mobile}
 @keyframes journey-six-mobile{0%{transform:translateX(170px);opacity:0}4%{opacity:1}12%{transform:translate(304px,-15px)}16%{transform:translate(304px,15px)}27%{transform:translate(442px,-15px)}31%{transform:translate(442px,15px)}42%{transform:translate(580px,-15px)}46%{transform:translate(580px,15px)}57%{transform:translate(718px,-15px)}61%{transform:translate(718px,15px)}72%{transform:translate(856px,-15px)}76%{transform:translate(856px,15px)}87%{transform:translate(994px,-15px)}91%{transform:translate(994px,15px)}100%{transform:translate(1132px,0);opacity:0}}}
+
+/* Cosmic motion redesign v3: restrained scale, glowing edges, narrow energy conduit */
+.fresh-journey{background:radial-gradient(ellipse at 44% 52%,#102439 0%,#05101e 58%,#030a14 100%);border:1px solid #26445a;box-shadow:inset 0 1px 0 #65849a24,0 16px 55px #0005}
+.journey-track{gap:8px;min-height:340px;padding-right:16px}
+.journey-mempool{width:252px;min-width:252px}
+.journey-node.journey-wait,.journey-node.journey-confirmed{width:var(--journey-step);min-width:var(--journey-step)}
+.journey-chamber{height:108px;clip-path:polygon(0 18%,9% 0,84% 0,100% 50%,84% 100%,9% 100%,0 82%);border:1px solid #eeb85a;background:radial-gradient(ellipse at 28% 50%,#c784233b,#0d1b2c 64%,#07111e 100%);box-shadow:inset 0 0 22px #f5aa394a,0 0 18px #ffbd3b26;filter:drop-shadow(0 0 4px #f7b44c55)}
+.journey-chamber i{width:3px;height:3px;background:#ffe1a0;box-shadow:0 0 5px 1px #ffad31,0 0 11px #ff9b24;animation-duration:13s!important}
+.journey-hex{width:91px;height:105px;clip-path:polygon(50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%);background:linear-gradient(135deg,#fff0b6,#ffc55c 19%,#89500d 52%,#ffcd66 82%,#7c4713);filter:drop-shadow(0 0 10px #ffaf3566);transition:filter .35s,transform .35s}
+.journey-hex-core{width:86px;height:100px;clip-path:inherit;background:radial-gradient(circle at 32% 22%,#283243 0%,#0b1c2b 48%,#070e1a 100%);box-shadow:inset 0 0 15px #f7b54130;font-size:38px}
+.journey-node:hover .journey-hex{filter:drop-shadow(0 0 17px #ffc45b9c);transform:translateY(-2px)}
+.journey-hex-blue{background:linear-gradient(140deg,#e2f7ff,#74cbff 20%,#1c5f99 57%,#82cfff);filter:drop-shadow(0 0 12px #46b6ff80)}
+.journey-hex-blue .journey-hex-core{background:radial-gradient(circle at 35% 24%,#195a8c,#091a30 75%);color:#a1ddff}
+.journey-tube{left:220px;top:155px;height:18px;border:1px solid #e4a64d55;border-radius:12px;background:linear-gradient(90deg,#ffae3315,#ffc25813 65%,#40adf51a);box-shadow:inset 0 0 9px #ffbd4c22,0 0 12px #ffb13b15}
+.journey-tube:before{top:3px;opacity:.25}.journey-tube:after{bottom:3px;opacity:.25}
+.journey-tube-glow{background:linear-gradient(90deg,transparent,#f8b94c0e 45%,#40b5ff0e 70%,transparent)}
+.journey-label{height:110px;padding-bottom:14px}.journey-label strong{font-size:15px;letter-spacing:.035em}.journey-label span{font-size:11px}
+.journey-node-footer{font-size:12px;margin-top:18px}.journey-node-footer small{font-size:10px;line-height:1.4;max-width:135px}
+.journey-travel-particle{width:3px;height:3px;box-shadow:0 0 6px 2px #ffb33b;animation-duration:115s!important}
+.journey-new-block .journey-confirmed:first-of-type .journey-hex{animation:journey-block-born 1.8s ease-out}
+@keyframes journey-block-born{0%{filter:drop-shadow(0 0 22px #ffc247);transform:translateX(-24px) scale(.8)}45%{filter:drop-shadow(0 0 25px #5fc9ff);transform:translateX(0) scale(1.05)}100%{filter:drop-shadow(0 0 12px #46b6ff80);transform:translateX(0) scale(1)}}
+@media(max-width:700px){.journey-mempool{width:215px;min-width:215px}.journey-track{--journey-step:118px!important;gap:8px}.journey-node.journey-wait,.journey-node.journey-confirmed{width:118px;min-width:118px}.journey-chamber{height:96px}.journey-hex{width:78px;height:92px}.journey-hex-core{width:73px;height:87px;font-size:32px}.journey-tube{left:183px;top:130px;height:16px}.journey-label{height:98px}.journey-label strong{font-size:13px}.journey-node-footer{font-size:11px}.journey-node-footer small{font-size:9px}}
