@@ -9,6 +9,24 @@ export async function GET(req:Request,{params}:{params:{address:string}}){
  if(!/^0x[a-f0-9]{40}$/i.test(address))return NextResponse.json({error:"Invalid Ethereum address"},{status:400});
  const u=new URL(req.url),mode=u.searchParams.get("mode")||"live";
  try{
+  if(mode==="balance-history"){
+   if(!process.env.ALCHEMY_API_KEY)return NextResponse.json({error:"History provider unavailable"},{status:503});
+   const days=Math.min(365,Math.max(1,Number(u.searchParams.get("days"))||30));
+   try{
+    const head=await alchemy("eth_blockNumber",[]);
+    if(typeof head!=="string")throw Error("No head");
+    const latest=BigInt(head);
+    const samples=await Promise.all(Array.from({length:9},async(_,i)=>{
+      const offset=BigInt(days*86400)*BigInt(8-i)/96n;
+      const block=latest>offset?latest-offset:0n;
+      const tag="0x"+block.toString(16);
+      const [header,value]=await Promise.all([alchemy("eth_getBlockByNumber",[tag,false]),alchemy("eth_getBalance",[address,tag])]);
+      if(!header?.timestamp||typeof value!=="string")throw Error("Missing archive data");
+      return {time:Number(BigInt(header.timestamp))*1000,balanceWei:BigInt(value).toString(),block:Number(block)};
+    }));
+    return NextResponse.json({samples,days,source:"Alchemy",note:"Exact ETH balances at sampled blocks; sample dates approximate. Excludes tokens."},{headers:{"Cache-Control":"public, s-maxage=300"}});
+   }catch{return NextResponse.json({error:"Historical state not available"},{status:503})}
+  }
   if(mode==="history"){
    const days=Math.min(365,Math.max(1,Number(u.searchParams.get("days"))||30)),cutoff=Date.now()-days*86400000;
    let next:Record<string,string|number>|null=null;const items:any[]=[];let complete=false,coverageStart:number|null=null,reason="Page limit reached";
