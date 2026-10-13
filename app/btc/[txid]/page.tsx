@@ -1,3 +1,4 @@
+import ExplorerHexScene from "../../components/ExplorerHexScene";
 "use client";
 import {Honeycomb} from "../../components/ChainDashboard";
 import HexArtwork from "../../components/SharedHexArtwork";
@@ -148,7 +149,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   ]:[])
  ];
  return <main className="pt-tx-page txr">
-  <div className="txr-ambient-art" aria-hidden="true"><div className="txr-ambient-grid"/><div className="txr-ambient-coin"><span>₿</span></div><i className="txr-ambient-cell one"/><i className="txr-ambient-cell two"/><i className="txr-ambient-cell three"/><i className="txr-ambient-cell four"/></div><div className="txr-shell">
+  <ExplorerHexScene chain="btc" kind="transaction"/><div className="txr-shell">
    <div className="txr-breadcrumb"><a href="/bitcoin">Bitcoin Explorer</a><span>›</span>Transaction</div><header className="txr-page-title"><h1>Bitcoin <em>Transaction</em></h1><div className="txr-id"><code title={txid}>{txid}</code><button type="button" onClick={copy} aria-label="Copy transaction ID">{copied?"✓ Copied":"▢"}</button></div></header>
    {error&&<p className="txr-error" role="alert">{error}{result?" Showing the last available data.":""}</p>}
    {loading&&!result&&<div className="txr-loading">Checking your Bitcoin transaction against the live network…</div>}
