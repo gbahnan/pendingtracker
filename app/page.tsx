@@ -299,12 +299,33 @@ export default function Page() {
           </div><a className="pt26-cta" href="/ethereum">Explore Ethereum Blockchain →</a>
         </article>
       </div>
-      <div className="pt26-wallet-follow" aria-label="Discover wallets to follow">
-        <div className="pt26-wallet-follow-copy"><strong>☆ &nbsp;Popular Wallets to Follow</strong><span>Explore publicly known addresses and follow on-chain activity.</span></div>
-        <div className="pt26-wallet-follow-links">
-          <a href="/eth/address/0x28C6c06298d514Db089934071355E5743bf21d60"><span className="eth-mark">◆</span> Binance ETH wallet <span aria-hidden="true">↗</span></a>
-          <a href="/bitcoin"><span className="btc-mark">₿</span> Explore Bitcoin wallets <span aria-hidden="true">↗</span></a>
-          <a href="/ethereum"><span className="eth-mark">◆</span> Explore Ethereum wallets <span aria-hidden="true">↗</span></a>
+      <div className="pt26-wallet-follow" aria-label="Explore notable blockchain wallets">
+        <div className="pt26-wallet-follow-copy"><strong>Explore Notable Wallets <span aria-hidden="true">↗</span></strong><span>See what major public wallets are holding and moving. Select a network to explore.</span></div>
+        <div className="pt26-wallet-follow-actions">
+          <details className="pt26-wallet-dropdown btc"><summary><span>₿</span> Bitcoin wallets <b aria-hidden="true">⌄</b></summary>
+            <div className="pt26-wallet-menu"><p>Large publicly tracked Bitcoin addresses</p>
+              {[
+                {name:"Binance · Cold Wallet 1",address:"34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo"},
+                {name:"Binance · Cold Wallet 2",address:"3M219KR5vEneNb47ewrPfWyb5jQ2DjxRP6"},
+                {name:"Robinhood · Cold Wallet",address:"bc1ql49ydapnjafl5t2cp9zqpjwe6pdgmxy98859v2"},
+                {name:"Bitfinex · Cold Wallet",address:"bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97"},
+                {name:"Tether · BTC Reserves",address:"bc1qjasf9z3h7w3jspkhtgatgpyvvzgpa2wwd2lr0eh5tx44reyn2k7sfc27a4"}
+              ].map(w=><a key={w.address} href={"/btc/address/"+w.address}><span><strong>{w.name}</strong><small>{w.address.slice(0,11)}…{w.address.slice(-7)}</small></span><span aria-hidden="true">↗</span></a>)}
+              <small className="pt26-wallet-disclaimer">Public third-party labels; ownership attributions may change.</small>
+            </div>
+          </details>
+          <details className="pt26-wallet-dropdown eth"><summary><span>◆</span> Ethereum wallets <b aria-hidden="true">⌄</b></summary>
+            <div className="pt26-wallet-menu"><p>Major publicly labeled Ethereum addresses</p>
+              {[
+                {name:"Binance 7 · Cold Wallet",address:"0xbe0eb53f46cd790cd13851d5eff43d12404d33e8"},
+                {name:"Binance 14 · Exchange Wallet",address:"0x28C6c06298d514Db089934071355E5743bf21d60"},
+                {name:"Binance · Hot Wallet 20",address:"0xf977814e90da44bfa03b6295a0616a897441acec"},
+                {name:"Bitfinex 19 · Cold Wallet",address:"0xe92d1a43df510f82c66382592a047d288f85226f"},
+                {name:"Vitalik Buterin · Public Address",address:"0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"}
+              ].map(w=><a key={w.address} href={"/eth/address/"+w.address}><span><strong>{w.name}</strong><small>{w.address.slice(0,11)}…{w.address.slice(-7)}</small></span><span aria-hidden="true">↗</span></a>)}
+              <small className="pt26-wallet-disclaimer">Public third-party labels; these are individual addresses, not complete entity holdings.</small>
+            </div>
+          </details>
         </div>
       </div>
     </section>
