@@ -255,3 +255,10 @@
  .txr .txr-network-v2 .motion-cell.confirmed{width:clamp(124px,9.4vw,138px)!important}
  .txr .txr-network-v2 .motion-track{gap:5px!important}
 }
+
+/* Small transaction marker, positioned along the fee-band hexagon. */
+.txr-explorer-motion .motion-cell{position:relative!important}
+.txr-explorer-motion .motion-tracked-arrow{position:absolute!important;top:calc(42px + 128px)!important;bottom:auto!important;left:50%;transform:translateX(-50%)!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:1px!important;width:max-content!important;max-width:75px!important;margin:0!important;padding:0!important;color:#ffd06a!important;font-size:9px!important;line-height:1.05!important;letter-spacing:0!important;pointer-events:none!important;z-index:8!important;transition:left .5s ease!important}
+.txr-explorer-motion .motion-tracked-arrow:before{display:none!important;content:none!important}
+.txr-explorer-motion .motion-tracked-pointer{font-size:12px!important;line-height:10px!important;filter:drop-shadow(0 0 4px #ffba44)}
+.txr-explorer-motion .motion-tracked-text{display:block!important;white-space:nowrap!important;padding:3px 5px!important;border:1px solid #c88e2d!important;border-radius:6px!important;background:#20170de8!important;font-size:9px!important;font-weight:800!important}
