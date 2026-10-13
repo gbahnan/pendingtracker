@@ -210,3 +210,27 @@
  .fresh-data-premium,.fresh-explainer-premium{padding:19px 16px}
  .fresh-learn{padding:26px 0}
 }
+
+/* Timeline spacing and soft right-edge reveal: preserve hexagon geometry. */
+.fresh-journey .motion-track{gap:6px}
+.fresh-journey .motion-cell{width:150px}
+.fresh-journey .motion-cell.mempool{width:198px}
+.fresh-journey .motion-cell.confirmed{width:144px}
+.fresh-journey .motion-window{-webkit-mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 32px),transparent 100%);mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 32px),transparent 100%)}
+@media(min-width:1500px){
+ .fresh-journey .motion-cell{width:150px}
+ .fresh-journey .motion-cell.mempool{width:198px}
+ .fresh-journey .motion-cell.confirmed{width:144px}
+}
+@media(max-width:1100px){
+ .fresh-journey .motion-cell{width:147px}
+ .fresh-journey .motion-cell.mempool{width:194px}
+ .fresh-journey .motion-cell.confirmed{width:143px}
+}
+@media(max-width:700px){
+ .fresh-journey .motion-track{gap:6px}
+ .fresh-journey .motion-cell{width:143px}
+ .fresh-journey .motion-cell.mempool{width:190px}
+ .fresh-journey .motion-cell.confirmed{width:143px}
+ .fresh-journey .motion-window{-webkit-mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 20px),transparent 100%);mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 20px),transparent 100%)}
+}
