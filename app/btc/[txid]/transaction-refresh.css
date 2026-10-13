@@ -211,3 +211,14 @@
 .txr-snapshot-v2 .txr-v2-primary-card{min-height:118px!important;padding:12px 10px!important}
 .txr-snapshot-v2 .txr-v2-secondary{margin-top:13px!important;padding-top:13px!important}
 @media(max-width:650px){.txr-network-v2{margin-top:8px!important}.txr-network-v2 .txr-v2-network-head{align-items:flex-start}.txr-snapshot-v2{padding:15px 12px!important}}
+
+/* Final hierarchy: visualization FIRST, Bitcoin Transaction title/hash INSIDE snapshot. */
+.txr .txr-breadcrumb{margin-bottom:2px!important}
+.txr-network-v2{margin-top:0!important;margin-bottom:6px!important}
+.txr-network-v2 .txr-explorer-motion{margin-top:0!important;margin-bottom:0!important}
+.txr-snapshot-v2{margin-top:6px!important}
+.txr-snapshot-v2 .txr-page-title{position:relative;margin:0 0 15px!important;padding:0 0 14px!important;border-bottom:1px solid #33434a;background:transparent!important;box-shadow:none!important}
+.txr-snapshot-v2 .txr-page-title h1{font-size:clamp(25px,2.8vw,35px)!important;margin:0 0 9px!important;line-height:1.15!important}
+.txr-snapshot-v2 .txr-id{max-width:100%;margin:0!important}
+.txr-snapshot-v2 .txr-snapshot-v2-head{margin-top:0!important}
+@media(max-width:650px){.txr-snapshot-v2 .txr-page-title{padding-bottom:12px!important;margin-bottom:12px!important}}
