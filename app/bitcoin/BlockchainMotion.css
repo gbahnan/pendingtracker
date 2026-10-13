@@ -65,3 +65,10 @@
 .motion-pool-glow{opacity:.11}
 .motion-hex-content{background:radial-gradient(ellipse,#091522f2 14%,#0b1928c7 60%,transparent 88%);text-shadow:0 1px 5px #02070c}
 .motion-hex-content small{color:#c9d3df}
+
+/* Cooler platinum-gold trim; midnight interior remains unchanged. */
+.motion-hex{background:linear-gradient(140deg,#f2e3c5 0%,#c9ac7b 24%,#987a51 54%,#62533d 78%,#dfc7a1 100%)}
+.motion-hex:after{border-color:#e1d0ad22}
+.motion-halo{filter:drop-shadow(0 0 2px #e1c38a80) drop-shadow(0 0 6px #b08a5350)}
+.motion-cell:hover .motion-halo{filter:drop-shadow(0 0 3px #f1dbb5a0) drop-shadow(0 0 8px #b9945965)}
+.motion-pool{border-color:#bea47e}
