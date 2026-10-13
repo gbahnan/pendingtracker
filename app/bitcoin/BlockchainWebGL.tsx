@@ -51,10 +51,10 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   };
   const observer=new ResizeObserver(measure);observer.observe(track);measure();
   const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
-   const rgb=blue?"90,187,247":"255,171,37";
+   const rgb=blue?"90,187,247":"220,120,31";
    ctx.globalAlpha=opacity;
    ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.15)";ctx.shadowColor="rgba("+rgb+",.56)";ctx.shadowBlur=5;ctx.arc(x,y,r*1.42,0,Math.PI*2);ctx.fill();
-   ctx.beginPath();ctx.fillStyle=blue?"#e4f6ff":"#ffedb7";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle=blue?"#e4f6ff":"#fff0d2";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
    ctx.shadowBlur=0;ctx.globalAlpha=1;
   };
   const point=(box:Chamber,u:number,v:number)=>{
