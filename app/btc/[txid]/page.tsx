@@ -1,6 +1,6 @@
+"use client";
 import TransactionMotion from "../../components/TransactionMotion";
 import ExplorerHexScene from "../../components/ExplorerHexScene";
-"use client";
 import {Honeycomb} from "../../components/ChainDashboard";
 import HexArtwork from "../../components/SharedHexArtwork";
 import styles from "./BitcoinTracker.module.css";
@@ -159,7 +159,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      
      <div className="txr-livehead"><div><h2>{confirmed?"Transaction Confirmed":observed?"Your Transaction Is Pending":"Transaction Not Found"}</h2><p>{confirmed?"Your payment is included in a block. The hexagons show the live Bitcoin network.":observed?"Your transaction is waiting for confirmation. The highlighted hexagon is a fee-based estimate.":"This transaction has not been located. The hexagons show general network activity."}</p></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
      <TransactionMotion chain="btc" stages={[{title:"Latest Block",detail:"#"+number(overview?.btc?.height),sub:"Confirmed on network",complete:true},...Array.from({length:4},(_,i)=>{const b=blocks[i];return {title:"~"+((i+1)*10)+" min",detail:b?.feeRange?b.feeRange.join("–")+" sat/vB":"Fee unavailable",sub:number(b?.transactionCount)+" waiting txs",active:!confirmed&&observed&&selectedPosition===i+1}})]}/>
-Swipe to explore stages <span aria-hidden="true">→</span></p>
+<p className="txr-swipe-hint">Swipe to explore live transaction stages <span aria-hidden="true">→</span></p>
      <p className="txr-timeline-note">{confirmed?"Your transaction is already confirmed. The gold hexagons show projected future blocks.":!observed?"Your transaction has not been located on the network yet.":"The highlighted hexagon is a fee-based estimate, not a guaranteed queue position."}</p>
      <div className="txr-overview"><div className="txr-overview-grid">
       {[
