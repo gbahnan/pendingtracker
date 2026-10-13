@@ -51,10 +51,10 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   };
   const observer=new ResizeObserver(measure);observer.observe(track);measure();
   const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
-   const rgb=blue?"90,187,247":"245,160,42";
+   const rgb=blue?"90,187,247":"255,171,37";
    ctx.globalAlpha=opacity;
    ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.15)";ctx.shadowColor="rgba("+rgb+",.56)";ctx.shadowBlur=5;ctx.arc(x,y,r*1.42,0,Math.PI*2);ctx.fill();
-   ctx.beginPath();ctx.fillStyle=blue?"#e4f6ff":"#fff5df";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle=blue?"#e4f6ff":"#ffedb7";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
    ctx.shadowBlur=0;ctx.globalAlpha=1;
   };
   const point=(box:Chamber,u:number,v:number)=>{
@@ -84,15 +84,14 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
      for(let j=0;j<9;j++){
       const seed=75+(chamber*13+j)%130,p=particles[seed];
       const uv=drift(p,elapsed*.65,seed);
-      // Continuous perimeter route: the particle's path never snaps
-      // from one side of the protected label region to the other.
-      const ring=bounce(p.lane+elapsed*(.038+(seed%5)*.005)+p.angle*.11);
-      const perimeter=ring*4;
-      const u=perimeter<1?perimeter:perimeter<2?1:perimeter<3?3-perimeter:0;
-      const v=perimeter<1?0:perimeter<2?perimeter-1:perimeter<3?1:4-perimeter;
-      const pos=box.kind==="gold"
-       ?point(box,.12+.76*u,.10+.80*v)
-       :point(box,uv.u,uv.v);
+      // Straight-line independent bounces; keep the center legible by
+      // placing residents in fixed upper/lower lanes, not orbiting text.
+      const laneTop=j%2===0;
+      const u=.12+.76*bounce(p.lane+elapsed*(.065+(seed%5)*.007)+p.angle*.17);
+      const v=laneTop
+       ? .13+.12*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009))
+       : .75+.12*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009));
+      const pos=box.kind==="gold"?point(box,u,v):point(box,uv.u,uv.v);
       drawBall(pos.x,pos.y,p.radius*.82*1.18,box.kind==="blue",.72);
      }
     }
