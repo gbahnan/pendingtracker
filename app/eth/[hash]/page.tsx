@@ -1,6 +1,6 @@
+"use client";
 import TransactionMotion from "../../components/TransactionMotion";
 import ExplorerHexScene from "../../components/ExplorerHexScene";
-"use client";
 import {useCallback,useEffect,useMemo,useState} from "react";
 
 import "./ethereum-transaction.css";
@@ -96,7 +96,7 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
     <section className="etr-tracker" aria-label="Ethereum transaction status">
      <div className="etr-tracker-heading"><div><h2>{failed?"Transaction Included · Execution Failed":confirmed?"Your Transaction Is Confirmed":"Your Transaction Is Pending"}</h2><p>{failed?"Ethereum included the transaction, but its execution reverted.":confirmed?"Your transaction is recorded in an Ethereum block.":"Ethereum transactions are included by validators; there is no reliable fixed position in a future block."}</p></div><span className="etr-live"><i/> Live Ethereum data</span></div>
      <TransactionMotion chain="eth" stages={[{title:failed?"Execution failed":confirmed?"Included in block":"Transaction seen",detail:confirmed?"Block #"+fmt(block):"Broadcast to network",complete:confirmed&&!failed},{title:"Block inclusion",detail:confirmed?"Completed":"Awaiting validator",complete:confirmed},{title:"Confirmations",detail:confirmed?fmt(tx.confirmations??1)+" so far":"After inclusion",complete:confirmed},{title:"Finality",detail:"Separate network milestone"},{title:"Receiving service",detail:"May have its own checks"}]}/>
-Swipe to explore stages <span aria-hidden="true">→</span></p>
+<p className="etr-swipe-hint">Swipe to explore stages <span aria-hidden="true">→</span></p>
      <p className="etr-timeline-note">{confirmed?"Block inclusion is confirmed. This diagram shows stages, not measured timestamps or finality verification.":failed?"A reverted transaction can be included in a block and still incur a gas fee.":"Ethereum slots are typically 12 seconds, but inclusion, confirmation and finality are not guaranteed by a countdown."}</p>
      <div className="etr-overview">{metric.map(m=><article className="etr-overview-item" key={m.label}><div className="etr-metric-icon">{m.icon}</div><div><small>{m.label}</small><strong>{m.value}</strong><p>{m.help}</p></div></article>)}</div>
     </section>
