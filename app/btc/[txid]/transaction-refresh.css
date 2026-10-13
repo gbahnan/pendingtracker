@@ -275,3 +275,7 @@
 .txr .txr-network-v2 .motion-track:after{content:""!important;display:block!important;position:absolute!important;left:0!important;right:0!important;top:190px!important;height:2px!important;background:linear-gradient(90deg,#b6c2cc,#f4f6f9 45%,#b6c2cc)!important;opacity:.9!important;z-index:6!important;pointer-events:none!important}
 .txr .txr-network-v2 .motion-tracked-arrow{top:173px!important;bottom:auto!important;z-index:10!important;transition:left .45s ease!important}
 .txr .txr-network-v2 .motion-tracked-pointer{top:0!important;border-bottom:17px solid #f7f9fc!important}
+
+/* Give the white tracking pointer breathing room beneath the hexagons. */
+.txr .txr-network-v2 .motion-track:after{top:205px!important}
+.txr .txr-network-v2 .motion-tracked-arrow{top:188px!important}
