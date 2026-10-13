@@ -26,9 +26,9 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   if(!canvas||!track)return;
   const ctx=canvas.getContext("2d");if(!ctx)return;
   type Chamber={x:number;y:number;w:number;h:number;kind:string};
-  const particles=Array.from({length:82},(_,i)=>({
+  const particles=Array.from({length:180},(_,i)=>({
    offset:(i*0.618033988749895)%1,
-   speed:.0035+(i%6)*.00065,
+   speed:.006+(i%6)*.001,
    angle:i*2.39996,
    radius:1.7+(i%4)*.42,
    lane:(i*.754877666)%1
@@ -62,27 +62,39 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
    if(layout.length){
     // Most balls remain visibly bouncing in the mempool, not streaming like a cannon.
     const pool=layout[0];
-    for(let i=0;i<67;i++){
-     const p=particles[i],a=elapsed*(.43+(i%7)*.045)+p.angle;
+    for(let i=0;i<65;i++){
+     const p=particles[i],a=elapsed*(.68+(i%7)*.06)+p.angle;
      const u=.5+Math.sin(a)*(.22+p.lane*.15);
      const v=.5+Math.cos(a*.83)*(.24+(i%4)*.024);
      const pos=point(pool,u,v);
      drawBall(pos.x,pos.y,p.radius,false,.73);
     }
+    // Independent resident balls keep every chamber visibly active, even between transfers.
+    for(let chamber=1;chamber<layout.length;chamber++){
+     const box=layout[chamber];
+     for(let j=0;j<7;j++){
+      const p=particles[65+(chamber*7+j)%105];
+      const a=elapsed*(.72+(j%4)*.12)+p.angle+chamber*.73;
+      const u=.5+Math.sin(a)*(.18+p.lane*.12);
+      const v=.5+Math.cos(a*1.13)*(.18+(j%3)*.035);
+      const pos=point(box,u,v);
+      drawBall(pos.x,pos.y,p.radius*.82,box.kind==="blue",.69);
+     }
+    }
     // A smaller independent population makes the journey slowly, with long pauses
     // bouncing in each hexagon and a short, gently curved crossing between them.
-    for(let i=0;i<15;i++){
-     const p=particles[i+67];
+    for(let i=0;i<32;i++){
+     const p=particles[i+115];
      const progress=(p.offset+elapsed*p.speed)%1;
      const scaled=progress*(layout.length-1);
      const index=Math.min(layout.length-2,Math.floor(scaled));
      const local=scaled-index,box=layout[index];
-     const a=elapsed*(.48+(i%5)*.09)+p.angle;
+     const a=elapsed*(.7+(i%5)*.12)+p.angle;
      const u=.5+Math.sin(a)*(.19+p.lane*.11);
      const v=.5+Math.cos(a*1.17)*(.19+(i%3)*.035);
      let pos=point(box,u,v),blue=box.kind==="blue";
-     if(local>.86){
-      const next=layout[index+1],t=(local-.86)/.14;
+     if(local>.90){
+      const next=layout[index+1],t=(local-.90)/.10;
       const from=point(box,.86,.5+Math.sin(a)*.07);
       const to=point(next,.14,.5+Math.sin(a+.6)*.07);
       const eased=t*t*(3-2*t);
