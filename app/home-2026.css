@@ -58,3 +58,16 @@
 @media(max-width:1200px){.pt26-hero{background-position:left -145px center,right -145px center;background-size:515px auto,515px auto}}
 @media(max-width:850px){.pt26-hero{background-position:left -208px center,right -208px center;background-size:465px auto,465px auto}}
 @media(max-width:600px){.pt26-hero{background-image:linear-gradient(rgba(2,11,21,.70),rgba(2,11,21,.70)),url('/artwork/btc-hero.svg'),url('/artwork/eth-hero.svg');background-position:center,left -230px center,right -230px center;background-size:100% 100%,420px auto,420px auto;background-repeat:no-repeat}}
+
+/* Compact, unboxed wallet discovery within Live Network Activity. */
+.pt26-wallet-follow{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:16px 0 0;padding:15px 1px 2px;border-top:1px solid #263b50;background:transparent}
+.pt26-wallet-follow-copy{display:flex;flex-direction:column;gap:4px;min-width:225px}
+.pt26-wallet-follow-copy strong{color:#f4f8ff;font-size:15px;font-weight:750}
+.pt26-wallet-follow-copy span{color:#9fb5c9;font-size:12px}
+.pt26-wallet-follow-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pt26-wallet-follow-links a{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid #25415a;border-radius:999px;background:rgba(7,24,39,.55);color:#cddded;font-size:12px;text-decoration:none;transition:border-color .2s,background .2s}
+.pt26-wallet-follow-links a:hover{border-color:#4a95c5;background:#0b253a}
+.pt26-wallet-follow-links .eth-mark{color:#51b5ff}.pt26-wallet-follow-links .btc-mark{color:#ffc145}
+.pt26-panel.eth .pt26-side-stats{min-width:0}
+.pt26-panel.eth .pt26-side-stats strong{white-space:normal;overflow-wrap:anywhere;line-height:1.2}
+@media(max-width:650px){.pt26-wallet-follow{gap:11px;margin-top:12px}.pt26-wallet-follow-links{gap:7px}.pt26-wallet-follow-links a{font-size:11px;padding:7px 9px}}
