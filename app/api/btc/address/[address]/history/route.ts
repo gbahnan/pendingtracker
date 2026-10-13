@@ -27,7 +27,7 @@ export async function GET(request:Request,{params}:{params:{address:string}}){
    for(const tx of batch){
     const time=tx.status?.block_time??0;
     if(!time)continue;
-    reverse.push({time,balance,txid:tx.txid});
+    if(time<cutoff){reachedCutoff=true;break}\n    reverse.push({time,balance,txid:tx.txid});
     const incoming=(tx.vout??[]).reduce((n,v)=>n+(v.scriptpubkey_address===address?(v.value??0):0),0);
     const outgoing=(tx.vin??[]).reduce((n,v)=>n+(v.prevout?.scriptpubkey_address===address?(v.prevout?.value??0):0),0);
     balance-=incoming-outgoing;
