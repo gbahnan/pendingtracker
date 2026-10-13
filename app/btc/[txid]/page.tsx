@@ -156,10 +156,11 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
     <section className="txr-top">
      
      <div className="txr-livehead"><div><h2>{confirmed?"Transaction Confirmed":observed?"Your Transaction Is Pending":"Transaction Not Found"}</h2><p>{confirmed?"Your payment is included in a block. The hexagons show the live Bitcoin network.":observed?"Your transaction is waiting for confirmation. The highlighted hexagon is a fee-based estimate.":"This transaction has not been located. The hexagons show general network activity."}</p></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
-     <div className="txr-hexrow">
+     <div className="txr-hexscroll" role="region" aria-label="Swipe horizontally to explore transaction stages" tabIndex={0}><div className="txr-hexrow">
       <div className="txr-hexunit"><div className="txr-hex confirmed"><span>✓</span></div><strong>Latest Block</strong><small>#{number(overview?.btc?.height)}</small><small>Confirmed on network</small></div>
       {Array.from({length:4},(_,i)=>{const b=blocks[i];const active=!confirmed&&observed&&selectedPosition===i+1;return <div className="txr-hexunit" key={i}><div className={"txr-hex"+(active?" active":"")}><span>⬡</span></div><strong>~{(i+1)*10} min</strong><small>{b?.feeRange?.length===2?number(b.feeRange[0])+"–"+number(b.feeRange[1])+" sat/vB":"Fee range unavailable"}</small><small>{number(b?.transactionCount)} waiting txs</small>{active&&<b className="txr-marker">↑ Your transaction</b>}</div>})}
-     </div>
+     </div></div>
+     <p className="txr-swipe-hint">Swipe to explore stages <span aria-hidden="true">→</span></p>
      <p className="txr-timeline-note">{confirmed?"Your transaction is already confirmed. The gold hexagons show projected future blocks.":!observed?"Your transaction has not been located on the network yet.":"The highlighted hexagon is a fee-based estimate, not a guaranteed queue position."}</p>
      <div className="txr-overview"><div className="txr-overview-grid">
       {[
