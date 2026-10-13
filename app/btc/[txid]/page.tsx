@@ -1,6 +1,5 @@
 "use client";
 import BlockchainWebGL from "../../bitcoin/BlockchainWebGL";
-import ExplorerHexScene from "../../components/ExplorerHexScene";
 import {Honeycomb} from "../../components/ChainDashboard";
 import HexArtwork from "../../components/SharedHexArtwork";
 import styles from "./BitcoinTracker.module.css";
@@ -152,7 +151,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   ]:[])
  ];
  return <main className="pt-tx-page txr">
-  <ExplorerHexScene chain="btc" kind="transaction"/><div className="txr-shell">
+  <div className="txr-shell">
    <div className="txr-breadcrumb"><a href="/bitcoin">Bitcoin Explorer</a><span>›</span>Transaction</div>
    {error&&<p className="txr-error" role="alert">{error}{result?" Showing the last available data.":""}</p>}
    {loading&&!result&&<div className="txr-loading">Checking your Bitcoin transaction against the live network…</div>}
