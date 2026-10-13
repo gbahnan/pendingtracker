@@ -3,7 +3,7 @@ import {useEffect,useRef,useState} from "react";
 import "../bitcoin/BlockchainMotion.css";
 type Block={height:number|null;ageMinutes:number;transactionCount:number|null;id:string|null};
 type Projection={medianFee:number|null;feeRange:number[]|null};
-type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined;projections?:Projection[]};
+type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined;projections?:Projection[];transactionMode?:boolean;trackedBlockHeight?:number|null;pendingTransaction?:boolean};
 const fmt=(n:number|null|undefined)=>n==null?"—":Math.round(n).toLocaleString("en-US");
 const times=[72,60,48,36,24,12];
 
@@ -13,7 +13,7 @@ function Hex({blue=false,time,feeText,seed=0}:{blue?:boolean;time?:number;feeTex
   <div className="motion-hex-content">{blue?<strong>◆</strong>:<><strong>~{time} SEC</strong><small>{feeText||"Gas unavailable"}</small></>}</div>
  </div></div>
 }
-export default function EthereumBlockchainMotion({pending,fee,blocks,projections=[]}:Props){
+export default function EthereumBlockchainMotion({pending,fee,blocks,projections=[],transactionMode=false,trackedBlockHeight=null,pendingTransaction=false}:Props){
  const viewport=useRef<HTMLDivElement>(null);
  const trackRef=useRef<HTMLDivElement>(null);
  const canvasRef=useRef<HTMLCanvasElement>(null);
@@ -134,8 +134,8 @@ export default function EthereumBlockchainMotion({pending,fee,blocks,projections
    <div ref={trackRef} className={"motion-track"+(newBlock?" motion-new":"")}><canvas ref={canvasRef} className="motion-canvas" aria-hidden="true"/>
     
     <div className="motion-cell mempool"><div className="motion-label"><strong>ETHEREUM</strong><span>Proof-of-stake network</span></div><div className="motion-pool"><span className="motion-pool-glow"/></div><div className="motion-caption"><strong>Illustrative activity</strong></div></div>
-    {times.map((t,i)=><div className="motion-cell motion-stage" key={t}><div className="motion-label"><span>Illustrative future slot</span></div><Hex time={t} feeText={stageFees[i]} seed={i+1}/><div className="motion-caption">{i===5?"Next slot · not guaranteed":"Not a confirmation forecast"}</div></div>)}
-    {recent.map((b,i)=><button type="button" className="motion-cell confirmed" key={b.id||i} onClick={()=>{if(!dragging)setSelected(selected===i?null:i)}}><div className="motion-label"><strong>CONFIRMED</strong><span>{fmt(b.ageMinutes)} min ago</span></div>{i===0&&<div className="motion-divider"/>}<Hex blue seed={i+8}/><div className="motion-caption"><strong>#{fmt(b.height)}</strong>{fmt(b.transactionCount)} transactions</div></button>)}
+    {times.map((t,i)=><div className="motion-cell motion-stage" key={t}><div className="motion-label">{!transactionMode&&<span>Illustrative future slot</span>}</div><Hex time={t} feeText={stageFees[i]} seed={i+1}/><div className="motion-caption">{!transactionMode&&(i===5?"Next slot · not guaranteed":"Not a confirmation forecast")}</div>{transactionMode&&pendingTransaction&&i===5&&<span className="motion-tracked-arrow" aria-label="Illustrative next-slot marker"><span className="motion-tracked-pointer"/></span>}</div>)}
+    {recent.map((b,i)=><button type="button" className="motion-cell confirmed" key={b.id||i} onClick={()=>{if(!dragging)setSelected(selected===i?null:i)}}><div className="motion-label"><strong>CONFIRMED</strong><span>{fmt(b.ageMinutes)} min ago</span></div>{i===0&&<div className="motion-divider"/>}<Hex blue seed={i+8}/><div className="motion-caption"><strong>#{fmt(b.height)}</strong>{fmt(b.transactionCount)} transactions</div>{transactionMode&&trackedBlockHeight!=null&&Number(b.height)===trackedBlockHeight&&<span className="motion-tracked-arrow" aria-label="Block containing this transaction"><span className="motion-tracked-pointer"/></span>}</button>)}
    </div>
   </div>
   <div className="motion-footer"><span>BLUE · Illustrative slots</span><span>CYAN · Recorded blocks</span><span>Swipe on mobile · Drag or use arrows on desktop</span></div>
