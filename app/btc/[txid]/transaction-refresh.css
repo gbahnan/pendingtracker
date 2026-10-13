@@ -93,3 +93,28 @@
 .txr-io-panel{border-color:#805818;background:linear-gradient(145deg,#0a1721,#04101a)}
 @media(max-width:750px){.txr-summary-art{flex-basis:125px;height:145px}.txr-summary-art:before{inset:17px 8px}.txr-summary-art:after{inset:21px 12px}.txr-summary-art>span{font-size:61px}.txr-art-cell{width:23px;height:27px}.txr-summary{min-height:0}.txr-overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.txr-hexrow{gap:3px;padding-left:0;padding-right:0}.txr-hexrow:before{top:calc(20px + 9vw);height:3px}.txr-hexunit>strong{font-size:10px}.txr-summary-art{position:absolute;right:0;top:12px;width:95px;height:102px;opacity:.18}.txr-summary-art:before{inset:10px 0}.txr-summary-art:after{inset:14px 4px}.txr-summary-art>span{font-size:45px}.txr-summary-copy{width:100%}.txr-summary{display:block;padding:20px 2px!important}.txr-overview-item{gap:7px}.txr-metric-icon{width:30px;height:34px;flex-basis:30px;font-size:20px}.txr-overview-item strong{font-size:14px}}
+
+/* Upper-right atmospheric Bitcoin art, behind all transaction content. */
+.txr{position:relative;isolation:isolate;overflow:hidden}
+.txr-shell{position:relative;z-index:2}
+.txr-ambient-art{position:absolute;z-index:0;pointer-events:none;top:-58px;right:-40px;width:min(58vw,820px);height:550px;opacity:.8;overflow:hidden;mask-image:linear-gradient(to left,#000 48%,transparent 100%);-webkit-mask-image:linear-gradient(to left,#000 48%,transparent 100%)}
+.txr-ambient-art:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 68% 33%,rgba(231,131,11,.27),transparent 55%)}
+.txr-ambient-grid{position:absolute;inset:-80px;background-image:linear-gradient(30deg,transparent 47%,rgba(255,171,33,.13) 49%,transparent 51%),linear-gradient(150deg,transparent 47%,rgba(255,171,33,.11) 49%,transparent 51%);background-size:32px 54px;opacity:.38;transform:rotate(-8deg)}
+.txr-ambient-coin{position:absolute;right:13%;top:18%;width:250px;height:278px;display:grid;place-items:center;filter:drop-shadow(0 0 29px rgba(255,147,0,.7));isolation:isolate;transform:rotate(-7deg)}
+.txr-ambient-coin:before,.txr-ambient-coin:after{content:"";position:absolute;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);z-index:-1}
+.txr-ambient-coin:before{inset:0;background:linear-gradient(130deg,#fff2ad,#ffb42b,#865008,#ffc14c);box-shadow:0 0 35px #f2a023}
+.txr-ambient-coin:after{inset:5px;background:radial-gradient(circle at 46% 32%,rgba(142,82,14,.75),rgba(15,19,20,.97) 72%)}
+.txr-ambient-coin span{font-size:153px;font-weight:850;color:#ffcb57;text-shadow:0 0 22px #ffad24,0 0 60px #f79a14}
+.txr-ambient-cell{position:absolute;width:65px;height:73px;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);background:linear-gradient(145deg,rgba(255,200,81,.8),rgba(113,64,4,.35));filter:drop-shadow(0 0 15px rgba(255,157,14,.6))}
+.txr-ambient-cell.one{top:90px;left:23%}.txr-ambient-cell.two{top:340px;right:7%;width:43px;height:49px}.txr-ambient-cell.three{top:54px;right:0;width:93px;height:104px}.txr-ambient-cell.four{top:245px;left:12%;width:37px;height:43px}
+.txr-summary{display:block!important;min-height:0!important;padding:22px 3px 27px!important}
+.txr-summary-copy{display:block!important;max-width:100%!important}
+.txr-summary-copy>div{max-width:100%!important}
+.txr-summary-art{display:none!important}
+.txr-summary-status{display:none!important}
+.txr-summary p{max-width:980px}
+.txr-top{position:relative;z-index:2}
+.txr-page-title{position:relative;z-index:2}
+.txr-top,.txr-overview-grid,.txr-cards,.txr-io-grid{backdrop-filter:blur(3px)}
+@media(max-width:900px){.txr-ambient-art{width:65vw;right:-95px;top:-20px;opacity:.47}.txr-ambient-coin{width:180px;height:205px}.txr-ambient-coin span{font-size:110px}}
+@media(max-width:650px){.txr-ambient-art{width:90vw;height:300px;top:0;right:-90px;opacity:.25}.txr-ambient-coin{right:0;top:35px;width:125px;height:145px}.txr-ambient-coin span{font-size:78px}.txr-summary{padding:19px 2px 24px!important}}
