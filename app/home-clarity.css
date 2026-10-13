@@ -50,3 +50,6 @@ main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh .pt-faq-heading{margin-bottom
 main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh .pt-faq-list{column-gap:30px!important}
 main.pt-shell:has(> .pt-clarity) > .pt-founder-footer{margin-top:0!important;padding-top:18px!important;padding-bottom:23px!important}
 @media(max-width:650px){main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{padding:0 15px!important;margin:12px auto 18px!important}}
+
+/* Align explanation section to the more focused homepage content width; preserve its cards and layout. */
+@media(min-width:1100px){.pt-clarity-inner{max-width:1120px}}
