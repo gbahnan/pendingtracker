@@ -109,3 +109,15 @@
 .bex-advanced>div strong{display:block;margin-top:7px;color:#ffd06a;font-size:15px}
 @media(max-width:950px){.bex-stats-grid{gap:10px}.bex-stat,.bex-stat:first-child,.bex-stat:last-child{border:1px solid #294255;padding:14px 12px}}
 @media(max-width:700px){.bex-duo{gap:12px;margin-bottom:12px}.bex-panel,.bex-panel:first-child{border:1px solid #304658;border-radius:12px;padding:16px}.bex-stats-grid{gap:9px}.bex-stat,.bex-stat:first-child,.bex-stat:last-child{padding:13px 11px}.bex-bottom>div{gap:8px}.bex-bottom a,.bex-bottom a:first-child,.bex-bottom a:last-child{border:1px solid #2e4557;padding:14px 10px}.bex-network-summary{padding:13px 12px}.bex-mode{margin-top:7px}.bex-projection-detail{padding:13px}}
+
+/* Shared BTC/ETH explorer timeline: visible connector behind five hexagons. */
+.bex-projection-row{position:relative;isolation:isolate;gap:clamp(5px,1.1vw,13px);padding:14px 2px 7px}
+.bex-projection-row::before{content:"";position:absolute;z-index:0;pointer-events:none;left:9%;right:9%;top:calc(14px + (min((1160px - 8px)/5,188px) / 2));height:4px;border-radius:5px;background:linear-gradient(90deg,#43d5bf 0%,#bfa35b 23%,#ffc24e 48%,#ac6d1e 100%);box-shadow:0 0 13px rgba(248,169,37,.48),0 0 3px rgba(255,211,109,.75)}
+.bex-projection-item{position:relative;z-index:1}
+.bex-projection-hex{max-width:166px;gap:clamp(2px,.6vw,7px)}
+.bex-projection-hex strong{font-size:clamp(17px,2vw,27px)}
+.bex-projection-item>p{line-height:1.4}
+@media(min-width:1200px){.bex-projection-row::before{top:calc(14px + 83px)}}
+@media(max-width:950px){.bex-projection-row::before{top:calc(14px + (100vw - 70px)/10)}.bex-projection-hex{max-width:150px}.bex-projection-hex span{font-size:9px}.bex-projection-hex small{font-size:10px}.bex-projection-item>p{font-size:10px}}
+@media(max-width:700px){.bex-estimates-slot{overflow:visible!important}.bex-projection-row{min-width:0!important;width:100%;gap:3px;padding:11px 0 6px}.bex-projection-row::before{top:calc(11px + (100vw - 35px)/10);height:3px;left:7%;right:7%}.bex-projection-hex{max-width:none;aspect-ratio:1.05;gap:1px;padding:4px 1px}.bex-projection-hex span{font-size:clamp(6px,1.6vw,9px);letter-spacing:0;line-height:1.15}.bex-projection-hex strong{font-size:clamp(12px,3.1vw,20px);line-height:1.1}.bex-projection-hex small{font-size:clamp(6px,1.5vw,9px);line-height:1.1}.bex-projection-item>p{font-size:clamp(8px,1.8vw,10px);line-height:1.25;margin:7px 0 0}.bex-projection-note{margin-top:11px}.bex-heading h2{font-size:clamp(21px,5vw,28px)!important}.bex-heading p{font-size:12px}.bex-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bex-topic{min-width:0}.bex-panel{min-width:0}}
+@media(max-width:390px){.bex-projection-hex span{font-size:6px}.bex-projection-hex strong{font-size:12px}.bex-projection-hex small{font-size:6px}.bex-projection-item>p{font-size:8px}.bex-hero h1{font-size:30px!important}.bex-hero p{font-size:12px}}
