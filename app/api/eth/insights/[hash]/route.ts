@@ -15,7 +15,7 @@ export async function GET(_request:Request,{params}:{params:{hash:string}}){
  return NextResponse.json({
   available:true,
   status:receipt?.status==="0x0"?"error":receipt?.status==="0x1"?"ok":tx?.status??null,
-  method:typeof tx.method==="string"?tx.method:null,
+  method:typeof tx?.method==="string"?tx.method:null,
   from:rpcTx?.from??safeAddress(tx?.from),
   to:rpcTx?.to??safeAddress(tx?.to),
   createdContract:receipt?.contractAddress??safeAddress(tx?.created_contract),
