@@ -153,15 +153,16 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  ];
  return <main className="pt-tx-page txr">
   <ExplorerHexScene chain="btc" kind="transaction"/><div className="txr-shell">
-   <div className="txr-breadcrumb"><a href="/bitcoin">Bitcoin Explorer</a><span>›</span>Transaction</div><header className="txr-page-title"><h1>Bitcoin <em>Transaction</em></h1><div className="txr-id"><code title={txid}>{txid}</code><button type="button" onClick={copy} aria-label="Copy transaction ID">{copied?"✓ Copied":"▢"}</button></div></header>
+   <div className="txr-breadcrumb"><a href="/bitcoin">Bitcoin Explorer</a><span>›</span>Transaction</div>
    {error&&<p className="txr-error" role="alert">{error}{result?" Showing the last available data.":""}</p>}
    {loading&&!result&&<div className="txr-loading">Checking your Bitcoin transaction against the live network…</div>}
    {result&&<>
     <section className="txr-network-v2" aria-label="Live Bitcoin network and transaction position">
-     <div className="txr-v2-network-head"><div><span className="txr-v2-kicker">LIVE BITCOIN NETWORK</span><h2>Where is <em>your transaction?</em></h2></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
+     
      <div className="txr-explorer-motion fresh-journey"><BlockchainWebGL compactTransactionLabels pending={overview?.btc?.pending} fee={blocks[0]?.medianFee??null} projectedCount={blocks[0]?.transactionCount??null} projections={blocks} blocks={overview?.btc?.recentBlocks??[]} trackedPosition={!confirmed&&observed?selectedPosition:null} trackedConfirmedHeight={confirmed?blockHeight??null:null}/></div>
     </section>
     <section className="txr-snapshot-v2" aria-label="Your transaction snapshot">
+     <header className="txr-page-title"><h1>Bitcoin <em>Transaction</em></h1><div className="txr-id"><code title={txid}>{txid}</code><button type="button" onClick={copy} aria-label="Copy transaction ID">{copied?"✓ Copied":"▢"}</button></div></header>
      <div className="txr-snapshot-v2-head"><div><span className="txr-v2-kicker">YOUR TRANSACTION</span><h2>Your Transaction <em>Snapshot</em></h2><p>{confirmed?"Your transaction is included in a Bitcoin block.":observed?"Your transaction is pending and waiting for confirmation.":"This transaction has not yet been located on the Bitcoin network."}</p></div><div className="txr-v2-status"><strong>{confirmed?"✓ Confirmed":observed?"⬡ Pending":"? Not found"}</strong><small>{confirmed?"Block #"+number(blockHeight):observed?"Waiting to be included in a block":"Verify transaction broadcast"}</small></div></div>
      <div className="txr-v2-primary">
       {[
