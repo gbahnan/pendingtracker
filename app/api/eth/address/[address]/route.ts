@@ -10,26 +10,26 @@ export async function GET(req:Request,{params}:{params:{address:string}}){
  try{
   if(mode==="history"){
    const days=Math.min(365,Math.max(1,Number(u.searchParams.get("days"))||30)),cutoff=Date.now()-days*86400000;
-   let next:Record<string,string|number>|null=null;const items:any[]=[];let complete=false,coverageStart:number|null=null;
+   let next:Record<string,string|number>|null=null;const items:any[]=[];let complete=false,coverageStart:number|null=null,reason="Page limit reached";
    for(let i=0;i<25;i++){
     const qs=new URLSearchParams();if(next)for(const [k,v] of Object.entries(next))qs.set(k,String(v));
     const d=await get(base+address+"/transactions"+(qs.size?"?"+qs:""));
     const batch=Array.isArray(d.items)?d.items:[];
-    if(!batch.length){complete=true;break}
-    for(const t of batch){const ts=Date.parse(t.timestamp||"");if(!Number.isFinite(ts))continue;coverageStart=ts;items.push({hash:t.hash,time:ts,delta:direction(t,address),status:t.status});if(ts<cutoff){complete=true;break}}
+    if(!batch.length){complete=true;reason="End of provider history";break}
+    for(const t of batch){const ts=Date.parse(t.timestamp||"");if(!Number.isFinite(ts))continue;coverageStart=ts;items.push({hash:t.hash,time:ts,delta:direction(t,address),status:t.status});if(ts<cutoff){complete=true;reason="Requested date range covered";break}}
     if(complete)break;
-    next=d.next_page_params;if(!next){complete=true;break}
+    next=d.next_page_params;if(!next){complete=true;reason="End of provider history";break}
    }
-   return NextResponse.json({items:items.filter(x=>x.time>=cutoff).reverse(),complete,coverageStart,days},{headers:{"Cache-Control":"public, s-maxage=60, stale-while-revalidate=120"}});
+   return NextResponse.json({items:items.filter(x=>x.time>=cutoff).reverse(),complete,coverageStart,days,coverageNote:reason,chartType:"Transaction ETH movement, not historical balance"},{headers:{"Cache-Control":"public, s-maxage=60, stale-while-revalidate=120"}});
   }
   if(mode==="pending"){
    const [pendingResult,regularResult]=await Promise.allSettled([get(base+address+"/transactions?filter=pending"),get(base+address+"/transactions")]);
    const first=pendingResult.status==="fulfilled"&&Array.isArray(pendingResult.value.items)?pendingResult.value.items:[];
    const second=regularResult.status==="fulfilled"&&Array.isArray(regularResult.value.items)?regularResult.value.items:[];
-   if(pendingResult.status!=="fulfilled"&&regularResult.status!=="fulfilled")throw Error("Pending provider unavailable");
+   if(regularResult.status!=="fulfilled")throw Error("Pending provider unavailable");
    const unique=new Map<string,any>();
    for(const x of [...first,...second])if(x.hash&&(x.status==="pending"||x.block_number==null))unique.set(x.hash,x);
-   return NextResponse.json({pendingTransactions:[...unique.values()].slice(0,30).map(x=>({hash:x.hash,time:x.timestamp?Date.parse(x.timestamp):null,delta:direction(x,address),status:"pending",method:x.method??null,from:x.from?.hash??null,to:x.to?.hash??null,fee:x.fee?.value??null,gasUsed:x.gas_used??null})),updatedAt:Date.now(),coverage:"Provider-observed pending transactions only"},{headers:{"Cache-Control":"no-store"}});
+   return NextResponse.json({pendingTransactions:[...unique.values()].slice(0,30).map(x=>({hash:x.hash,time:x.timestamp?Date.parse(x.timestamp):null,delta:direction(x,address),status:"pending",method:x.method??null,from:x.from?.hash??null,to:x.to?.hash??null,fee:x.fee?.value??null,gasUsed:x.gas_used??null})),updatedAt:Date.now(),coverage:"Provider-observed pending transactions only",pendingFilterSupported:pendingResult.status==="fulfilled"},{headers:{"Cache-Control":"no-store"}});
   }
   const [info,txs,tokens,price,transfers]=await Promise.allSettled([get(base+address),get(base+address+"/transactions"),get(base+address+"/token-balances"),get("https://eth.blockscout.com/api/v2/stats"),get(base+address+"/token-transfers")]);
   if(info.status!=="fulfilled")throw Error("Address unavailable");
