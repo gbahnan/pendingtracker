@@ -53,8 +53,12 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
    const rgb=blue?"90,187,247":"220,120,31";
    ctx.globalAlpha=opacity;
-   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.15)";ctx.shadowColor="rgba("+rgb+",.56)";ctx.shadowBlur=5;ctx.arc(x,y,r*1.42,0,Math.PI*2);ctx.fill();
-   ctx.beginPath();ctx.fillStyle=blue?"#e4f6ff":"#fff0d2";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.24)";ctx.shadowColor="rgba("+rgb+",.65)";ctx.shadowBlur=5;ctx.arc(x,y,r*1.48,0,Math.PI*2);ctx.fill();
+   // The actual sphere must be amber, not an ivory disk over amber glow.
+   const sphere=ctx.createRadialGradient(x-r*.28,y-r*.3,r*.08,x,y,r);
+   if(blue){sphere.addColorStop(0,"#effaff");sphere.addColorStop(.32,"#89d9ff");sphere.addColorStop(1,"#268cc9")}
+   else{sphere.addColorStop(0,"#ffe1a2");sphere.addColorStop(.27,"#e99535");sphere.addColorStop(.72,"#dc781f");sphere.addColorStop(1,"#a64c16")}
+   ctx.beginPath();ctx.fillStyle=sphere;ctx.shadowBlur=1.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
    ctx.shadowBlur=0;ctx.globalAlpha=1;
   };
   const point=(box:Chamber,u:number,v:number)=>{
