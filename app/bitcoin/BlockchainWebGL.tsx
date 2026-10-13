@@ -51,10 +51,10 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   };
   const observer=new ResizeObserver(measure);observer.observe(track);measure();
   const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
-   const rgb=blue?"106,197,249":"239,177,95";
+   const rgb=blue?"90,187,247":"245,160,42";
    ctx.globalAlpha=opacity;
    ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.15)";ctx.shadowColor="rgba("+rgb+",.56)";ctx.shadowBlur=5;ctx.arc(x,y,r*1.42,0,Math.PI*2);ctx.fill();
-   ctx.beginPath();ctx.fillStyle=blue?"#e8f8ff":"#fff0d1";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle=blue?"#e4f6ff":"#fff5df";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
    ctx.shadowBlur=0;ctx.globalAlpha=1;
   };
   const point=(box:Chamber,u:number,v:number)=>{
@@ -84,16 +84,15 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
      for(let j=0;j<9;j++){
       const seed=75+(chamber*13+j)%130,p=particles[seed];
       const uv=drift(p,elapsed*.65,seed);
-      let pos=point(box,uv.u,uv.v);
-      // Keep the fee/time labels legible by routing resident balls
-      // outside the central text area, while preserving wall bouncing.
-      if(box.kind==="gold"){
-       const cx=box.x+box.w/2,cy=box.y+box.h/2;
-       if(Math.abs(pos.x-cx)<40&&Math.abs(pos.y-cy)<27){
-        const side=pos.x>=cx?1:-1;
-        pos={x:cx+side*(40+Math.abs(pos.x-cx)*.10),y:pos.y};
-       }
-      }
+      // Continuous perimeter route: the particle's path never snaps
+      // from one side of the protected label region to the other.
+      const ring=bounce(p.lane+elapsed*(.038+(seed%5)*.005)+p.angle*.11);
+      const perimeter=ring*4;
+      const u=perimeter<1?perimeter:perimeter<2?1:perimeter<3?3-perimeter:0;
+      const v=perimeter<1?0:perimeter<2?perimeter-1:perimeter<3?1:4-perimeter;
+      const pos=box.kind==="gold"
+       ?point(box,.12+.76*u,.10+.80*v)
+       :point(box,uv.u,uv.v);
       drawBall(pos.x,pos.y,p.radius*.82*1.18,box.kind==="blue",.72);
      }
     }
@@ -108,7 +107,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
       const from=point(fromBox,.94,lane),to=point(toBox,.06,lane);
       const pos={x:from.x+(to.x-from.x)*phase,y:from.y+(to.y-from.y)*phase+sway};
       const blue=phase>.55?toBox.kind==="blue":fromBox.kind==="blue";
-      drawBall(pos.x,pos.y,(1.9+(j%3)*.35)*1.25,blue,.80);
+      drawBall(pos.x,pos.y,(1.9+(j%3)*.35)*1.25,blue,.80*Math.min(1,phase*9,(1-phase)*9));
      }
     }
    }
