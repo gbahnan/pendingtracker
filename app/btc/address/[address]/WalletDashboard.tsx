@@ -1,3 +1,4 @@
+import ExplorerHexScene from "../../../components/ExplorerHexScene";
 "use client";
 import Link from "next/link";
 import {useMemo,useState,useEffect,useRef} from "react";
@@ -35,7 +36,7 @@ export default function WalletDashboard(p:Props){
  };
  const stats=[["Total Received",btc(p.received)+" BTC","Lifetime incoming outputs"],["Total Sent",btc(p.sent)+" BTC","Lifetime spent outputs"],["Transactions",txCount.toLocaleString("en-US"),"Confirmed and pending"],["Unspent Outputs",p.utxos.toLocaleString("en-US"),"Confirmed UTXOs"],["Pending Balance",(pendingBalance>0?"+":"")+btc(pendingBalance)+" BTC","Unconfirmed net change"]];
  return <main className="ptw-shell">
-  <div className="ptw-ambient" aria-hidden="true"/>
+  <ExplorerHexScene chain="btc" kind="wallet"/>
   <section className="ptw-heading"><div className="ptw-eyebrow">TRACK · EXPLORE · UNDERSTAND</div><h1><span>Bitcoin Wallet</span> Explorer</h1><p>Explore any Bitcoin address and get a clear, easy-to-understand breakdown of its balance, transactions, and activity.</p>
    <form className="ptw-search" onSubmit={search}><span className="ptw-btc">₿</span><input aria-label="Search Bitcoin wallet or transaction" placeholder="Search a Bitcoin wallet address..." value={query} onChange={e=>setQuery(e.target.value)}/><button type="submit" aria-label="Search">⌕</button></form>
    <small>Example: 34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo</small>{error&&<p className="ptw-error" role="alert">{error}</p>}
