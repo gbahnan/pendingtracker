@@ -1,5 +1,5 @@
 "use client";
-import TransactionMotion from "../../components/TransactionMotion";
+import BlockchainWebGL from "../../bitcoin/BlockchainWebGL";
 import ExplorerHexScene from "../../components/ExplorerHexScene";
 import {Honeycomb} from "../../components/ChainDashboard";
 import HexArtwork from "../../components/SharedHexArtwork";
@@ -9,8 +9,8 @@ import {useCallback,useEffect,useMemo,useState} from "react";
 import type {BtcMvpResult} from "@/lib/btc/types";
 import {isLikelyTxid} from "@/lib/btc/validate";
 
-type ProjectedBlock={position:number;transactionCount:number|null;feeRange:number[]|null};
-type Overview={btc?:{projectedBlocks?:ProjectedBlock[];height?:number|null}};
+type ProjectedBlock={position:number;transactionCount:number|null;feeRange:number[]|null;medianFee?:number|null};
+type Overview={btc?:{projectedBlocks?:ProjectedBlock[];height?:number|null;pending?:number|null;recentBlocks?:Array<{height:number|null;ageMinutes:number;transactionCount:number|null;id:string|null}>}};
 const number=(n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(n);
 const btc=(sats:number|null|undefined)=>sats==null?"—":(sats/100000000).toLocaleString("en-US",{maximumFractionDigits:8})+" BTC";
 const short=(value:string)=>value.length>27?value.slice(0,14)+"…"+value.slice(-10):value;
@@ -158,8 +158,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
     <section className="txr-top">
      
      <div className="txr-livehead"><div><h2>{confirmed?"Transaction Confirmed":observed?"Your Transaction Is Pending":"Transaction Not Found"}</h2><p>{confirmed?"Your payment is included in a block. The hexagons show the live Bitcoin network.":observed?"Your transaction is waiting for confirmation. The highlighted hexagon is a fee-based estimate.":"This transaction has not been located. The hexagons show general network activity."}</p></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
-     <TransactionMotion chain="btc" stages={[{title:"Latest Block",detail:"#"+number(overview?.btc?.height),sub:"Confirmed on network",complete:true},...Array.from({length:4},(_,i)=>{const b=blocks[i];return {title:"~"+((i+1)*10)+" min",detail:b?.feeRange?b.feeRange.join("–")+" sat/vB":"Fee unavailable",sub:number(b?.transactionCount)+" waiting txs",active:!confirmed&&observed&&selectedPosition===i+1}})]}/>
-<p className="txr-swipe-hint">Swipe to explore live transaction stages <span aria-hidden="true">→</span></p>
+     <div className="txr-explorer-motion"><BlockchainWebGL pending={overview?.btc?.pending} fee={blocks[0]?.medianFee??null} projectedCount={blocks[0]?.transactionCount??null} projections={blocks} blocks={overview?.btc?.recentBlocks??[]} trackedPosition={!confirmed&&observed?selectedPosition:null} trackedConfirmedHeight={confirmed?blockHeight??null:null}/></div>
      <p className="txr-timeline-note">{confirmed?"Your transaction is already confirmed. The gold hexagons show projected future blocks.":!observed?"Your transaction has not been located on the network yet.":"The highlighted hexagon is a fee-based estimate, not a guaranteed queue position."}</p>
      <div className="txr-overview"><div className="txr-overview-grid">
       {[
