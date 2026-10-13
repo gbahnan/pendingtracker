@@ -51,10 +51,10 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   };
   const observer=new ResizeObserver(measure);observer.observe(track);measure();
   const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
-   const rgb=blue?"81,181,237":"243,153,47";
+   const rgb=blue?"78,182,246":"255,158,42";
    ctx.globalAlpha=opacity;
-   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.19)";ctx.shadowColor="rgba("+rgb+",.64)";ctx.shadowBlur=5;ctx.arc(x,y,r*1.55,0,Math.PI*2);ctx.fill();
-   ctx.beginPath();ctx.fillStyle=blue?"#d6f2ff":"#ffe6ae";ctx.shadowBlur=2.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.19)";ctx.shadowColor="rgba("+rgb+",.64)";ctx.shadowBlur=7;ctx.arc(x,y,r*1.65,0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle=blue?"#d6f2ff":"#ffe6ae";ctx.shadowBlur=3;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
    ctx.shadowBlur=0;ctx.globalAlpha=1;
   };
   const point=(box:Chamber,u:number,v:number)=>{
@@ -88,24 +88,19 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
       drawBall(pos.x,pos.y,p.radius*.82,box.kind==="blue",.72);
      }
     }
-    // Many simultaneous crossings, with slower free-floating motion and
-    // independently offset paths so there is no cannon-like stream.
-    for(let i=0;i<82;i++){
-     const p=particles[i+205];
-     const progress=(p.offset+elapsed*p.speed)%1;
-     const scaled=progress*(layout.length-1);
-     const index=Math.min(layout.length-2,Math.floor(scaled));
-     const local=scaled-index,box=layout[index];
-     const uv=drift(p,elapsed*.62,i+205);
-     let pos=point(box,uv.u,uv.v),blue=box.kind==="blue";
-     if(local>.46){
-      const next=layout[index+1],t=(local-.46)/.54;
-      const from=point(box,.90,.20+p.lane*.60);
-      const to=point(next,.10,.20+p.lane*.60);
-      const blend=Math.min(1,(local-.46)/.09);const departure={x:pos.x+(from.x-pos.x)*blend,y:pos.y+(from.y-pos.y)*blend};const travel=Math.max(0,(local-.55)/.45);pos=local<.55?departure:{x:from.x+(to.x-from.x)*travel,y:from.y+(to.y-from.y)*travel+Math.sin(travel*Math.PI)*Math.sin(p.angle)*6};
-      blue=t>.55?next.kind==="blue":blue;
+    // Six independent, continuously traveling balls per gap. Each has its
+    // own lane and phase, so every pair of chambers looks connected.
+    for(let gap=0;gap<layout.length-1;gap++){
+     const fromBox=layout[gap],toBox=layout[gap+1];
+     for(let j=0;j<6;j++){
+      const phase=(j/6+gap*.173+elapsed*(.043+(j%3)*.004))%1;
+      const lane=.20+((j*.381966+gap*.113)%1)*.60;
+      const sway=Math.sin(phase*Math.PI)*Math.sin(j*2.17+gap)*4;
+      const from=point(fromBox,.94,lane),to=point(toBox,.06,lane);
+      const pos={x:from.x+(to.x-from.x)*phase,y:from.y+(to.y-from.y)*phase+sway};
+      const blue=phase>.55?toBox.kind==="blue":fromBox.kind==="blue";
+      drawBall(pos.x,pos.y,1.9+(j%3)*.35,blue,.80);
      }
-     drawBall(pos.x,pos.y,p.radius,blue,.82);
     }
    }
    raf=requestAnimationFrame(draw);
