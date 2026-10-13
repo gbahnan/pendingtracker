@@ -1,7 +1,7 @@
 "use client";
 import {useCallback,useEffect,useMemo,useState} from "react";
-import ChainDashboard from "../../components/ChainDashboard";
-import styles from "../../btc/[txid]/BitcoinTracker.module.css";
+
+import "./ethereum-transaction.css";
 
 type TokenTransfer={from?:string|null;to?:string|null;symbol?:string|null;name?:string|null;decimals?:number|null;amount?:string|null;tokenId?:string|null;type?:string|null};
 type Insights={available?:boolean;status?:string|null;method?:string|null;from?:string|null;to?:string|null;createdContract?:string|null;blockNumber?:number|string|null;gasUsed?:number|string|null;gasPrice?:number|string|null;fee?:string|null;nonce?:number|string|null;revertReason?:string|null;tokenTransfers?:TokenTransfer[];tokenTransfersHasMore?:boolean;tokenTransfersAvailable?:boolean};
@@ -20,6 +20,7 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
  const [loading,setLoading]=useState(true);
  const [error,setError]=useState<string|null>(null);
  const [copied,setCopied]=useState(false);
+ const [expanded,setExpanded]=useState(false);
  const refresh=useCallback(async()=>{
   if(!valid)return;
   try{
@@ -60,66 +61,59 @@ export default function EthereumTransaction({params}:{params:{hash:string}}){
  const activity=hasTokens?"The transaction includes "+tokens.length+(insights?.tokenTransfersHasMore?" or more":"")+" reported token movement"+(tokens.length===1&&!insights?.tokenTransfersHasMore?"":"s")+". Token movements are separate from any ETH sent directly.":contract?"This transaction interacts with an Ethereum contract. Contract calls can perform actions without sending ETH directly, and the method name alone does not establish everything that happened.":"The direct ETH amount is "+ethAmount+". This is the value attached to the transaction, not the gas fee.";
  const next=failed?"What to do next: check the reported failure reason and your wallet activity before retrying. Avoid repeating a transaction without understanding why it failed.":confirmed?"What to do next: no acceleration is needed. If the receiving service has not credited your funds, check its deposit requirements using this transaction hash.":"What to do next: you can usually wait. If it is urgent, check whether your wallet supports speeding up or replacing this transaction with the same nonce. Avoid sending a duplicate payment.";
  function copy(){navigator.clipboard?.writeText(hash).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),1600)}).catch(()=>{})}
- if(!valid)return <main className={styles.page}><div className={styles.shell}><a className={styles.back} href="/ethereum">← Ethereum Explorer</a><h1>Invalid Ethereum transaction hash</h1><p>Enter 0x followed by 64 hexadecimal characters.</p></div></main>;
- return <main className={styles.page+" "+styles.ethPage}>
-  <div className={styles.shell}>
-   <a className={styles.back} href="/ethereum">← &nbsp; Ethereum Explorer</a>
-   <header className={styles.hero}>
-    <div className={styles.ethCoin} aria-hidden="true">◆</div>
-    <div className={styles.heroText}><div className={styles.eyebrow}>YOUR ETHEREUM TRANSACTION</div><h1>{failed?"Your transaction failed":confirmed?"Your transaction is confirmed":<>Waiting for <span>confirmation</span></>}</h1><p>{failed?"The transaction was included in a block, but its execution failed. Gas may still have been charged.":confirmed?"Ethereum recorded this transaction. Your wallet or exchange may still need time to credit the funds.":"Track your transaction on Ethereum and understand what its gas, status and transfers mean."}</p></div>
-    <div className={styles.ethStatus}>{status}</div>
-   </header>
-   {error&&<p className={styles.error} role="alert">{error}{tx?" Showing the last available data.":""}</p>}
-   {loading&&!tx&&<p className={styles.loading}>Checking the Ethereum network…</p>}
+
+ const block=insights?.blockNumber??tx?.blockNumber??tx?.block_number;
+ const gasFeeWei=insights?.fee;
+ const metric=[
+ {icon:"◆",label:"Direct ETH Value",value:ethAmount,help:"ETH attached to this transaction. Token transfers are shown below."},
+ {icon:"≋",label:"Network Fee (Gas)",value:gasFee,help:"Gas paid for network processing; this can apply even if execution fails."},
+ {icon:"◷",label:confirmed?"Confirmations":"Confirmation Status",value:confirmed?fmt(tx?.confirmations??1):"Waiting",help:confirmed?"New blocks add confirmations. Finality is a separate milestone.":"No guaranteed confirmation time; gas settings and nonce matter."},
+ {icon:"⬡",label:confirmed?"Block Number":"Transaction Status",value:confirmed?fmt(block):status,help:confirmed?"The block where this transaction was included.":"Waiting to be included in a block."}
+ ];
+ const details=[
+ {icon:"≋",label:"Gas Price",value:gasPrice,help:"Effective price per gas unit, shown in Gwei. This is not the total fee."},
+ {icon:"⇄",label:"Transaction Type",value:method,help:contract?"This interacts with a smart contract, which may transfer tokens or execute other actions.":hasTokens?"This transaction includes reported token movements.":"This describes the transaction's main operation."},
+ {icon:"▤",label:"Gas Used",value:gasUsed,help:"Units of Ethereum computation consumed. Unlike Bitcoin, this is not a transaction's byte size."},
+ {icon:"⬡",label:"Execution Status",value:status,help:failed?"The operation reverted; gas may still be charged.":confirmed?"Included in a block and processed successfully.":"The result is not known until inclusion."},
+ ...(expanded?[
+ {icon:"₿",label:"Direct ETH Amount",value:ethAmount,help:"ETH directly attached to the transaction; does not include ERC-20 or NFT transfers."},
+ {icon:"◷",label:"Nonce",value:fmt(insights?.nonce),help:"Sender transaction sequence. An earlier pending nonce can delay this transaction."},
+ {icon:"◇",label:"Token Movements",value:String(totalTokens),help:"Reported token transfers; some contract interactions produce several."},
+ {icon:"⬡",label:"Block Number",value:confirmed?fmt(block):"Pending",help:"The block containing the transaction, when available."}
+ ]:[])
+ ];
+ if(!valid)return <main className="etr"><div className="etr-shell"><a href="/ethereum">← Ethereum Explorer</a><h1>Invalid Ethereum transaction hash</h1><p>Enter 0x followed by 64 hexadecimal characters.</p></div></main>;
+ return <main className="etr">
+  <div className="etr-ambient" aria-hidden="true"><div className="etr-ambient-grid"/><div className="etr-ambient-coin"><span>◆</span></div><i className="etr-spark s1"/><i className="etr-spark s2"/><i className="etr-spark s3"/></div>
+  <div className="etr-shell">
+   <div className="etr-breadcrumb"><a href="/ethereum">Ethereum Explorer</a><span>›</span>Transaction</div>
+   <header className="etr-title"><h1>Ethereum <em>Transaction</em></h1><div className="etr-hash"><code title={hash}>{hash}</code><button type="button" onClick={copy} aria-label="Copy transaction hash">{copied?"✓ Copied":"▢"}</button></div></header>
+   {error&&<p className="etr-error" role="alert">{error}{tx?" Showing the last available data.":""}</p>}
+   {loading&&!tx&&<p className="etr-loading">Checking the Ethereum network…</p>}
    {tx&&<>
-    <div className={styles.ethNetwork}><ChainDashboard chain="ethereum" tracking trackedEthBlock={confirmed?Number(insights?.blockNumber??tx?.blockNumber??tx?.block_number??0)||null:null} ethPending={!confirmed}/><p className={styles.ethCaveat}>Ethereum blocks are proposed approximately every 12 seconds. Pending transactions do not have a guaranteed position in a future block. A failed transaction can still be included in a block.</p></div>
-    <section className={styles.summary} aria-label="Ethereum transaction status"><div className={styles.summarySectionHeading}><span className={styles.summarySectionNumber}>1</span><h2>WHERE IS MY TRANSACTION?</h2></div>
-     <div className={styles.summaryGrid}>
+    <section className="etr-tracker" aria-label="Ethereum transaction status">
+     <div className="etr-tracker-heading"><div><h2>{failed?"Transaction Included · Execution Failed":confirmed?"Your Transaction Is Confirmed":"Your Transaction Is Pending"}</h2><p>{failed?"Ethereum included the transaction, but its execution reverted.":confirmed?"Your transaction is recorded in an Ethereum block.":"Ethereum transactions are included by validators; there is no reliable fixed position in a future block."}</p></div><span className="etr-live"><i/> Live Ethereum data</span></div>
+     <div className="etr-hexrow">
       {[
-       ["STATUS",status,failed?"Included in a block, but execution failed.":confirmed?"Recorded on the Ethereum blockchain.":"Awaiting inclusion in a block."],
-       ["CONFIRMATIONS",confirmed?fmt(tx.confirmations??1):"0","More blocks increase confirmations. Receiving services set their own requirements."],
-       ["BLOCK",confirmed?fmt(insights?.blockNumber??tx?.blockNumber??tx?.block_number):"Pending","The Ethereum block containing your transaction, if confirmed."],
-       ["NETWORK GAS",network?.eth?.gasGwei==null?"Unavailable":network.eth.gasGwei+" Gwei","Current network gas estimate, not your transaction's actual fee."],
-       ["EXECUTION",failed?"Reverted":confirmed?"Succeeded":"Not yet known",failed?"A failed execution may still consume gas.":confirmed?"The transaction was processed successfully.":"Final execution outcome is not known yet."]
-      ].map(([label,value,help])=><div className={styles.fact} key={label}><div className={styles.factTop}><span className={styles.ethFactIcon}>◆</span><div><div className={styles.factLabel}>{label}</div><div className={styles.factValue}><strong>{value}</strong></div></div></div><p>{help}</p></div>)}
-     </div><div className={styles.summaryFooter}><div>Transaction hash <code title={hash}>{short(hash)}</code><button type="button" onClick={copy}>{copied?"✓ Copied":"▢ Copy"}</button></div><a href={"https://eth.blockscout.com/tx/"+hash} target="_blank" rel="noopener noreferrer">View on Blockscout ↗</a></div>
-    </section>
-    <section className={styles["pt-story"]}>
-     <div className={styles["pt-story-eyebrow"]}>THE SAME BLOCKCHAIN. A CLEARER PICTURE.</div>
-     <h2>Your Ethereum transaction, <em>in plain English.</em></h2><p className={styles["pt-story-sub"]}>Real Ethereum data. Clear explanations.</p>
-     <div className={styles["pt-story-intro"]}><div className={styles["pt-story-introicon"]} aria-hidden="true">✦</div><div><h3>Your transaction, explained</h3><p>{explanation}</p><p>{activity} {insights?.fee!=null?"The reported network processing fee is "+gasFee+".":""} {failed&&insights?.revertReason?"Reported failure reason: "+insights.revertReason:""}</p><p className={styles["pt-story-takeaway"]}>{next}</p></div></div>
-     <div className={styles["pt-story-data"]}><h3>UNDERSTANDING YOUR TRANSACTION</h3>
-      {[
-       ["Direct ETH amount",ethAmount,"ETH attached directly to the transaction. A token swap or contract call can move tokens even when this value is zero."],
-       ["Network fee",gasFee,"The gas fee for Ethereum processing, separate from the ETH transferred. Even a reverted contract operation can incur a fee."],
-       ["Gas used",gasUsed,"How many units of computation this transaction consumed. More complex contract interactions often use more gas."],
-       ["Token transfers",String(totalTokens),"Reported ERC-20 or NFT movements. A single contract interaction can produce several transfers; some operations have none."]
-      ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
+       {label:failed?"Execution failed":confirmed?"Included in block":"Transaction seen",sub:confirmed?"Block #"+fmt(block):"Broadcast to network",state:"first"},
+       {label:"Block inclusion",sub:confirmed?"Completed":"Awaiting validator",state:confirmed?"complete":"waiting"},
+       {label:"Confirmations",sub:confirmed?fmt(tx.confirmations??1)+" so far":"After inclusion",state:confirmed?"complete":"waiting"},
+       {label:"Finality",sub:"Separate network milestone",state:"waiting"},
+       {label:"Receiving service",sub:"May have its own checks",state:"waiting"}
+      ].map((x,i)=><div className="etr-hexunit" key={i}><div className={"etr-hex "+x.state}><span>{i===0?"✓":i===1?"⬡":i===2?"◷":i===3?"◆":"⇄"}</span></div><strong>{x.label}</strong><small>{x.sub}</small></div>)}
      </div>
-     <details className={styles["pt-story-advanced"]}><summary><b>Explore additional blockchain data</b><span>Gas price, nonce, method, block, addresses and execution details — each explained. ↓</span></summary>
-      {[
-       ["Effective gas price",gasPrice,"The reported price per gas unit. One Gwei is one-billionth of an ETH; the actual fee depends on gas used."],
-       ["Nonce",fmt(insights?.nonce),"The sequence number of transactions sent by an Ethereum account. An earlier pending nonce can delay later transactions."],
-       ["Method",method,"The function or operation identified by the explorer, if available. A method name does not prove what the operation achieved."],
-       ["Block number",confirmed?fmt(insights?.blockNumber??tx.blockNumber??tx.block_number):"Pending","The block that included this transaction, if one exists."],
-       ["Sender",from??"Unavailable","The sending Ethereum address. It does not reveal the real-world identity of the owner."],
-       ["Recipient / contract",to??insights?.createdContract??"Unavailable","The destination address or contract. Contract creation can have no ordinary recipient address."],
-       ["Transaction hash",hash,"The unique identifier for looking up this transaction on Ethereum."]
-      ].map(([label,value,help])=><div className={styles["pt-story-row"]} key={label}><div><small>{label}</small><strong className={styles["pt-story-wrap"]}>{value}</strong></div><div><b>What this means</b><p>{help}</p></div></div>)}
-      {insights?.revertReason&&<p className={styles.ethFailure}>Reported failure reason: {insights.revertReason}</p>}
-      <details className={styles["pt-story-raw"]}><summary>View raw Ethereum data</summary><pre>{JSON.stringify({transaction:tx,insights},null,2)}</pre></details>
-     </details>
-     <section className={styles["pt-story-flow"]} aria-label="Ethereum transaction movement">
-      <h3>WHERE DID THE ETHEREUM ASSETS GO?</h3>
-      <p className={styles["pt-story-flowlead"]}>Ethereum uses account-to-account transactions and smart contracts—not Bitcoin's input/output model. The flow below shows the direct transaction and any token movements reported by the explorer.</p>
-      <div className={styles["pt-story-flowgrid"]}><div className={styles["pt-story-flowendpoint"]}><small>FROM · SENDING ADDRESS</small><strong className={styles.ethAddressValue}>{from?short(from):"Unavailable"}</strong><small>Account that submitted the transaction</small></div><div className={styles["pt-story-path"]} aria-hidden="true"><span className={styles["pt-story-linegold"]}/><div className={styles["pt-story-coin"]}>◆</div><span className={styles["pt-story-lineteal"]}/></div><div className={styles["pt-story-flowendpoint"]}><small>TO · DESTINATION</small><strong className={styles.ethAddressValue}>{to?short(to):insights?.createdContract?"Contract creation":"Unavailable"}</strong><small>{method}</small></div></div>
-      <div className={styles["pt-story-flowfooter"]}><span>Direct ETH: <b>{ethAmount}</b></span><span>Gas fee: <b>{gasFee}</b></span></div>
-      <div className={styles["pt-story-addressgrid"]}><div><h4>Transaction addresses</h4><p className={styles["pt-story-addresshelp"]}>Ethereum account and destination</p><div className={styles["pt-story-addressrow"]}><span>From {from?<a href={"/eth/address/"+from}>{short(from)} ↗</a>:<small>Unavailable</small>}</span></div><div className={styles["pt-story-addressrow"]}><span>To {to?<a href={"/eth/address/"+to}>{short(to)} ↗</a>:<small>{insights?.createdContract?"Contract creation":"Unavailable"}</small>}</span><strong>{ethAmount}</strong></div></div>
-       <div><h4>Token movements <span>({totalTokens})</span></h4><p className={styles["pt-story-addresshelp"]}>ERC-20, NFT and other reported transfers</p>{tokens.slice(0,8).map((t,i)=><div className={styles["pt-story-addressrow"]} key={i}><span>{t.symbol??t.name??t.type??"Token"}<small>{t.from?short(t.from):"Unknown"} → {t.to?short(t.to):"Unknown"}</small></span><strong>{tokenAmount(t)}</strong></div>)}{tokens.length>8&&<details className={styles["pt-story-showall"]}><summary>Show remaining token movements ↓</summary>{tokens.slice(8).map((t,i)=><div className={styles["pt-story-addressrow"]} key={i}><span>{t.symbol??t.name??"Token"}<small>{t.from?short(t.from):"Unknown"} → {t.to?short(t.to):"Unknown"}</small></span><strong>{tokenAmount(t)}</strong></div>)}</details>}{insights?.tokenTransfersHasMore&&<p>More token transfers exist; Blockscout has additional records.</p>}{!hasTokens&&<p>{insights?.tokenTransfersAvailable?"No token movements were reported.":"Token-transfer data is currently unavailable."}</p>}</div></div>
-     </section>
-     <p className={styles["pt-story-source"]}>Live Ethereum mainnet data · <a href={"https://eth.blockscout.com/tx/"+hash} target="_blank" rel="noopener noreferrer">Verify on Blockscout ↗</a></p>
+     <p className="etr-timeline-note">{confirmed?"Block inclusion is confirmed. This diagram shows stages, not measured timestamps or finality verification.":failed?"A reverted transaction can be included in a block and still incur a gas fee.":"Ethereum slots are typically 12 seconds, but inclusion, confirmation and finality are not guaranteed by a countdown."}</p>
+     <div className="etr-overview">{metric.map(m=><article className="etr-overview-item" key={m.label}><div className="etr-metric-icon">{m.icon}</div><div><small>{m.label}</small><strong>{m.value}</strong><p>{m.help}</p></div></article>)}</div>
     </section>
+    <section className="etr-summary"><div className="etr-eyebrow">YOUR TRANSACTION</div><h2>{failed?<>This transaction <em>did not execute successfully.</em></>:confirmed?<>This transaction has been <em>confirmed.</em></>:<>Your transaction is <em>waiting for confirmation.</em></>}</h2><p>{explanation}</p><p>{activity} {insights?.fee!=null?"The network processing fee is "+gasFee+".":""}</p><p className="etr-next">{next}</p>{failed&&insights?.revertReason&&<p className="etr-failure">Reported failure reason: {insights.revertReason}</p>}</section>
+    <section className="etr-details"><div className="etr-section-heading"><div><h2>Key Transaction Details</h2><p>Four useful Ethereum details, explained in plain English.</p></div><button type="button" className="etr-more" aria-expanded={expanded} onClick={()=>setExpanded(x=>!x)}>{expanded?"Show Fewer Details":"Show 4 More Details"} <span>{expanded?"⌃":"⌄"}</span></button></div><div className="etr-cards">{details.map(d=><article className="etr-card" key={d.label}><div className="etr-card-icon">{d.icon}</div><h3>{d.label}</h3><strong>{d.value}</strong><p>{d.help}</p></article>)}</div>
+    <details className="etr-advanced"><summary>Explore technical Ethereum data (addresses, nonce, method, gas and raw records)</summary><div><small>Transaction hash</small><code>{hash}</code></div><div><small>Sender</small><code>{from??"Unavailable"}</code></div><div><small>Recipient / contract</small><code>{to??insights?.createdContract??"Unavailable"}</code></div><div><small>Method</small><strong>{method}</strong></div><div><small>Nonce</small><strong>{fmt(insights?.nonce)}</strong></div><div><small>Gas price</small><strong>{gasPrice}</strong></div><div><small>Gas used</small><strong>{gasUsed}</strong></div><details><summary>View raw Ethereum records</summary><pre>{JSON.stringify({transaction:tx,insights},null,2)}</pre></details></details>
+    </section>
+    <section className="etr-movement"><div className="etr-section-heading"><div><h2>From &amp; To</h2><p>Ethereum uses accounts and smart contracts, not Bitcoin-style inputs and outputs. Token movements appear separately.</p></div></div><div className="etr-movement-grid"><article className="etr-movement-panel"><div className="etr-panel-head"><h3>From <span>(1)</span></h3><strong>Sender</strong></div><p>Address that submitted this transaction</p><div className="etr-address-row"><span><small>FROM ADDRESS</small>{from?<a href={"/eth/address/"+from}>{short(from)} ↗</a>:<b>Unavailable</b>}</span><strong>{ethAmount}</strong></div></article><article className="etr-movement-panel"><div className="etr-panel-head"><h3>To <span>({to?"1":insights?.createdContract?"Contract":"—"})</span></h3><strong>Destination</strong></div><p>Recipient or contract called by the transaction</p><div className="etr-address-row"><span><small>TO ADDRESS</small>{to?<a href={"/eth/address/"+to}>{short(to)} ↗</a>:insights?.createdContract?<a href={"/eth/address/"+insights.createdContract}>{short(insights.createdContract)} ↗</a>:<b>Contract creation / unavailable</b>}</span><strong>{ethAmount}</strong></div></article></div>
+     <div className="etr-tokens"><div className="etr-section-heading"><div><h2>Token Movements <span>({totalTokens})</span></h2><p>ERC-20 and NFT transfers reported for this transaction. These are separate from the direct ETH value.</p></div></div>{tokens.length>0?<div className="etr-token-list">{tokens.map((t,i)=><div className="etr-token-row" key={i}><span><b>{t.symbol??t.name??t.type??"Token"}</b><small>{short(t.from??"Unknown")} → {short(t.to??"Unknown")}</small></span><strong>{tokenAmount(t)}</strong></div>)}</div>:<p className="etr-token-empty">{insights?.tokenTransfersAvailable?"No token transfers were reported.":"Token-transfer data is unavailable."}</p>}{insights?.tokenTransfersHasMore&&<p className="etr-token-empty">More token movements may be available on Blockscout.</p>}</div>
+    </section>
+    <footer className="etr-footer"><span>Transaction hash: <code>{short(hash)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"Copy"}</button></span><a href={"https://eth.blockscout.com/tx/"+hash} target="_blank" rel="noopener noreferrer">Verify on Blockscout ↗</a></footer>
    </>}
-  </div><p className="pt-tx-footnote">Live updates approximately every 15 seconds · No wallet connection required · Block times are not transaction guarantees.</p>
+  </div><p className="etr-disclaimer">Live Ethereum mainnet data refreshes approximately every 15 seconds. Slot times and network fee estimates are not guarantees. No wallet connection required.</p>
  </main>;
 }
