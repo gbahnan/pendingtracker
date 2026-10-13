@@ -50,3 +50,9 @@
  .eex .bex-projection-hex strong{font-size:clamp(20px,5vw,27px)!important}
  .eex .bex-projection-row::before{background:linear-gradient(90deg,#79dfff,#38b7ff 40%,#236fd4 78%,#17447f)!important;box-shadow:0 0 15px rgba(31,144,255,.6)!important}
 }
+
+/* Preserve Ethereum blue styling at the smaller phone-only carousel size. */
+@media(max-width:700px){
+ .eex .bex-projection-hex strong{font-size:clamp(15px,3.7vw,20px)!important}
+ .eex .bex-projection-row{gap:7px!important;padding:10px 7px 7px!important}
+}
