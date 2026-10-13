@@ -103,3 +103,28 @@
  100%{transform:translate(1020px,0);opacity:0}
  }
 }
+
+.journey-node.journey-wait,.journey-node.journey-confirmed{width:var(--journey-step);min-width:var(--journey-step)}
+.journey-mempool{width:260px;min-width:260px}
+.journey-chamber{clip-path:polygon(0 12%,8% 0,82% 0,100% 50%,82% 100%,8% 100%,0 88%);background:radial-gradient(ellipse at 20% 50%,#d78c283b,#081a2b 80%);filter:drop-shadow(0 0 6px #f5ac3944)}
+.journey-hex{width:112px;height:112px}.journey-hex-core{width:107px;height:107px}
+.journey-tube{left:220px;top:145px;height:55px;border-radius:30px}
+.journey-travel-particle{animation-name:journey-six}
+@keyframes journey-six{
+0%{transform:translateX(220px);opacity:0}4%{opacity:.9}
+12%{transform:translate(calc(270px + var(--journey-step)*.5),-18px)}
+16%{transform:translate(calc(270px + var(--journey-step)*.5),18px)}
+27%{transform:translate(calc(280px + var(--journey-step)*1.5),-18px)}
+31%{transform:translate(calc(280px + var(--journey-step)*1.5),18px)}
+42%{transform:translate(calc(290px + var(--journey-step)*2.5),-18px)}
+46%{transform:translate(calc(290px + var(--journey-step)*2.5),18px)}
+57%{transform:translate(calc(300px + var(--journey-step)*3.5),-18px)}
+61%{transform:translate(calc(300px + var(--journey-step)*3.5),18px)}
+72%{transform:translate(calc(310px + var(--journey-step)*4.5),-18px)}
+76%{transform:translate(calc(310px + var(--journey-step)*4.5),18px)}
+87%{transform:translate(calc(320px + var(--journey-step)*5.5),-18px)}
+91%{transform:translate(calc(320px + var(--journey-step)*5.5),18px)}
+100%{transform:translate(calc(330px + var(--journey-step)*6.5),0);opacity:0}
+}
+@media(max-width:700px){.journey-track{--journey-step:128px!important}.journey-node.journey-wait,.journey-node.journey-confirmed{width:128px;min-width:128px}.journey-mempool{width:230px;min-width:230px}.journey-tube{left:190px;top:125px}.journey-travel-particle{animation-name:journey-six-mobile}
+@keyframes journey-six-mobile{0%{transform:translateX(170px);opacity:0}4%{opacity:1}12%{transform:translate(304px,-15px)}16%{transform:translate(304px,15px)}27%{transform:translate(442px,-15px)}31%{transform:translate(442px,15px)}42%{transform:translate(580px,-15px)}46%{transform:translate(580px,15px)}57%{transform:translate(718px,-15px)}61%{transform:translate(718px,15px)}72%{transform:translate(856px,-15px)}76%{transform:translate(856px,15px)}87%{transform:translate(994px,-15px)}91%{transform:translate(994px,15px)}100%{transform:translate(1132px,0);opacity:0}}}
