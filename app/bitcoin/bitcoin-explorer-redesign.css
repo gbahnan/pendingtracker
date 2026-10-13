@@ -143,3 +143,70 @@
  .fresh-now-snapshot{box-shadow:0 10px 30px #0004}
 }
 @media(prefers-reduced-motion:reduce){.fresh-faq details,.fresh-search form{transition:none}}
+
+/* Precision spacing and responsive network sizing — October 2026. */
+.fresh-btc{width:100%;max-width:1440px;padding:clamp(22px,2.5vw,38px) clamp(18px,3vw,44px) 52px}
+.fresh-hero{min-height:clamp(215px,19vw,270px)}
+.fresh-hero h1{font-size:clamp(43px,4.8vw,67px)}
+.fresh-search{max-width:980px;margin-bottom:clamp(27px,3.3vw,42px)}
+.fresh-now-snapshot{padding:clamp(21px,2.25vw,30px) clamp(21px,2.4vw,34px)}
+.fresh-now-main{grid-template-columns:minmax(285px,1.12fr) minmax(0,2.08fr);gap:clamp(16px,2vw,28px)}
+.fresh-now-price{padding-right:clamp(8px,1.2vw,18px)}
+.fresh-now-metric{padding-left:clamp(10px,1.25vw,19px);padding-right:clamp(5px,.7vw,11px)}
+.fresh-now-metric strong{font-size:clamp(19px,1.8vw,27px)}
+.fresh-journey{padding-top:clamp(29px,3.4vw,46px);padding-bottom:clamp(23px,2.7vw,34px);margin-bottom:clamp(8px,1.4vw,18px)}
+.fresh-journey .fresh-section-head{margin-bottom:clamp(12px,1.5vw,22px)}
+.fresh-journey .fresh-section-head h2{font-size:clamp(29px,2.8vw,41px)}
+.fresh-journey .motion-top{margin:9px 0 13px}
+.fresh-journey .motion-arrows{margin:12px 0 8px}
+.fresh-journey .motion-track{gap:clamp(8px,1vw,13px);padding-top:13px;padding-bottom:19px;min-height:240px}
+.fresh-journey .motion-cell{width:clamp(139px,11.5vw,164px);min-height:214px}
+.fresh-journey .motion-cell.mempool{width:clamp(185px,15.5vw,215px)}
+.fresh-journey .motion-cell.confirmed{width:clamp(138px,11vw,155px)}
+.fresh-journey .motion-label{height:36px}
+.fresh-journey .motion-caption{margin-top:7px;min-height:29px}
+.fresh-journey .motion-footer{margin-top:4px}
+.fresh-journey .motion-note{margin-top:9px!important}
+.fresh-explore-premium{padding-top:clamp(29px,3.2vw,43px);padding-bottom:clamp(23px,2.5vw,34px)}
+.fresh-explore-premium .fresh-section-head{margin-bottom:clamp(17px,2vw,25px)}
+.fresh-explore-premium .fresh-explore-body{grid-template-columns:minmax(0,1.9fr) minmax(300px,.95fr);gap:clamp(14px,1.5vw,21px)}
+.fresh-data-premium,.fresh-explainer-premium{padding:clamp(19px,1.8vw,27px)}
+.fresh-learn{padding-top:clamp(27px,3vw,40px);padding-bottom:clamp(24px,2.5vw,34px)}
+.fresh-learn .fresh-section-head{margin-bottom:clamp(17px,2vw,26px)}
+@media(min-width:1500px){
+ .fresh-journey .motion-cell{width:164px}
+ .fresh-journey .motion-cell.mempool{width:215px}
+ .fresh-journey .motion-cell.confirmed{width:155px}
+}
+@media(max-width:1100px){
+ .fresh-now-main{grid-template-columns:1fr;gap:16px}
+ .fresh-now-price{padding:0}
+ .fresh-now-metrics{border-top:1px solid #294451;padding-top:15px}
+ .fresh-now-metric:first-child{border-left:0}
+ .fresh-explore-premium .fresh-explore-body{grid-template-columns:1fr}
+ .fresh-journey .motion-cell{width:151px}
+ .fresh-journey .motion-cell.mempool{width:199px}
+ .fresh-journey .motion-cell.confirmed{width:147px}
+}
+@media(max-width:700px){
+ .fresh-btc{padding:20px 16px 40px}
+ .fresh-hero{min-height:215px}
+ .fresh-search{margin-bottom:27px}
+ .fresh-now-snapshot{padding:20px 16px}
+ .fresh-journey{padding:27px 0 19px}
+ .fresh-journey .motion-top{gap:8px}
+ .fresh-journey .motion-info{padding:7px 10px;font-size:11px}
+ .fresh-journey .motion-arrows{gap:7px}
+ .fresh-journey .motion-arrows>span{max-width:30%;font-size:10px}
+ .fresh-journey .motion-track{gap:9px;padding:11px 4px 16px;min-height:231px}
+ .fresh-journey .motion-cell{width:143px;min-height:208px}
+ .fresh-journey .motion-cell.mempool{width:190px}
+ .fresh-journey .motion-cell.confirmed{width:143px}
+ .fresh-journey .motion-halo{width:119px;height:140px}
+ .fresh-journey .motion-pool{width:177px;height:113px}
+ .fresh-journey .motion-label{height:37px}
+ .fresh-journey .motion-footer{gap:7px;font-size:10px}
+ .fresh-explore-premium{padding:27px 0 23px}
+ .fresh-data-premium,.fresh-explainer-premium{padding:19px 16px}
+ .fresh-learn{padding:26px 0}
+}
