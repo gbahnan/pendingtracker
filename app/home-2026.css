@@ -86,3 +86,15 @@
 .pt26-panel.eth .pt26-side-stats{min-width:0}
 .pt26-panel.eth .pt26-side-stats strong{white-space:normal;overflow-wrap:anywhere;line-height:1.2}
 @media(max-width:650px){.pt26-wallet-follow{align-items:flex-start;gap:11px}.pt26-wallet-follow-copy{min-width:0;flex-basis:100%}.pt26-wallet-follow-actions{width:100%}.pt26-wallet-dropdown{flex:1}.pt26-wallet-dropdown summary{justify-content:center;padding:9px 10px;font-size:11px}.pt26-wallet-dropdown:first-child .pt26-wallet-menu{left:0;right:auto}.pt26-wallet-dropdown:last-child .pt26-wallet-menu{right:0}}
+
+/* Homepage width refinement: contain content, not the full-bleed hero artwork. */
+@media(min-width:1100px){
+  .pt26-live-title,.pt26-grid,.pt26-wallet-follow{max-width:1120px;margin-left:auto;margin-right:auto}
+  .pt26-grid{gap:18px}
+  .pt26-hero-content{max-width:660px}
+  .pt26-search{max-width:650px}
+}
+@media(min-width:1100px) and (max-width:1250px){
+  .pt26-card-visual{grid-template-columns:minmax(0,1fr) 135px}
+  .pt26-side-stats{padding-left:14px}
+}
