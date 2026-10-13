@@ -26,13 +26,21 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   if(!canvas||!track)return;
   const ctx=canvas.getContext("2d");if(!ctx)return;
   type Chamber={x:number;y:number;w:number;h:number;kind:string};
-  const particles=Array.from({length:180},(_,i)=>({
+  const particles=Array.from({length:280},(_,i)=>({
    offset:(i*0.618033988749895)%1,
-   speed:.0045+(i%6)*.00065,
+   speed:.0032+(i%7)*.00043,
    angle:i*2.39996,
    radius:1.7+(i%4)*.42,
    lane:(i*.754877666)%1
   }));
+  // Triangle-wave reflection gives each ball straight, independently angled
+  // drifting and natural wall bounces instead of circular sine/cosine orbits.
+  const bounce=(t:number)=>{const n=((t%2)+2)%2;return n<=1?n:2-n};
+  const drift=(p:{angle:number;lane:number},time:number,seed:number)=>{
+   const vx=.075+.055*((seed*0.61803398875)%1);
+   const vy=.065+.06*((seed*.41421356237)%1);
+   return {u:.08+.84*bounce(p.lane+time*vx+p.angle*.17),v:.08+.84*bounce(p.angle*.31+time*vy)};
+  };
   let raf=0,last=0,elapsed=0,layout:Chamber[]=[];
   const measure=()=>{
    const rect=track.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
@@ -63,49 +71,41 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
    const dt=Math.min((now-last)/1000||0,.05);last=now;elapsed+=dt;
    ctx.clearRect(0,0,track.clientWidth,track.clientHeight);
    if(layout.length){
-    // Most balls remain visibly bouncing in the mempool, not streaming like a cannon.
     const pool=layout[0];
-    for(let i=0;i<65;i++){
-     const p=particles[i],a=elapsed*(.68+(i%7)*.06)+p.angle;
-     const u=.5+Math.sin(a)*(.22+p.lane*.15);
-     const v=.5+Math.cos(a*.83)*(.24+(i%4)*.024);
-     const pos=point(pool,u,v);
+    for(let i=0;i<75;i++){
+     const p=particles[i],uv=drift(p,elapsed*.72,i);
+     const pos=point(pool,uv.u,uv.v);
      drawBall(pos.x,pos.y,p.radius,false,.73);
     }
-    // Independent resident balls keep every chamber visibly active, even between transfers.
+    // More resident balls, with independent straight-line bounces across
+    // the entire chamber rather than synchronized circular motion.
     for(let chamber=1;chamber<layout.length;chamber++){
      const box=layout[chamber];
-     for(let j=0;j<7;j++){
-      const p=particles[65+(chamber*7+j)%105];
-      const a=elapsed*(.72+(j%4)*.12)+p.angle+chamber*.73;
-      const u=.5+Math.sin(a)*(.37+p.lane*.075);
-      const v=.5+Math.cos(a*1.13)*(.36+(j%3)*.03);
-      const pos=point(box,u,v);
-      drawBall(pos.x,pos.y,p.radius*.82,box.kind==="blue",.69);
+     for(let j=0;j<13;j++){
+      const seed=75+(chamber*13+j)%130,p=particles[seed];
+      const uv=drift(p,elapsed*.65,seed);
+      const pos=point(box,uv.u,uv.v);
+      drawBall(pos.x,pos.y,p.radius*.82,box.kind==="blue",.72);
      }
     }
-    // A smaller independent population makes the journey slowly, with long pauses
-    // bouncing in each hexagon and a short, gently curved crossing between them.
-    for(let i=0;i<32;i++){
-     const p=particles[i+115];
+    // Many simultaneous crossings, with slower free-floating motion and
+    // independently offset paths so there is no cannon-like stream.
+    for(let i=0;i<70;i++){
+     const p=particles[i+205];
      const progress=(p.offset+elapsed*p.speed)%1;
      const scaled=progress*(layout.length-1);
      const index=Math.min(layout.length-2,Math.floor(scaled));
      const local=scaled-index,box=layout[index];
-     const a=elapsed*(.7+(i%5)*.12)+p.angle;
-     const u=.5+Math.sin(a)*(.35+p.lane*.08);
-     const v=.5+Math.cos(a*1.17)*(.34+(i%3)*.035);
-     let pos=point(box,u,v),blue=box.kind==="blue";
-     if(local>.58){
-      // Spend 42% of each stage's lifetime drifting to the next chamber.
-      // Linear interpolation avoids the cannon-like acceleration of smoothstep.
-      const next=layout[index+1],t=(local-.58)/.42;
-      const from=point(box,.94,.5+Math.sin(p.angle)*.12);
-      const to=point(next,.06,.5+Math.sin(p.angle+.6)*.12);
-      pos={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t+Math.sin(t*Math.PI)*Math.sin(p.angle)*8};
+     const uv=drift(p,elapsed*.62,i+205);
+     let pos=point(box,uv.u,uv.v),blue=box.kind==="blue";
+     if(local>.46){
+      const next=layout[index+1],t=(local-.46)/.54;
+      const from=point(box,.93,.20+p.lane*.60);
+      const to=point(next,.07,.20+p.lane*.60);
+      pos={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t+Math.sin(t*Math.PI)*Math.sin(p.angle)*6};
       blue=t>.55?next.kind==="blue":blue;
      }
-     drawBall(pos.x,pos.y,p.radius,blue,.84);
+     drawBall(pos.x,pos.y,p.radius,blue,.82);
     }
    }
    raf=requestAnimationFrame(draw);
