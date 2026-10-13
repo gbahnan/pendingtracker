@@ -272,8 +272,8 @@ export default function Page() {
       <div className="pt26-hero-content">
         <div className="pt26-kicker">TRACK &nbsp; • &nbsp; <b>EXPLORE</b> &nbsp; • &nbsp; <em>UNDERSTAND</em></div>
         <h1>A simpler <span>blockchain explorer.</span></h1>
-        <p>We decode confusing blockchain data into clear, easy-to-understand summaries so you can track transactions, explore the network, and know what’s happening.</p>
-        <form className="pt26-search" onSubmit={e=>{e.preventDefault();search()}}><span className="magnify" aria-hidden="true">⌕</span><input aria-label="Search transaction or address" placeholder="Search a Bitcoin or Ethereum address, transaction, or block..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("")}}/><button type="submit" aria-label="Search blockchain">→</button></form>
+        <p>Track a Bitcoin or Ethereum transaction, explore any wallet address, and understand what’s happening — all in plain English.</p>
+        <form className="pt26-search" onSubmit={e=>{e.preventDefault();search()}}><span className="magnify" aria-hidden="true">⌕</span><input aria-label="Search transaction or address" placeholder="Search a transaction hash or wallet address (Bitcoin or Ethereum)..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("")}}/><button type="submit" aria-label="Search blockchain">→</button></form>
         <div className="pt26-chain-select"><button type="button" className={"btc"+(network==="btc"?" active":"")} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button><button type="button" className={"eth"+(network==="eth"?" active":"")} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button></div>
         {ambiguousHash?<div className="pt26-chain-choice">Choose the blockchain: <button onClick={()=>router.push("/btc/"+ambiguousHash)}>Bitcoin →</button><button onClick={()=>router.push("/eth/0x"+ambiguousHash)}>Ethereum →</button></div>:null}
         {error?<p className="pt26-search-error" role="alert">{error}</p>:null}
@@ -292,12 +292,20 @@ export default function Page() {
         </article>
         <article className="pt26-panel eth">
           <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum</h2></div><a className="pt26-explore" href="/ethereum">Explore Ethereum ↗</a></div>
-          <div className="pt26-card-visual"><div className="pt26-scene"><HeroEmblem chain="eth" variant="network"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong></div><div><small>Gas price</small><strong>{eth?.gasGwei==null?"—":eth.gasGwei+" gwei"}</strong></div><div><small>Slot time</small><strong>~12 sec</strong></div></div></div>
+          <div className="pt26-card-visual"><div className="pt26-scene"><HeroEmblem chain="eth" variant="network"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong></div><div><small>Gas price</small><strong>{eth?.gasGwei==null?"—":eth.gasGwei.toLocaleString("en-US",{maximumFractionDigits:2})+" Gwei"}</strong></div><div><small>Slot time</small><strong>~12 sec</strong></div></div></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>◆ &nbsp;Latest Ethereum Transactions</strong><a href="/ethereum">View More →</a></div>
             {(eth?.recentTransactions??[]).slice(0,5).map(t=><a className="pt26-feed-row" href={"/eth/"+t.hash} key={t.hash}><span className="hash">{t.hash.slice(0,7)}…{t.hash.slice(-5)}</span><span className="detail">{t.block==null?"Pending":"Block "+format(t.block)}</span><span className="age">{t.status??"Recorded"}</span><b>›</b></a>)}
             {!eth?.recentTransactions?.length?<p className="pt26-feed-empty">Waiting for live Ethereum transactions…</p>:null}
           </div><a className="pt26-cta" href="/ethereum">Explore Ethereum Blockchain →</a>
         </article>
+      </div>
+      <div className="pt26-wallet-follow" aria-label="Discover wallets to follow">
+        <div className="pt26-wallet-follow-copy"><strong>☆ &nbsp;Popular Wallets to Follow</strong><span>Explore publicly known addresses and follow on-chain activity.</span></div>
+        <div className="pt26-wallet-follow-links">
+          <a href="/eth/address/0x28C6c06298d514Db089934071355E5743bf21d60"><span className="eth-mark">◆</span> Binance ETH wallet <span aria-hidden="true">↗</span></a>
+          <a href="/bitcoin"><span className="btc-mark">₿</span> Explore Bitcoin wallets <span aria-hidden="true">↗</span></a>
+          <a href="/ethereum"><span className="eth-mark">◆</span> Explore Ethereum wallets <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
     </section>
     <section className="pt-clarity" id="how-it-works" data-chain={comparisonChain}>
