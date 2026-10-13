@@ -10,7 +10,7 @@ const times=[72,60,48,36,24,12];
 function Hex({blue=false,time,feeText,seed=0}:{blue?:boolean;time?:number;feeText?:string;seed?:number}){
  return <div className={"motion-halo"+(blue?" blue":"")}><div className={"motion-hex"+(blue?" blue":"")}>
   
-  <div className="motion-hex-content">{blue?<strong>₿</strong>:<><strong>~{time} SEC</strong><small>{feeText||"— sat/vB"}</small></>}</div>
+  <div className="motion-hex-content">{blue?<strong>◆</strong>:<><strong>~{time} SEC</strong><small>{feeText||"Gas unavailable"}</small></>}</div>
  </div></div>
 }
 export default function EthereumBlockchainMotion({pending,fee,blocks,projections=[]}:Props){
@@ -54,7 +54,7 @@ export default function EthereumBlockchainMotion({pending,fee,blocks,projections
    const rgb=blue?"98,214,255":"49,131,244";
    ctx.globalAlpha=opacity;
    ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.24)";ctx.shadowColor="rgba("+rgb+",.65)";ctx.shadowBlur=5;ctx.arc(x,y,r*1.48,0,Math.PI*2);ctx.fill();
-   // The actual sphere must be amber, not an ivory disk over amber glow.
+   // The sphere uses Ethereum blue with a soft ice-blue core.
    const sphere=ctx.createRadialGradient(x-r*.28,y-r*.3,r*.08,x,y,r);
    if(blue){sphere.addColorStop(0,"#effaff");sphere.addColorStop(.32,"#89d9ff");sphere.addColorStop(1,"#268cc9")}
    else{sphere.addColorStop(0,"#e1f6ff");sphere.addColorStop(.27,"#73c7ff");sphere.addColorStop(.72,"#318bfa");sphere.addColorStop(1,"#194cbd")}
