@@ -1,0 +1,16 @@
+/* Shared explorer hexagon identity; scoped to detail pages only. */
+.pt-explorer-hex-scene{position:absolute;right:2%;top:8px;width:min(39vw,420px);height:225px;pointer-events:none;z-index:0;opacity:.83;overflow:hidden}
+.pt-explorer-hex-scene svg{width:100%;height:100%;overflow:visible}
+.pt-scene-particle{animation:pt-scene-float 26s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+.pt-scene-satellite{animation:pt-scene-satellite 29s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+@keyframes pt-scene-float{from{transform:translate(0,0);opacity:.2}to{transform:translate(var(--dx),var(--dy));opacity:.65}}
+@keyframes pt-scene-satellite{from{transform:translate(-4px,3px)}to{transform:translate(6px,-5px)}}
+.txr .txr-ambient-art,.etr .etr-ambient,.ptw-shell>.ptw-ambient{display:none!important}
+.txr,.etr,.ptw-shell{position:relative;isolation:isolate}
+.txr>.txr-shell,.etr>.etr-shell,.ptw-shell>.ptw-heading,.ptw-shell>.ptw-panel{position:relative;z-index:1}
+.txr .txr-hex,.etr .etr-hex{clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);border-radius:0!important;box-shadow:none!important;background:linear-gradient(145deg,#282015,#090b10)!important;border-color:#c39443!important}
+.etr .etr-hex{background:linear-gradient(145deg,#1c2636,#090b10)!important;border-color:#558bde!important}
+.txr .txr-hex.active,.txr .txr-hex.confirmed{background:linear-gradient(145deg,#513819,#11100d)!important;filter:drop-shadow(0 0 6px #e9a83250)}
+.etr .etr-hex.first,.etr .etr-hex.complete{background:linear-gradient(145deg,#223e66,#10141c)!important;filter:drop-shadow(0 0 5px #387ef545)}
+@media(max-width:720px){.pt-explorer-hex-scene{width:205px;height:135px;top:12px;right:0;opacity:.48}}
+@media(prefers-reduced-motion:reduce){.pt-scene-particle,.pt-scene-satellite{animation:none!important}}
