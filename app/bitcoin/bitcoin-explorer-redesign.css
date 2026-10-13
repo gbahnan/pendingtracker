@@ -331,3 +331,37 @@
 .bex-unified-caption strong{color:#f6c36a}
 .bex-unified-network .bex-rev-expanded{margin-top:14px}
 @media(max-width:750px){.bex-unified-network{padding:17px 14px 14px}.bex-unified-network .bex-rev-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 0}.bex-unified-network .bex-rev-metrics>div:nth-child(2){border-right:0!important}.bex-unified-network .bex-rev-metrics>div:nth-child(3){padding-left:0!important}.bex-unified-network .bex-rev-confirm{padding-top:18px!important}}
+
+/* Section 1 compact pass: substantially reduce vertical height without hiding data. */
+.bex-unified-network{padding:13px 20px 10px!important;border-radius:13px}
+.bex-unified-network .bex-rev-network{padding-bottom:10px!important}
+.bex-unified-network .bex-rev-confirm{padding-top:12px!important}
+.bex-unified-eyebrow{font-size:9px;margin-bottom:3px;letter-spacing:.14em}
+.bex-unified-network .bex-rev-head{margin-bottom:6px!important;gap:9px}
+.bex-unified-network .bex-rev-head h2{font-size:clamp(20px,1.75vw,25px)!important;margin-bottom:3px!important}
+.bex-unified-network .bex-rev-head p{font-size:11px;line-height:1.35}
+.bex-unified-network .bex-rev-actions{gap:8px}
+.bex-unified-network .bex-rev-actions button{padding:6px 10px;font-size:11px}
+.bex-unified-network .bex-network-story{padding:2px 0 7px!important;gap:9px}
+.bex-unified-network .bex-story-icon{font-size:17px}
+.bex-unified-network .bex-network-story small{font-size:9px}
+.bex-unified-network .bex-network-story h3{font-size:16px!important;margin:1px 0 2px!important}
+.bex-unified-network .bex-network-story p{font-size:11px;line-height:1.4}
+.bex-unified-network .bex-network-story details{margin-top:4px;font-size:11px}
+.bex-unified-network .bex-rev-metrics>div{padding:5px 12px!important;gap:3px}
+.bex-unified-network .bex-rev-metrics strong{font-size:clamp(17px,1.7vw,22px)!important}
+.bex-unified-network .bex-rev-metrics span{font-size:10px}
+.bex-unified-network .bex-rev-metrics small{font-size:10px;line-height:1.3}
+.bex-unified-network .bex-rev-confirm .bex-rev-head h2{font-size:clamp(19px,1.7vw,23px)!important}
+.bex-unified-network .bex-rev-confirm .bex-rev-head{margin-bottom:3px!important}
+.bex-unified-network .bex-projection-row{max-width:840px;margin:0 auto;gap:8px}
+.bex-unified-network .bex-projection-item{min-width:0}
+.bex-unified-network .bex-projection-hex{max-width:124px!important;gap:3px!important;filter:drop-shadow(0 0 7px rgba(255,167,27,.22))}
+.bex-unified-network .bex-projection-hex span{font-size:9px!important}
+.bex-unified-network .bex-projection-hex strong{font-size:clamp(15px,1.55vw,21px)!important}
+.bex-unified-network .bex-projection-hex small{font-size:9px!important}
+.bex-unified-network .bex-projection-item p{font-size:10px!important;margin:4px 0 0!important}
+.bex-unified-network .bex-swipe-hint{font-size:10px;margin:4px 0}
+.bex-unified-caption{font-size:10px;line-height:1.45;padding:7px 0 0}
+.bex-unified-network .bex-projection-detail{margin-top:8px;padding:10px}
+@media(max-width:750px){.bex-unified-network{padding:12px 11px 9px!important}.bex-unified-network .bex-rev-metrics{gap:7px 0}.bex-unified-network .bex-rev-metrics>div{padding:5px 9px!important}.bex-unified-network .bex-rev-metrics>div:nth-child(3){padding-left:0!important}.bex-unified-network .bex-projection-row{min-width:580px}.bex-unified-network .bex-projection-hex{max-width:110px!important}.bex-unified-network .bex-rev-confirm{padding-top:11px!important}}
