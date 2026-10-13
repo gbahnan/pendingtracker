@@ -149,13 +149,13 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  ];
  return <main className="pt-tx-page txr">
   <div className="txr-shell">
-   <div className="txr-breadcrumb"><a href="/bitcoin">Bitcoin Explorer</a><span>›</span>Transaction</div>
+   <div className="txr-breadcrumb"><a href="/bitcoin">Bitcoin Explorer</a><span>›</span>Transaction</div><header className="txr-page-title"><h1>Bitcoin <em>Transaction</em></h1><div className="txr-id"><code title={txid}>{txid}</code><button type="button" onClick={copy} aria-label="Copy transaction ID">{copied?"✓ Copied":"▢"}</button></div></header>
    {error&&<p className="txr-error" role="alert">{error}{result?" Showing the last available data.":""}</p>}
    {loading&&!result&&<div className="txr-loading">Checking your Bitcoin transaction against the live network…</div>}
    {result&&<>
     <section className="txr-top">
-     <div className="txr-tophead"><div><span className="txr-eyebrow">LIVE BITCOIN TRANSACTION TRACKER</span><h1>Transaction <em>Status</em></h1><p>See where your Bitcoin is and what happens next.</p></div><div className="txr-topcoin" aria-hidden="true">₿</div></div>
-     <div className="txr-livehead"><div><h2>Estimated Confirmation Time</h2><p>Based on live mempool data. Bitcoin blocks average about ten minutes, but timing varies.</p></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
+     
+     <div className="txr-livehead"><div><h2>{confirmed?"Transaction Confirmed":observed?"Your Transaction Is Pending":"Transaction Not Found"}</h2><p>{confirmed?"Your payment is included in a block. The hexagons show the live Bitcoin network.":observed?"Your transaction is waiting for confirmation. The highlighted hexagon is a fee-based estimate.":"This transaction has not been located. The hexagons show general network activity."}</p></div><span className="txr-live"><i/> Live network data {lastChecked&&<small>Updated {lastChecked}</small>}</span></div>
      <div className="txr-hexrow">
       <div className="txr-hexunit"><div className="txr-hex confirmed"><span>✓</span></div><strong>Latest Block</strong><small>#{number(overview?.btc?.height)}</small><small>Confirmed on network</small></div>
       {Array.from({length:4},(_,i)=>{const b=blocks[i];const active=!confirmed&&observed&&selectedPosition===i+1;return <div className="txr-hexunit" key={i}><div className={"txr-hex"+(active?" active":"")}><span>⬡</span></div><strong>~{(i+1)*10} min</strong><small>{b?.feeRange?.length===2?number(b.feeRange[0])+"–"+number(b.feeRange[1])+" sat/vB":"Fee range unavailable"}</small><small>{number(b?.transactionCount)} waiting txs</small>{active&&<b className="txr-marker">↑ Your transaction</b>}</div>})}
