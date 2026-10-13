@@ -33,3 +33,20 @@
 .motion-pool{background:radial-gradient(ellipse at 47% 45%,#3b2a1a,#17202a 68%,#081421);border-color:#e1a74b;box-shadow:inset 0 0 17px #e9a64235,0 0 9px #d99c3c4d}
 .motion-hex-content{background:radial-gradient(ellipse,#121a22e0 15%,#151a1f9c 53%,transparent 83%)}
 .motion-hex.blue .motion-hex-content{background:radial-gradient(ellipse,#0b2b47d9 15%,#0b2b4777 60%,transparent 84%)}
+
+/* Obsidian / brushed champagne: targeted material refinement only. */
+.motion-halo{filter:drop-shadow(0 0 2px #e6b96885) drop-shadow(0 0 6px #9e6a2c50)}
+.motion-halo:after{background:#c38b2a0c;filter:blur(5px)}
+.motion-hex{background:linear-gradient(137deg,#ffe3a1 0%,#c99951 19%,#805021 49%,#a57438 76%,#e5ba77 100%)}
+.motion-hex:before{background:radial-gradient(ellipse at 48% 48%,#241e1b 0%,#151b22 49%,#091421 83%,#07111d 100%);box-shadow:inset 0 0 15px #05080c}
+.motion-hex:after{border-color:#b98a4c35}
+.motion-cell:hover .motion-halo{filter:drop-shadow(0 0 3px #f2ce8c9c) drop-shadow(0 0 9px #b8813870)}
+.motion-halo.blue{filter:drop-shadow(0 0 2px #a3dcff9c) drop-shadow(0 0 7px #287db06e)}
+.motion-halo.blue:after{background:#2c95d30d}
+.motion-hex.blue{background:linear-gradient(138deg,#d7f1ff 0%,#7eb9dc 22%,#24547b 53%,#367aa9 77%,#a5d8f3 100%)}
+.motion-hex.blue:before{background:radial-gradient(ellipse at 48% 45%,#182f41 0%,#102336 53%,#071626 100%);box-shadow:inset 0 0 14px #050d18}
+.motion-hex.blue:after{border-color:#7bc0e84d}
+.motion-cell.confirmed:hover .motion-halo{filter:drop-shadow(0 0 4px #b6e8ff) drop-shadow(0 0 9px #409ed08c)}
+.motion-pool{background:radial-gradient(ellipse at 48% 43%,#2c251d 0%,#171c22 53%,#081421 100%);border-color:#b58b50;box-shadow:inset 0 0 15px #070b10, inset 0 0 9px #bd853322,0 0 6px #a476344d}
+.motion-pool:before{border-color:#d0a76732}
+.motion-pool-glow{opacity:.17;animation:none}
