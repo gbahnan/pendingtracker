@@ -51,24 +51,16 @@
 .motion-pool:before{border-color:#d0a76732}
 .motion-pool-glow{opacity:.17;animation:none}
 
-/* Midnight glass and champagne gold: final material palette. */
-.motion-halo{filter:drop-shadow(0 0 2px #d5ac7380) drop-shadow(0 0 6px #b77c3150)}
-.motion-halo:after{background:#dba55d09;filter:blur(5px)}
-.motion-hex{background:linear-gradient(139deg,#f5dcaa 0%,#dbad6a 22%,#ad8046 53%,#74552f 78%,#d7ac72 100%)}
-.motion-hex:before{background:radial-gradient(ellipse at 48% 45%,#172637 0%,#101e2e 60%,#071321 100%)}
-.motion-hex:after{border-color:#e3c08a26}
-.motion-cell:hover .motion-halo{filter:drop-shadow(0 0 3px #e8c5919c) drop-shadow(0 0 8px #b4814660)}
-.motion-halo.blue{filter:drop-shadow(0 0 2px #9edcff95) drop-shadow(0 0 7px #247eaf65)}
+/* Modern gold-orange: 20% heavier inner rim without resizing hexagons. */
+.motion-halo{filter:drop-shadow(0 0 2px #f0bd648c) drop-shadow(0 0 7px #bd803e60)}
+.motion-hex{background:linear-gradient(140deg,#ffdc92 0%,#e8b455 24%,#c38935 54%,#91602b 77%,#f3c777 100%)}
+.motion-hex:before{inset:2.4px;background:radial-gradient(ellipse at 48% 45%,#172637 0%,#101e2e 60%,#071321 100%)}
+.motion-hex:after{border-color:#f0c77740}
+.motion-cell:hover .motion-halo{filter:drop-shadow(0 0 3px #f5d18aab) drop-shadow(0 0 9px #ca904773)}
+.motion-halo.blue{filter:drop-shadow(0 0 3px #9edcff95) drop-shadow(0 0 7px #247eaf65)}
 .motion-hex.blue{background:linear-gradient(139deg,#d9f4ff,#83c5e7 23%,#397da7 53%,#1a4d73 77%,#9cd8f3)}
 .motion-hex.blue:before{background:radial-gradient(ellipse at 46% 45%,#1a344a 0%,#10263b 56%,#071626 100%)}
-.motion-pool{background:radial-gradient(ellipse at 48% 45%,#172637,#101e2e 63%,#071321 100%);border-color:#c9a06b;box-shadow:inset 0 0 16px #040b15,0 0 7px #aa79384d}
+.motion-pool{background:radial-gradient(ellipse at 48% 45%,#172637,#101e2e 63%,#071321 100%);border-color:#d7a657;box-shadow:inset 0 0 16px #040b15,0 0 7px #b8823d50}
 .motion-pool-glow{opacity:.11}
 .motion-hex-content{background:radial-gradient(ellipse,#091522f2 14%,#0b1928c7 60%,transparent 88%);text-shadow:0 1px 5px #02070c}
 .motion-hex-content small{color:#c9d3df}
-
-/* Cooler platinum-gold trim; midnight interior remains unchanged. */
-.motion-hex{background:linear-gradient(140deg,#f2e3c5 0%,#c9ac7b 24%,#987a51 54%,#62533d 78%,#dfc7a1 100%)}
-.motion-hex:after{border-color:#e1d0ad22}
-.motion-halo{filter:drop-shadow(0 0 2px #e1c38a80) drop-shadow(0 0 6px #b08a5350)}
-.motion-cell:hover .motion-halo{filter:drop-shadow(0 0 3px #f1dbb5a0) drop-shadow(0 0 8px #b9945965)}
-.motion-pool{border-color:#bea47e}
