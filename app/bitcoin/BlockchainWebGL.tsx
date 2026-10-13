@@ -6,12 +6,12 @@ type Projection={medianFee:number|null;feeRange:number[]|null};
 type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined;projections?:Projection[]};
 const fmt=(n:number|null|undefined)=>n==null?"—":Math.round(n).toLocaleString("en-US");
 const times=[60,50,40,30,20,10];
-const dots=Array.from({length:80},(_,i)=>({left:7+(i*37)%84,top:10+(i*43)%78,delay:-((i*13)%61)/7,duration:6+(i%8)}));
+const dots=Array.from({length:80},(_,i)=>({left:7+(i*37)%84,top:10+(i*43)%78,delay:-((i*13)%61)/7,duration:1.5+(i%5)*.37}));
 function Hex({blue=false,time,feeText}:{blue?:boolean;time?:number;feeText?:string}){
- return <div className={"motion-hex"+(blue?" blue":"")}>
+ return <div className={"motion-halo"+(blue?" blue":"")}><div className={"motion-hex"+(blue?" blue":"")}>
   <div className="motion-sparks" aria-hidden="true">{dots.slice(0,blue?13:10).map((d,i)=><i key={i} style={{left:d.left+"%",top:d.top+"%",["--delay" as string]:d.delay+"s",["--dur" as string]:d.duration+"s"}}/>)}</div>
   <div className="motion-hex-content">{blue?<strong>₿</strong>:<><strong>~{time} MIN</strong><small>{feeText||"— sat/vB"}</small></>}</div>
- </div>
+ </div></div>
 }
 export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Props){
  const viewport=useRef<HTMLDivElement>(null);
@@ -31,9 +31,9 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[]}:Prop
   <div className="motion-arrows"><span>← Longer estimated waits</span><div><button type="button" aria-label="Scroll toward mempool" onClick={()=>viewport.current?.scrollBy({left:-360,behavior:"smooth"})}>←</button><button type="button" aria-label="Scroll toward confirmed blocks" onClick={()=>viewport.current?.scrollBy({left:360,behavior:"smooth"})}>→</button></div><span>Drag or scroll to see confirmed blocks →</span></div>
   <div className={"motion-window"+(dragging?" grabbing":"")} ref={viewport} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} tabIndex={0} aria-label="Horizontally scrollable Bitcoin transaction journey">
    <div className={"motion-track"+(newBlock?" motion-new":"")}>
-    <div className="motion-flow" aria-hidden="true">{Array.from({length:14},(_,i)=><i key={i} style={{["--delay" as string]:-(i*7.9)+"s",["--travel" as string]:(85+i%4*8)+"s"}}/>)}</div>
-    <div className="motion-cell mempool"><div className="motion-label"><strong>MEMPOOL</strong><span>{fmt(pending)} waiting transactions</span></div><div className="motion-pool">{dots.map((d,i)=><i key={i} style={{left:d.left+"%",top:d.top+"%",["--delay" as string]:d.delay+"s",["--dur" as string]:d.duration+"s"}}/>)}</div><div className="motion-caption"><strong>Unconfirmed transactions</strong></div></div>
-    {times.map((t,i)=><div className="motion-cell" key={t}><div className="motion-label"><span>Estimated confirmation</span></div><Hex time={t} feeText={stageFees[i]}/><div className="motion-caption">{i===5?"Next projected block":"Estimated wait · not guaranteed"}</div></div>)}
+    
+    <div className="motion-cell mempool"><div className="motion-label"><strong>MEMPOOL</strong><span>{fmt(pending)} waiting transactions</span></div><div className="motion-pool"><span className="motion-pool-glow"/>{dots.map((d,i)=><i key={i} style={{left:d.left+"%",top:d.top+"%",["--delay" as string]:d.delay+"s",["--dur" as string]:d.duration+"s"}}/>)}</div><div className="motion-caption"><strong>Unconfirmed transactions</strong></div></div>
+    {times.map((t,i)=><div className="motion-cell motion-stage" key={t}><div className="motion-label"><span>Estimated confirmation</span></div><Hex time={t} feeText={stageFees[i]}/><div className="motion-caption">{i===5?"Next projected block":"Estimated wait · not guaranteed"}</div></div>)}
     {recent.map((b,i)=><button type="button" className="motion-cell confirmed" key={b.id||i} onClick={()=>{if(!dragging)setSelected(selected===i?null:i)}}><div className="motion-label"><strong>CONFIRMED</strong><span>{fmt(b.ageMinutes)} min ago</span></div>{i===0&&<div className="motion-divider"/>}<Hex blue/><div className="motion-caption"><strong>#{fmt(b.height)}</strong>{fmt(b.transactionCount)} transactions</div></button>)}
    </div>
   </div>
