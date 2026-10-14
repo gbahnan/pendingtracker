@@ -19,6 +19,24 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
  const canvasRef=useRef<HTMLCanvasElement>(null);
  const pointer=useRef<{x:number;scroll:number;id:number}|null>(null);
  const [dragging,setDragging]=useState(false),[info,setInfo]=useState(false),[selected,setSelected]=useState<number|null>(null),[newBlock,setNewBlock]=useState(false);
+ const [overviewWidth,setOverviewWidth]=useState<number|null>(null);
+ useEffect(()=>{
+  if(!overview)return;
+  const update=()=>{
+   const track=trackRef.current;
+   const first=track?.querySelector<HTMLElement>(".motion-cell.confirmed");
+   if(!track||!first)return;
+   const left=first.offsetLeft;
+   const half=first.offsetWidth/2;
+   const available=viewport.current?.parentElement?.clientWidth||0;
+   if(available)setOverviewWidth(Math.min(available,Math.round(left+half)));
+  };
+  const observer=new ResizeObserver(update);
+  if(trackRef.current)observer.observe(trackRef.current);
+  if(viewport.current?.parentElement)observer.observe(viewport.current.parentElement);
+  update();
+  return()=>observer.disconnect();
+ },[overview,blocks.length]);
  const prevTip=useRef<string|null>(null);
  const recent=blocks.slice(0,12);
  useEffect(()=>{
@@ -130,7 +148,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
   <div className="motion-top"><span className="motion-live">LIVE BITCOIN NETWORK</span><button className="motion-info" type="button" onClick={()=>setInfo(!info)} aria-expanded={info}>ⓘ How does this work? {info?"−":"＋"}</button></div>
   {info&&<p className="motion-explain">Gold hexagons illustrate estimated waiting times, not guaranteed countdowns. Their fee rates are indicative estimates based on projected mempool blocks, not a guaranteed rate for a particular time. Blue hexagons represent actual confirmed blocks. Animated dots explain the journey; they are not individually tracked transactions.</p>}
   <div className="motion-arrows"><span>← Longer estimated waits</span><div><button type="button" aria-label="Scroll toward mempool" onClick={()=>viewport.current?.scrollBy({left:-360,behavior:"smooth"})}>←</button><button type="button" aria-label="Scroll toward confirmed blocks" onClick={()=>viewport.current?.scrollBy({left:360,behavior:"smooth"})}>→</button></div><span>Drag or scroll to see confirmed blocks →</span></div>
-  <div className={"motion-window"+(dragging?" grabbing":"")} ref={viewport} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} tabIndex={0} aria-label="Horizontally scrollable Bitcoin transaction journey">
+  <div className={"motion-window"+(dragging?" grabbing":"")} style={overview&&overviewWidth&&typeof window!=="undefined"&&window.innerWidth>700?{maxWidth:overviewWidth,marginInline:"auto"}:undefined} ref={viewport} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} tabIndex={0} aria-label="Horizontally scrollable Bitcoin transaction journey">
    <div ref={trackRef} className={"motion-track"+(newBlock?" motion-new":"")}><canvas ref={canvasRef} className="motion-canvas" aria-hidden="true"/>
     
     <div className="motion-cell mempool"><div className="motion-label"><strong>MEMPOOL</strong><span>{fmt(pending)} waiting transactions</span></div><div className="motion-pool"><span className="motion-pool-glow"/></div><div className="motion-caption"><strong>Unconfirmed transactions</strong></div></div>
