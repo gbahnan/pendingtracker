@@ -279,3 +279,15 @@
 /* Give the white tracking pointer breathing room beneath the hexagons. */
 .txr .txr-network-v2 .motion-track:after{top:205px!important}
 .txr .txr-network-v2 .motion-tracked-arrow{top:188px!important}
+
+@media(max-width:700px){
+ .txr .txr-network-v2 .motion-cell.motion-stage{width:clamp(68px,21vw,84px)!important}
+ .txr .txr-network-v2 .motion-cell.mempool{width:clamp(78px,25vw,98px)!important}
+ .txr .txr-network-v2 .motion-cell.confirmed{width:clamp(68px,21vw,84px)!important}
+ .txr .txr-network-v2 .motion-cell .motion-label,.txr .txr-network-v2 .motion-cell .motion-label:empty{height:37px!important;min-height:37px!important}
+ .txr .txr-network-v2 .motion-cell .motion-halo{height:96px!important}
+ .txr .txr-network-v2 .motion-cell.mempool .motion-pool{margin-top:6px!important;height:85px!important}
+ .txr .txr-network-v2 .motion-track:after{top:158px!important}
+ .txr .txr-network-v2 .motion-tracked-arrow{top:141px!important}
+ .txr .txr-network-v2 .motion-tracked-pointer{border-left-width:9px!important;border-right-width:9px!important;border-bottom-width:13px!important;left:-9px!important}
+}
