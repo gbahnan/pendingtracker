@@ -727,3 +727,51 @@
  }
  .fresh-btc-mockup .fresh-explore-premium{margin-top:34px!important}
 }
+
+/* Bitcoin-only finishing pass — preserve the existing hexagon artwork and motion. */
+@media (min-width:1050px) {
+ .fresh-btc-mockup .fresh-live-network-combined > .fresh-journey {
+   padding-top:5px!important;
+   padding-bottom:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey-heading {
+   margin-bottom:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-top {
+   margin:0!important;
+   padding:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-arrows {
+   margin:0!important;
+   padding:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-track {
+   padding:0!important;
+   margin:0!important;
+   min-height:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell,
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.mempool,
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.confirmed {
+   min-height:160px!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-label {
+   height:25px!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-caption {
+   margin-top:0!important;
+   min-height:20px!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-window {
+   -webkit-mask-image:none!important;
+   mask-image:none!important;
+   overflow:hidden!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-footer {
+   margin-top:0!important;
+   padding-top:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-note {
+   margin-top:3px!important;
+ }
+}
