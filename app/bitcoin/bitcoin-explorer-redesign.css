@@ -546,3 +546,52 @@
 .fresh-btc-mockup .fresh-learn{margin-top:10px!important;padding-top:10px!important}
 }
 @media(max-width:1049px){.fresh-btc-mockup .fresh-tab-copy small{display:none}}
+
+
+/* Selected Bitcoin Explorer mockup: preserve all existing brand artwork and animations. */
+.fresh-btc-mockup .fresh-data-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.fresh-btc-mockup .fresh-view-all{font-size:12px;color:#f6b742;text-decoration:none;white-space:nowrap;padding-top:5px}
+.fresh-btc-mockup .fresh-view-all:hover{text-decoration:underline}
+.fresh-btc-mockup .fresh-explain-accordion{margin-top:14px;border-top:1px solid #284253}
+.fresh-btc-mockup .fresh-explain-accordion button{display:flex;width:100%;align-items:center;gap:11px;background:transparent;border:0;border-bottom:1px solid #284253;color:#e8eef6;font-size:13px;font-weight:600;text-align:left;padding:10px 2px;cursor:pointer}
+.fresh-btc-mockup .fresh-explain-accordion button>span{font-size:18px;color:#f9b53e}
+.fresh-btc-mockup .fresh-explain-accordion button>b{margin-left:auto;font-size:17px;color:#f9b53e;font-weight:500}
+.fresh-btc-mockup .fresh-explain-accordion>p{font-size:13px;line-height:1.65;padding:10px 12px 14px;margin:0;color:#bdcbd8;background:#0b2030;border-bottom:1px solid #284253}
+.fresh-btc-mockup .fresh-learn-compact{margin:10px 0 16px!important;padding:16px 18px!important;border:1px solid #355164;border-radius:14px;background:#061929}
+.fresh-btc-mockup .fresh-learn-inline{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:12px}
+.fresh-btc-mockup .fresh-learn-inline>div{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px}
+.fresh-btc-mockup .fresh-learn-inline .fresh-kicker{margin:0!important}
+.fresh-btc-mockup .fresh-learn-inline h2{font-size:19px!important;letter-spacing:-.4px;margin:0!important}
+.fresh-btc-mockup .fresh-learn-inline p{font-size:12px;margin:0!important;color:#a8bbca}
+.fresh-btc-mockup .fresh-learn-inline .fresh-learn-more{margin:0!important;white-space:nowrap;font-size:12px}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq details{min-width:0!important;margin:0!important;border:1px solid #24485c!important;border-radius:10px!important;background:#061a29!important;padding:0!important}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq summary{font-size:12px!important;line-height:1.35!important;min-height:58px!important;padding:10px!important;display:flex!important;align-items:center!important;gap:8px!important}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq summary span{margin-left:auto;color:#f9b43d}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq details>p{font-size:12px!important;line-height:1.55!important;padding:2px 10px 12px!important}
+@media(min-width:1050px){
+ .fresh-btc-mockup .fresh-explore-premium{border:1px solid #1c4255!important;background:linear-gradient(180deg,#061d2c,#041421)!important;padding:12px 16px 14px!important}
+ .fresh-btc-mockup .fresh-explore-title{margin-bottom:8px!important}
+ .fresh-btc-mockup .fresh-explore-title>div:first-child{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+ .fresh-btc-mockup .fresh-explore-title h2{font-size:23px!important;margin:0!important}
+ .fresh-btc-mockup .fresh-explore-title p{font-size:12px!important;margin:0!important}
+ .fresh-btc-mockup .fresh-explore-body{gap:10px!important}
+ .fresh-btc-mockup .fresh-data-premium,.fresh-btc-mockup .fresh-explainer-premium{padding:15px!important}
+ .fresh-btc-mockup .fresh-data-table .fresh-table-row{min-height:35px!important}
+ .fresh-btc-mockup .fresh-explainer-premium>h3{font-size:22px!important}
+ .fresh-btc-mockup .fresh-explainer-premium>p{font-size:13px!important;line-height:1.55!important}
+ .fresh-btc-mockup .fresh-now-secondary-metric{background:transparent!important;border:0!important;border-left:1px solid #244254!important;border-radius:0!important;padding:8px 10px!important}
+ .fresh-btc-mockup .fresh-now-secondary-metric .fresh-secondary-text strong{font-size:clamp(15px,1.3vw,21px)!important}
+ .fresh-btc-mockup .fresh-now-secondary-metric .fresh-secondary-text span{font-size:11px!important}
+ .fresh-btc-mockup .fresh-live-network-combined{border-color:#ad7c25!important}
+ .fresh-btc-mockup .fresh-now-snapshot{padding-bottom:9px!important}
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{padding-top:9px!important}
+}
+@media(max-width:1049px){
+ .fresh-btc-mockup .fresh-learn-compact .fresh-faq{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:600px){
+ .fresh-btc-mockup .fresh-learn-inline{align-items:flex-start;flex-direction:column}
+ .fresh-btc-mockup .fresh-learn-compact .fresh-faq{grid-template-columns:1fr!important}
+ .fresh-btc-mockup .fresh-data-header{flex-direction:column;gap:4px}
+}
