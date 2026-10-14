@@ -42,10 +42,10 @@ export default function BitcoinExplorerOverview(){
   <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
   <div className="fresh-bitcoin-right-now" role="status" aria-live="polite">
    <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
-   <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-reading"><span>Current priority fee</span><strong>{rate(btc?.fastestFee)}</strong><small>Estimate, not a guarantee</small></div></div>
+   <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-stats"><div><span>Hash rate</span><strong>{mining?.hashrateEH==null?"—":fmt(mining.hashrateEH)+" EH/s"}</strong></div><div><span>Mempool size</span><strong>{btc?.mempoolVsizeMB==null?"—":fmt(btc.mempoolVsizeMB)+" vMB"}</strong></div><div><span>Priority fee</span><strong>{rate(btc?.fastestFee)}</strong></div></div></div>
   </div>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
-   <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> BITCOIN NETWORK LIVE</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
+   <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> LIVE BITCOIN SNAPSHOT</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
    <div className="fresh-now-secondary">
     {([
       {id:"pending" as const,icon:"▱",label:"Pending transactions",value:fmt(btc?.pending),description:"Payments waiting to be confirmed."},
