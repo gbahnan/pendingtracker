@@ -69,7 +69,7 @@ export default function BitcoinExplorerOverview(){
       snapshotOpen==="congestion"?<><h3>Difficulty adjustment</h3><p>The next difficulty change is estimated at {mining?.difficultyChange==null?"an unavailable rate":(mining.difficultyChange>=0?"+":"")+mining.difficultyChange.toFixed(2)+"%"}, with about {fmt(mining?.remainingBlocks)} blocks remaining. This is a projection, not a confirmed change.</p></>:
       <><h3>Mempool size</h3><p>The waiting transactions occupy approximately {btc?.mempoolVsizeMB==null?"an unavailable amount of space":fmt(btc.mempoolVsizeMB)+" virtual megabytes (vMB)"}. This measures pending transaction data, not the total Bitcoin value being sent.</p></>}
       <p className="pt-snapshot-disclaimer">Values update from available network and market data. Decorative chart illustrations are not historical price or network measurements.</p>
-    </div></div>)}
+    </div>}</div>)}
     </div>
   </section>
   <section className="fresh-explore fresh-explore-premium" id="explore-bitcoin">
