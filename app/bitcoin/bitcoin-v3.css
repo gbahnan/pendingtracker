@@ -800,3 +800,15 @@
   mask-image:linear-gradient(to right,transparent 0%,#000 4%,#000 95%,transparent 100%)!important;
  }
 }
+
+/* Full-width timeline polish: clear mempool breathing room and softer right fade.
+   Keep cell dimensions, animation, arrows, and the page below untouched. */
+@media(min-width:1050px){
+ .fresh-v3>.fresh-journey .motion-explorer .motion-track{
+  padding-left:30px!important;
+ }
+ .fresh-v3>.fresh-journey .motion-explorer .motion-window{
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 85%,rgba(0,0,0,.92) 89%,rgba(0,0,0,.45) 95%,transparent 100%)!important;
+  mask-image:linear-gradient(to right,#000 0%,#000 85%,rgba(0,0,0,.92) 89%,rgba(0,0,0,.45) 95%,transparent 100%)!important;
+ }
+}
