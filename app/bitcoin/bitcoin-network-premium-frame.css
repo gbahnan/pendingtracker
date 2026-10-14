@@ -43,10 +43,10 @@
 /* Gold diagonal hero artwork ends before the live Bitcoin data.
    Preserve the artwork above search, never behind the metrics or timeline. */
 .pt-bitcoin-explorer-redesign::before{
-  height:300px!important;
+  height:255px!important;
   background-size:cover!important;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 54%,rgba(0,0,0,.72) 69%,transparent 100%)!important;
-  mask-image:linear-gradient(to bottom,#000 0%,#000 54%,rgba(0,0,0,.72) 69%,transparent 100%)!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.95) 32%,rgba(0,0,0,.38) 64%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.95) 32%,rgba(0,0,0,.38) 64%,transparent 100%)!important;
 }
 @media(max-width:700px){
  .pt-bitcoin-explorer-redesign::before{
