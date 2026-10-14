@@ -64,3 +64,34 @@
 .motion-pool-glow{opacity:.11}
 .motion-hex-content{background:radial-gradient(ellipse,#091522f2 14%,#0b1928c7 60%,transparent 88%);text-shadow:0 1px 5px #02070c}
 .motion-hex-content small{color:#c9d3df}
+
+/* Mobile-first network overview: show the mempool and nearest three
+   estimated hexagons immediately, with the remaining timeline swipeable. */
+@media(max-width:700px){
+ .motion-window{width:100%!important;max-width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;touch-action:pan-x!important;scroll-snap-type:x proximity!important}
+ .motion-track{gap:5px!important;padding:8px 3px 30px!important;min-height:195px!important}
+ .motion-cell{width:clamp(68px,21vw,84px)!important;min-height:168px!important;scroll-snap-align:start}
+ .motion-cell.mempool{width:clamp(78px,25vw,98px)!important;order:0}
+ .motion-cell.motion-stage:nth-child(7){order:1}
+ .motion-cell.motion-stage:nth-child(6){order:2}
+ .motion-cell.motion-stage:nth-child(5){order:3}
+ .motion-cell.motion-stage:nth-child(4){order:4}
+ .motion-cell.motion-stage:nth-child(3){order:5}
+ .motion-cell.motion-stage:nth-child(2){order:6}
+ .motion-cell.confirmed{order:7;width:clamp(68px,21vw,84px)!important}
+ .motion-label{height:37px!important;min-height:37px!important;max-width:100%;font-size:8px!important}
+ .motion-label strong{font-size:10px!important}
+ .motion-label span{font-size:8px!important}
+ .motion-pool{width:100%!important;height:85px!important;margin-top:6px!important;border-radius:22px!important}
+ .motion-halo{width:100%!important;height:96px!important;margin-top:0!important;transform:none!important}
+ .motion-hex{width:100%!important;height:94px!important}
+ .motion-hex-content{gap:3px!important;font-size:9px!important}
+ .motion-hex-content strong{font-size:11px!important}
+ .motion-hex-content small{font-size:9px!important}
+ .motion-hex.blue .motion-hex-content strong{font-size:27px!important}
+ .motion-caption{font-size:9px!important;line-height:1.25!important;max-width:100%!important;margin-top:6px!important}
+ .motion-caption strong{font-size:10px!important}
+ .motion-arrows>span{font-size:9px!important;max-width:32%}
+ .motion-arrows button{padding:3px 8px!important}
+ .motion-track .motion-canvas{pointer-events:none!important}
+}
