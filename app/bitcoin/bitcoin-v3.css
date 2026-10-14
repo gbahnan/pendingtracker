@@ -391,3 +391,13 @@
 .fresh-v3 .pt-snapshot-header{padding-bottom:11px}
 .fresh-v3 .pt-snapshot-title h2{letter-spacing:-.025em}
 @media(max-width:700px){.fresh-v3>.fresh-hero{margin-top:8px}.fresh-v3>.fresh-hero h1{font-size:clamp(27px,7vw,36px);line-height:1.15}.fresh-v3>.fresh-hero p{font-size:12px;padding:0 8px}.fresh-v3>.fresh-search{margin-top:13px}.fresh-v3 .pt-snapshot{margin-top:20px}}
+
+/* Separate the live snapshot from the explorer hero while keeping the
+   visualization, heading and search grouped as one cohesive entry point. */
+@media(min-width:701px){
+ .fresh-v3>.fresh-hero{margin-top:2px}
+ .fresh-v3 .pt-snapshot{margin-top:37px}
+}
+@media(max-width:700px){
+ .fresh-v3 .pt-snapshot{margin-top:27px}
+}
