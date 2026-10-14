@@ -812,3 +812,53 @@
   mask-image:linear-gradient(to right,#000 0%,#000 85%,rgba(0,0,0,.92) 89%,rgba(0,0,0,.45) 95%,transparent 100%)!important;
  }
 }
+
+/* Restore legible two-column data rows for Fees, Network, Mining and Insights. */
+.fresh-v3 .fresh-fee-list{
+ display:flex!important;
+ flex-direction:column!important;
+ gap:0!important;
+ width:100%!important;
+ margin-top:18px!important;
+}
+.fresh-v3 .fresh-fee-list>div{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) max-content!important;
+ align-items:center!important;
+ column-gap:24px!important;
+ padding:13px 4px!important;
+ min-height:65px!important;
+ border-bottom:1px solid rgba(95,151,180,.25)!important;
+}
+.fresh-v3 .fresh-fee-list>div>span{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:flex-start!important;
+ gap:4px!important;
+ min-width:0!important;
+}
+.fresh-v3 .fresh-fee-list>div>span>strong{
+ display:block!important;
+ font-size:15px!important;
+ line-height:1.35!important;
+ color:#f0f5fa!important;
+}
+.fresh-v3 .fresh-fee-list>div>span>small{
+ display:block!important;
+ font-size:12px!important;
+ line-height:1.45!important;
+ color:#9eb9ca!important;
+ white-space:normal!important;
+}
+.fresh-v3 .fresh-fee-list>div>b{
+ display:block!important;
+ font-size:17px!important;
+ line-height:1.35!important;
+ color:#f5ba46!important;
+ text-align:right!important;
+ white-space:nowrap!important;
+}
+@media(max-width:560px){
+ .fresh-v3 .fresh-fee-list>div{column-gap:12px!important}
+ .fresh-v3 .fresh-fee-list>div>b{font-size:14px!important}
+}
