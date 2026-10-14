@@ -30,3 +30,12 @@
   border-image:linear-gradient(180deg,transparent,rgba(91,151,181,.68) 5%,rgba(91,151,181,.68) 95%,transparent) 1!important;
  }
 }
+
+/* Contextual explorer guidance: no changes to the core layout or animation. */
+.fresh-btc-mockup .fresh-network-guidance{padding:9px 18px 12px;color:#a9c2d3;font-size:12px;line-height:1.5;border-top:1px solid rgba(91,151,181,.22)}
+.fresh-btc-mockup .fresh-network-guidance strong{color:#f3bb52}
+.fresh-btc-mockup .fresh-network-guidance a,.fresh-btc-mockup .fresh-block-selection-help a,.fresh-btc-mockup .fresh-block-selection-help button{color:#f4bc56;text-decoration:underline;text-underline-offset:3px}
+.fresh-btc-mockup .fresh-selectable-block{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(91,151,181,.25);font:inherit;color:inherit;text-align:left;cursor:pointer}
+.fresh-btc-mockup .fresh-selectable-block:hover,.fresh-btc-mockup .fresh-selected-block{background:rgba(241,176,62,.09)}
+.fresh-btc-mockup .fresh-block-selection-help{margin:12px 0;padding:10px 0;border-top:1px solid rgba(91,151,181,.25);color:#b4cad9;font-size:13px;line-height:1.6}
+.fresh-btc-mockup .fresh-block-selection-help button{background:none;border:0;cursor:pointer;font:inherit}
