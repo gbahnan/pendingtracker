@@ -293,3 +293,38 @@
  .pt-bitcoin-explorer-redesign .fresh-hero-copy h1{letter-spacing:-1.6px}
  .pt-bitcoin-explorer-redesign .fresh-hero-copy p{max-width:34ch!important}
 }
+
+/* 2D gold particle wave — restrained hero-only artwork, feathered into the page.
+   Desktop and mobile share the same visual; no 3D or changes to explorer cards. */
+.pt-bitcoin-explorer-redesign::before{
+ content:"";
+ position:absolute;
+ z-index:0;
+ pointer-events:none;
+ top:0;
+ left:50%;
+ transform:translateX(-50%);
+ width:100%;
+ height:640px;
+ background-image:url("/artwork/bitcoin-gold-particle-wave.svg");
+ background-position:center top;
+ background-repeat:no-repeat;
+ background-size:cover;
+ opacity:.74;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 47%,rgba(0,0,0,.48) 72%,transparent 100%);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 47%,rgba(0,0,0,.48) 72%,transparent 100%);
+}
+.pt-bitcoin-explorer-redesign .fresh-btc{position:relative;z-index:1}
+@media(max-width:700px){
+ .pt-bitcoin-explorer-redesign::before{
+  height:490px;
+  background-size:auto 490px;
+  opacity:.46;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.65) 48%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.65) 48%,transparent 100%);
+ }
+}
+@media(prefers-reduced-motion:no-preference){
+ .pt-bitcoin-explorer-redesign::before{animation:pt-btc-wave-breathe 17s ease-in-out infinite alternate}
+ @keyframes pt-btc-wave-breathe{from{opacity:.62}to{opacity:.74}}
+}
