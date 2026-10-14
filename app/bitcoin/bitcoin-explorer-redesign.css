@@ -875,3 +875,33 @@
     box-shadow:0 0 9px rgba(64,143,191,.16);
   }
 }
+
+
+/* Bitcoin Explore: open-ended gradient border accents.
+   These deliberately do not form a card or surround the section. */
+@media (min-width:1050px) {
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body {
+    position:relative!important;
+    padding-bottom:17px!important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body::after {
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    left:6%;
+    right:7%;
+    bottom:0;
+    height:1px;
+    background:linear-gradient(90deg,transparent 0%,rgba(57,116,155,.38) 18%,rgba(86,158,199,.56) 54%,rgba(61,126,167,.32) 84%,transparent 100%);
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body::before {
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    right:0;
+    bottom:0;
+    width:1px;
+    height:31%;
+    background:linear-gradient(0deg,rgba(77,147,189,.40),rgba(77,147,189,.20) 45%,transparent 100%);
+  }
+}
