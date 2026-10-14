@@ -685,3 +685,45 @@
   box-shadow:none!important;
  }
 }
+
+/* Bitcoin desktop precision pass: eliminate inherited 221px track and 196px cell
+   minimums which left the artwork floating in excessive vertical whitespace. */
+@media(min-width:1050px){
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot,
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{
+  padding-left:20px!important;
+  padding-right:20px!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{
+  padding-top:8px!important;
+  padding-bottom:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-track{
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  align-items:center!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell,
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.mempool,
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.confirmed{
+  min-height:175px!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-label{
+  height:28px!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-caption{
+  min-height:22px!important;
+  margin-top:2px!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-window{
+  margin:0!important;
+  padding:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-footer{
+  padding-top:3px!important;
+ }
+ .fresh-btc-mockup .fresh-explore-premium{margin-top:34px!important}
+}
