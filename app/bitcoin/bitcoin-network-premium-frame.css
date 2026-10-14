@@ -283,3 +283,17 @@
 .fresh-btc-mockup-v2 .fresh-explore-title{margin-bottom:14px!important}
 .fresh-btc-mockup-v2 .fresh-explore-guide{margin:9px 0!important}
 @media(max-width:800px){.fresh-btc-mockup-v2 .fresh-right-now-content{grid-template-columns:1fr!important}.fresh-btc-mockup-v2 .fresh-right-now-stats strong{font-size:14px}}
+
+/* Tighten the visual hierarchy to the supplied full-page reference. */
+.fresh-btc-mockup-v2>.fresh-journey{padding:8px 0 0!important;margin:0 auto 12px!important}
+.fresh-btc-mockup-v2>.fresh-journey .fresh-journey-heading{margin:0 0 8px!important;gap:8px!important}
+.fresh-btc-mockup-v2>.fresh-journey .fresh-journey-title{font-size:18px!important;margin:3px 0!important}
+.fresh-btc-mockup-v2>.fresh-journey .fresh-journey-heading p{font-size:11px!important}
+.fresh-btc-mockup-v2>.fresh-hero{padding-top:12px!important;padding-bottom:0!important;margin:0 auto!important}
+.fresh-btc-mockup-v2>.fresh-hero .fresh-hero-copy h1{font-size:clamp(28px,3.4vw,46px)!important;margin:4px 0 6px!important}
+.fresh-btc-mockup-v2>.fresh-hero .fresh-hero-copy p{margin:0 auto!important}
+.fresh-btc-mockup-v2>.fresh-search{margin:12px auto 14px!important}
+.fresh-btc-mockup-v2 .fresh-now-primary{max-height:200px!important;overflow:hidden!important;padding:8px 0!important}
+.fresh-btc-mockup-v2 .fresh-now-price .fresh-price-chart{max-height:55px!important}
+.fresh-btc-mockup-v2 .fresh-network-guidance{display:none!important}
+@media(max-width:700px){.fresh-btc-mockup-v2>.fresh-journey .fresh-journey-title{font-size:16px!important}.fresh-btc-mockup-v2 .fresh-now-primary{max-height:none!important}}
