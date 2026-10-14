@@ -506,3 +506,57 @@
 
 /* Add approximately a quarter inch (24 CSS px) between Bitcoin Right Now and explorer tabs. */
 .fresh-v3 .pt-snapshot{margin-bottom:54px!important}
+
+/* Cohesive open explorer data section: heading + attached tabs + faded perimeter. */
+.fresh-v3 .fresh-explore-premium{
+ position:relative;isolation:isolate;overflow:visible;
+ border:0!important;border-radius:0!important;background:transparent!important;
+ padding:0 16px 19px!important;margin-bottom:25px!important;
+}
+.fresh-v3 .fresh-explore-premium::before,
+.fresh-v3 .fresh-explore-premium::after{
+ content:"";position:absolute;pointer-events:none;top:36px;bottom:15px;width:1px;
+ background:linear-gradient(to bottom,transparent,rgba(78,139,171,.35) 17%,rgba(78,139,171,.35) 78%,transparent);
+}
+.fresh-v3 .fresh-explore-premium::before{left:0}
+.fresh-v3 .fresh-explore-premium::after{right:0}
+.fresh-v3 .fresh-explore-title{
+ display:flex!important;align-items:flex-end;justify-content:space-between;
+ margin:0!important;padding:0 4px 17px!important;border:0!important;background:transparent!important;
+}
+.fresh-v3 .fresh-explore-title .fresh-explore-kicker{display:none}
+.fresh-v3 .fresh-explore-title h2{font-size:clamp(22px,2.25vw,30px);font-weight:800;letter-spacing:-.035em;line-height:1.2;margin:0 0 5px;color:#f1f7fc}
+.fresh-v3 .fresh-explore-title h2 span{color:#f4b942}
+.fresh-v3 .fresh-explore-title p{font-size:12px;color:#a8c2d4;margin:0}
+.fresh-v3 .fresh-explore-decoration{display:none!important}
+.fresh-v3 .fresh-tabs-six{
+ position:relative;z-index:1;border:0!important;border-radius:0!important;
+ overflow:visible!important;background:transparent!important;
+ border-bottom:1px solid rgba(72,132,163,.36)!important;
+}
+.fresh-v3 .fresh-tabs-six button{
+ background:transparent!important;border-right:0!important;
+ border-top:1px solid rgba(67,116,145,.16)!important;
+ border-bottom:0!important;min-height:55px;
+ transition:background .18s,color .18s;
+}
+.fresh-v3 .fresh-tabs-six button+button{border-left:1px solid rgba(64,117,146,.22)!important}
+.fresh-v3 .fresh-tabs-six button:hover{background:rgba(26,70,96,.25)!important}
+.fresh-v3 .fresh-tabs-six button.active{
+ background:linear-gradient(to bottom,rgba(247,185,65,.09),rgba(247,185,65,.015))!important;
+ box-shadow:inset 0 -3px #f5b942!important;color:#f5b942!important;
+}
+.fresh-v3 .fresh-explore-body{
+ position:relative;padding:18px 4px 12px!important;
+ border:0!important;border-radius:0!important;background:transparent!important;
+}
+.fresh-v3 .fresh-explore-body::after{
+ content:"";position:absolute;pointer-events:none;bottom:0;left:0;right:0;height:1px;
+ background:linear-gradient(90deg,transparent,rgba(77,137,169,.36) 15%,rgba(77,137,169,.36) 85%,transparent);
+}
+@media(max-width:900px){
+ .fresh-v3 .fresh-explore-premium{padding:0 8px 14px!important}
+ .fresh-v3 .fresh-explore-title{padding:0 3px 14px!important}
+ .fresh-v3 .fresh-explore-title h2{font-size:23px}
+ .fresh-v3 .fresh-tabs-six button{min-height:47px}
+}
