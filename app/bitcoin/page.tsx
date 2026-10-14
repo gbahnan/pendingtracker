@@ -1,6 +1,7 @@
 import BitcoinExplorerOverview from "./BitcoinExplorerOverview";
 import "./bitcoin-explorer-redesign.css";
 import "./bitcoin-border-refinement.css";
+import "./bitcoin-network-premium-frame.css";
 
 export const metadata = {
  title: "Bitcoin Blockchain Explorer | Pending Tracker",
