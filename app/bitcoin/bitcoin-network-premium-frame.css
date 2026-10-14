@@ -97,11 +97,3 @@
 .fresh-btc-mockup .fresh-learn-compact .fresh-faq summary span{
  color:#f5b942!important;
 }
-
-/* More breathing room between the blockchain explorer and beginner education. */
-.fresh-btc-mockup .fresh-learn-compact{
- margin-top:42px!important;
-}
-@media(max-width:700px){
- .fresh-btc-mockup .fresh-learn-compact{margin-top:30px!important}
-}
