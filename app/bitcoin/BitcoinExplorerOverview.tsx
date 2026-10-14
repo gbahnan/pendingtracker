@@ -10,7 +10,7 @@ type BTC={pending?:number|null;congestion?:string;explanation?:string;fastestFee
 type Tab="blocks"|"transactions"|"fees"|"network"|"mining"|"insights";
 type Mining={hashrateEH:number|null;difficultyChange:number|null;remainingBlocks:number|null;estimatedRetargetDate:string|null;available:boolean};
 type Market={price:number|null;change24h:number|null;low24h:number|null;high24h:number|null;chart:number[];updatedAt:string|null};
-type SnapshotMetric="pending"|"fee"|"interval"|"congestion";
+type SnapshotMetric="pending"|"fee"|"interval"|"congestion"|"latest";
 const fmt=(n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(n);
 const rate=(n:number|null|undefined)=>n==null?"—":fmt(n)+" sat/vB";
 const faqs=[["What is a Bitcoin transaction?","A transaction is a transfer recorded on the Bitcoin network. It starts as unconfirmed and becomes confirmed when included in a block."],["What is the mempool?","The mempool is the waiting area for transactions that have been broadcast but not yet confirmed. Different nodes can have slightly different mempools."],["Why do transaction fees matter?","Bitcoin block space is limited. Miners often select transactions offering higher fees per virtual byte, but paying a higher fee does not guarantee a confirmation time."],["What is a confirmation?","A transaction receives its first confirmation when it is included in a block. Each subsequent block adds another confirmation."],["What is the Bitcoin network?","The Bitcoin network is a decentralized collection of computers that validate and relay transactions and blocks."]];
