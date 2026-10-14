@@ -297,3 +297,28 @@
 .fresh-btc-mockup-v2 .fresh-now-price .fresh-price-chart{max-height:55px!important}
 .fresh-btc-mockup-v2 .fresh-network-guidance{display:none!important}
 @media(max-width:700px){.fresh-btc-mockup-v2>.fresh-journey .fresh-journey-title{font-size:16px!important}.fresh-btc-mockup-v2 .fresh-now-primary{max-height:none!important}}
+
+/* Consolidated dashboard, matching the supplied reference rather than stacked dashboards. */
+.fresh-btc-mockup-v2 .fresh-now-snapshot{margin:0 auto 12px!important;padding:0 10px!important}
+.fresh-btc-mockup-v2 .fresh-now-top{display:none!important}
+.fresh-btc-mockup-v2 .fresh-now-secondary{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important}
+.fresh-btc-mockup-v2 .fresh-now-secondary-metric{display:flex!important;align-items:center!important;gap:13px!important;min-height:98px!important;padding:15px!important;background:#071a2a!important;border:1px solid rgba(75,130,164,.46)!important;border-radius:11px!important;box-shadow:none!important}
+.fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-metric-icon{flex:0 0 40px!important}
+.fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-secondary-text{display:flex!important;flex-direction:column!important;gap:4px!important}
+.fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-secondary-text>span{order:-1;color:#9dc7e1!important;font-size:12px!important}
+.fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-secondary-text strong{font-size:21px!important}
+.fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-secondary-text small{font-size:11px!important}
+.fresh-btc-mockup-v2 .fresh-bitcoin-right-now{margin-bottom:13px!important}
+.fresh-btc-mockup-v2 .fresh-explore-premium{margin:10px auto 14px!important;padding:10px 14px 15px!important}
+.fresh-btc-mockup-v2 .fresh-explore-title{display:none!important}
+.fresh-btc-mockup-v2 .fresh-explore-guide{display:none!important}
+.fresh-btc-mockup-v2 .fresh-explore-premium .fresh-tabs-six{margin:0!important}
+.fresh-btc-mockup-v2 .fresh-explore-premium .fresh-explore-body{gap:12px!important}
+.fresh-btc-mockup-v2 .fresh-explore-premium .fresh-data-premium{padding:17px 13px!important}
+.fresh-btc-mockup-v2 .fresh-explore-premium .fresh-explainer-premium{padding-top:17px!important}
+.fresh-btc-mockup-v2 .fresh-learn-compact{display:grid!important;grid-template-columns:minmax(250px,.85fr) minmax(0,2fr)!important;gap:18px!important;align-items:center!important;padding:17px 18px!important;margin-top:14px!important;border:1px solid rgba(75,130,164,.40)!important;border-radius:12px!important;background:rgba(7,26,42,.55)!important}
+.fresh-btc-mockup-v2 .fresh-learn-inline{display:block!important}
+.fresh-btc-mockup-v2 .fresh-learn-inline p{display:none!important}
+.fresh-btc-mockup-v2 .fresh-faq{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important}
+.fresh-btc-mockup-v2 .fresh-faq details{min-width:0!important;min-height:85px!important;margin:0!important}
+@media(max-width:900px){.fresh-btc-mockup-v2 .fresh-now-secondary{grid-template-columns:repeat(2,minmax(0,1fr))!important}.fresh-btc-mockup-v2 .fresh-learn-compact{grid-template-columns:1fr!important}.fresh-btc-mockup-v2 .fresh-faq{grid-template-columns:1fr!important}}
