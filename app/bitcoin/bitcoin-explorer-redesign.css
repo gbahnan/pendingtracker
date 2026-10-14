@@ -680,37 +680,3 @@
  .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot{padding-top:5px!important;padding-bottom:5px!important}
 }
 
-/* Bitcoin flow: remove reserved vertical space rather than shrinking artwork.
-   Keep labels immediately adjacent to hexagons; controls/legend below. */
-@media(min-width:1050px){
- .fresh-btc-mockup .fresh-journey .motion-track{
-   min-height:0!important;height:auto!important;
-   padding-top:0!important;padding-bottom:0!important;
-   margin-top:0!important;margin-bottom:0!important;
-   align-items:center!important;
- }
- .fresh-btc-mockup .fresh-journey .motion-cell,
- .fresh-btc-mockup .fresh-journey .motion-cell.mempool,
- .fresh-btc-mockup .fresh-journey .motion-cell.confirmed{
-   min-height:0!important;height:auto!important;
-   padding-top:0!important;padding-bottom:0!important;
-   margin-top:0!important;margin-bottom:0!important;
- }
- .fresh-btc-mockup .fresh-journey .motion-label{
-   height:auto!important;min-height:0!important;
-   margin:0 0 3px!important;padding:0!important;
- }
- .fresh-btc-mockup .fresh-journey .motion-caption{
-   height:auto!important;min-height:0!important;
-   margin:3px 0 0!important;padding:0!important;
- }
- .fresh-btc-mockup .fresh-journey .motion-window{
-   min-height:0!important;height:auto!important;
- }
- .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-arrows{
-   min-height:0!important;margin:0!important;padding:0!important;
- }
- .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-footer{
-   margin:0!important;padding:0!important;
- }
-}
