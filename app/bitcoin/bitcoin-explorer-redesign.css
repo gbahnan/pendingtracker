@@ -480,3 +480,31 @@
   .fresh-btc .fresh-live-network-combined { margin: 12px 0 20px; }
   .fresh-btc .fresh-live-network-combined > .fresh-journey { padding-top: 16px !important; }
 }
+
+
+/* One coherent hierarchy for the combined network snapshot and live timeline. */
+.fresh-btc .fresh-live-network-combined > .fresh-journey {
+ padding:20px 28px 17px!important;
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey-heading {
+ margin-bottom:10px!important;
+ align-items:center;
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey-heading h2 {
+ font-size:clamp(20px,2vw,27px);
+ line-height:1.22;
+ letter-spacing:-.55px;
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey-heading p {
+ margin-top:5px;
+ max-width:780px;
+ font-size:13px;
+ line-height:1.5;
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey-heading .fresh-kicker {
+ margin-bottom:5px;
+}
+@media(max-width:760px){
+ .fresh-btc .fresh-live-network-combined > .fresh-journey {padding:17px 14px 14px!important;}
+ .fresh-btc .fresh-live-network-combined .fresh-journey-heading h2 {font-size:21px;}
+}
