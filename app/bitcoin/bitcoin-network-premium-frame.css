@@ -108,3 +108,30 @@
 @media(max-width:700px){
  .fresh-btc-mockup .fresh-explore-premium{margin-top:46px!important}
 }
+
+/* Bitcoin explorer hybrid dashboard: open information, framed controls, fading hairlines. */
+.fresh-btc-mockup .fresh-bitcoin-right-now{
+ padding:24px 26px 22px;
+ background:radial-gradient(ellipse at 100% 0%,rgba(54,98,122,.10),transparent 60%);
+ position:relative;
+}
+.fresh-btc-mockup .fresh-bitcoin-right-now::after{
+ content:"";position:absolute;bottom:0;left:2%;right:2%;height:1px;
+ background:linear-gradient(90deg,transparent,rgba(91,151,181,.68) 12%,rgba(91,151,181,.68) 88%,transparent);
+}
+.fresh-btc-mockup .fresh-right-now-heading{display:flex;align-items:center;gap:10px;color:#91b9d4;font-size:11px;font-weight:750;letter-spacing:.12em}
+.fresh-btc-mockup .fresh-right-now-pulse{color:#f5b942;font-size:21px;line-height:1}
+.fresh-btc-mockup .fresh-right-now-live{margin-left:auto;color:#7694a8;font-size:9px;letter-spacing:.09em}
+.fresh-btc-mockup .fresh-right-now-content{display:flex;justify-content:space-between;align-items:center;gap:32px;margin-top:11px}
+.fresh-btc-mockup .fresh-right-now-content h2{margin:0;color:#f2f5f9;font-size:clamp(19px,2vw,26px);font-weight:650;letter-spacing:-.035em}
+.fresh-btc-mockup .fresh-right-now-content p{margin:7px 0 0;max-width:670px;color:#a8bece;font-size:13px;line-height:1.65}
+.fresh-btc-mockup .fresh-right-now-reading{flex:0 0 auto;display:flex;flex-direction:column;gap:4px;padding-left:26px;border-left:1px solid rgba(91,151,181,.32)}
+.fresh-btc-mockup .fresh-right-now-reading span{color:#91b9d4;font-size:11px}
+.fresh-btc-mockup .fresh-right-now-reading strong{color:#f5b942;font-size:22px;letter-spacing:-.025em}
+.fresh-btc-mockup .fresh-right-now-reading small{color:#879eae;font-size:10px}
+@media(max-width:700px){
+ .fresh-btc-mockup .fresh-bitcoin-right-now{padding:20px 16px}
+ .fresh-btc-mockup .fresh-right-now-content{align-items:stretch;flex-direction:column;gap:16px}
+ .fresh-btc-mockup .fresh-right-now-reading{padding:12px 0 0;border-left:0;border-top:1px solid rgba(91,151,181,.25)}
+ .fresh-btc-mockup .fresh-right-now-live{font-size:8px}
+}
