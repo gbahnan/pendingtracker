@@ -764,3 +764,36 @@
    margin-top:2px!important;
  }
 }
+
+/* Structural correction: the 28px label track + 190px fixed cell were
+   reserving space even after MEMPOOL text was hidden. Collapse those tracks. */
+@media (min-width:1050px) {
+ .fresh-btc-mockup .fresh-journey .motion-cell,
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool,
+ .fresh-btc-mockup .fresh-journey .motion-cell.confirmed {
+   height:166px!important;
+   min-height:0!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-cell .motion-label,
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool .motion-label {
+   height:13px!important;
+   min-height:0!important;
+   flex:0 0 13px!important;
+   margin:0!important;
+   padding:0!important;
+   line-height:13px!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool .motion-label span {
+   font-size:10px!important;
+   line-height:13px!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool .motion-pool {
+   margin-top:0!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-track {
+   align-items:start!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-window {
+   margin-top:0!important;
+ }
+}
