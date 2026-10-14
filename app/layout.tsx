@@ -4,6 +4,7 @@ import "./site-polish.css";
 import "./mobile-responsive.css";
 import type { Metadata } from "next";
 import Link from "next/link";
+import ActiveNav from "./components/ActiveNav";
 
 export const metadata: Metadata = {
   title: "Pending Tracker | The Blockchain Explorer That Explains Everything",
@@ -17,9 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="container">
           <header className="header pt-reference-header">
           <Link href="/" className="brand"><span className="pt-brand-hex" aria-hidden="true">⬡</span><span>PENDING TRACKER</span></Link>
-          <nav className="nav" aria-label="Main navigation">
-            <Link href="/">Home</Link><Link href="/bitcoin">Bitcoin</Link><Link href="/ethereum">Ethereum</Link><Link href="/faq">FAQ</Link>
-          </nav>
+          <ActiveNav />
           <form className="pt-header-search" action="/" method="get"><a href="/#transaction-search">⌕ &nbsp; Search a transaction…</a></form>
         </header>
 
