@@ -855,3 +855,23 @@
     padding-right: 10px !important;
   }
 }
+
+/* Bitcoin desktop: refined visual pause between transaction flow and Explore.
+   Centered fading steel-blue hairline, preserving all existing artwork. */
+@media (min-width:1050px) {
+  .fresh-btc-mockup .fresh-explore-premium {
+    position:relative!important;
+    margin-top:64px!important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium::before {
+    content:"";
+    position:absolute;
+    top:-32px;
+    left:22.5%;
+    width:55%;
+    height:1px;
+    pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(88,156,199,.72) 50%,transparent);
+    box-shadow:0 0 9px rgba(64,143,191,.16);
+  }
+}
