@@ -1,6 +1,7 @@
 import "./components/explorer-dashboard.css";
 import "./globals.css";
 import "./site-polish.css";
+import "./mobile-responsive.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 
