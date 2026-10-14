@@ -679,3 +679,26 @@
  .fresh-v3 .pt-snapshot-live{margin-top:7px!important}
  .fresh-v3 .pt-snapshot-status{padding:6px 8px 10px!important;gap:5px!important}
 }
+
+/* Balanced snapshot heading: centered title, left activity, right live timestamp. */
+.fresh-v3 .pt-snapshot-header{padding:0 8px 8px!important}
+.fresh-v3 .pt-snapshot-status-row{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;padding:7px 12px 10px;margin:0;
+}
+.fresh-v3 .pt-snapshot-status-row .pt-snapshot-status{
+ display:flex!important;align-items:center!important;justify-content:flex-start!important;
+ flex-wrap:nowrap!important;gap:7px!important;margin:0!important;padding:0!important;
+ background:none!important;border:0!important;box-shadow:none!important;
+}
+.fresh-v3 .pt-snapshot-status-row .pt-snapshot-live{
+ position:static!important;display:inline-flex;align-items:center;gap:4px;
+ margin:0!important;white-space:nowrap;text-align:right!important;
+}
+.fresh-v3 .pt-snapshot-status-row .pt-snapshot-live i{margin-right:2px}
+@media(max-width:560px){
+ .fresh-v3 .pt-snapshot-status-row{padding:8px 3px 10px;gap:7px}
+ .fresh-v3 .pt-snapshot-status-row .pt-snapshot-status{font-size:10px!important}
+ .fresh-v3 .pt-snapshot-status-row .pt-snapshot-live{font-size:10px!important}
+ .fresh-v3 .pt-snapshot-status-row .pt-snapshot-live small{display:inline!important;font-size:9px}
+}
