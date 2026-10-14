@@ -649,3 +649,33 @@
  .fresh-v3 .pt-snapshot-title p{font-size:10px!important}
  .fresh-v3 .pt-snapshot-status{font-size:10px!important}
 }
+
+/* Snapshot header hierarchy: title + subtitle, followed by one compact status line. */
+.fresh-v3 .pt-snapshot-header{
+  position:relative!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  gap:0!important;padding:0 8px 7px!important;
+}
+.fresh-v3 .pt-snapshot-title{width:100%;justify-content:center!important}
+.fresh-v3 .pt-snapshot-title p{margin:5px 0 0!important}
+.fresh-v3 .pt-snapshot-live{
+  position:absolute!important;right:4px;top:6px;
+  margin:0!important;font-size:11px!important;
+}
+.fresh-v3 .pt-snapshot-status{
+  display:flex!important;flex-wrap:wrap!important;
+  justify-content:center!important;align-items:center!important;
+  gap:7px!important;
+  padding:7px 8px 10px!important;margin:0 0 4px!important;
+  line-height:1.4!important;
+}
+.fresh-v3 .pt-snapshot-status strong{white-space:nowrap}
+@media(max-width:1050px){
+ .fresh-v3 .pt-snapshot-live{position:static!important;margin-top:7px!important}
+}
+@media(max-width:560px){
+ .fresh-v3 .pt-snapshot-title p{max-width:320px;margin:5px auto 0!important}
+ .fresh-v3 .pt-snapshot-live{margin-top:7px!important}
+ .fresh-v3 .pt-snapshot-status{padding:6px 8px 10px!important;gap:5px!important}
+}
