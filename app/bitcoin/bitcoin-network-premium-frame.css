@@ -322,3 +322,49 @@
 .fresh-btc-mockup-v2 .fresh-faq{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important}
 .fresh-btc-mockup-v2 .fresh-faq details{min-width:0!important;min-height:85px!important;margin:0!important}
 @media(max-width:900px){.fresh-btc-mockup-v2 .fresh-now-secondary{grid-template-columns:repeat(2,minmax(0,1fr))!important}.fresh-btc-mockup-v2 .fresh-learn-compact{grid-template-columns:1fr!important}.fresh-btc-mockup-v2 .fresh-faq{grid-template-columns:1fr!important}}
+
+/* Reference layout pass: control the actual component structure, not legacy spacing. */
+@media(min-width:1050px){
+ .fresh-btc-mockup-v2{max-width:1190px!important;margin:0 auto!important;padding:0 22px!important}
+ .fresh-btc-mockup-v2>.fresh-journey{margin:0 -22px 20px!important;padding:10px 0 4px!important}
+ .fresh-btc-mockup-v2>.fresh-journey .fresh-journey-heading{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;margin:0 auto 6px!important}
+ .fresh-btc-mockup-v2>.fresh-journey .fresh-journey-heading .fresh-kicker{font-size:12px!important;letter-spacing:.32em!important;color:#8dc6e9!important}
+ .fresh-btc-mockup-v2>.fresh-journey .fresh-journey-title,.fresh-btc-mockup-v2>.fresh-journey .fresh-journey-heading p,.fresh-btc-mockup-v2>.fresh-journey .fresh-journey-legend{display:none!important}
+ .fresh-btc-mockup-v2>.fresh-hero{margin:8px auto 0!important;padding:0!important}
+ .fresh-btc-mockup-v2>.fresh-hero .fresh-hero-copy .fresh-kicker{display:none!important}
+ .fresh-btc-mockup-v2>.fresh-hero .fresh-hero-copy h1{font-family:Georgia,serif!important;font-size:clamp(31px,3.1vw,43px)!important;line-height:1.12!important;font-weight:700!important;letter-spacing:-.035em!important}
+ .fresh-btc-mockup-v2>.fresh-hero .fresh-hero-copy p{font-size:15px!important}
+ .fresh-btc-mockup-v2>.fresh-search{max-width:900px!important;margin:16px auto 22px!important}
+ .fresh-btc-mockup-v2>.fresh-search form{height:56px!important;border-radius:10px!important}
+ .fresh-btc-mockup-v2>.fresh-search form button{border-radius:9px!important;min-width:94px!important;height:44px!important;font-size:0!important}
+ .fresh-btc-mockup-v2>.fresh-search form button::after{content:"Search";font-size:13px!important;font-weight:750}
+ .fresh-btc-mockup-v2 .fresh-bitcoin-right-now{margin:0 0 15px!important;padding:14px 18px!important}
+ .fresh-btc-mockup-v2 .fresh-right-now-heading{margin-bottom:2px!important}
+ .fresh-btc-mockup-v2 .fresh-right-now-content{grid-template-columns:1.05fr 1fr!important}
+ .fresh-btc-mockup-v2 .fresh-right-now-content h2{font-size:17px!important}
+ .fresh-btc-mockup-v2 .fresh-right-now-content p{font-size:12px!important}
+ .fresh-btc-mockup-v2 .fresh-now-snapshot{margin:0 0 14px!important;padding:0!important}
+ .fresh-btc-mockup-v2 .fresh-now-secondary{gap:12px!important}
+ .fresh-btc-mockup-v2 .fresh-now-secondary-metric{min-height:90px!important;max-height:105px!important;align-items:center!important;text-align:left!important;padding:12px!important;border-radius:11px!important;border:1px solid #28475d!important;background:linear-gradient(135deg,#081d2d,#061521)!important}
+ .fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-metric-icon{width:37px!important;min-width:37px!important;height:37px!important;display:grid!important;place-items:center!important}
+ .fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-secondary-text>span{font-size:11px!important}
+ .fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-secondary-text strong{font-size:19px!important}
+ .fresh-btc-mockup-v2 .fresh-now-secondary-metric .fresh-secondary-text small{font-size:10px!important}
+ .fresh-btc-mockup-v2 .fresh-explore-premium{margin:0 0 14px!important;padding:0!important;border:1px solid rgba(78,129,159,.32)!important;border-radius:12px!important;background:#061725!important;overflow:hidden!important}
+ .fresh-btc-mockup-v2 .fresh-explore-premium .fresh-tabs-six{border:0!important;border-bottom:1px solid #2a4558!important;border-radius:0!important}
+ .fresh-btc-mockup-v2 .fresh-explore-premium .fresh-tabs-six button{padding:13px 8px!important}
+ .fresh-btc-mockup-v2 .fresh-explore-premium .fresh-explore-body{padding:13px!important;grid-template-columns:minmax(0,1.9fr) minmax(270px,.85fr)!important;gap:0!important}
+ .fresh-btc-mockup-v2 .fresh-explore-premium .fresh-data-premium{padding:5px 18px 5px 5px!important}
+ .fresh-btc-mockup-v2 .fresh-explore-premium .fresh-explainer-premium{padding:9px 10px 5px 20px!important;border-left:1px solid #294a5d!important}
+ .fresh-btc-mockup-v2 .fresh-explore-premium .fresh-table-row{min-height:37px!important;padding-top:7px!important;padding-bottom:7px!important}
+ .fresh-btc-mockup-v2 .fresh-learn-compact{margin:12px 0!important;grid-template-columns:minmax(220px,.8fr) minmax(0,2fr)!important;gap:14px!important}
+ .fresh-btc-mockup-v2 .fresh-faq{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+}
+.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq details{padding:11px!important;background:#0a2031!important;border:1px solid #2a4a61!important;border-radius:10px!important;min-height:88px!important}
+.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq details summary{display:flex!important;align-items:flex-start!important;gap:9px!important;font-size:12px!important;list-style:none!important}
+.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq-icon{flex:0 0 24px;color:#f5b942;font-size:22px;line-height:1.1}
+.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq-copy{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq-copy strong{color:#f3f6fa;font-size:11px}
+.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq-copy small{color:#9bb3c4;font-size:10px;line-height:1.4}
+.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq-plus{color:#f5b942;margin-left:auto}
+@media(max-width:700px){.fresh-btc-mockup-v2 .fresh-now-secondary-metric{display:flex!important;align-items:center!important;text-align:left!important;gap:8px!important}.fresh-btc-mockup-v2 .fresh-learn-compact .fresh-faq details{min-height:72px!important}}
