@@ -355,3 +355,24 @@
 .fresh-v3>.fresh-journey .motion-explorer .motion-divider{height:120px;top:24px}
 .fresh-v3>.fresh-hero{margin-top:8px}
 @media(max-width:700px){.fresh-v3>.fresh-journey .motion-explorer .motion-track{gap:7px}.fresh-v3>.fresh-journey .motion-explorer .motion-cell{width:132px}.fresh-v3>.fresh-journey .motion-explorer .motion-cell.mempool{width:158px}.fresh-v3>.fresh-journey .motion-explorer .motion-pool{width:140px;height:96px}.fresh-v3>.fresh-journey .motion-explorer .motion-halo{width:105px;height:123px}.fresh-v3>.fresh-journey .motion-explorer .motion-hex{width:103px;height:120px}}
+
+/* Explorer timeline: intentionally reveal half the first confirmed blue hexagon,
+   with soft edge fades. Keep transaction-specific timeline untouched. */
+@media(min-width:1050px){
+ .fresh-v3>.fresh-journey .motion-explorer{container-type:inline-size}
+ .fresh-v3>.fresh-journey .motion-explorer .motion-track{gap:9px!important}
+ .fresh-v3>.fresh-journey .motion-explorer .motion-cell.mempool{width:175px!important;min-width:175px!important;flex-basis:175px!important}
+ .fresh-v3>.fresh-journey .motion-explorer .motion-cell.motion-stage{width:clamp(112px,calc((100cqw - 175px - 75px - 75px) / 6),160px)!important;min-width:0!important;flex-basis:clamp(112px,calc((100cqw - 175px - 75px - 75px) / 6),160px)!important}
+ .fresh-v3>.fresh-journey .motion-explorer .motion-cell.confirmed{width:150px!important;min-width:150px!important;flex-basis:150px!important}
+ .fresh-v3>.fresh-journey .motion-explorer .motion-pool{width:155px!important}
+}
+.fresh-v3>.fresh-journey .motion-explorer .motion-window{
+ -webkit-mask-image:linear-gradient(to right,transparent 0,#000 2.2%,#000 93%,transparent 100%);
+ mask-image:linear-gradient(to right,transparent 0,#000 2.2%,#000 93%,transparent 100%);
+}
+@media(max-width:1049px){
+ .fresh-v3>.fresh-journey .motion-explorer .motion-window{
+ -webkit-mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 91%,transparent 100%);
+ mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 91%,transparent 100%);
+ }
+}
