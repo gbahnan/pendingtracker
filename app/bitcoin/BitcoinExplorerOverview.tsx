@@ -56,19 +56,6 @@ export default function BitcoinExplorerOverview(){
       <span className="fresh-metric-icon" aria-hidden="true">{m.icon}</span><span className="fresh-secondary-text"><strong>{m.value}</strong><span>{m.label} <span className="fresh-inline-help">ⓘ</span></span><small>{m.description}</small></span>
      </button>)}
    </div>
-   <div className="fresh-now-primary">
-    <div className="fresh-now-price">
-     <div className="fresh-price-line"><span className="fresh-btc-coin">₿</span><div><span className="fresh-price-label">Bitcoin price (USD)</span><div className="fresh-price-values"><strong>{market?.price!=null?"$"+fmt(market.price):"Price unavailable"}</strong>{market?.change24h!=null&&<span className={market.change24h>=0?"up":"down"}>{market.change24h>=0?"+":""}{market.change24h.toFixed(2)}% <small>24h</small></span>}</div></div></div>
-     {market?.chart&&market.chart.length>2&&<svg className="fresh-price-chart" viewBox="0 0 320 60" preserveAspectRatio="none" role="img" aria-label="Bitcoin price trend over the past 24 hours"><defs><linearGradient id="btc-spark-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#f9ad35" stopOpacity=".32"/><stop offset="100%" stopColor="#f9ad35" stopOpacity="0"/></linearGradient></defs>{(()=>{const values=market.chart;const low=Math.min(...values),high=Math.max(...values),span=Math.max(1,high-low);const coords=values.map((v,i)=>[(i/(values.length-1))*320,54-(v-low)/span*46]);const line=coords.map(([x,y],i)=>(i?"L":"M")+x.toFixed(1)+","+y.toFixed(1)).join(" ");return <><path d={line+" L320,60 L0,60 Z"} fill="url(#btc-spark-fill)"/><path d={line} fill="none" stroke="#f9b33c" strokeWidth="2" vectorEffect="non-scaling-stroke"/></>})()}</svg>}
-     <div className="fresh-price-range">{market?.low24h!=null&&<span>24h Low <b>${fmt(market.low24h)}</b></span>}{market?.high24h!=null&&<span>24h High <b>${fmt(market.high24h)}</b></span>}{market?.price==null&&<small>Market feed temporarily unavailable</small>}</div>
-    </div>
-    <button type="button" className="fresh-network-activity" onClick={()=>setSnapshotOpen(snapshotOpen==="congestion"?null:"congestion")} aria-expanded={snapshotOpen==="congestion"}>
-     <span className="fresh-price-label">Network Activity</span>
-     <strong>{btc?.congestion??"Checking…"}</strong>
-     <span className="fresh-congestion-bars" aria-hidden="true">{Array.from({length:5},(_,i)=><i key={i} className={i<(btc?.congestion==="Busy"?5:btc?.congestion==="Moderate"?3:btc?.congestion==="Light"?1:0)?"lit":""}/>)}</span>
-     <small>How busy Bitcoin is right now. <span className="fresh-inline-help">ⓘ</span></small>
-    </button>
-   </div>
    <div className="fresh-network-guidance" role="status"><strong>What this means for you:</strong> {networkAdvice} <a href="#explore-bitcoin" onClick={()=>setTab("fees")}>See fee estimates →</a></div>
    {snapshotOpen&&<div id="fresh-now-expanded" className="fresh-now-expanded" role="region" aria-live="polite">
     <button type="button" className="fresh-now-close" aria-label="Close explanation" onClick={()=>setSnapshotOpen(null)}>×</button>
@@ -108,7 +95,7 @@ export default function BitcoinExplorerOverview(){
     </aside>
    </div>
   </section>
-  <section className="fresh-learn fresh-learn-compact"><div className="fresh-learn-inline"><div><span className="fresh-kicker">NEW TO BITCOIN?</span><h2>Clear answers. No jargon.</h2><p>Understand the basics in a minute, not an afternoon.</p></div><button className="fresh-learn-more" onClick={()=>setExpanded(!expanded)}>{expanded?"Show fewer questions":"View all questions"} →</button></div><div className="fresh-faq">{faqs.slice(0,expanded?faqs.length:5).map(([q,a])=><details key={q}><summary>{q}<span>＋</span></summary><p>{a}</p></details>)}</div></section>
+  <section className="fresh-learn fresh-learn-compact"><div className="fresh-learn-inline"><div><span className="fresh-kicker">NEW TO BITCOIN?</span><h2>Clear answers. No jargon.</h2><p>Understand the basics in a minute, not an afternoon.</p></div><button className="fresh-learn-more" onClick={()=>setExpanded(!expanded)}>{expanded?"Show fewer questions":"View all questions"} →</button></div><div className="fresh-faq">{faqs.slice(0,expanded?faqs.length:3).map(([q,a])=><details key={q}><summary>{q}<span>＋</span></summary><p>{a}</p></details>)}</div></section>
   <footer className="fresh-footer">Live Bitcoin data sourced through Pending Tracker. Estimates are not guarantees. <Link href="/">Explore Ethereum or track another transaction ↗</Link></footer>
  </div>
 }
