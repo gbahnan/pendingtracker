@@ -32,6 +32,13 @@ export default function BitcoinExplorerOverview(){
   </section>
   <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a Bitcoin transaction ID or address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
   <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
+  <section className="fresh-journey" aria-label="Live Bitcoin confirmation timeline">
+   <div className="fresh-section-head fresh-journey-heading">
+    <div><div className="fresh-kicker">LIVE BITCOIN BLOCKSPACE · VISUAL EXPLORER</div><h2 className="fresh-journey-title">See how Bitcoin transactions <em>move toward confirmation.</em></h2><p>Each gold hexagon represents an estimated confirmation window, not a guaranteed arrival time. Explore projected blocks and recently confirmed blocks below.</p></div>
+    <div className="fresh-journey-legend" aria-label="Visualization key"><span><i className="fresh-legend-gold" aria-hidden="true"/> Estimated blocks</span><span><i className="fresh-legend-blue" aria-hidden="true"/> Confirmed history</span></div>
+   </div>
+   <BlockchainWebGL overview pending={btc?.pending} fee={projections[0]?.medianFee} projectedCount={projections[0]?.transactionCount} projections={projections} blocks={blocks}/>
+  </section>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
    <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> BITCOIN NETWORK LIVE</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
    <div className="fresh-now-primary">
@@ -68,13 +75,6 @@ export default function BitcoinExplorerOverview(){
    <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
    <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-reading"><span>Current priority fee</span><strong>{rate(btc?.fastestFee)}</strong><small>Estimate, not a guarantee</small></div></div>
   </div>
-  <section className="fresh-journey" aria-label="Live Bitcoin confirmation timeline">
-   <div className="fresh-section-head fresh-journey-heading">
-    <div><div className="fresh-kicker">LIVE BITCOIN BLOCKSPACE · VISUAL EXPLORER</div><h2 className="fresh-journey-title">See how Bitcoin transactions <em>move toward confirmation.</em></h2><p>Each gold hexagon represents an estimated confirmation window, not a guaranteed arrival time. Explore projected blocks and recently confirmed blocks below.</p></div>
-    <div className="fresh-journey-legend" aria-label="Visualization key"><span><i className="fresh-legend-gold" aria-hidden="true"/> Estimated blocks</span><span><i className="fresh-legend-blue" aria-hidden="true"/> Confirmed history</span></div>
-   </div>
-   <BlockchainWebGL overview pending={btc?.pending} fee={projections[0]?.medianFee} projectedCount={projections[0]?.transactionCount} projections={projections} blocks={blocks}/>
-  </section>
   </div>
   <nav className="fresh-explorer-jump" aria-label="Jump to Bitcoin explorer sections">
    <span>EXPLORE BITCOIN</span>
