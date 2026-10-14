@@ -103,3 +103,20 @@
  .motion-track{flex-wrap:nowrap!important;width:max-content!important;min-width:max-content!important}
  .motion-cell{flex:0 0 auto!important}
 }
+
+
+/* Bitcoin explorer overview only: fit the mempool, six waiting bands and
+   approximately half the first confirmed block into the initial desktop view.
+   The transaction-specific tracker retains its existing dimensions. */
+@media (min-width: 701px) {
+ .motion-explorer {container-type:inline-size;}
+ .motion-explorer .motion-track {gap:10px;}
+ .motion-explorer .motion-cell.motion-stage {
+   width: max(108px, calc((100cqw - 207px - 70px - 75px - 3px) / 6));
+ }
+ .motion-explorer .motion-window {width:100%;}
+}
+.motion-explorer .motion-top {margin:5px 0 9px;}
+.motion-explorer .motion-arrows {margin:8px 0 3px;}
+.motion-explorer .motion-footer {padding-top:10px;}
+.motion-explorer .motion-note {margin-top:8px!important;}
