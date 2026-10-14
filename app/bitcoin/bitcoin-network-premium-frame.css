@@ -268,3 +268,18 @@
 .fresh-btc-mockup-v2 .fresh-now-price{flex:1!important;min-width:0!important}
 .fresh-btc-mockup-v2 .fresh-network-activity{flex:1!important;min-width:0!important}
 @media(max-width:800px){.fresh-btc-mockup-v2 .fresh-now-secondary{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.fresh-btc-mockup-v2 .fresh-now-primary{flex-direction:column!important}}
+
+/* Compact context strip and explorer proportions from reference. */
+.fresh-btc-mockup-v2 .fresh-bitcoin-right-now{display:block!important;margin:8px 12px 18px!important;padding:18px 22px!important;border:1px solid #294b63!important;border-radius:12px!important;background:linear-gradient(110deg,#091e30,#061624)!important}
+.fresh-btc-mockup-v2 .fresh-bitcoin-right-now::before,.fresh-btc-mockup-v2 .fresh-bitcoin-right-now::after{display:none!important}
+.fresh-btc-mockup-v2 .fresh-right-now-content{display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)!important;align-items:center!important;gap:18px!important}
+.fresh-btc-mockup-v2 .fresh-right-now-content h2{font-size:18px!important}
+.fresh-btc-mockup-v2 .fresh-right-now-content p{font-size:12px!important;margin-top:5px!important}
+.fresh-btc-mockup-v2 .fresh-right-now-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.fresh-btc-mockup-v2 .fresh-right-now-stats>div{display:flex;flex-direction:column;gap:6px;padding:5px 12px;border-left:1px solid #244359;min-width:0}
+.fresh-btc-mockup-v2 .fresh-right-now-stats span{font-size:11px;color:#9eb9cd}
+.fresh-btc-mockup-v2 .fresh-right-now-stats strong{font-size:17px;color:#f2f5f9;white-space:nowrap}
+.fresh-btc-mockup-v2 .fresh-explore-premium{padding-top:12px!important;margin-top:20px!important}
+.fresh-btc-mockup-v2 .fresh-explore-title{margin-bottom:14px!important}
+.fresh-btc-mockup-v2 .fresh-explore-guide{margin:9px 0!important}
+@media(max-width:800px){.fresh-btc-mockup-v2 .fresh-right-now-content{grid-template-columns:1fr!important}.fresh-btc-mockup-v2 .fresh-right-now-stats strong{font-size:14px}}
