@@ -593,3 +593,32 @@
  .fresh-v3 .pt-snapshot>.pt-snapshot-header::before,
  .fresh-v3 .pt-snapshot>.pt-snapshot-header::after{height:calc(100% + 800px)}
 }
+
+/* Snapshot refinement: rails frame ONLY the metric grid, never heading/status.
+   Tighten each tile so Learn more follows its explanatory sentence. */
+.fresh-v3 .pt-snapshot>.pt-snapshot-header::before,
+.fresh-v3 .pt-snapshot>.pt-snapshot-header::after{content:none!important;display:none!important}
+.fresh-v3 .pt-snapshot-grid{
+ grid-auto-rows:165px!important;
+ background-image:
+  linear-gradient(to bottom,transparent,rgba(78,139,171,.36) 17%,rgba(78,139,171,.36) 83%,transparent),
+  linear-gradient(to bottom,transparent,rgba(78,139,171,.36) 17%,rgba(78,139,171,.36) 83%,transparent)!important;
+ background-size:1px 100%,1px 100%!important;
+ background-position:left center,right center!important;
+ background-repeat:no-repeat!important;
+}
+.fresh-v3 .pt-snapshot-item,
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{height:165px!important}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{padding-bottom:8px!important}
+.fresh-v3 .pt-snapshot-description{min-height:0!important}
+.fresh-v3 .pt-snapshot-more{margin-top:5px!important;padding-top:0!important;align-self:flex-start}
+.fresh-v3 .pt-snapshot-status{margin-bottom:8px!important}
+@media(max-width:950px){
+ .fresh-v3 .pt-snapshot-grid{grid-auto-rows:175px!important}
+ .fresh-v3 .pt-snapshot-item,.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{height:175px!important}
+}
+@media(max-width:560px){
+ .fresh-v3 .pt-snapshot-grid{grid-auto-rows:175px!important}
+ .fresh-v3 .pt-snapshot-item,.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{height:175px!important}
+ .fresh-v3 .pt-snapshot-more{margin-top:6px!important}
+}
