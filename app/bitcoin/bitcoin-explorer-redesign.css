@@ -319,3 +319,63 @@
   mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.85) 58%,transparent 100%);
  }
 }
+
+
+/* Approved October Bitcoin explorer mockup: snapshot-first, simplified visual hierarchy. */
+.pt-bitcoin-explorer-redesign .fresh-btc{max-width:1390px;padding-top:18px}
+.pt-bitcoin-explorer-redesign .fresh-hero{padding:18px 0 18px!important}
+.pt-bitcoin-explorer-redesign .fresh-hero h1{margin-bottom:13px}
+.pt-bitcoin-explorer-redesign .fresh-search{margin-bottom:22px;max-width:1050px}
+.pt-bitcoin-explorer-redesign .fresh-now-snapshot{display:block;padding:24px 30px 25px;margin-bottom:12px;border-radius:17px}
+.pt-bitcoin-explorer-redesign .fresh-now-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.pt-bitcoin-explorer-redesign .fresh-now-top .fresh-kicker{margin:0}
+.pt-bitcoin-explorer-redesign .fresh-live-dot{color:#38dca5;letter-spacing:0}
+.pt-bitcoin-explorer-redesign .fresh-now-live{font-size:11px;color:#9eb2c3;font-weight:500;letter-spacing:0}
+.pt-bitcoin-explorer-redesign .fresh-now-primary{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;padding-bottom:18px;border-bottom:1px solid #2b4351}
+.pt-bitcoin-explorer-redesign .fresh-now-primary .fresh-now-price{padding:0 34px 0 0;min-width:0}
+.pt-bitcoin-explorer-redesign .fresh-network-activity{display:flex;flex-direction:column;align-items:stretch;justify-content:center;text-align:left;gap:9px;padding:12px 24px 12px 44px;background:transparent;border:0;border-left:1px solid #2b4351;color:#eef4fa;cursor:pointer}
+.pt-bitcoin-explorer-redesign .fresh-network-activity strong{font-size:clamp(27px,2.8vw,40px);line-height:1.15;color:#f5b741}
+.pt-bitcoin-explorer-redesign .fresh-network-activity small{font-size:12px;color:#b2c4d2}
+.pt-bitcoin-explorer-redesign .fresh-network-activity .fresh-congestion-bars{display:flex;gap:7px;width:min(100%,380px);margin:0}
+.pt-bitcoin-explorer-redesign .fresh-network-activity .fresh-congestion-bars i{flex:1;height:10px;border-radius:6px}
+.pt-bitcoin-explorer-redesign .fresh-inline-help{font-size:11px;color:#c3ad7b}
+.pt-bitcoin-explorer-redesign .fresh-now-secondary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-top:20px}
+.pt-bitcoin-explorer-redesign .fresh-now-secondary-metric{min-width:0;display:flex;align-items:center;gap:15px;text-align:left;padding:6px 20px;background:transparent;border:0;border-left:1px solid #2b4351;color:#eef4fa;cursor:pointer}
+.pt-bitcoin-explorer-redesign .fresh-now-secondary-metric:first-child{border-left:0;padding-left:0}
+.pt-bitcoin-explorer-redesign .fresh-now-secondary-metric.active,.pt-bitcoin-explorer-redesign .fresh-network-activity:hover,.pt-bitcoin-explorer-redesign .fresh-now-secondary-metric:hover{background:#ffffff06}
+.pt-bitcoin-explorer-redesign .fresh-now-secondary-metric .fresh-metric-icon{flex:0 0 45px;width:45px;height:45px;display:grid;place-items:center;border-radius:50%;background:#51361666;color:#f6b94a;font-size:23px}
+.pt-bitcoin-explorer-redesign .fresh-secondary-text{min-width:0;display:flex;flex-direction:column;gap:3px}
+.pt-bitcoin-explorer-redesign .fresh-secondary-text strong{font-size:clamp(19px,2vw,29px);line-height:1.2;white-space:nowrap}
+.pt-bitcoin-explorer-redesign .fresh-secondary-text>span{font-size:12px;color:#c6d4df}
+.pt-bitcoin-explorer-redesign .fresh-secondary-text small{font-size:11px;line-height:1.35;color:#91aabd}
+.pt-bitcoin-explorer-redesign .fresh-journey{padding-top:27px;padding-bottom:16px;margin-bottom:3px}
+.pt-bitcoin-explorer-redesign .fresh-journey .fresh-section-head{margin-bottom:12px}
+.pt-bitcoin-explorer-redesign .fresh-journey .fresh-section-head h2{font-size:clamp(27px,2.6vw,36px)}
+.pt-bitcoin-explorer-redesign .fresh-journey .motion-cell.motion-stage .motion-label,.pt-bitcoin-explorer-redesign .fresh-journey .motion-cell.motion-stage .motion-caption{visibility:hidden}
+.pt-bitcoin-explorer-redesign .fresh-journey .motion-note{font-size:11px}
+.pt-bitcoin-explorer-redesign .fresh-explore-premium{border:1px solid #234052;border-radius:16px;background:linear-gradient(135deg,#081a29,#05121d);padding:22px 18px 20px;margin-top:10px}
+.pt-bitcoin-explorer-redesign .fresh-explore-premium .fresh-explore-decoration{display:none}
+.pt-bitcoin-explorer-redesign .fresh-explore-premium .fresh-section-head{margin-bottom:17px}
+.pt-bitcoin-explorer-redesign .fresh-explore-premium .fresh-section-head h2{font-size:clamp(23px,2.4vw,30px)}
+.pt-bitcoin-explorer-redesign .fresh-explore-premium .fresh-section-head p{margin-top:4px}
+.pt-bitcoin-explorer-redesign .fresh-explore-premium .fresh-tabs-six{margin-bottom:12px}
+.pt-bitcoin-explorer-redesign .fresh-data-premium,.pt-bitcoin-explorer-redesign .fresh-explainer-premium{padding:20px 18px}
+@media(max-width:850px){
+ .pt-bitcoin-explorer-redesign .fresh-now-primary{grid-template-columns:1fr}
+ .pt-bitcoin-explorer-redesign .fresh-now-primary .fresh-now-price{padding:0 0 17px}
+ .pt-bitcoin-explorer-redesign .fresh-network-activity{border-left:0;border-top:1px solid #2b4351;padding:20px 0 5px}
+ .pt-bitcoin-explorer-redesign .fresh-now-secondary-metric{padding:7px 10px;gap:8px;flex-direction:column;align-items:flex-start}
+ .pt-bitcoin-explorer-redesign .fresh-now-secondary-metric .fresh-metric-icon{width:36px;height:36px;flex-basis:36px;font-size:19px}
+ .pt-bitcoin-explorer-redesign .fresh-secondary-text strong{font-size:clamp(16px,3vw,23px)}
+}
+@media(max-width:550px){
+ .pt-bitcoin-explorer-redesign .fresh-now-snapshot{padding:18px 15px}
+ .pt-bitcoin-explorer-redesign .fresh-now-live{font-size:10px}
+ .pt-bitcoin-explorer-redesign .fresh-now-top .fresh-kicker{font-size:9px;letter-spacing:.09em}
+ .pt-bitcoin-explorer-redesign .fresh-now-secondary{gap:0}
+ .pt-bitcoin-explorer-redesign .fresh-now-secondary-metric{padding:6px 5px}
+ .pt-bitcoin-explorer-redesign .fresh-secondary-text strong{font-size:14px;white-space:normal;overflow-wrap:anywhere}
+ .pt-bitcoin-explorer-redesign .fresh-secondary-text>span{font-size:10px}
+ .pt-bitcoin-explorer-redesign .fresh-secondary-text small{display:none}
+ .pt-bitcoin-explorer-redesign .fresh-explore-premium{padding:18px 11px}
+}
