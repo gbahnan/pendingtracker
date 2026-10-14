@@ -130,3 +130,21 @@
  .pt-ethereum-explorer-redesign .eth-fresh .fresh-hero-copy h1{letter-spacing:-1.6px}
  .pt-ethereum-explorer-redesign .eth-fresh .fresh-hero-copy p{max-width:34ch!important}
 }
+
+/* Same hero accent artwork and positioning as Bitcoin, recolored Ethereum blue. */
+.pt-ethereum-explorer-redesign{position:relative}
+.pt-ethereum-explorer-redesign::before{
+ content:"";position:absolute;z-index:0;pointer-events:none;top:0;left:0;width:100%;height:640px;
+ background:url("/artwork/ethereum-blue-accent-wave.svg?v=1") center top / cover no-repeat;
+ opacity:1;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 58%,rgba(0,0,0,.68) 78%,transparent 100%);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 58%,rgba(0,0,0,.68) 78%,transparent 100%);
+}
+.pt-ethereum-explorer-redesign .eth-fresh{position:relative;z-index:1}
+@media(max-width:700px){
+ .pt-ethereum-explorer-redesign::before{
+  height:470px;background-size:auto 470px;opacity:.8;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.85) 58%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.85) 58%,transparent 100%);
+ }
+}
