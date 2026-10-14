@@ -667,3 +667,15 @@
 .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-footer{order:4!important}
 .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-detail{order:5!important}
 .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-note{order:6!important}
+
+/* Tighten desktop Bitcoin flow without changing hexagon art. */
+@media(min-width:1050px){
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{padding-top:4px!important}
+ .fresh-btc-mockup .fresh-journey .fresh-journey-heading{margin:0!important;padding:0!important;line-height:1.1!important}
+ .fresh-btc-mockup .fresh-journey .fresh-kicker{margin:0!important}
+ .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-window{margin-top:0!important;margin-bottom:0!important}
+ .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-arrows{margin:0!important;min-height:23px!important;font-size:10px!important}
+ .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-footer{padding:1px 0 0!important;margin:0!important}
+ .fresh-btc-mockup .fresh-journey .motion-explorer>.motion-note{margin:1px 0 0!important;font-size:10px!important}
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot{padding-top:5px!important;padding-bottom:5px!important}
+}
