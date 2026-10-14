@@ -3,7 +3,7 @@ import {useEffect,useRef,useState} from "react";
 import "./BlockchainMotion.css";
 type Block={height:number|null;ageMinutes:number;transactionCount:number|null;id:string|null};
 type Projection={medianFee:number|null;feeRange:number[]|null};
-type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined;projections?:Projection[];trackedPosition?:number|null;trackedFraction?:number|null;trackedConfirmedHeight?:number|null;compactTransactionLabels?:boolean};
+type Props={pending:number|null|undefined;fee:number|null|undefined;blocks:Block[];projectedCount:number|null|undefined;projections?:Projection[];trackedPosition?:number|null;trackedFraction?:number|null;trackedConfirmedHeight?:number|null;compactTransactionLabels?:boolean;overview?:boolean};
 const fmt=(n:number|null|undefined)=>n==null?"—":Math.round(n).toLocaleString("en-US");
 const times=[60,50,40,30,20,10];
 
@@ -13,7 +13,7 @@ function Hex({blue=false,time,feeText,seed=0}:{blue?:boolean;time?:number;feeTex
   <div className="motion-hex-content">{blue?<strong>₿</strong>:<><strong>~{time} MIN</strong><small>{feeText||"— sat/vB"}</small></>}</div>
  </div></div>
 }
-export default function BlockchainWebGL({pending,fee,blocks,projections=[],trackedPosition=null,trackedFraction=null,trackedConfirmedHeight=null,compactTransactionLabels=false}:Props){
+export default function BlockchainWebGL({pending,fee,blocks,projections=[],trackedPosition=null,trackedFraction=null,trackedConfirmedHeight=null,compactTransactionLabels=false,overview=false}:Props){
  const viewport=useRef<HTMLDivElement>(null);
  const trackRef=useRef<HTMLDivElement>(null);
  const canvasRef=useRef<HTMLCanvasElement>(null);
@@ -126,7 +126,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
  function down(e:React.PointerEvent<HTMLDivElement>){if(e.pointerType==="touch"||e.button!==0)return;const n=viewport.current;if(!n)return;pointer.current={x:e.clientX,scroll:n.scrollLeft,id:e.pointerId};setDragging(false)}
  function move(e:React.PointerEvent<HTMLDivElement>){const p=pointer.current,n=viewport.current;if(!p||!n||p.id!==e.pointerId)return;const d=e.clientX-p.x;if(Math.abs(d)>5){setDragging(true);if(!n.hasPointerCapture(e.pointerId))n.setPointerCapture(e.pointerId);n.scrollLeft=p.scroll-d}}
  function up(e:React.PointerEvent<HTMLDivElement>){pointer.current=null;setTimeout(()=>setDragging(false),0);if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId)}
- return <div className="motion">
+ return <div className={"motion"+(overview?" motion-explorer":"")}>
   <div className="motion-top"><span className="motion-live">LIVE BITCOIN NETWORK</span><button className="motion-info" type="button" onClick={()=>setInfo(!info)} aria-expanded={info}>ⓘ How does this work? {info?"−":"＋"}</button></div>
   {info&&<p className="motion-explain">Gold hexagons illustrate estimated waiting times, not guaranteed countdowns. Their fee rates are indicative estimates based on projected mempool blocks, not a guaranteed rate for a particular time. Blue hexagons represent actual confirmed blocks. Animated dots explain the journey; they are not individually tracked transactions.</p>}
   <div className="motion-arrows"><span>← Longer estimated waits</span><div><button type="button" aria-label="Scroll toward mempool" onClick={()=>viewport.current?.scrollBy({left:-360,behavior:"smooth"})}>←</button><button type="button" aria-label="Scroll toward confirmed blocks" onClick={()=>viewport.current?.scrollBy({left:360,behavior:"smooth"})}>→</button></div><span>Drag or scroll to see confirmed blocks →</span></div>
