@@ -73,7 +73,7 @@ export default function BitcoinExplorerOverview(){
     </div>
   </section>
   <section className="fresh-explore fresh-explore-premium" id="explore-bitcoin">
-   <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker fresh-explore-kicker">EXPLORE THE BLOCKCHAIN</div><h2>Explore the Bitcoin Blockchain</h2><p>Live data, detailed insights, and clear explanations.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
+   <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker fresh-explore-kicker">GO DEEPER</div><h2>Explore. <span>Understand.</span></h2><p>Live blockchain data, explained simply.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
    <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore Bitcoin data">{tabs.map(t=><button role="tab" aria-selected={tab===t.id} key={t.id} className={tab===t.id?"active":""} onClick={()=>{setTab(t.id);setAdvanced(false);setExplainOpen(null)}}><span className="fresh-tab-icon" aria-hidden="true">{t.icon}</span><span className="fresh-tab-copy"><strong>{t.label}</strong><small>{{blocks:"Confirmed payments",transactions:"Live network activity",fees:"Rates & trends",network:"Network health",mining:"Hashrate & difficulty",insights:"Historical data"}[t.id]}</small></span></button>)}</div>
    <div className="fresh-explore-body">
     <div className="fresh-data fresh-data-premium">
