@@ -838,3 +838,24 @@
 @media(max-width:900px){
  .fresh-v3 .fresh-explainer-premium{border-top-color:#3d454d!important}
 }
+
+/* Gunmetal refinement: lighten the page canvas to match the approved left mockup. */
+.pt-bitcoin-explorer-redesign{
+ background:#111418!important;
+ background-image:radial-gradient(ellipse at 50% 10%,rgba(58,63,69,.15),transparent 65%)!important;
+}
+.fresh-v3>.fresh-journey{
+ background:radial-gradient(ellipse at 50% 45%,rgba(72,77,84,.2),transparent 74%)!important;
+}
+.fresh-v3 .fresh-explore-body{background:#0c0f13!important}
+.fresh-v3 .fresh-tabs-six,
+.fresh-v3 .fresh-tabs-six button{background:#22272d!important}
+.fresh-v3 .fresh-tabs-six button.active{
+ background:linear-gradient(180deg,#39362e,#2d2b26)!important;
+}
+.fresh-v3>.fresh-search form{background:#22272d!important}
+.fresh-v3 .fresh-learn-compact details,
+.fresh-v3 .fresh-faq details{background:#1b1f24!important}
+.fresh-v3 .fresh-v3-context{
+ background:linear-gradient(115deg,#22272d,#161a1e)!important;
+}
