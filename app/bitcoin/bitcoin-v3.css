@@ -560,3 +560,36 @@
  .fresh-v3 .fresh-explore-title h2{font-size:23px}
  .fresh-v3 .fresh-tabs-six button{min-height:47px}
 }
+
+/* Match Explore / Understand's softly fading side rails on Bitcoin Right Now. */
+.fresh-v3 .pt-snapshot::before,
+.fresh-v3 .pt-snapshot::after{z-index:0}
+.fresh-v3 .pt-snapshot{
+  background:transparent!important;
+}
+.fresh-v3 .pt-snapshot>.pt-snapshot-header,
+.fresh-v3 .pt-snapshot>.pt-snapshot-status,
+.fresh-v3 .pt-snapshot>.pt-snapshot-grid{position:relative;z-index:1}
+.fresh-v3 .pt-snapshot{
+  --snapshot-rail:linear-gradient(to bottom,transparent 0%,rgba(78,139,171,.34) 18%,rgba(78,139,171,.34) 80%,transparent 100%);
+}
+.fresh-v3 .pt-snapshot::before{
+  top:0;bottom:auto;height:1px;left:0;right:0;
+  background:linear-gradient(to right,transparent,rgba(78,139,171,.34) 15%,rgba(78,139,171,.34) 85%,transparent);
+}
+.fresh-v3 .pt-snapshot::after{
+  top:auto;bottom:0;height:1px;left:0;right:0;
+  background:linear-gradient(to right,transparent,rgba(78,139,171,.34) 15%,rgba(78,139,171,.34) 85%,transparent);
+}
+.fresh-v3 .pt-snapshot{border-left:0!important;border-right:0!important}
+.fresh-v3 .pt-snapshot>.pt-snapshot-header::before,
+.fresh-v3 .pt-snapshot>.pt-snapshot-header::after{
+  content:"";position:absolute;pointer-events:none;top:0;height:calc(100% + 430px);width:1px;
+  background:var(--snapshot-rail);z-index:-1;
+}
+.fresh-v3 .pt-snapshot>.pt-snapshot-header::before{left:0}
+.fresh-v3 .pt-snapshot>.pt-snapshot-header::after{right:0}
+@media(max-width:950px){
+ .fresh-v3 .pt-snapshot>.pt-snapshot-header::before,
+ .fresh-v3 .pt-snapshot>.pt-snapshot-header::after{height:calc(100% + 800px)}
+}
