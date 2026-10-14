@@ -141,3 +141,17 @@
  .motion-explorer .motion-cell{min-height:200px!important}
  .motion-explorer .motion-caption{font-size:10px!important}
 }
+
+
+/* Timeline geometry fix: never compress the existing honeycomb artwork.
+   Actual cutoff is measured in BlockchainWebGL at half the first blue block. */
+@media(min-width:701px){
+ .motion-explorer .motion-track{width:max-content!important;min-width:max-content!important;gap:12px!important;flex-wrap:nowrap!important}
+ .motion-explorer .motion-cell.motion-stage{width:150px!important;min-width:150px!important;flex:0 0 150px!important}
+ .motion-explorer .motion-cell.mempool{width:190px!important;min-width:190px!important;flex:0 0 190px!important}
+ .motion-explorer .motion-pool{width:178px!important;height:113px!important}
+ .motion-explorer .motion-cell.confirmed{width:150px!important;min-width:150px!important;flex:0 0 150px!important}
+ .motion-explorer .motion-halo{width:119px!important;height:140px!important}
+ .motion-explorer .motion-hex{width:116px!important;height:136px!important}
+ .motion-explorer .motion-window{width:100%!important;overflow-x:auto!important}
+}
