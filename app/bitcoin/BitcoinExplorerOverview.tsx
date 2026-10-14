@@ -3,6 +3,7 @@ import {useEffect,useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import BlockchainWebGL from "./BlockchainWebGL";
+import SearchGuidance from "../components/SearchGuidance";
 type Block={height:number|null;id:string|null;ageMinutes:number;transactionCount:number|null;size?:number|null;feeBTC?:number|null;poolName?:string|null};
 type Tx={id:string;fee:number|null;vsize:number|null};
 type BTC={pending?:number|null;congestion?:string;explanation?:string;fastestFee?:number|null;halfHourFee?:number|null;hourFee?:number|null;economyFee?:number|null;mempoolVsizeMB?:number|null;latestBlock?:Block|null;recentBlocks?:Block[];recentTransactions?:Tx[];projectedBlocks?:Array<{position:number;transactionCount:number|null;medianFee:number|null;feeRange:number[]|null}>};
@@ -27,7 +28,7 @@ export default function BitcoinExplorerOverview(){
   <section className="fresh-hero">
    <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Search. Explore.<br/><em>Understand.</em></h1><p>Look up a Bitcoin transaction or explore the network. We'll explain what you're seeing, every step of the way.</p></div>
   </section>
-  <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a transaction ID or Bitcoin address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<p className="fresh-search-help">Not sure what to search? <a href="#explore-bitcoin">Explore the blockchain instead ↓</a></p></section>
+  <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a transaction ID or Bitcoin address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
    <div className="fresh-now-top"><div className="fresh-kicker">● BITCOIN RIGHT NOW {updated&&<small>· Network updated {updated}</small>}</div><span className="fresh-now-live">● LIVE NETWORK</span></div>
    <div className="fresh-now-main">
