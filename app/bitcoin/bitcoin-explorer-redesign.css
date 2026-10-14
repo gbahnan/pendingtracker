@@ -861,12 +861,12 @@
 @media (min-width:1050px) {
   .fresh-btc-mockup .fresh-explore-premium {
     position:relative!important;
-    margin-top:64px!important;
+    margin-top:90px!important;
   }
   .fresh-btc-mockup .fresh-explore-premium::before {
     content:"";
     position:absolute;
-    top:-32px;
+    top:-45px;
     left:22.5%;
     width:55%;
     height:1px;
