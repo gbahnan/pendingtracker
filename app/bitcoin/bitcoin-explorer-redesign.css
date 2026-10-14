@@ -797,3 +797,61 @@
    margin-top:0!important;
  }
 }
+
+
+/* 2026-10-14 — Bitcoin Explore editorial layout.
+   Scoped exclusively to the Bitcoin overview. Preserve all existing artwork,
+   icons, content, interaction, and the live network visualization. */
+@media (min-width: 1050px) {
+  .fresh-btc-mockup .fresh-explore-premium {
+    margin-top: 29px !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-title {
+    margin-bottom: 13px !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-tabs-six {
+    margin-bottom: 16px !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.72fr) minmax(0, 1fr) !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-data-premium,
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explainer-premium {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    min-width: 0 !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-data-premium {
+    padding: 2px 28px 4px 10px !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explainer-premium {
+    padding: 2px 8px 4px 26px !important;
+    border-left: 1px solid rgba(92, 139, 160, .48) !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-data-premium > h3 {
+    margin-top: 0 !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-table-row {
+    background: transparent !important;
+    border-radius: 0 !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-table-row:hover {
+    background: rgba(249, 179, 60, .055) !important;
+  }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explain-accordion {
+    margin-top: 13px !important;
+  }
+  .fresh-btc-mockup .fresh-learn-compact {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
