@@ -708,3 +708,14 @@
 .fresh-v3 .pt-snapshot-title p{margin-top:2px!important}
 .fresh-v3 .pt-snapshot-status-row{padding-top:2px!important;padding-bottom:2px!important;margin-bottom:0!important}
 .fresh-v3 .pt-snapshot-grid{margin-top:0!important}
+
+/* Center the Explore / Understand heading and subtitle over its section. */
+.fresh-v3 .fresh-explore-title{
+ display:flex!important;justify-content:center!important;align-items:center!important;
+ text-align:center!important;
+}
+.fresh-v3 .fresh-explore-title>div:first-child{width:100%;text-align:center!important}
+.fresh-v3 .fresh-explore-title h2,
+.fresh-v3 .fresh-explore-title p,
+.fresh-v3 .fresh-explore-kicker{text-align:center!important}
+.fresh-v3 .fresh-explore-decoration{display:none!important}
