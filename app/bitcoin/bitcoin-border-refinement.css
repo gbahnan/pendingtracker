@@ -1,0 +1,14 @@
+/* Bitcoin explorer: short-fade perimeter and matching central separator */
+@media (min-width:1050px) {
+ .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body {
+  background:
+   linear-gradient(90deg,transparent,rgba(91,151,181,.66) 5%,rgba(91,151,181,.66) 95%,transparent) center top / calc(100% - 18px) 1px no-repeat,
+   linear-gradient(90deg,transparent,rgba(91,151,181,.66) 5%,rgba(91,151,181,.66) 95%,transparent) center bottom / calc(100% - 18px) 1px no-repeat,
+   linear-gradient(180deg,transparent,rgba(91,151,181,.6) 5%,rgba(91,151,181,.6) 95%,transparent) left center / 1px calc(100% - 18px) no-repeat,
+   linear-gradient(180deg,transparent,rgba(91,151,181,.6) 5%,rgba(91,151,181,.6) 95%,transparent) right center / 1px calc(100% - 18px) no-repeat!important;
+ }
+ .fresh-btc-mockup .fresh-explore-premium .fresh-explainer-premium {
+  border-left:1px solid transparent!important;
+  border-image:linear-gradient(180deg,transparent,rgba(91,151,181,.68) 5%,rgba(91,151,181,.68) 95%,transparent) 1!important;
+ }
+}
