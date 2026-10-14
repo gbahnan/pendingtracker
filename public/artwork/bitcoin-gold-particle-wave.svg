@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" preserveAspectRatio="xMidYMin slice">
+<defs>
+ <linearGradient id="waveL" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#f4b84a" stop-opacity=".64"/><stop offset=".5" stop-color="#e5a42d" stop-opacity=".40"/><stop offset="1" stop-color="#d69a34" stop-opacity="0"/></linearGradient>
+ <linearGradient id="waveR" x1="1" y1="0" x2="0" y2="0"><stop stop-color="#f4b84a" stop-opacity=".64"/><stop offset=".5" stop-color="#e5a42d" stop-opacity=".40"/><stop offset="1" stop-color="#d69a34" stop-opacity="0"/></linearGradient>
+ <radialGradient id="haze"><stop stop-color="#b87922" stop-opacity=".16"/><stop offset="1" stop-color="#b87922" stop-opacity="0"/></radialGradient>
+ <radialGradient id="spark"><stop stop-color="#ffd47a" stop-opacity=".85"/><stop offset="1" stop-color="#e8a734" stop-opacity="0"/></radialGradient>
+ <mask id="fade"><rect width="1600" height="640" fill="white"/><rect x="540" y="0" width="520" height="640" fill="black"/></mask>
+</defs>
+<ellipse cx="110" cy="235" rx="440" ry="210" fill="url(#haze)"/>
+<ellipse cx="1490" cy="235" rx="440" ry="210" fill="url(#haze)"/>
+<g fill="none" stroke-width="1.25">
+ <path d="M-70 240 C80 330 175 120 355 180 S540 290 675 255" stroke="url(#waveL)"/>
+ <path d="M-90 265 C80 355 175 155 355 201 S540 312 675 276" stroke="url(#waveL)" opacity=".45"/>
+ <path d="M-100 214 C100 295 195 90 370 154 S555 267 670 240" stroke="url(#waveL)" opacity=".33"/>
+ <path d="M1670 240 C1520 330 1425 120 1245 180 S1060 290 925 255" stroke="url(#waveR)"/>
+ <path d="M1690 265 C1520 355 1425 155 1245 201 S1060 312 925 276" stroke="url(#waveR)" opacity=".45"/>
+ <path d="M1700 214 C1500 295 1405 90 1230 154 S1045 267 930 240" stroke="url(#waveR)" opacity=".33"/>
+</g>
+<g fill="url(#spark)">
+ <circle cx="70" cy="205" r="3"/><circle cx="155" cy="181" r="2.5"/><circle cx="240" cy="158" r="3"/><circle cx="315" cy="184" r="2"/><circle cx="390" cy="212" r="2.4"/><circle cx="450" cy="246" r="1.8"/><circle cx="95" cy="275" r="2"/><circle cx="210" cy="260" r="2.5"/><circle cx="330" cy="242" r="2"/><circle cx="490" cy="210" r="1.8"/>
+ <circle cx="1530" cy="205" r="3"/><circle cx="1445" cy="181" r="2.5"/><circle cx="1360" cy="158" r="3"/><circle cx="1285" cy="184" r="2"/><circle cx="1210" cy="212" r="2.4"/><circle cx="1150" cy="246" r="1.8"/><circle cx="1505" cy="275" r="2"/><circle cx="1390" cy="260" r="2.5"/><circle cx="1270" cy="242" r="2"/><circle cx="1110" cy="210" r="1.8"/>
+</g>
+<g fill="#e9a63a" opacity=".28">
+ <circle cx="42" cy="150" r="1"/><circle cx="105" cy="126" r="1"/><circle cx="184" cy="310" r="1"/><circle cx="275" cy="124" r="1"/><circle cx="366" cy="290" r="1"/><circle cx="421" cy="140" r="1"/><circle cx="90" cy="338" r="1"/><circle cx="306" cy="318" r="1"/><circle cx="455" cy="300" r="1"/>
+ <circle cx="1558" cy="150" r="1"/><circle cx="1495" cy="126" r="1"/><circle cx="1416" cy="310" r="1"/><circle cx="1325" cy="124" r="1"/><circle cx="1234" cy="290" r="1"/><circle cx="1179" cy="140" r="1"/><circle cx="1510" cy="338" r="1"/><circle cx="1294" cy="318" r="1"/><circle cx="1145" cy="300" r="1"/>
+</g>
+</svg>
