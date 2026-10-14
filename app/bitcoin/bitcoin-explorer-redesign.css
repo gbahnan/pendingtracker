@@ -655,3 +655,15 @@
  }
  .fresh-btc-mockup .fresh-explore-premium {margin-top:24px!important}
 }
+
+/* Compact Bitcoin visualization heading; controls follow the artwork. */
+.fresh-btc-mockup .fresh-journey-heading{margin-bottom:0!important}
+.fresh-btc-mockup .fresh-journey-heading p{display:none!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer{display:flex!important;flex-direction:column!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer>.motion-top{display:none!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer>.motion-window{order:1!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer>.motion-arrows{order:2!important;display:flex!important;justify-content:space-between!important;align-items:center!important;margin:2px 0 4px!important;padding:0!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer>.motion-explain{order:3!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer>.motion-footer{order:4!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer>.motion-detail{order:5!important}
+.fresh-btc-mockup .fresh-journey .motion-explorer>.motion-note{order:6!important}
