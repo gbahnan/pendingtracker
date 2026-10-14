@@ -71,10 +71,10 @@
  .motion-window{width:100%!important;max-width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;touch-action:pan-x!important;scroll-snap-type:x proximity!important}
  .motion-track{gap:5px!important;padding:8px 3px 30px!important;min-height:195px!important}
  .motion-cell{width:clamp(68px,21vw,84px)!important;min-height:168px!important;scroll-snap-align:start}
- .motion-cell.mempool{width:clamp(78px,25vw,98px)!important;order:0}
- .motion-cell.motion-stage:nth-child(7){order:1}
- .motion-cell.motion-stage:nth-child(6){order:2}
- .motion-cell.motion-stage:nth-child(5){order:3}
+ .motion-cell.mempool{width:clamp(78px,25vw,98px)!important;order:3}
+ .motion-cell.motion-stage:nth-child(7){order:0}
+ .motion-cell.motion-stage:nth-child(6){order:1}
+ .motion-cell.motion-stage:nth-child(5){order:2}
  .motion-cell.motion-stage:nth-child(4){order:4}
  .motion-cell.motion-stage:nth-child(3){order:5}
  .motion-cell.motion-stage:nth-child(2){order:6}
