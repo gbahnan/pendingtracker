@@ -784,3 +784,19 @@
   z-index:5;
  }
 }
+
+/* Full-bleed Bitcoin confirmation timeline, inspired by mempool's wide canvas.
+   Hexagon dimensions and all following sections remain unchanged. */
+@media(min-width:1050px){
+ .fresh-v3>.fresh-journey{
+  width:100vw!important;
+  max-width:none!important;
+  margin-left:calc(50% - 50vw)!important;
+  margin-right:calc(50% - 50vw)!important;
+ }
+ .fresh-v3>.fresh-journey .motion-explorer .motion-window{
+  width:100%!important;max-width:none!important;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 4%,#000 95%,transparent 100%)!important;
+  mask-image:linear-gradient(to right,transparent 0%,#000 4%,#000 95%,transparent 100%)!important;
+ }
+}
