@@ -732,3 +732,35 @@
    margin-top:2px!important;
  }
 }
+
+/* 2026-10-14: remove redundant MEMPOOL headline and lift timeline toward section title.
+   Bitcoin desktop only; do not touch the art, ETH, or mobile. */
+@media (min-width:1050px) {
+ .fresh-btc-mockup .fresh-live-network-combined > .fresh-journey {
+   padding-top:4px!important;
+ }
+ .fresh-btc-mockup .fresh-journey-heading {
+   margin:0!important;
+   padding:0!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-track {
+   padding-top:0!important;
+   padding-bottom:0!important;
+   margin-top:0!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool .motion-label strong {
+   display:none!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool .motion-label {
+   height:28px!important;
+   min-height:28px!important;
+   flex-basis:28px!important;
+   justify-content:flex-end!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool .motion-pool {
+   margin-top:0!important;
+ }
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool .motion-caption {
+   margin-top:2px!important;
+ }
+}
