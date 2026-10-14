@@ -596,182 +596,62 @@
  .fresh-btc-mockup .fresh-data-header{flex-direction:column;gap:4px}
 }
 
-/* Open editorial layout approved October 14: separate the live visual from explorer. */
-@media (min-width:1050px){
- .fresh-btc-mockup .fresh-live-network-combined{border:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
- .fresh-btc-mockup .fresh-now-snapshot{border-bottom:1px solid #244254!important}
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{padding-bottom:0!important}
- .fresh-btc-mockup .fresh-explore-premium{margin-top:40px!important;border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important}
- .fresh-btc-mockup .fresh-journey .fresh-journey-viewport{margin-top:0!important;margin-bottom:0!important}
-}
-@media (min-width:601px) and (max-width:1049px){
- .fresh-btc-mockup .fresh-explore-premium{margin-top:32px!important}
-}
-@media (max-width:600px){
- .fresh-btc-mockup .fresh-explore-premium{margin-top:24px!important}
-}
-
-/* Final Bitcoin editorial layout. One uninterrupted visual field, no outer card.
-   Overrides only layout/spacing, never the honeycomb artwork or animation. */
-@media(min-width:1050px){
- .fresh-btc-mockup .fresh-live-network-combined{
-  margin:8px 0 0!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  overflow:visible!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot{
-  margin:0!important;
-  padding:9px 18px 10px!important;
-  border:0!important;
-  border-bottom:1px solid rgba(65,105,128,.42)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{
-  margin:0!important;
-  padding:10px 18px 0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey:before{display:none!important}
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey>.fresh-section-head{margin:0 0 3px!important}
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-top{margin:1px 0 1px!important}
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-arrows{margin:0!important}
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-track{
-  min-height:0!important;
-  padding:0!important;
-  align-items:center!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell{
-  min-height:0!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-footer{margin-top:0!important}
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-note{margin-top:4px!important}
- .fresh-btc-mockup .fresh-explore-premium{
-  margin-top:34px!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  padding:0!important;
- }
-}
-@media(max-width:1049px){
- .fresh-btc-mockup .fresh-live-network-combined{
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  overflow:visible!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot{
-  border:0!important;
-  border-bottom:1px solid rgba(65,105,128,.42)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
- }
-}
-
-/* Bitcoin desktop precision pass: eliminate inherited 221px track and 196px cell
-   minimums which left the artwork floating in excessive vertical whitespace. */
-@media(min-width:1050px){
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot,
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{
-  padding-left:20px!important;
-  padding-right:20px!important;
-  width:100%!important;
-  box-sizing:border-box!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{
-  padding-top:8px!important;
-  padding-bottom:0!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-track{
-  min-height:0!important;
-  padding:0!important;
-  margin:0!important;
-  align-items:center!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell,
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.mempool,
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.confirmed{
-  min-height:175px!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-label{
-  height:28px!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-caption{
-  min-height:22px!important;
-  margin-top:2px!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-window{
-  margin:0!important;
-  padding:0!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-footer{
-  padding-top:3px!important;
- }
- .fresh-btc-mockup .fresh-explore-premium{margin-top:34px!important}
-}
-
-/* Bitcoin-only finishing pass — preserve the existing hexagon artwork and motion. */
+/* Bitcoin desktop layout calibration — single authoritative layout pass.
+   Replaces conflicting October 14 overrides. Keeps artwork and animation intact. */
 @media (min-width:1050px) {
- .fresh-btc-mockup .fresh-live-network-combined > .fresh-journey {
-   padding-top:5px!important;
-   padding-bottom:0!important;
+ .fresh-btc-mockup {max-width:1480px!important;padding:12px 28px 38px!important}
+ .fresh-btc-mockup .fresh-search {margin-bottom:8px!important}
+ .fresh-btc-mockup .fresh-live-network-combined {
+   margin:8px 0 0!important;padding:0!important;border:0!important;border-radius:0!important;
+   background:transparent!important;box-shadow:none!important;overflow:visible!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey-heading {
-   margin-bottom:0!important;
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot {
+   box-sizing:border-box!important;width:100%!important;margin:0!important;
+   padding:9px 20px 10px!important;border:0!important;
+   border-bottom:1px solid rgba(65,105,128,.42)!important;border-radius:0!important;
+   background:transparent!important;box-shadow:none!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-top {
-   margin:0!important;
-   padding:0!important;
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey {
+   box-sizing:border-box!important;width:100%!important;margin:0!important;
+   padding:8px 20px 0!important;border:0!important;border-radius:0!important;
+   background:transparent!important;box-shadow:none!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-arrows {
-   margin:0!important;
-   padding:0!important;
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey:before {display:none!important}
+ .fresh-btc-mockup .fresh-journey-heading,
+ .fresh-btc-mockup .fresh-journey>.fresh-section-head {margin-bottom:3px!important}
+ .fresh-btc-mockup .fresh-journey .motion-top,
+ .fresh-btc-mockup .fresh-journey .motion-arrows {margin:0!important;padding:0!important}
+ .fresh-btc-mockup .fresh-journey .motion-track {
+   min-height:0!important;margin:0!important;padding:0!important;align-items:center!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-track {
-   padding:0!important;
-   margin:0!important;
-   min-height:0!important;
+ .fresh-btc-mockup .fresh-journey .motion-cell,
+ .fresh-btc-mockup .fresh-journey .motion-cell.mempool,
+ .fresh-btc-mockup .fresh-journey .motion-cell.confirmed {min-height:160px!important}
+ .fresh-btc-mockup .fresh-journey .motion-label {height:25px!important}
+ .fresh-btc-mockup .fresh-journey .motion-caption {min-height:20px!important;margin-top:0!important}
+ .fresh-btc-mockup .fresh-journey .motion-window {
+   margin:0!important;padding:0!important;overflow:hidden!important;
+   -webkit-mask-image:linear-gradient(to right,#000 0%,#000 95%,transparent 100%)!important;
+   mask-image:linear-gradient(to right,#000 0%,#000 95%,transparent 100%)!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell,
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.mempool,
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-cell.confirmed {
-   min-height:160px!important;
+ .fresh-btc-mockup .fresh-journey .motion-footer {margin-top:0!important;padding-top:0!important}
+ .fresh-btc-mockup .fresh-journey .motion-note {margin-top:3px!important}
+ .fresh-btc-mockup .fresh-explore-premium {
+   margin-top:27px!important;padding:0!important;border:0!important;border-radius:0!important;
+   background:transparent!important;box-shadow:none!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-label {
-   height:25px!important;
+}
+@media (max-width:1049px) {
+ .fresh-btc-mockup .fresh-live-network-combined {
+   border:0!important;border-radius:0!important;background:transparent!important;
+   box-shadow:none!important;overflow:visible!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-caption {
-   margin-top:0!important;
-   min-height:20px!important;
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot {
+   border:0!important;border-bottom:1px solid rgba(65,105,128,.42)!important;
+   border-radius:0!important;background:transparent!important;box-shadow:none!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-window {
-   -webkit-mask-image:none!important;
-   mask-image:none!important;
-   overflow:hidden!important;
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey {
+   border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
  }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-footer {
-   margin-top:0!important;
-   padding-top:0!important;
- }
- .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-note {
-   margin-top:3px!important;
- }
+ .fresh-btc-mockup .fresh-explore-premium {margin-top:24px!important}
 }
