@@ -263,3 +263,33 @@
   background:radial-gradient(ellipse 90% 80% at 85% 45%,rgba(135,78,14,.11),transparent 84%)!important;
  }
 }
+
+/* Center Bitcoin hero message above the existing search bar; artwork removed. */
+.pt-bitcoin-explorer-redesign .fresh-hero{
+ justify-content:center!important;
+ text-align:center!important;
+ min-height:0!important;
+ padding:30px 0 24px!important;
+ background:transparent!important;
+}
+.pt-bitcoin-explorer-redesign .fresh-hero-copy{
+ width:100%;
+ max-width:850px!important;
+ margin:0 auto!important;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+}
+.pt-bitcoin-explorer-redesign .fresh-hero-copy .fresh-kicker{width:100%;text-align:center}
+.pt-bitcoin-explorer-redesign .fresh-hero-copy h1{width:100%;text-align:center}
+.pt-bitcoin-explorer-redesign .fresh-hero-copy p{
+ max-width:570px!important;
+ margin:0 auto!important;
+ text-align:center!important;
+ text-wrap:balance;
+}
+@media(max-width:700px){
+ .pt-bitcoin-explorer-redesign .fresh-hero{padding:20px 0 20px!important}
+ .pt-bitcoin-explorer-redesign .fresh-hero-copy h1{letter-spacing:-1.6px}
+ .pt-bitcoin-explorer-redesign .fresh-hero-copy p{max-width:34ch!important}
+}
