@@ -234,3 +234,32 @@
  .fresh-journey .motion-cell.confirmed{width:143px}
  .fresh-journey .motion-window{-webkit-mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 20px),transparent 100%);mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 20px),transparent 100%)}
 }
+
+/* Bitcoin explorer only: seamless ambient canvas and feathered hero lighting.
+   No layout, card, navigation, or Ethereum styles are changed. */
+.pt-bitcoin-explorer-redesign{
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse 72% 520px at 95% 165px,rgba(150,91,20,.105),transparent 73%),
+    radial-gradient(ellipse 64% 650px at 2% 440px,rgba(17,53,72,.12),transparent 76%),
+    linear-gradient(180deg,#030b13 0%,#030a12 48%,#030a12 100%)!important;
+}
+.pt-bitcoin-explorer-redesign .fresh-btc{
+  position:relative;
+  z-index:1;
+  background:transparent!important;
+}
+.pt-bitcoin-explorer-redesign .fresh-hero{
+  background:radial-gradient(ellipse 65% 85% at 85% 45%,rgba(135,78,14,.18) 0%,rgba(90,52,15,.07) 42%,transparent 83%)!important;
+}
+@media(max-width:700px){
+ .pt-bitcoin-explorer-redesign{
+  background:
+   radial-gradient(ellipse 105% 390px at 95% 165px,rgba(150,91,20,.09),transparent 75%),
+   linear-gradient(180deg,#030b13,#030a12 580px,#030a12)!important;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-hero{
+  background:radial-gradient(ellipse 90% 80% at 85% 45%,rgba(135,78,14,.11),transparent 84%)!important;
+ }
+}
