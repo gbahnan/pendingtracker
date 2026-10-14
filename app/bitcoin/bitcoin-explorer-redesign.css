@@ -379,3 +379,55 @@
  .pt-bitcoin-explorer-redesign .fresh-secondary-text small{display:none}
  .pt-bitcoin-explorer-redesign .fresh-explore-premium{padding:18px 11px}
 }
+
+
+/* Laptop-first confirmation journey: initial viewport contains mempool, all six
+   projected time bands, and the first real confirmed block. Extra confirmed
+   blocks remain horizontally scrollable. Mobile keeps its existing timeline. */
+@media(min-width:851px){
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-track{
+  display:grid;
+  grid-auto-flow:column;
+  grid-template-columns:minmax(142px,1.4fr) repeat(6,minmax(93px,1fr)) minmax(104px,1.05fr);
+  grid-auto-columns:clamp(105px,10vw,140px);
+  gap:clamp(2px,.45vw,7px);
+  width:max(100%,830px);
+  min-height:221px;
+  padding:9px 0 12px;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-cell,
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-cell.mempool,
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-cell.confirmed{
+  width:100%;min-width:0;min-height:196px;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-halo{
+  width:min(119px,100%);height:137px;margin-inline:auto;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-hex{
+  width:min(116px,100%);height:134px;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-pool{
+  width:calc(100% - 5px);max-width:185px;height:111px;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-cell.motion-stage .motion-label{
+  visibility:visible;height:36px;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-next-label{
+  color:#ffcb69;font-size:10px;letter-spacing:.11em;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-next-block .motion-halo{
+  filter:drop-shadow(0 0 5px #ffd18c) drop-shadow(0 0 13px #f2a333b0);
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-window{
+  -webkit-mask-image:none;mask-image:none;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-hex-content strong{font-size:clamp(12px,1.05vw,15px)}
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-hex-content small{font-size:clamp(9px,.75vw,11px)}
+}
+.pt-bitcoin-explorer-redesign .fresh-journey .motion-flow-key{display:inline-flex;align-items:center;gap:7px}
+.pt-bitcoin-explorer-redesign .fresh-journey .motion-key-dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
+.pt-bitcoin-explorer-redesign .fresh-journey .motion-key-dot.gold{background:#ffc04b;box-shadow:0 0 8px #ffad37}
+.pt-bitcoin-explorer-redesign .fresh-journey .motion-key-dot.blue{background:#59c9ff;box-shadow:0 0 8px #299bff}
+@media(max-width:850px){
+ .pt-bitcoin-explorer-redesign .fresh-journey .motion-next-label{color:#ffc96a;font-size:10px}
+}
