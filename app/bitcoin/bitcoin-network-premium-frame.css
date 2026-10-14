@@ -203,3 +203,42 @@
  .fresh-btc-mockup .fresh-explorer-jump + .fresh-explore-premium{margin-top:26px!important}
  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-guide{font-size:11px}
 }
+
+/* Cohesive top-to-bottom premium hierarchy; artwork and WebGL visuals unchanged. */
+.fresh-btc-mockup .fresh-hero-copy h1{letter-spacing:-.045em!important}
+.fresh-btc-mockup .fresh-hero-copy>p{max-width:700px!important;color:#aebfd0!important;line-height:1.7!important}
+.fresh-btc-mockup .fresh-search form{
+ border-color:rgba(105,159,187,.46)!important;
+ box-shadow:0 10px 45px rgba(0,0,0,.14),0 0 30px rgba(205,143,42,.055)!important;
+}
+.fresh-btc-mockup .fresh-search form:focus-within{
+ border-color:rgba(245,185,66,.7)!important;
+ box-shadow:0 0 0 3px rgba(245,185,66,.09)!important;
+}
+.fresh-btc-mockup .fresh-journey-heading{
+ display:flex!important;align-items:flex-end!important;justify-content:space-between!important;
+ gap:25px!important;margin-bottom:20px!important;
+}
+.fresh-btc-mockup .fresh-journey-title{
+ color:#f1f5f9!important;font-size:clamp(20px,2.15vw,29px)!important;
+ font-weight:650!important;letter-spacing:-.035em!important;line-height:1.25!important;
+ margin:10px 0 8px!important;
+}
+.fresh-btc-mockup .fresh-journey-title em{font-style:normal;color:#f5b942}
+.fresh-btc-mockup .fresh-journey-heading p{max-width:730px!important;color:#a2b8c9!important;line-height:1.65!important}
+.fresh-btc-mockup .fresh-journey-legend{
+ display:flex;flex-wrap:wrap;justify-content:flex-end;gap:13px;flex:0 0 auto;
+ padding-bottom:5px;color:#9bb2c3;font-size:11px;
+}
+.fresh-btc-mockup .fresh-journey-legend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.fresh-btc-mockup .fresh-journey-legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.fresh-btc-mockup .fresh-legend-gold{background:#f5b942;box-shadow:0 0 9px rgba(245,185,66,.45)}
+.fresh-btc-mockup .fresh-legend-blue{background:#6ea6c5;box-shadow:0 0 8px rgba(110,166,197,.35)}
+@media(max-width:900px){
+ .fresh-btc-mockup .fresh-journey-heading{flex-direction:column!important;align-items:flex-start!important;gap:8px!important}
+ .fresh-btc-mockup .fresh-journey-legend{justify-content:flex-start}
+}
+@media(max-width:700px){
+ .fresh-btc-mockup .fresh-journey-title{font-size:21px!important}
+ .fresh-btc-mockup .fresh-journey-legend{font-size:10px;gap:10px}
+}
