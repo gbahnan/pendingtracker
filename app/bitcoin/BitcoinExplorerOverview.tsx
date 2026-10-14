@@ -32,6 +32,10 @@ export default function BitcoinExplorerOverview(){
   </section>
   <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a transaction ID or Bitcoin address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
   <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
+  <div className="fresh-bitcoin-right-now" role="status" aria-live="polite">
+   <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
+   <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-reading"><span>Current priority fee</span><strong>{rate(btc?.fastestFee)}</strong><small>Estimate, not a guarantee</small></div></div>
+  </div>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
    <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> BITCOIN NETWORK LIVE</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
    <div className="fresh-now-primary">
