@@ -446,3 +446,60 @@
  .fresh-v3 .pt-snapshot-description{font-size:9px;line-height:1.32}
  .fresh-v3 .pt-snapshot-more{font-size:9px}
 }
+
+/* Open, integrated Bitcoin Right Now: no enclosing widget or status box.
+   Fading separators provide structure without card outlines. */
+.fresh-v3 .pt-snapshot{
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:transparent!important;
+  padding:24px 0 22px!important;
+  position:relative;
+}
+.fresh-v3 .pt-snapshot::before,
+.fresh-v3 .pt-snapshot::after{
+  content:"";display:block;position:absolute;pointer-events:none;
+  left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0%,rgba(71,125,153,.16) 8%,rgba(87,143,174,.44) 50%,rgba(71,125,153,.16) 92%,transparent 100%);
+}
+.fresh-v3 .pt-snapshot::before{top:0}
+.fresh-v3 .pt-snapshot::after{bottom:0}
+.fresh-v3 .pt-snapshot-status{
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:transparent!important;padding:8px 2px 13px!important;
+}
+.fresh-v3 .pt-snapshot-grid{
+  border-top:1px solid transparent!important;
+  border-image:none!important;
+  background:transparent!important;
+  position:relative;
+}
+.fresh-v3 .pt-snapshot-grid::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(70,125,156,.35) 15%,rgba(70,125,156,.35) 85%,transparent);
+}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card:hover{
+  background:radial-gradient(ellipse at center,rgba(37,82,109,.13),transparent 82%)!important;
+}
+.fresh-v3 .pt-snapshot-item.is-expanded>.pt-snapshot-card{
+  background:radial-gradient(ellipse at top,rgba(241,180,61,.09),transparent 85%)!important;
+  box-shadow:inset 0 2px 0 rgba(255,194,70,.5)!important;
+}
+.fresh-v3 .pt-snapshot-item:not(:nth-child(4n))::after{
+  background:linear-gradient(to bottom,transparent 0%,rgba(80,141,173,.29) 24%,rgba(80,141,173,.29) 76%,transparent 100%)!important;
+}
+.fresh-v3 .pt-snapshot-item:nth-child(-n+4)::before{
+  background:linear-gradient(to right,transparent 0%,rgba(80,141,173,.3) 20%,rgba(80,141,173,.3) 80%,transparent 100%)!important;
+}
+@media(max-width:950px){
+ .fresh-v3 .pt-snapshot-item:nth-child(odd)::after{
+  background:linear-gradient(to bottom,transparent,rgba(80,141,173,.29),transparent)!important;
+ }
+ .fresh-v3 .pt-snapshot-item:nth-child(-n+6)::before{
+  background:linear-gradient(to right,transparent,rgba(80,141,173,.3),transparent)!important;
+ }
+}
