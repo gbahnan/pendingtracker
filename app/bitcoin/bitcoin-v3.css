@@ -58,3 +58,64 @@
 .fresh-v3 .fresh-footer{border-top:1px solid #29475b;margin-top:22px;padding-top:15px;display:flex;justify-content:space-between;gap:16px;color:#8da9bd;font-size:11px}
 @media(max-width:900px){.fresh-v3 .fresh-now-secondary{grid-template-columns:repeat(2,minmax(0,1fr))}.fresh-v3 .fresh-v3-context{grid-template-columns:1fr}.fresh-v3 .fresh-explore-body{grid-template-columns:1fr}.fresh-v3 .fresh-explainer-premium{border-left:0;border-top:1px solid #2d5065;padding:17px 5px}.fresh-v3 .fresh-learn-compact{grid-template-columns:1fr}.fresh-v3 .fresh-tabs-six{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.fresh-v3{width:calc(100% - 24px);padding-top:8px}.fresh-v3>.fresh-hero h1{font-size:29px}.fresh-v3>.fresh-hero p{font-size:12px}.fresh-v3>.fresh-search form button{min-width:75px}.fresh-v3 .fresh-v3-context{padding:13px}.fresh-v3-context-stats strong{font-size:13px}.fresh-v3-context-stats>div{padding:5px 7px}.fresh-v3 .fresh-now-secondary{gap:8px}.fresh-v3 .fresh-now-secondary-metric{padding:10px 8px;gap:7px}.fresh-v3 .fresh-metric-icon{flex-basis:28px;height:28px;font-size:17px}.fresh-v3 .fresh-secondary-text strong{font-size:14px}.fresh-v3 .fresh-secondary-text small{font-size:9px}.fresh-v3 .fresh-faq{grid-template-columns:1fr}.fresh-v3 .fresh-faq details{min-height:0}.fresh-v3 .fresh-footer{flex-direction:column}.fresh-v3 .fresh-tab-copy small{display:none}}
+
+
+/* Premium open-surface refinement: retain the rebuilt layout and interaction. */
+.fresh-v3 .fresh-v3-context{
+ background:transparent;border:0;border-radius:0;
+ border-bottom:1px solid transparent;
+ border-image:linear-gradient(90deg,transparent,#42677b 14%,#42677b 86%,transparent) 1;
+ padding:20px 10px 22px;margin-bottom:18px;
+}
+.fresh-v3 .fresh-v3-context-stats>div{
+ border-left:1px solid transparent;
+ border-image:linear-gradient(180deg,transparent,#3c647c 20%,#3c647c 80%,transparent) 1;
+ padding-left:18px;
+}
+.fresh-v3 .fresh-now-secondary{gap:0;margin:4px 0 22px}
+.fresh-v3 .fresh-now-secondary-metric{
+ border:0;border-radius:0;background:transparent;
+ border-right:1px solid transparent;
+ border-image:linear-gradient(180deg,transparent,#3b6077 20%,#3b6077 80%,transparent) 1;
+ padding:18px 15px;min-height:100px;
+ transition:background .2s ease;
+}
+.fresh-v3 .fresh-now-secondary-metric:first-child{padding-left:8px}
+.fresh-v3 .fresh-now-secondary-metric:last-child{border-right:0}
+.fresh-v3 .fresh-now-secondary-metric:hover,.fresh-v3 .fresh-now-secondary-metric.active{
+ background:linear-gradient(90deg,transparent,rgba(246,185,65,.075),transparent);
+}
+.fresh-v3 .fresh-metric-icon{background:rgba(246,185,65,.075);border-radius:10px}
+.fresh-v3 .fresh-explore-premium{background:transparent;border:0;border-radius:0;overflow:visible;margin-bottom:22px}
+.fresh-v3 .fresh-tabs-six{border:1px solid #31536a;border-radius:10px 10px 0 0;overflow:hidden;background:#071b2a}
+.fresh-v3 .fresh-explore-body{
+ padding:22px 10px 20px;
+ border-bottom:1px solid transparent;
+ border-image:linear-gradient(90deg,transparent,#3b6177 14%,#3b6177 86%,transparent) 1;
+}
+.fresh-v3 .fresh-explainer-premium{
+ border-left:1px solid transparent;
+ border-image:linear-gradient(180deg,transparent,#3b647c 12%,#3b647c 88%,transparent) 1;
+ padding-left:24px;
+}
+.fresh-v3 .fresh-learn-compact{
+ border:0;border-radius:0;background:transparent;
+ border-top:1px solid transparent;
+ border-image:linear-gradient(90deg,transparent,#385e74 14%,#385e74 86%,transparent) 1;
+ padding:25px 6px 10px;
+}
+.fresh-v3 .fresh-faq details{background:rgba(11,36,54,.48);border-color:#2b4b61;min-height:82px}
+.fresh-v3 .fresh-faq details:hover{border-color:#577c90}
+@media(max-width:900px){
+ .fresh-v3 .fresh-explainer-premium{border-left:0;border-top:1px solid #34566a;border-image:none;padding:20px 4px}
+ .fresh-v3 .fresh-now-secondary-metric:nth-child(2){border-right:0}
+ .fresh-v3 .fresh-now-secondary-metric{border-bottom:1px solid #213b4d}
+}
+@media(max-width:600px){
+ .fresh-v3 .fresh-v3-context{padding:15px 3px}
+ .fresh-v3 .fresh-v3-context-stats>div{padding-left:8px}
+ .fresh-v3 .fresh-now-secondary-metric{padding:12px 7px;gap:7px}
+ .fresh-v3 .fresh-now-secondary-metric:first-child{padding-left:7px}
+ .fresh-v3 .fresh-explore-body{padding:15px 3px}
+ .fresh-v3 .fresh-learn-compact{padding:20px 2px}
+}
