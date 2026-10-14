@@ -719,3 +719,11 @@
 .fresh-v3 .fresh-explore-title p,
 .fresh-v3 .fresh-explore-kicker{text-align:center!important}
 .fresh-v3 .fresh-explore-decoration{display:none!important}
+
+/* Compact the first viewport without moving the Bitcoin Right Now section.
+   Visual-only offsets preserve document flow and every section below. */
+@media(min-width:701px){
+ .fresh-v3>.fresh-journey{transform:translateY(-24px)}
+ .fresh-v3>.fresh-hero{transform:translateY(-35px)}
+ .fresh-v3>.fresh-search{transform:translateY(-35px)}
+}
