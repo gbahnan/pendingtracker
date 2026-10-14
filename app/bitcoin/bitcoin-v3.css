@@ -702,3 +702,9 @@
  .fresh-v3 .pt-snapshot-status-row .pt-snapshot-live{font-size:10px!important}
  .fresh-v3 .pt-snapshot-status-row .pt-snapshot-live small{display:inline!important;font-size:9px}
 }
+
+/* Bring the Bitcoin Right Now heading directly against the metric snapshot. */
+.fresh-v3 .pt-snapshot-header{padding-bottom:0!important;margin-bottom:0!important}
+.fresh-v3 .pt-snapshot-title p{margin-top:2px!important}
+.fresh-v3 .pt-snapshot-status-row{padding-top:2px!important;padding-bottom:2px!important;margin-bottom:0!important}
+.fresh-v3 .pt-snapshot-grid{margin-top:0!important}
