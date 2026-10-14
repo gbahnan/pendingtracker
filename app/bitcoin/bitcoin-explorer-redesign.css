@@ -877,31 +877,28 @@
 }
 
 
-/* Bitcoin Explore: open-ended gradient border accents.
-   These deliberately do not form a card or surround the section. */
+/* Bitcoin Explore: premium four-sided frame with restrained horizontal fades.
+   Only the content beneath the tabs is framed; artwork and tabs remain unchanged. */
 @media (min-width:1050px) {
   .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body {
     position:relative!important;
-    padding-bottom:17px!important;
+    padding:14px 14px 20px!important;
+    border-left:1px solid rgba(75,133,165,.45)!important;
+    border-right:1px solid rgba(75,133,165,.45)!important;
+    border-radius:0!important;
+    background:transparent!important;
   }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body::before,
   .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body::after {
     content:"";
     position:absolute;
     pointer-events:none;
-    left:6%;
-    right:7%;
-    bottom:0;
-    height:1px;
-    background:linear-gradient(90deg,transparent 0%,rgba(57,116,155,.38) 18%,rgba(86,158,199,.56) 54%,rgba(61,126,167,.32) 84%,transparent 100%);
-  }
-  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body::before {
-    content:"";
-    position:absolute;
-    pointer-events:none;
+    left:0;
     right:0;
-    bottom:0;
-    width:1px;
-    height:31%;
-    background:linear-gradient(0deg,rgba(77,147,189,.40),rgba(77,147,189,.20) 45%,transparent 100%);
+    height:1px;
+    background:linear-gradient(90deg,rgba(57,116,155,.22) 0%,rgba(86,158,199,.65) 50%,rgba(57,116,155,.22) 100%);
+    box-shadow:0 0 7px rgba(64,143,191,.10);
   }
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body::before {top:0;}
+  .fresh-btc-mockup .fresh-explore-premium .fresh-explore-body::after {bottom:0;}
 }
