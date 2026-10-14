@@ -622,3 +622,30 @@
  .fresh-v3 .pt-snapshot-item,.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{height:175px!important}
  .fresh-v3 .pt-snapshot-more{margin-top:6px!important}
 }
+
+/* Center the snapshot heading and network status over the eight metrics. */
+.fresh-v3 .pt-snapshot-header{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;gap:6px!important;
+ text-align:center!important;padding:0 8px 3px!important;
+}
+.fresh-v3 .pt-snapshot-title{
+ display:flex!important;justify-content:center!important;align-items:center!important;
+ gap:8px!important;width:100%;text-align:center!important;
+}
+.fresh-v3 .pt-snapshot-title>div{text-align:center}
+.fresh-v3 .pt-snapshot-title h2{margin:0!important;letter-spacing:-.025em!important}
+.fresh-v3 .pt-snapshot-title p{margin:3px 0 0!important}
+.fresh-v3 .pt-snapshot-pulse{display:none!important}
+.fresh-v3 .pt-snapshot-live{margin:2px 0 0!important;text-align:center!important}
+.fresh-v3 .pt-snapshot-status{
+ display:flex!important;justify-content:center!important;align-items:center!important;
+ text-align:center!important;gap:7px!important;
+ margin:0 0 7px!important;padding:4px 8px 7px!important;
+}
+@media(max-width:560px){
+ .fresh-v3 .pt-snapshot-header{gap:5px!important}
+ .fresh-v3 .pt-snapshot-title h2{font-size:clamp(19px,5vw,24px)!important}
+ .fresh-v3 .pt-snapshot-title p{font-size:10px!important}
+ .fresh-v3 .pt-snapshot-status{font-size:10px!important}
+}
