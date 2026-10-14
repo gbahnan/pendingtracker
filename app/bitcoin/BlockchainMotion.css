@@ -120,3 +120,24 @@
 .motion-explorer .motion-arrows {margin:8px 0 3px;}
 .motion-explorer .motion-footer {padding-top:10px;}
 .motion-explorer .motion-note {margin-top:8px!important;}
+
+
+/* Approved explorer mockup: one clean timeline with only half of first confirmed block visible. */
+.motion-explorer .motion-top{display:none!important}
+.motion-explorer .motion-arrows{margin:1px 0 5px!important}
+.motion-explorer .motion-footer{margin-top:1px!important;padding-top:7px!important}
+.motion-explorer .motion-note{font-size:10px!important;margin:5px 0 0!important}
+@media(min-width:1050px){
+ .motion-explorer{container-type:inline-size}
+ .motion-explorer .motion-window{width:100%!important;overflow-x:auto!important}
+ .motion-explorer .motion-track{gap:10px!important;padding:12px 8px 14px 3px!important}
+ .motion-explorer .motion-cell.mempool{width:145px!important}
+ .motion-explorer .motion-pool{width:139px!important;height:106px!important}
+ .motion-explorer .motion-cell.motion-stage{width:calc((100cqw - 145px - 80px - 75px - 20px) / 6)!important;min-width:90px!important}
+ .motion-explorer .motion-cell.confirmed{width:150px!important}
+ .motion-explorer .motion-halo{width:112px!important;height:136px!important}
+ .motion-explorer .motion-hex{width:109px!important;height:131px!important}
+ .motion-explorer .motion-label{height:32px!important}
+ .motion-explorer .motion-cell{min-height:200px!important}
+ .motion-explorer .motion-caption{font-size:10px!important}
+}
