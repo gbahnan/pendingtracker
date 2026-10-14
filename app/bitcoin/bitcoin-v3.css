@@ -775,3 +775,66 @@
 .fresh-v3 .fresh-explore-body{
  background:rgba(2,13,23,.36)!important;
 }
+
+/* Bitcoin explorer palette trial: Obsidian Black + Gunmetal.
+   Scoped to Bitcoin only; preserve gold, cyan, all layouts and interactions. */
+.pt-bitcoin-explorer-redesign{background:#080a0d!important;color:#edf1f5!important}
+.fresh-v3{--line:#363d45;--muted:#aab4bf;color:#edf1f5}
+.fresh-v3>.fresh-journey{
+ background:radial-gradient(ellipse at 50% 42%,rgba(70,74,79,.17),transparent 72%)!important;
+}
+.fresh-v3>.fresh-search form{
+ background:#171b20!important;border-color:#454d55!important;
+ box-shadow:0 8px 28px rgba(0,0,0,.25)!important;
+}
+.fresh-v3>.fresh-search form:focus-within{border-color:#f5b942!important}
+.fresh-v3 .pt-snapshot,
+.fresh-v3 .fresh-explore-premium,
+.fresh-v3 .fresh-learn-compact,
+.fresh-v3 .fresh-faq{background:transparent!important}
+.fresh-v3 .pt-snapshot-grid{
+ background-color:transparent!important;
+}
+.fresh-v3 .pt-snapshot-card,
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{
+ background:transparent!important;
+}
+.fresh-v3 .pt-snapshot-status-row{background:transparent!important}
+.fresh-v3 .pt-snapshot-detail.pt-snapshot-popover,
+.fresh-v3 .pt-snapshot-detail{
+ background:linear-gradient(145deg,#22272d,#12161a 78%)!important;
+ border-color:#76613c!important;
+}
+.fresh-v3 .fresh-tabs-six{
+ background:#1b1f24!important;
+ border-top-color:#4c535b!important;
+ border-bottom-color:#4b5158!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.04),0 5px 16px rgba(0,0,0,.24)!important;
+}
+.fresh-v3 .fresh-tabs-six button{
+ background:#1b1f24!important;
+ border-right-color:#3b424a!important;
+}
+.fresh-v3 .fresh-tabs-six button+button{border-left-color:#15191d!important}
+.fresh-v3 .fresh-tabs-six button:not(.active):hover{background:#292f36!important}
+.fresh-v3 .fresh-tabs-six button.active{
+ background:linear-gradient(180deg,#393329,#282723)!important;
+ box-shadow:inset 0 -3px #ffc34c,inset 0 1px rgba(255,205,100,.12)!important;
+}
+.fresh-v3 .fresh-explore-body{background:#101318!important}
+.fresh-v3 .fresh-data-premium{background:transparent!important}
+.fresh-v3 .fresh-table-head,.fresh-v3 .fresh-table-row{border-bottom-color:#343c44!important}
+.fresh-v3 .fresh-table-row:hover{background:#262b31!important}
+.fresh-v3 .fresh-explainer-premium{
+ background:radial-gradient(ellipse at 95% 25%,rgba(89,94,101,.13),transparent 72%)!important;
+ border-left-color:#3d454d!important;
+}
+.fresh-v3 .fresh-explain-accordion button{border-top-color:#384149!important}
+.fresh-v3 .fresh-learn-compact details,
+.fresh-v3 .fresh-faq details{
+ background:#171b20!important;border-color:#3d464f!important;
+}
+.fresh-v3 .fresh-v3-context{background:linear-gradient(110deg,#1b2025,#111519)!important;border-color:#444c54!important}
+@media(max-width:900px){
+ .fresh-v3 .fresh-explainer-premium{border-top-color:#3d454d!important}
+}
