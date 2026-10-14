@@ -28,9 +28,9 @@ export default function BitcoinExplorerOverview(){
  const tabs:{id:Tab;label:string;icon:string}[]=[{id:"blocks",label:"Blocks",icon:"⬡"},{id:"transactions",label:"Transactions",icon:"⇄"},{id:"fees",label:"Fees",icon:"ϟ"},{id:"network",label:"Network",icon:"▥"},{id:"mining",label:"Mining",icon:"⚒"},{id:"insights",label:"Insights",icon:"↗"}];
  return <div className="fresh-btc fresh-btc-mockup">
   <section className="fresh-hero">
-   <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Search. Explore. <em>Understand.</em></h1><p>Look up a Bitcoin transaction or explore the network. We’ll explain what you’re seeing, every step of the way.</p></div>
+   <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Search. Explore. <em>Understand.</em></h1><p>Bitcoin’s live blockchain, made understandable. Explore real transactions, fees, and blocks — with clear explanations alongside the data.</p></div>
   </section>
-  <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a transaction ID or Bitcoin address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
+  <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a Bitcoin transaction ID or address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
   <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
   <div className="fresh-bitcoin-right-now" role="status" aria-live="polite">
    <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
@@ -69,7 +69,8 @@ export default function BitcoinExplorerOverview(){
   </section>
   <section className="fresh-journey" aria-label="Live Bitcoin confirmation timeline">
    <div className="fresh-section-head fresh-journey-heading">
-    <div><div className="fresh-kicker">TRANSACTION FLOW · CONFIRMATION ESTIMATES</div><p>Each gold hexagon shows an estimated confirmation-time band. Drag or scroll to explore confirmed blocks.</p></div>
+    <div><div className="fresh-kicker">LIVE BITCOIN BLOCKSPACE · VISUAL EXPLORER</div><h2 className="fresh-journey-title">See how Bitcoin transactions <em>move toward confirmation.</em></h2><p>Each gold hexagon represents an estimated confirmation window, not a guaranteed arrival time. Explore projected blocks and recently confirmed blocks below.</p></div>
+    <div className="fresh-journey-legend" aria-label="Visualization key"><span><i className="fresh-legend-gold" aria-hidden="true"/> Estimated blocks</span><span><i className="fresh-legend-blue" aria-hidden="true"/> Confirmed history</span></div>
    </div>
    <BlockchainWebGL overview pending={btc?.pending} fee={projections[0]?.medianFee} projectedCount={projections[0]?.transactionCount} projections={projections} blocks={blocks}/>
   </section>
