@@ -503,3 +503,6 @@
   background:linear-gradient(to right,transparent,rgba(80,141,173,.3),transparent)!important;
  }
 }
+
+/* Add approximately a quarter inch (24 CSS px) between Bitcoin Right Now and explorer tabs. */
+.fresh-v3 .pt-snapshot{margin-bottom:54px!important}
