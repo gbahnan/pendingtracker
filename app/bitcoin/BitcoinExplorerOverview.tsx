@@ -40,7 +40,7 @@ export default function BitcoinExplorerOverview(){
   <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search transactions, blocks, or addresses…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
   <section className="pt-snapshot" aria-label="Bitcoin right now">
     <header className="pt-snapshot-header">
-      <div className="pt-snapshot-title"><span className="pt-snapshot-pulse" aria-hidden="true">〰</span><div><h2><span>BITCOIN</span> RIGHT NOW <small title="Live readings and estimates; not guaranteed confirmation times">ⓘ</small></h2><p>A real-time snapshot of the Bitcoin network.</p></div></div>
+      <div className="pt-snapshot-title"><span className="pt-snapshot-pulse" aria-hidden="true">〰</span><div><h2><span>BITCOIN</span> RIGHT NOW <small title="Live readings and estimates; not guaranteed confirmation times">ⓘ</small></h2><p>A real-time snapshot of the Bitcoin network. Here's what's happening right now and what it means.</p></div></div>
     </header>
     <div className="pt-snapshot-status-row">
       <div className="pt-snapshot-status"><span className="pt-now-green" aria-hidden="true"/><strong>{btc?.congestion==="Busy"?"Busy network":btc?.congestion==="Moderate"?"Moderate activity":btc?.congestion==="Light"?"Light activity":"Connecting to Bitcoin…"}</strong></div>
