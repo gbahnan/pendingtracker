@@ -56,3 +56,44 @@
   mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.9) 42%,transparent 100%)!important;
  }
 }
+
+/* Explorer text hierarchy: white content, Bitcoin gold actions, ice-blue guidance. */
+.fresh-btc-mockup .fresh-explore-premium .fresh-table-head,
+.fresh-btc-mockup .fresh-explore-premium .fresh-table-head span{
+ color:#91b9d4!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-tabs-six button:not(.active) .fresh-tab-copy strong{
+ color:#aecce0!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-tabs-six button .fresh-tab-copy small{
+ color:#91aabc!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-data-premium>p,
+.fresh-btc-mockup .fresh-explore-premium .fresh-section-head p,
+.fresh-btc-mockup .fresh-learn-compact .fresh-learn-inline p{
+ color:#9caebe!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-explainer-premium>span,
+.fresh-btc-mockup .fresh-learn-compact .fresh-kicker{
+ color:#91b9d4!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-explain-accordion>button{
+ color:#b5d3e5!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-explain-accordion>button span,
+.fresh-btc-mockup .fresh-explore-premium .fresh-explain-accordion>button b{
+ color:#f5b942!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-table-row>span:not(:first-child){
+ color:#dce6ef!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-table-row>span:nth-child(2),
+.fresh-btc-mockup .fresh-explore-premium .fresh-table-row>span:last-child{
+ color:#9caebe!important;
+}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq summary{
+ color:#e4edf5!important;
+}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq summary span{
+ color:#f5b942!important;
+}
