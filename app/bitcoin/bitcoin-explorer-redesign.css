@@ -306,7 +306,7 @@
  transform:translateX(-50%);
  width:100%;
  height:640px;
- background-image:url("/artwork/bitcoin-gold-particle-wave.svg");
+ background-image:url("/artwork/bitcoin-gold-particle-wave.svg?v=2");
  background-position:center top;
  background-repeat:no-repeat;
  background-size:cover;
@@ -327,4 +327,22 @@
 @media(prefers-reduced-motion:no-preference){
  .pt-bitcoin-explorer-redesign::before{animation:pt-btc-wave-breathe 17s ease-in-out infinite alternate}
  @keyframes pt-btc-wave-breathe{from{opacity:.82}to{opacity:.94}}
+}
+
+/* Reference-matched luminous particle wave: visible at edges, clear around text. */
+.pt-bitcoin-explorer-redesign::before{
+ opacity:1!important;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 59%,rgba(0,0,0,.78) 78%,transparent 100%)!important;
+ mask-image:linear-gradient(to bottom,#000 0%,#000 59%,rgba(0,0,0,.78) 78%,transparent 100%)!important;
+}
+@media(prefers-reduced-motion:no-preference){
+ .pt-bitcoin-explorer-redesign::before{animation:pt-btc-wave-refined 18s ease-in-out infinite alternate!important}
+ @keyframes pt-btc-wave-refined{from{opacity:.91}to{opacity:1}}
+}
+@media(max-width:700px){
+ .pt-bitcoin-explorer-redesign::before{
+  opacity:.78!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.88) 58%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.88) 58%,transparent 100%)!important;
+ }
 }
