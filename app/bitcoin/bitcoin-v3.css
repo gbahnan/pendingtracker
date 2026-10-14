@@ -727,3 +727,25 @@
  .fresh-v3>.fresh-hero{transform:translateY(-35px)}
  .fresh-v3>.fresh-search{transform:translateY(-35px)}
 }
+
+/* Explore / Understand: restrained Bitcoin gold and icy-blue visual hierarchy. */
+.fresh-v3 .fresh-tabs-six button:not(.active) .fresh-tab-icon{color:#70c8ee!important}
+.fresh-v3 .fresh-tabs-six button:nth-child(odd):not(.active) .fresh-tab-icon{color:#e8b65b!important}
+.fresh-v3 .fresh-tabs-six button.active .fresh-tab-icon,
+.fresh-v3 .fresh-tabs-six button.active .fresh-tab-copy strong{color:#ffc24d!important}
+.fresh-v3 .fresh-tabs-six button:not(.active) .fresh-tab-copy strong{color:#dbe9f2!important}
+.fresh-v3 .fresh-tabs-six button:hover .fresh-tab-copy strong{color:#f5c86b!important}
+.fresh-v3 .fresh-data h3{color:#f2f7fb!important}
+.fresh-v3 .fresh-data h3::first-letter{color:#f3bc50}
+.fresh-v3 .fresh-table-head{color:#83d1f3!important}
+.fresh-v3 .fresh-table-row{color:#d8e6f0!important}
+.fresh-v3 .fresh-table-row .fresh-table-link{color:#ffc14d!important}
+.fresh-v3 .fresh-table-row:hover{background:rgba(33,88,116,.23)!important}
+.fresh-v3 .fresh-explainer-premium{
+ background:radial-gradient(ellipse at 95% 25%,rgba(28,99,137,.12),transparent 72%)!important;
+}
+.fresh-v3 .fresh-explainer>span{color:#8fd3f4!important}
+.fresh-v3 .fresh-explainer h3{color:#f3f7fb!important}
+.fresh-v3 .fresh-explainer-icon{color:#ffc34d!important}
+.fresh-v3 .fresh-explain-accordion button{color:#f2b944!important}
+.fresh-v3 .fresh-explain-accordion button:hover{color:#ffe09a!important;background:rgba(27,77,105,.13)!important}
