@@ -431,3 +431,52 @@
 @media(max-width:850px){
  .pt-bitcoin-explorer-redesign .fresh-journey .motion-next-label{color:#ffc96a;font-size:10px}
 }
+
+
+/* Integrated Bitcoin Network Live: snapshot and original confirmation animation share one visual surface. */
+@media (min-width: 761px) {
+  .fresh-btc .fresh-hero { min-height: 210px; }
+  .fresh-btc .fresh-hero h1 { margin-bottom: 12px; }
+}
+.fresh-btc .fresh-live-network-combined {
+  position: relative;
+  margin: 14px 0 24px;
+  padding: 0;
+  border: 1px solid #285063;
+  border-radius: 19px;
+  background: linear-gradient(155deg,#081b29 0%,#04121f 53%,#030c16 100%);
+  box-shadow: 0 15px 50px #0000002b;
+  overflow: hidden;
+}
+.fresh-btc .fresh-live-network-combined > .fresh-now-snapshot {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.fresh-btc .fresh-live-network-combined > .fresh-journey {
+  margin: 0 !important;
+  border: 0 !important;
+  border-top: 1px solid #284352 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding-top: 18px !important;
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey > .fresh-section-head {
+  margin-bottom: 12px !important;
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey > .fresh-section-head h2 {
+  font-size: clamp(20px,2.1vw,28px);
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey > .fresh-section-head .fresh-kicker {
+  margin-bottom: 6px;
+}
+.fresh-btc .fresh-live-network-combined .fresh-journey > .fresh-section-head p {
+  margin-top: 5px;
+}
+@media (max-width:760px) {
+  .fresh-btc .fresh-live-network-combined { margin: 12px 0 20px; }
+  .fresh-btc .fresh-live-network-combined > .fresh-journey { padding-top: 16px !important; }
+}
