@@ -22,3 +22,19 @@
 .pt-reference-header .pt-active-nav a[aria-current="page"]::after{content:"";position:absolute;left:14%;right:14%;bottom:1px;height:2px;border-radius:2px;background:#c6a15c;box-shadow:0 0 8px #d3a45755}
 .pt-reference-header .pt-active-nav a[href^="/ethereum"][aria-current="page"]::after{background:#64baff;box-shadow:0 0 8px #64baff77}
 @media(max-width:760px){.pt-reference-header .pt-active-nav a[aria-current="page"]{background:rgba(255,255,255,.07)}}
+
+/* Override legacy globals.css rule that permanently marked the first (Home) link blue. */
+.pt-reference-header .pt-active-nav a:first-child:not([aria-current="page"]){
+ color:#aabcca!important;
+ border-bottom:2px solid transparent!important;
+}
+.pt-reference-header .pt-active-nav a:first-child[aria-current="page"]{
+ color:#f4f8ff!important;
+ border-bottom:2px solid transparent!important;
+}
+.pt-reference-header .pt-active-nav a:not([aria-current="page"]){
+ color:#aabcca!important;
+ border-bottom:2px solid transparent!important;
+ background:transparent!important;
+ font-weight:inherit!important;
+}
