@@ -26,12 +26,7 @@ export default function BitcoinExplorerOverview(){
  const status=btc?.congestion==="Busy"?"Bitcoin is busy right now.":btc?.congestion==="Moderate"?"Bitcoin has a moderate queue.":btc?.congestion==="Light"?"Bitcoin is running smoothly.":"Checking the Bitcoin network…";
  const expl=btc?.explanation||"We're connecting to live Bitcoin data. New blocks arrive about every ten minutes on average.";
  const tabs:{id:Tab;label:string;icon:string}[]=[{id:"blocks",label:"Blocks",icon:"⬡"},{id:"transactions",label:"Transactions",icon:"⇄"},{id:"fees",label:"Fees",icon:"ϟ"},{id:"network",label:"Network",icon:"▥"},{id:"mining",label:"Mining",icon:"⚒"},{id:"insights",label:"Insights",icon:"↗"}];
- return <div className="fresh-btc fresh-btc-mockup">
-  <section className="fresh-hero">
-   <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Search. Explore. <em>Understand.</em></h1><p>Bitcoin’s live blockchain, made understandable. Explore real transactions, fees, and blocks — with clear explanations alongside the data.</p></div>
-  </section>
-  <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a Bitcoin transaction ID or address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
-  <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
+ return <div className="fresh-btc fresh-btc-mockup fresh-btc-mockup-v2">
   <section className="fresh-journey" aria-label="Live Bitcoin confirmation timeline">
    <div className="fresh-section-head fresh-journey-heading">
     <div><div className="fresh-kicker">LIVE BITCOIN BLOCKSPACE · VISUAL EXPLORER</div><h2 className="fresh-journey-title">See how Bitcoin transactions <em>move toward confirmation.</em></h2><p>Each gold hexagon represents an estimated confirmation window, not a guaranteed arrival time. Explore projected blocks and recently confirmed blocks below.</p></div>
@@ -39,6 +34,16 @@ export default function BitcoinExplorerOverview(){
    </div>
    <BlockchainWebGL overview pending={btc?.pending} fee={projections[0]?.medianFee} projectedCount={projections[0]?.transactionCount} projections={projections} blocks={blocks}/>
   </section>
+
+  <section className="fresh-hero">
+   <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Explore the <em>Bitcoin</em> Blockchain</h1><p>See what’s happening on Bitcoin right now, with clear explanations and live data.</p></div>
+  </section>
+  <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a Bitcoin transaction ID or address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
+  <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
+  <div className="fresh-bitcoin-right-now" role="status" aria-live="polite">
+   <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
+   <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-reading"><span>Current priority fee</span><strong>{rate(btc?.fastestFee)}</strong><small>Estimate, not a guarantee</small></div></div>
+  </div>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
    <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> BITCOIN NETWORK LIVE</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
    <div className="fresh-now-primary">
@@ -71,18 +76,7 @@ export default function BitcoinExplorerOverview(){
     {snapshotOpen==="pending"?<><h3>What are pending transactions?</h3><p>These are Bitcoin payments waiting in the mempool to be included in a block. Right now, {fmt(btc?.pending)} transactions are reported as waiting. A larger queue can mean more competition for limited block space, but the number alone doesn't predict your wait.</p></>:snapshotOpen==="fee"?<><h3>What does the recommended fee mean?</h3><p>The current priority estimate is {rate(btc?.fastestFee)}. Bitcoin fees are measured in satoshis per virtual byte (sat/vB), not as a percentage of the amount sent. Your total fee depends on transaction size. Higher rates can help miners prioritize a transaction, but don't guarantee a confirmation time.</p></>:snapshotOpen==="interval"?<><h3>When will the next Bitcoin block arrive?</h3><p>Bitcoin blocks are found approximately every 10 minutes on average. Actual intervals vary substantially. This is an average, not a countdown or a promise that your transaction will confirm within ten minutes.</p></>:<><h3>What does network congestion mean?</h3><p>{expl} Congestion is a simplified interpretation of the current mempool and fee conditions. When more transactions compete for block space, fee rates may rise and lower-fee payments may take longer to confirm.</p></>}
    </div>}
   </section>
-  <div className="fresh-bitcoin-right-now" role="status" aria-live="polite">
-   <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
-   <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-reading"><span>Current priority fee</span><strong>{rate(btc?.fastestFee)}</strong><small>Estimate, not a guarantee</small></div></div>
   </div>
-  </div>
-  <nav className="fresh-explorer-jump" aria-label="Jump to Bitcoin explorer sections">
-   <span>EXPLORE BITCOIN</span>
-   <a href="#explore-bitcoin" onClick={()=>setTab("blocks")}>Latest blocks <span aria-hidden="true">↗</span></a>
-   <a href="#explore-bitcoin" onClick={()=>setTab("transactions")}>Transactions <span aria-hidden="true">↗</span></a>
-   <a href="#explore-bitcoin" onClick={()=>setTab("fees")}>Live fees <span aria-hidden="true">↗</span></a>
-   <a href="#explore-bitcoin" onClick={()=>setTab("mining")}>Mining <span aria-hidden="true">↗</span></a>
-  </nav>
   <section className="fresh-explore fresh-explore-premium" id="explore-bitcoin">
    <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker fresh-explore-kicker">EXPLORE THE BLOCKCHAIN</div><h2>Explore the <span className="fresh-explore-gold-word">Bitcoin</span> Blockchain</h2><p>Explore live blocks, transactions, fees, and mining. Select any category to see the data and understand what it means.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
    <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore Bitcoin data">{tabs.map(t=><button role="tab" aria-selected={tab===t.id} key={t.id} className={tab===t.id?"active":""} onClick={()=>{setTab(t.id);setAdvanced(false);setExplainOpen(null)}}><span className="fresh-tab-icon" aria-hidden="true">{t.icon}</span><span className="fresh-tab-copy"><strong>{t.label}</strong><small>{{blocks:"Confirmed payments",transactions:"Live network activity",fees:"Rates & trends",network:"Network health",mining:"Hashrate & difficulty",insights:"Historical data"}[t.id]}</small></span></button>)}</div>
