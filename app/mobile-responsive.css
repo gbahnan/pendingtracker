@@ -1,0 +1,32 @@
+/* Mobile usability pass — scoped to small screens; desktop unchanged. */
+@media (max-width: 767px) {
+  html, body { max-width:100%; overflow-x:clip; }
+  .container { width:100%; max-width:100%; min-width:0; padding-left:0!important; padding-right:0!important; }
+  main, section, article, .fresh-btc, .eth-fresh, .pt-shell { min-width:0; max-width:100%; }
+  img, video, svg:not(.motion-canvas) { max-width:100%; }
+  input, select, textarea { max-width:100%; min-width:0; font-size:16px; }
+  .pt-reference-header { width:100%; max-width:100%; }
+  .pt-reference-header .nav { flex-wrap:wrap; }
+  .pt-reference-header .nav a { min-height:40px; display:inline-flex; align-items:center; justify-content:center; }
+  .pt-reference-header .pt-header-search { min-width:0; }
+  .pt-founder-footer { max-width:100%; text-align:center; }
+  .pt26-hero-content, .pt26-search, .pt26-grid, .pt26-live, .pt-clarity-inner { min-width:0; max-width:100%; }
+  .pt26-search input, .fresh-search input { min-width:0; width:100%; }
+  .fresh-btc, .eth-fresh { width:100%; }
+  .fresh-section-head, .fresh-explore-body, .fresh-now-main { min-width:0; }
+  .fresh-data, .fresh-explainer, .etr-card, .txr-card, .bex-panel { min-width:0; max-width:100%; }
+  .fresh-data table, .etr-card table, .txr-card table { display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .motion-window { overflow-x:auto!important; overflow-y:hidden!important; touch-action:pan-x!important; }
+  .motion-track { flex-wrap:nowrap!important; direction:ltr!important; }
+  .motion-track > .motion-cell { order:initial!important; }
+  .pt-standard-tracker-flow { max-width:100%; overflow-x:auto!important; -webkit-overflow-scrolling:touch; }
+  .pt-founder-footer .footer-disclaimer { overflow-wrap:break-word; }
+}
+@media (max-width: 390px) {
+  .pt-reference-header { padding:10px 12px!important; }
+  .pt-reference-header .nav { gap:2px!important; }
+  .pt-reference-header .nav a { font-size:11px!important; padding:7px 4px!important; }
+  .pt26-hero { padding-left:12px; padding-right:12px; }
+  .fresh-btc { padding-left:10px; padding-right:10px; }
+  .fresh-explore, .fresh-learn { padding-left:12px; padding-right:12px; }
+}
