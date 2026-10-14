@@ -26,7 +26,6 @@ export default function BitcoinExplorerOverview(){
  return <div className="fresh-btc">
   <section className="fresh-hero">
    <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Search. Explore.<br/><em>Understand.</em></h1><p>Look up a Bitcoin transaction or explore the network. We'll explain what you're seeing, every step of the way.</p></div>
-   <div className="fresh-hero-symbol" aria-hidden="true"><div className="fresh-hero-hex">₿</div><i className="hx-one"/><i className="hx-two"/><i className="hx-three"/></div>
   </section>
   <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a transaction ID or Bitcoin address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<p className="fresh-search-help">Not sure what to search? <a href="#explore-bitcoin">Explore the blockchain instead ↓</a></p></section>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
