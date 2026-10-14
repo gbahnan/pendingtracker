@@ -508,3 +508,41 @@
  .fresh-btc .fresh-live-network-combined > .fresh-journey {padding:17px 14px 14px!important;}
  .fresh-btc .fresh-live-network-combined .fresh-journey-heading h2 {font-size:21px;}
 }
+
+
+/* Approved compact integrated explorer mockup */
+.fresh-btc-mockup .fresh-tab-copy{display:flex;flex-direction:column;gap:3px;text-align:left}
+.fresh-btc-mockup .fresh-tab-copy strong{font-weight:700}
+.fresh-btc-mockup .fresh-tab-copy small{font-size:10px;color:#8fa7b9;white-space:nowrap;font-weight:400}
+.fresh-btc-mockup .fresh-tabs-six button{display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important}
+@media(min-width:1050px){
+.fresh-btc-mockup{max-width:1480px!important;padding:14px 28px 46px!important}
+.fresh-btc-mockup .fresh-hero{min-height:120px!important;justify-content:center!important;text-align:center!important;background:transparent!important;padding:8px 0 0!important}
+.fresh-btc-mockup .fresh-hero-copy{max-width:none!important}
+.fresh-btc-mockup .fresh-hero h1{font-size:clamp(36px,3.2vw,48px)!important;line-height:1.1!important;letter-spacing:-1.6px!important;margin:2px 0 7px!important;white-space:nowrap}
+.fresh-btc-mockup .fresh-hero p{max-width:none!important;font-size:15px!important}
+.fresh-btc-mockup .fresh-hero .fresh-kicker{margin-bottom:6px!important}
+.fresh-btc-mockup .fresh-search{max-width:950px!important;margin:0 auto 12px!important}
+.fresh-btc-mockup .fresh-live-network-combined{margin:12px 0 10px!important}
+.fresh-btc-mockup .fresh-now-snapshot{display:grid!important;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr) minmax(0,1.85fr)!important;column-gap:14px!important;padding:15px 18px 12px!important;align-items:stretch!important}
+.fresh-btc-mockup .fresh-now-top{grid-column:1/-1!important;margin-bottom:7px!important}
+.fresh-btc-mockup .fresh-now-primary{grid-column:1/3!important;display:grid!important;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)!important;gap:12px!important;margin:0!important;padding:0!important;border:0!important}
+.fresh-btc-mockup .fresh-now-price{min-width:0!important;padding:0 12px 0 0!important}
+.fresh-btc-mockup .fresh-network-activity{padding:8px 12px!important;min-width:0!important;text-align:left!important}
+.fresh-btc-mockup .fresh-now-secondary{grid-column:3!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;margin:0!important;padding:0!important;border:0!important;align-items:stretch!important}
+.fresh-btc-mockup .fresh-now-secondary-metric{min-width:0!important;display:flex!important;flex-direction:column!important;gap:7px!important;align-items:flex-start!important;padding:13px 10px!important;border:1px solid #1b3546!important;border-radius:10px!important;background:#071725!important}
+.fresh-btc-mockup .fresh-now-secondary-metric .fresh-secondary-text{min-width:0!important;display:flex!important;flex-direction:column!important;gap:4px!important}
+.fresh-btc-mockup .fresh-now-secondary-metric .fresh-secondary-text strong{font-size:clamp(15px,1.45vw,23px)!important;white-space:nowrap!important}
+.fresh-btc-mockup .fresh-now-secondary-metric .fresh-secondary-text span{font-size:11px!important}
+.fresh-btc-mockup .fresh-now-secondary-metric .fresh-secondary-text small{font-size:10px!important;line-height:1.4!important}
+.fresh-btc-mockup .fresh-now-expanded{grid-column:1/-1!important}
+.fresh-btc-mockup .fresh-live-network-combined > .fresh-journey{padding:12px 18px 10px!important}
+.fresh-btc-mockup .fresh-journey-heading{margin-bottom:3px!important}
+.fresh-btc-mockup .fresh-journey-heading p{font-size:12px!important;max-width:none!important}
+.fresh-btc-mockup .fresh-explore-premium{margin-top:10px!important;padding:15px 18px!important}
+.fresh-btc-mockup .fresh-explore-title{margin-bottom:10px!important}
+.fresh-btc-mockup .fresh-explore-title h2{font-size:24px!important}
+.fresh-btc-mockup .fresh-explore-kicker{display:none!important}
+.fresh-btc-mockup .fresh-learn{margin-top:10px!important;padding-top:10px!important}
+}
+@media(max-width:1049px){.fresh-btc-mockup .fresh-tab-copy small{display:none}}
