@@ -314,3 +314,18 @@
 @keyframes pt-snapshot-reveal{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.fresh-v3 .pt-snapshot-grid>.pt-snapshot-detail{animation:none}}
 @media(max-width:950px){.fresh-v3 .pt-snapshot-grid>.pt-snapshot-detail{padding:18px 16px}}
+
+/* Individual snapshot card disclosure: no full-row expansion. */
+.fresh-v3 .pt-snapshot-grid{align-items:start}
+.fresh-v3 .pt-snapshot-item{min-width:0;display:flex;flex-direction:column;align-self:start}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{width:100%;height:100%;min-height:260px}
+.fresh-v3 .pt-snapshot-item.is-expanded>.pt-snapshot-card{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom-color:transparent!important;transform:none}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail{position:relative;min-width:0;margin:0;padding:15px 13px 17px;border:1px solid #ffc44e;border-top:1px solid rgba(255,196,78,.3);border-radius:0 0 13px 13px;background:linear-gradient(180deg,#0c2736,#061723);box-shadow:0 12px 22px rgba(0,0,0,.22);animation:pt-snapshot-reveal .2s ease-out}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail h3{font-size:16px;line-height:1.25;margin:10px 24px 8px 0}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail p{font-size:12px;line-height:1.55;margin:0}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail .pt-snapshot-disclaimer{font-size:10px;line-height:1.45;margin-top:12px}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail .fresh-kicker{font-size:9px;letter-spacing:.11em}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail .pt-snapshot-close{right:9px;top:7px;font-size:21px}
+@media(max-width:950px){.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{min-height:240px}}
+@media(max-width:560px){.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{min-height:230px}.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail{padding:12px 9px 14px}.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail h3{font-size:14px}.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail p{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail{animation:none}}
