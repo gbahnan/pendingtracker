@@ -39,3 +39,20 @@
 .fresh-btc-mockup .fresh-selectable-block:hover,.fresh-btc-mockup .fresh-selected-block{background:rgba(241,176,62,.09)}
 .fresh-btc-mockup .fresh-block-selection-help{margin:12px 0;padding:10px 0;border-top:1px solid rgba(91,151,181,.25);color:#b4cad9;font-size:13px;line-height:1.6}
 .fresh-btc-mockup .fresh-block-selection-help button{background:none;border:0;cursor:pointer;font:inherit}
+
+/* Gold diagonal hero artwork ends before the live Bitcoin data.
+   Preserve the artwork above search, never behind the metrics or timeline. */
+.pt-bitcoin-explorer-redesign::before{
+  height:300px!important;
+  background-size:cover!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 54%,rgba(0,0,0,.72) 69%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0%,#000 54%,rgba(0,0,0,.72) 69%,transparent 100%)!important;
+}
+@media(max-width:700px){
+ .pt-bitcoin-explorer-redesign::before{
+  height:340px!important;
+  background-size:auto 470px!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.9) 42%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.9) 42%,transparent 100%)!important;
+ }
+}
