@@ -376,3 +376,18 @@
  mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 91%,transparent 100%);
  }
 }
+
+/* Explorer first-screen typography and rhythm: tighten without changing sections. */
+.fresh-v3>.fresh-hero{margin:2px auto 0;padding:0}
+.fresh-v3>.fresh-hero h1{font-size:clamp(32px,3.5vw,47px);line-height:1.12;letter-spacing:-.042em;margin:0}
+.fresh-v3>.fresh-hero p{font-size:14px;line-height:1.45;margin:8px auto 0;max-width:660px}
+.fresh-v3>.fresh-search{margin:14px auto 0}
+.fresh-v3>.fresh-search form{min-height:54px;box-shadow:0 8px 26px rgba(0,0,0,.12)}
+.fresh-v3>.fresh-search form:focus-within{border-color:#f3b747;box-shadow:0 0 0 2px rgba(243,183,71,.12)}
+.fresh-v3>.fresh-search form input::placeholder{color:#9cb4c8}
+.fresh-v3>.fresh-search form button{transition:filter .18s,transform .18s}
+.fresh-v3>.fresh-search form button:hover{filter:brightness(1.09)}
+.fresh-v3 .pt-snapshot{margin-top:22px;margin-bottom:30px}
+.fresh-v3 .pt-snapshot-header{padding-bottom:11px}
+.fresh-v3 .pt-snapshot-title h2{letter-spacing:-.025em}
+@media(max-width:700px){.fresh-v3>.fresh-hero{margin-top:8px}.fresh-v3>.fresh-hero h1{font-size:clamp(27px,7vw,36px);line-height:1.15}.fresh-v3>.fresh-hero p{font-size:12px;padding:0 8px}.fresh-v3>.fresh-search{margin-top:13px}.fresh-v3 .pt-snapshot{margin-top:20px}}
