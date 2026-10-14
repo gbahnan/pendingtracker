@@ -46,6 +46,16 @@ export default function BitcoinExplorerOverview(){
   </div>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
    <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> BITCOIN NETWORK LIVE</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
+   <div className="fresh-now-secondary">
+    {([
+      {id:"pending" as const,icon:"▱",label:"Pending transactions",value:fmt(btc?.pending),description:"Payments waiting to be confirmed."},
+      {id:"fee" as const,icon:"ϟ",label:"Priority fee",value:rate(btc?.fastestFee),description:"Suggested rate for faster confirmation."},
+      {id:"interval" as const,icon:"◷",label:"Average block interval",value:"~10 minutes",description:"Long-term average, not a countdown."},
+      {id:"latest" as const,icon:"⬡",label:"Latest confirmed block",value:btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height),description:"Most recently added Bitcoin block."}
+     ]).map(m=><button type="button" key={m.id} className={"fresh-now-secondary-metric"+(snapshotOpen===m.id?" active":"")} aria-expanded={m.id==="latest"?undefined:snapshotOpen===m.id} onClick={()=>{if(m.id==="latest"){setTab("blocks");document.getElementById("explore-bitcoin")?.scrollIntoView({behavior:"smooth"});}else{setSnapshotOpen(snapshotOpen===m.id?null:m.id)}}}>
+      <span className="fresh-metric-icon" aria-hidden="true">{m.icon}</span><span className="fresh-secondary-text"><strong>{m.value}</strong><span>{m.label} <span className="fresh-inline-help">ⓘ</span></span><small>{m.description}</small></span>
+     </button>)}
+   </div>
    <div className="fresh-now-primary">
     <div className="fresh-now-price">
      <div className="fresh-price-line"><span className="fresh-btc-coin">₿</span><div><span className="fresh-price-label">Bitcoin price (USD)</span><div className="fresh-price-values"><strong>{market?.price!=null?"$"+fmt(market.price):"Price unavailable"}</strong>{market?.change24h!=null&&<span className={market.change24h>=0?"up":"down"}>{market.change24h>=0?"+":""}{market.change24h.toFixed(2)}% <small>24h</small></span>}</div></div></div>
@@ -59,16 +69,6 @@ export default function BitcoinExplorerOverview(){
      <small>How busy Bitcoin is right now. <span className="fresh-inline-help">ⓘ</span></small>
     </button>
    </div>
-   <div className="fresh-now-secondary">
-    {([
-      {id:"pending" as const,icon:"▱",label:"Pending transactions",value:fmt(btc?.pending),description:"Payments waiting to be confirmed."},
-      {id:"fee" as const,icon:"ϟ",label:"Priority fee",value:rate(btc?.fastestFee),description:"Suggested rate for faster confirmation."},
-      {id:"interval" as const,icon:"◷",label:"Average block interval",value:"~10 minutes",description:"Long-term average, not a countdown."},
-      {id:"latest" as const,icon:"⬡",label:"Latest confirmed block",value:btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height),description:"Most recently added Bitcoin block."}
-     ]).map(m=><button type="button" key={m.id} className={"fresh-now-secondary-metric"+(snapshotOpen===m.id?" active":"")} aria-expanded={m.id==="latest"?undefined:snapshotOpen===m.id} onClick={()=>{if(m.id==="latest"){setTab("blocks");document.getElementById("explore-bitcoin")?.scrollIntoView({behavior:"smooth"});}else{setSnapshotOpen(snapshotOpen===m.id?null:m.id)}}}>
-      <span className="fresh-metric-icon" aria-hidden="true">{m.icon}</span><span className="fresh-secondary-text"><strong>{m.value}</strong><span>{m.label} <span className="fresh-inline-help">ⓘ</span></span><small>{m.description}</small></span>
-     </button>)}
-   </div>
    <div className="fresh-network-guidance" role="status"><strong>What this means for you:</strong> {networkAdvice} <a href="#explore-bitcoin" onClick={()=>setTab("fees")}>See fee estimates →</a></div>
    {snapshotOpen&&<div id="fresh-now-expanded" className="fresh-now-expanded" role="region" aria-live="polite">
     <button type="button" className="fresh-now-close" aria-label="Close explanation" onClick={()=>setSnapshotOpen(null)}>×</button>
@@ -78,7 +78,7 @@ export default function BitcoinExplorerOverview(){
   </section>
   </div>
   <section className="fresh-explore fresh-explore-premium" id="explore-bitcoin">
-   <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker fresh-explore-kicker">EXPLORE THE BLOCKCHAIN</div><h2>Explore the <span className="fresh-explore-gold-word">Bitcoin</span> Blockchain</h2><p>Explore live blocks, transactions, fees, and mining. Select any category to see the data and understand what it means.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
+   <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker fresh-explore-kicker">EXPLORE THE BLOCKCHAIN</div><h2>Explore Live Bitcoin Data</h2><p>Explore live blocks, transactions, fees, and mining. Select any category to see the data and understand what it means.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
    <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore Bitcoin data">{tabs.map(t=><button role="tab" aria-selected={tab===t.id} key={t.id} className={tab===t.id?"active":""} onClick={()=>{setTab(t.id);setAdvanced(false);setExplainOpen(null)}}><span className="fresh-tab-icon" aria-hidden="true">{t.icon}</span><span className="fresh-tab-copy"><strong>{t.label}</strong><small>{{blocks:"Confirmed payments",transactions:"Live network activity",fees:"Rates & trends",network:"Network health",mining:"Hashrate & difficulty",insights:"Historical data"}[t.id]}</small></span></button>)}</div>
    <div className="fresh-explore-guide"><span className="fresh-explore-guide-dot" aria-hidden="true">✦</span><span>Choose a category below. The data and plain-English explanation update together.</span></div><div className="fresh-explore-body">
     <div className="fresh-data fresh-data-premium">
