@@ -16,4 +16,17 @@
   border-top:1px solid transparent!important;
   border-image:linear-gradient(90deg,transparent,rgba(91,151,181,.68) 5%,rgba(91,151,181,.68) 95%,transparent) 1!important;
  }
+ /* Matching premium gradient hairline dividers for the snapshot metrics.
+    Keep existing layout and spacing; replace only the rigid borders. */
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-network-activity {
+  border-left:1px solid transparent!important;
+  border-image:linear-gradient(180deg,transparent,rgba(91,151,181,.68) 5%,rgba(91,151,181,.68) 95%,transparent) 1!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-now-secondary-metric {
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  border-left:1px solid transparent!important;
+  border-image:linear-gradient(180deg,transparent,rgba(91,151,181,.68) 5%,rgba(91,151,181,.68) 95%,transparent) 1!important;
+ }
 }
