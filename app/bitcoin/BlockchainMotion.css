@@ -95,3 +95,20 @@
  .motion-arrows button{padding:3px 8px!important}
  .motion-track .motion-canvas{pointer-events:none!important}
 }
+
+/* Mobile timeline must retain the EXACT desktop sequence:
+   mempool -> 60 -> 50 -> 40 -> 30 -> 20 -> 10 -> confirmed.
+   Keep compact cards visible and swipe to reveal the rest. */
+@media(max-width:700px){
+ .motion-track>.motion-cell.mempool{order:0!important}
+ .motion-track>.motion-cell.motion-stage:nth-child(2){order:1!important}
+ .motion-track>.motion-cell.motion-stage:nth-child(3){order:2!important}
+ .motion-track>.motion-cell.motion-stage:nth-child(4){order:3!important}
+ .motion-track>.motion-cell.motion-stage:nth-child(5){order:4!important}
+ .motion-track>.motion-cell.motion-stage:nth-child(6){order:5!important}
+ .motion-track>.motion-cell.motion-stage:nth-child(7){order:6!important}
+ .motion-track>.motion-cell.confirmed{order:7!important}
+ .motion-window{overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;touch-action:pan-x!important}
+ .motion-track{flex-wrap:nowrap!important;width:max-content!important;min-width:max-content!important}
+ .motion-cell{flex:0 0 auto!important}
+}
