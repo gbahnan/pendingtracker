@@ -305,3 +305,12 @@
 .fresh-v3 .pt-snapshot-close{position:absolute;right:14px;top:10px;background:transparent;border:0;color:#ffc24b;font-size:26px}
 @media(max-width:950px){.fresh-v3 .pt-snapshot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fresh-v3 .pt-snapshot-card{min-height:240px}}
 @media(max-width:560px){.fresh-v3 .pt-snapshot{padding:15px 10px;margin-top:22px}.fresh-v3 .pt-snapshot-title{gap:8px}.fresh-v3 .pt-snapshot-pulse{font-size:30px}.fresh-v3 .pt-snapshot-title h2{font-size:18px}.fresh-v3 .pt-snapshot-title p{font-size:11px}.fresh-v3 .pt-snapshot-live small{display:none}.fresh-v3 .pt-snapshot-grid{gap:8px}.fresh-v3 .pt-snapshot-card{padding:11px 9px;min-height:230px}.fresh-v3 .pt-snapshot-card-top{gap:7px}.fresh-v3 .pt-snapshot-icon{flex-basis:30px;height:33px;font-size:20px}.fresh-v3 .pt-snapshot-label{font-size:10px}.fresh-v3 .pt-snapshot-card-copy strong{font-size:17px}.fresh-v3 .pt-snapshot-art{height:54px;flex-basis:54px}.fresh-v3 .pt-snapshot-description{font-size:10px}}
+
+/* Snapshot drill-down: the explanation is a grid item immediately after the selected four-card row. */
+.fresh-v3 .pt-snapshot-grid>.pt-snapshot-detail{grid-column:1/-1;margin:1px 0 7px;border:0;border-top:1px solid rgba(94,163,194,.6);border-bottom:1px solid rgba(94,163,194,.35);border-radius:0;background:linear-gradient(90deg,rgba(12,38,54,.86),rgba(5,22,35,.95),rgba(12,38,54,.86));box-shadow:0 12px 32px rgba(0,0,0,.14);padding:22px 28px;animation:pt-snapshot-reveal .22s ease-out}
+.fresh-v3 .pt-snapshot-card.selected{border-color:#ffc44e!important;box-shadow:0 0 0 1px rgba(255,196,78,.4),0 0 24px rgba(255,190,55,.18)!important;background:linear-gradient(145deg,#122b3a,#071722 90%)}
+.fresh-v3 .pt-snapshot-card.selected .pt-snapshot-more{color:#fff}
+.fresh-v3 .pt-snapshot-card:focus-visible{outline:2px solid #ffc44e;outline-offset:3px}
+@keyframes pt-snapshot-reveal{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.fresh-v3 .pt-snapshot-grid>.pt-snapshot-detail{animation:none}}
+@media(max-width:950px){.fresh-v3 .pt-snapshot-grid>.pt-snapshot-detail{padding:18px 16px}}
