@@ -119,3 +119,52 @@
  .fresh-v3 .fresh-explore-body{padding:15px 3px}
  .fresh-v3 .fresh-learn-compact{padding:20px 2px}
 }
+
+
+/* Bitcoin Right Now — editorial status strip, mockup hierarchy, open premium framing. */
+.fresh-v3 .fresh-v3-context{
+ display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+ align-items:center;column-gap:34px;row-gap:16px;
+ padding:23px 12px 25px!important;margin:12px 0 23px!important;
+ background:transparent!important;border:0!important;border-radius:0!important;
+ border-bottom:1px solid transparent!important;
+ border-image:linear-gradient(90deg,transparent,rgba(102,158,187,.55) 12%,rgba(102,158,187,.55) 88%,transparent) 1!important;
+}
+.fresh-v3 .fresh-v3-context-message{min-width:0}
+.fresh-v3 .fresh-v3-context-message .fresh-kicker{
+ display:flex;align-items:center;gap:10px;color:#8bd0f5!important;
+ font-size:17px!important;letter-spacing:.015em!important;font-weight:700!important;
+ text-transform:none!important;margin-bottom:12px!important;
+}
+.fresh-v3 .fresh-v3-context-message .fresh-kicker .fresh-v3-pulse{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:28px;height:28px;color:#f5b942;font-size:22px;
+ filter:drop-shadow(0 0 7px rgba(245,185,66,.42));
+}
+.fresh-v3 .fresh-v3-context-message .fresh-v3-status-line{
+ font-size:15px!important;line-height:1.6!important;color:#d1dfeb!important;
+ margin:0!important;max-width:650px;
+}
+.fresh-v3 .fresh-v3-status-line strong{color:#f4f7fb!important;font-size:16px;font-weight:700}
+.fresh-v3 .fresh-v3-context-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center}
+.fresh-v3 .fresh-v3-context-stats>div{
+ min-width:0;padding:8px 15px 8px 19px!important;
+ border:0!important;border-left:1px solid transparent!important;
+ border-image:linear-gradient(180deg,transparent,rgba(102,158,187,.58) 20%,rgba(102,158,187,.58) 80%,transparent) 1!important;
+ gap:7px!important;
+}
+.fresh-v3 .fresh-v3-context-stats small{font-size:12px!important;color:#a9c9de!important}
+.fresh-v3 .fresh-v3-context-stats strong{font-size:18px!important;color:#f4f7fb!important}
+@media(max-width:1000px){
+ .fresh-v3 .fresh-v3-context{grid-template-columns:1fr!important;gap:18px!important}
+ .fresh-v3 .fresh-v3-context-stats>div:first-child{border-left:0!important}
+}
+@media(max-width:600px){
+ .fresh-v3 .fresh-v3-context{padding:18px 4px 21px!important}
+ .fresh-v3 .fresh-v3-context-message .fresh-kicker{font-size:16px!important}
+ .fresh-v3 .fresh-v3-context-message .fresh-v3-status-line{font-size:13px!important}
+ .fresh-v3 .fresh-v3-status-line strong{font-size:14px!important}
+ .fresh-v3 .fresh-v3-context-stats>div{padding:7px 8px!important}
+ .fresh-v3 .fresh-v3-context-stats strong{font-size:13px!important}
+ .fresh-v3 .fresh-v3-context-stats small{font-size:10px!important}
+}
