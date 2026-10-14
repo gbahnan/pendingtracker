@@ -135,3 +135,71 @@
  .fresh-btc-mockup .fresh-right-now-reading{padding:12px 0 0;border-left:0;border-top:1px solid rgba(91,151,181,.25)}
  .fresh-btc-mockup .fresh-right-now-live{font-size:8px}
 }
+
+/* Mockup-inspired Bitcoin explorer layout: preserve gold artwork and live hexagons. */
+.fresh-btc-mockup .fresh-live-network-combined{
+ background:radial-gradient(ellipse at 65% 0%,rgba(21,48,69,.15),transparent 66%)!important;
+}
+.fresh-btc-mockup .fresh-bitcoin-right-now{padding-top:29px;padding-bottom:27px}
+.fresh-btc-mockup .fresh-right-now-content h2{font-size:clamp(22px,2.3vw,30px)}
+.fresh-btc-mockup .fresh-now-snapshot .fresh-now-secondary-metric{
+ transition:background .2s ease,transform .2s ease;
+}
+.fresh-btc-mockup .fresh-now-snapshot .fresh-now-secondary-metric:hover{
+ background:rgba(91,151,181,.07)!important;
+}
+.fresh-btc-mockup .fresh-explorer-jump{
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+ gap:12px 22px;max-width:1100px;margin:58px auto 0;
+ padding:16px 24px;position:relative;
+}
+.fresh-btc-mockup .fresh-explorer-jump::before,
+.fresh-btc-mockup .fresh-explorer-jump::after{
+ content:"";position:absolute;left:8%;right:8%;height:1px;
+ background:linear-gradient(90deg,transparent,rgba(91,151,181,.50) 16%,rgba(91,151,181,.50) 84%,transparent);
+}
+.fresh-btc-mockup .fresh-explorer-jump::before{top:0}
+.fresh-btc-mockup .fresh-explorer-jump::after{bottom:0}
+.fresh-btc-mockup .fresh-explorer-jump>span{color:#91b9d4;font-size:10px;font-weight:750;letter-spacing:.13em;margin-right:12px}
+.fresh-btc-mockup .fresh-explorer-jump a{color:#d9e6ef;text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap;transition:color .2s}
+.fresh-btc-mockup .fresh-explorer-jump a span{color:#f5b942;margin-left:3px}
+.fresh-btc-mockup .fresh-explorer-jump a:hover{color:#f5b942}
+.fresh-btc-mockup .fresh-explore-premium .fresh-explore-gold-word{color:#f5b942}
+.fresh-btc-mockup .fresh-explore-premium .fresh-explore-guide{
+ display:flex;align-items:center;gap:9px;color:#9db7ca;font-size:12px;line-height:1.5;
+ margin:0 0 17px;padding:0 3px;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-explore-guide-dot{color:#f5b942;font-size:16px}
+.fresh-btc-mockup .fresh-explore-premium .fresh-tabs-six button:not(.active){
+ background:transparent!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-tabs-six button:not(.active):hover{
+ background:rgba(91,151,181,.11)!important;
+}
+.fresh-btc-mockup .fresh-explore-premium .fresh-tabs-six button.active{
+ background:linear-gradient(180deg,rgba(101,69,22,.32),rgba(26,32,35,.34))!important;
+ box-shadow:inset 0 -2px #f5b942!important;
+}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq details{
+ background:rgba(15,33,47,.40)!important;
+ border-color:rgba(91,151,181,.22)!important;
+ transition:background .2s,border-color .2s;
+}
+.fresh-btc-mockup .fresh-learn-compact .fresh-faq details[open]{
+ background:rgba(20,40,55,.65)!important;
+ border-color:rgba(91,151,181,.44)!important;
+}
+@media(min-width:1050px){
+ .fresh-btc-mockup .fresh-explorer-jump + .fresh-explore-premium{margin-top:42px!important}
+ .fresh-btc-mockup .fresh-explorer-jump + .fresh-explore-premium::before{display:none!important}
+}
+@media(min-width:701px) and (max-width:1049px){
+ .fresh-btc-mockup .fresh-explorer-jump + .fresh-explore-premium{margin-top:32px!important}
+}
+@media(max-width:700px){
+ .fresh-btc-mockup .fresh-explorer-jump{margin:34px 12px 0;gap:11px 16px;padding:15px 10px}
+ .fresh-btc-mockup .fresh-explorer-jump>span{flex-basis:100%;text-align:center;margin-right:0}
+ .fresh-btc-mockup .fresh-explorer-jump a{font-size:11px}
+ .fresh-btc-mockup .fresh-explorer-jump + .fresh-explore-premium{margin-top:26px!important}
+ .fresh-btc-mockup .fresh-explore-premium .fresh-explore-guide{font-size:11px}
+}
