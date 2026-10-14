@@ -29,6 +29,7 @@ export default function BitcoinExplorerOverview(){
    <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Search. Explore.<br/><em>Understand.</em></h1><p>Look up a Bitcoin transaction or explore the network. We'll explain what you're seeing, every step of the way.</p></div>
   </section>
   <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a transaction ID or Bitcoin address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
+  <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
    <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> LIVE BITCOIN NETWORK SNAPSHOT</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
    <div className="fresh-now-primary">
@@ -60,6 +61,7 @@ export default function BitcoinExplorerOverview(){
    </div>}
   </section>
   <section className="fresh-journey" aria-label="Live two-dimensional Bitcoin confirmation timeline"><div className="fresh-section-head"><div><div className="fresh-kicker">THE BLOCKCHAIN IN MOTION</div><h2>Watch Bitcoin transactions get confirmed.</h2><p>Gold hexagons show estimated waiting-time bands. Blue hexagons show confirmed blocks. Drag or scroll to explore.</p></div><details><summary>How does this work? ＋</summary><p>Gold hexagons represent estimated waiting-time bands and the next projected block. Blue hexagons are real confirmed blocks. Moving dots illustrate how transactions progress, not individual tracked transactions.</p></details></div><BlockchainWebGL pending={btc?.pending} fee={projections[0]?.medianFee} projectedCount={projections[0]?.transactionCount} projections={projections} blocks={blocks}/></section>
+  </div>
   <section className="fresh-explore fresh-explore-premium" id="explore-bitcoin">
    <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker">EXPLORE THE BLOCKCHAIN</div><h2>Explore the Bitcoin blockchain.</h2><p>Dive into live data, detailed insights, and clear explanations.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
    <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore Bitcoin data">{tabs.map(t=><button role="tab" aria-selected={tab===t.id} key={t.id} className={tab===t.id?"active":""} onClick={()=>{setTab(t.id);setAdvanced(false)}}><span className="fresh-tab-icon" aria-hidden="true">{t.icon}</span>{t.label}</button>)}</div>
