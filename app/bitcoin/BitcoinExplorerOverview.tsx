@@ -32,10 +32,6 @@ export default function BitcoinExplorerOverview(){
   </section>
   <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search a Bitcoin transaction ID or address…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
   <div className="fresh-live-network-combined" aria-label="Bitcoin Network Live">
-  <div className="fresh-bitcoin-right-now" role="status" aria-live="polite">
-   <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
-   <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-reading"><span>Current priority fee</span><strong>{rate(btc?.fastestFee)}</strong><small>Estimate, not a guarantee</small></div></div>
-  </div>
   <section className="fresh-now fresh-now-snapshot" aria-label="Current Bitcoin snapshot">
    <div className="fresh-now-top"><div className="fresh-kicker"><span className="fresh-live-dot">●</span> BITCOIN NETWORK LIVE</div><span className="fresh-now-live">{updated?"Updated "+updated:"Connecting to live network…"}</span></div>
    <div className="fresh-now-primary">
@@ -55,8 +51,9 @@ export default function BitcoinExplorerOverview(){
     {([
       {id:"pending" as const,icon:"▱",label:"Pending transactions",value:fmt(btc?.pending),description:"Payments waiting to be confirmed."},
       {id:"fee" as const,icon:"ϟ",label:"Priority fee",value:rate(btc?.fastestFee),description:"Suggested rate for faster confirmation."},
-      {id:"interval" as const,icon:"◷",label:"Average block interval",value:"~10 minutes",description:"Average time between new blocks."}
-     ]).map(m=><button type="button" key={m.id} className={"fresh-now-secondary-metric"+(snapshotOpen===m.id?" active":"")} aria-expanded={snapshotOpen===m.id} onClick={()=>setSnapshotOpen(snapshotOpen===m.id?null:m.id)}>
+      {id:"interval" as const,icon:"◷",label:"Average block interval",value:"~10 minutes",description:"Long-term average, not a countdown."},
+      {id:"latest" as const,icon:"⬡",label:"Latest confirmed block",value:btc?.latestBlock?.height==null?"—":"#"+fmt(btc.latestBlock.height),description:"Most recently added Bitcoin block."}
+     ]).map(m=><button type="button" key={m.id} className={"fresh-now-secondary-metric"+(snapshotOpen===m.id?" active":"")} aria-expanded={m.id==="latest"?undefined:snapshotOpen===m.id} onClick={()=>{if(m.id==="latest"){setTab("blocks");document.getElementById("explore-bitcoin")?.scrollIntoView({behavior:"smooth"});}else{setSnapshotOpen(snapshotOpen===m.id?null:m.id)}}}>
       <span className="fresh-metric-icon" aria-hidden="true">{m.icon}</span><span className="fresh-secondary-text"><strong>{m.value}</strong><span>{m.label} <span className="fresh-inline-help">ⓘ</span></span><small>{m.description}</small></span>
      </button>)}
    </div>
@@ -67,6 +64,10 @@ export default function BitcoinExplorerOverview(){
     {snapshotOpen==="pending"?<><h3>What are pending transactions?</h3><p>These are Bitcoin payments waiting in the mempool to be included in a block. Right now, {fmt(btc?.pending)} transactions are reported as waiting. A larger queue can mean more competition for limited block space, but the number alone doesn't predict your wait.</p></>:snapshotOpen==="fee"?<><h3>What does the recommended fee mean?</h3><p>The current priority estimate is {rate(btc?.fastestFee)}. Bitcoin fees are measured in satoshis per virtual byte (sat/vB), not as a percentage of the amount sent. Your total fee depends on transaction size. Higher rates can help miners prioritize a transaction, but don't guarantee a confirmation time.</p></>:snapshotOpen==="interval"?<><h3>When will the next Bitcoin block arrive?</h3><p>Bitcoin blocks are found approximately every 10 minutes on average. Actual intervals vary substantially. This is an average, not a countdown or a promise that your transaction will confirm within ten minutes.</p></>:<><h3>What does network congestion mean?</h3><p>{expl} Congestion is a simplified interpretation of the current mempool and fee conditions. When more transactions compete for block space, fee rates may rise and lower-fee payments may take longer to confirm.</p></>}
    </div>}
   </section>
+  <div className="fresh-bitcoin-right-now" role="status" aria-live="polite">
+   <div className="fresh-right-now-heading"><span className="fresh-right-now-pulse" aria-hidden="true">✦</span><span>BITCOIN RIGHT NOW</span><span className="fresh-right-now-live">LIVE NETWORK CONTEXT</span></div>
+   <div className="fresh-right-now-content"><div><h2>{status}</h2><p>{networkAdvice}</p></div><div className="fresh-right-now-reading"><span>Current priority fee</span><strong>{rate(btc?.fastestFee)}</strong><small>Estimate, not a guarantee</small></div></div>
+  </div>
   <section className="fresh-journey" aria-label="Live Bitcoin confirmation timeline">
    <div className="fresh-section-head fresh-journey-heading">
     <div><div className="fresh-kicker">LIVE BITCOIN BLOCKSPACE · VISUAL EXPLORER</div><h2 className="fresh-journey-title">See how Bitcoin transactions <em>move toward confirmation.</em></h2><p>Each gold hexagon represents an estimated confirmation window, not a guaranteed arrival time. Explore projected blocks and recently confirmed blocks below.</p></div>
