@@ -97,3 +97,14 @@
 .fresh-btc-mockup .fresh-learn-compact .fresh-faq summary span{
  color:#f5b942!important;
 }
+
+/* Deliberate separation between live hexagon flow and Explore Bitcoin. */
+@media(min-width:1050px){
+ .fresh-btc-mockup .fresh-explore-premium{margin-top:126px!important}
+}
+@media(min-width:701px) and (max-width:1049px){
+ .fresh-btc-mockup .fresh-explore-premium{margin-top:62px!important}
+}
+@media(max-width:700px){
+ .fresh-btc-mockup .fresh-explore-premium{margin-top:46px!important}
+}
