@@ -610,3 +610,51 @@
 @media (max-width:600px){
  .fresh-btc-mockup .fresh-explore-premium{margin-top:24px!important}
 }
+
+/* Cohesive Bitcoin network panel: one surface for snapshot + honeycombs.
+   Keep original honeycomb geometry, animation, artwork and all data. */
+@media(min-width:1050px){
+ .fresh-btc-mockup .fresh-live-network-combined{
+  margin:12px 0 0!important;
+  border:1px solid #946c26!important;
+  border-radius:18px!important;
+  background:linear-gradient(155deg,rgba(7,26,39,.97),rgba(3,12,22,.98))!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot{
+  padding:13px 18px 10px!important;
+  border:0!important;
+  border-bottom:1px solid #294553!important;
+  background:transparent!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{
+  padding:10px 18px 9px!important;
+  border:0!important;
+  background:transparent!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey>.fresh-section-head{margin-bottom:2px!important}
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-top{margin:1px 0 2px!important}
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-arrows{margin:1px 0 1px!important}
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-track{
+  min-height:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-footer{margin-top:0!important}
+ .fresh-btc-mockup .fresh-live-network-combined .fresh-journey .motion-note{margin-top:3px!important}
+ .fresh-btc-mockup .fresh-explore-premium{margin-top:40px!important}
+}
+@media(max-width:1049px){
+ .fresh-btc-mockup .fresh-live-network-combined{
+  border:1px solid #946c26!important;
+  border-radius:16px!important;
+  overflow:hidden!important;
+  background:linear-gradient(155deg,#071a29,#030c16)!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-now-snapshot{
+  border-bottom:1px solid #294553!important;
+  background:transparent!important;
+ }
+ .fresh-btc-mockup .fresh-live-network-combined>.fresh-journey{background:transparent!important}
+}
