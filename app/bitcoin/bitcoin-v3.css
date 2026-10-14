@@ -775,3 +775,12 @@
 .fresh-v3 .fresh-explore-body{
  background:rgba(2,13,23,.36)!important;
 }
+
+/* Keep navigation arrows fully below the sticky header after lifting the hexagons. */
+@media(min-width:701px){
+ .fresh-v3>.fresh-journey .motion-explorer .motion-arrows{
+  transform:translateY(24px);
+  position:relative;
+  z-index:5;
+ }
+}
