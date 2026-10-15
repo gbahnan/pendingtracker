@@ -1513,3 +1513,61 @@
  .fresh-v3>.fresh-explore-premium{padding-top:14px!important}
  .fresh-v3>.pt-snapshot-header.pt-external-section-heading .pt-snapshot-title p{font-size:12px!important}
 }
+
+
+/* Compact transaction-detail proportions for the two Bitcoin overview panels. */
+@media(min-width:951px){
+ .fresh-v3>.pt-external-section-heading{margin-top:27px!important;margin-bottom:10px!important}
+ .fresh-v3>.fresh-explore-title.pt-external-section-heading{margin-top:30px!important;margin-bottom:10px!important}
+ .fresh-v3>.pt-snapshot{padding-top:10px!important;padding-bottom:10px!important}
+ .fresh-v3 .pt-snapshot-grid{grid-auto-rows:minmax(176px,auto)!important}
+ .fresh-v3 .pt-snapshot-item{min-height:176px!important;height:auto!important}
+ .fresh-v3 .pt-snapshot-item>.pt-snapshot-card{min-height:176px!important;height:100%!important;padding:11px 12px 9px!important}
+ .fresh-v3 .pt-snapshot-card-top{gap:8px!important}
+ .fresh-v3 .pt-snapshot-card-copy{gap:3px!important}
+ .fresh-v3 .pt-snapshot-art{height:37px!important;flex-basis:37px!important;margin:5px 0 3px!important;padding:3px 4px 1px!important}
+ .fresh-v3 .pt-snapshot-description{min-height:0!important;line-height:1.4!important}
+ .fresh-v3 .pt-snapshot-more{padding-top:7px!important}
+ .fresh-v3>.fresh-explore-premium{padding-top:12px!important}
+ .fresh-v3 .fresh-tabs-six{padding-bottom:12px!important;gap:6px!important}
+ .fresh-v3 .fresh-tabs-six button{min-height:55px!important;padding:7px 8px!important}
+ .fresh-v3 .fresh-tab-icon{font-size:18px!important}
+ .fresh-v3 .fresh-tab-copy{gap:2px!important}
+ .fresh-v3 .fresh-explore-body{padding:15px 17px 17px!important}
+ .fresh-v3 .fresh-data-premium{padding:3px 19px 3px 2px!important}
+ .fresh-v3 .fresh-explainer-premium{padding:3px 3px 3px 19px!important}
+ .fresh-v3 .fresh-explainer-premium>.fresh-explainer-icon{width:29px!important;height:29px!important;margin-bottom:9px!important}
+ .fresh-v3 .fresh-explainer-premium>h3{margin:7px 0 9px!important}
+ .fresh-v3 .fresh-explainer-premium>p{margin-bottom:10px!important;line-height:1.65!important}
+ .fresh-v3 .fresh-explain-accordion{margin-top:5px!important}
+ .fresh-v3 .fresh-explain-accordion button{padding:11px 2px!important}
+ .fresh-v3 .fresh-table-row{padding-top:10px!important;padding-bottom:10px!important}
+}
+@media(min-width:561px) and (max-width:950px){
+ .fresh-v3>.pt-external-section-heading{margin-top:26px!important;margin-bottom:10px!important}
+ .fresh-v3>.fresh-explore-title.pt-external-section-heading{margin-top:28px!important;margin-bottom:10px!important}
+ .fresh-v3 .pt-snapshot-grid{grid-auto-rows:minmax(185px,auto)!important}
+ .fresh-v3 .pt-snapshot-item{min-height:185px!important;height:auto!important}
+ .fresh-v3 .pt-snapshot-item>.pt-snapshot-card{min-height:185px!important;height:100%!important;padding:12px 12px 10px!important}
+ .fresh-v3 .pt-snapshot-art{height:37px!important;flex-basis:37px!important;margin:6px 0 4px!important}
+ .fresh-v3>.fresh-explore-premium{padding-top:12px!important}
+ .fresh-v3 .fresh-tabs-six button{min-height:56px!important;padding:8px 7px!important}
+ .fresh-v3 .fresh-explore-body{padding:16px!important}
+}
+@media(max-width:560px){
+ .fresh-v3>.pt-external-section-heading{margin-top:22px!important;margin-bottom:9px!important}
+ .fresh-v3>.fresh-explore-title.pt-external-section-heading{margin-top:25px!important;margin-bottom:9px!important}
+ .fresh-v3>.pt-snapshot{padding-top:9px!important}
+ .fresh-v3 .pt-snapshot-grid{grid-auto-rows:minmax(194px,auto)!important}
+ .fresh-v3 .pt-snapshot-item{min-height:194px!important;height:auto!important}
+ .fresh-v3 .pt-snapshot-item>.pt-snapshot-card{min-height:194px!important;height:100%!important;padding:11px 10px 9px!important}
+ .fresh-v3 .pt-snapshot-art{height:33px!important;flex-basis:33px!important;margin:5px 0 3px!important}
+ .fresh-v3 .pt-snapshot-more{padding-top:7px!important}
+ .fresh-v3>.fresh-explore-premium{padding-top:10px!important}
+ .fresh-v3 .fresh-tabs-six{padding-bottom:10px!important}
+ .fresh-v3 .fresh-tabs-six button{min-height:54px!important;padding:7px 5px!important}
+ .fresh-v3 .fresh-explore-body{padding:13px 12px 16px!important}
+ .fresh-v3 .fresh-explainer-premium{padding-top:15px!important}
+ .fresh-v3 .fresh-explainer-premium>p{margin-bottom:10px!important}
+ .fresh-v3 .fresh-explain-accordion button{padding:12px 2px!important}
+}
