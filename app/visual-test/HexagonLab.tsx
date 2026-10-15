@@ -197,8 +197,8 @@ function MovingParticles({motion}:{motion:boolean}){
     }else{clipInterior(current);drawBall(p)}
     ctx.restore();
    }
-   // Independent streams per link: irregular spacing, distinct vertical
-   // trajectories and gentle drift, so the particles never form a straight snake.
+   // Independently scattered crossings: no shared middle row, including
+   // the last three links. Most paths remain central but are not collinear.
    for(let gap=0;gap<layout.length-1;gap++){
     const from=layout[gap],to=layout[gap+1];
     const left=from.x+from.w*.77,right=to.x+to.w*.23;
@@ -209,10 +209,10 @@ function MovingParticles({motion}:{motion:boolean}){
      const offset=(j+random(seed+4)*.72)/10;
      const speed=.72+random(seed+12)*.42;
      const phase=(flowClock*speed/10+offset)%1;
-     // Middle is the preferred region, not a single shared center line.
-     const lane=(random(seed+8)+random(seed+19)-1)*.27;
-     const wobble=Math.sin(flowClock*(.31+random(seed+23)*.18)+seed*1.7)*height*.038;
-     const arc=Math.sin(phase*Math.PI)*(random(seed+31)-.5)*height*.13;
+     // A wide, irregular spread instead of a thin line.
+     const lane=(random(seed+8)+random(seed+19)-1)*.54;
+     const wobble=Math.sin(flowClock*(.25+random(seed+23)*.16)+seed*1.7)*height*.065;
+     const arc=Math.sin(phase*Math.PI)*(random(seed+31)-.5)*height*.20;
      const y=centerY+lane*height+wobble+arc;
      const x=left+(right-left)*phase;
      const ball:Ball={chamber:gap,next:gap+1,x,y,vx:0,vy:0,r:2.25+random(seed+17)*.85,age:0,wait:0,travel:true,opacity:.42+random(seed+29)*.18,seed};
