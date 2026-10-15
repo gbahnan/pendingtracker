@@ -1619,3 +1619,90 @@
  .fresh-v3>.fresh-learn{margin-top:30px!important}
  .fresh-v3 .fresh-explain-accordion button{padding-top:11px!important;padding-bottom:11px!important}
 }
+
+
+/* Final focused polish: section rhythm, card breathing room, editorial FAQ, footer. */
+@media(min-width:951px){
+ .fresh-v3>.pt-snapshot-header.pt-external-section-heading{margin-top:18px!important}
+ .fresh-v3 .pt-snapshot-item>.pt-snapshot-card{padding-top:12px!important;padding-bottom:11px!important}
+ .fresh-v3 .pt-snapshot-card-copy{gap:5px!important}
+ .fresh-v3 .pt-snapshot-art{margin-top:7px!important;margin-bottom:5px!important}
+ .fresh-v3 .pt-snapshot-description{line-height:1.45!important}
+}
+.fresh-v3 .fresh-live-tx-title{
+ display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:10px!important;
+}
+.fresh-v3 .fresh-live-tx-title h3{margin:0!important}
+.fresh-v3 .fresh-live-tx-indicator{
+ display:inline-flex!important;align-items:center!important;gap:7px!important;
+ font-size:10px!important;font-weight:800!important;letter-spacing:.11em!important;
+ color:#80ddba!important;white-space:nowrap!important;
+}
+.fresh-v3 .fresh-live-tx-indicator i{
+ display:block!important;width:7px!important;height:7px!important;
+ border-radius:50%!important;background:#55dda4!important;
+ box-shadow:0 0 8px rgba(85,221,164,.40)!important;
+}
+.fresh-v3 .fresh-data-table .fresh-table-row.fresh-tx-new{
+ background:linear-gradient(90deg,rgba(91,191,154,.13),transparent 90%)!important;
+ box-shadow:inset 2px 0 #64d6a8!important;
+ transition:background 1.2s ease,box-shadow 1.2s ease!important;
+}
+.fresh-v3>.fresh-learn.fresh-learn-compact{
+ background:linear-gradient(125deg,rgba(44,65,77,.58),rgba(27,48,63,.38))!important;
+ border:1px solid rgba(187,197,198,.13)!important;
+ border-radius:16px!important;
+ box-shadow:none!important;
+ padding:18px 21px!important;
+}
+.fresh-v3 .fresh-learn-inline h2{
+ font-size:clamp(19px,1.8vw,24px)!important;
+ line-height:1.2!important;
+ margin:6px 0 8px!important;
+}
+.fresh-v3 .fresh-faq{
+ display:grid!important;
+ grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:15px!important;
+}
+.fresh-v3 .fresh-faq details{
+ min-height:0!important;
+ padding:6px 0 9px!important;
+ background:transparent!important;
+ border:0!important;
+ border-bottom:1px solid rgba(173,193,200,.25)!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+}
+.fresh-v3 .fresh-faq summary{
+ align-items:center!important;
+ font-size:12px!important;
+ font-weight:750!important;
+ line-height:1.5!important;
+ color:#e6eef3!important;
+}
+.fresh-v3 .fresh-faq summary span{color:#e9bb70!important;font-size:15px!important}
+.fresh-v3 .fresh-faq details[open]{border-bottom-color:rgba(232,184,107,.55)!important}
+.fresh-v3 .fresh-faq details p{font-size:12px!important;line-height:1.65!important;color:#b9cbd6!important}
+.fresh-v3>.fresh-footer{
+ margin-top:15px!important;
+ padding:15px 4px 24px!important;
+ border-top:1px solid rgba(216,176,105,.15)!important;
+ background:linear-gradient(180deg,rgba(38,58,69,.07),rgba(16,32,45,.02))!important;
+ color:#9cb4c1!important;
+}
+.pt-bitcoin-explorer-redesign{
+ background-image:linear-gradient(180deg,transparent 87%,rgba(7,22,35,.30) 100%)!important;
+}
+@media(min-width:951px){
+ .fresh-v3>.fresh-learn.fresh-learn-compact{margin-top:33px!important}
+}
+@media(max-width:950px){
+ .fresh-v3>.fresh-learn.fresh-learn-compact{padding:16px!important}
+ .fresh-v3 .fresh-faq{grid-template-columns:1fr!important;gap:4px!important}
+ .fresh-v3 .fresh-faq details{padding:10px 0!important}
+ .fresh-v3 .fresh-live-tx-title{gap:7px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .fresh-v3 .fresh-data-table .fresh-table-row.fresh-tx-new{transition:none!important}
+}
