@@ -963,3 +963,41 @@
  .txr .txr-new-learn{padding-top:13px!important}
  .txr .txr-understand-v2.fresh-explore-premium{margin-top:32px!important}
 }
+
+
+/* Snapshot heading hierarchy: champagne-gold category, framed icon, white live value.
+   Preserve the compact cards, grid, copy, links, and existing navy gradients. */
+.txr .txr-new-metric-heading{
+ gap:10px!important;
+ align-items:center!important;
+}
+.txr .txr-new-metric-heading .txr-new-metric-icon{
+ width:32px!important;
+ height:32px!important;
+ flex:0 0 32px!important;
+ border-radius:7px!important;
+ background:rgba(221,182,111,.10)!important;
+ color:#e0b96f!important;
+ font-size:21px!important;
+ opacity:1!important;
+}
+.txr .txr-new-metric-heading .txr-new-metric-label{
+ color:#e5c58b!important;
+}
+.txr .txr-new-metric-copy{
+ padding-left:42px!important;
+}
+.txr .txr-new-metric-copy strong{
+ color:#f5f8fb!important;
+}
+.txr .txr-new-metric>p{
+ margin-left:42px!important;
+}
+@media(max-width:550px){
+ .txr .txr-new-metric-heading{gap:9px!important}
+ .txr .txr-new-metric-heading .txr-new-metric-icon{
+  width:30px!important;height:30px!important;flex-basis:30px!important;font-size:20px!important;
+ }
+ .txr .txr-new-metric-copy{padding-left:39px!important}
+ .txr .txr-new-metric>p{margin-left:39px!important}
+}
