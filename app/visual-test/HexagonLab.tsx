@@ -62,8 +62,8 @@ function MovingParticles({motion}:{motion:boolean}){
    const edge=bounds(box,y);
    const x=edge.left+12+random(seed+13)*Math.max(2,edge.right-edge.left-24);
    const angle=random(seed+21)*Math.PI*2;
-   const speed=9+random(seed+31)*12;
-   return {chamber,next:chamber+1,x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,r:2.35+random(seed+41)*1.15,age:0,wait:4+random(seed+51)*13,travel:false,opacity:.62+random(seed+61)*.22,seed};
+   const speed=6.5+random(seed+31)*8.5;
+   return {chamber,next:chamber+1,x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,r:2.35+random(seed+41)*1.15,age:0,wait:7+random(seed+51)*16,travel:false,opacity:.62+random(seed+61)*.22,seed};
   };
   const measure=()=>{
    const boundsRect=track.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);
@@ -114,16 +114,18 @@ function MovingParticles({motion}:{motion:boolean}){
      if(!target){p.travel=false;continue}
      // Keep a single continuous position and velocity across both chambers.
      // Gentle acceleration toward the next opening; no positional lerps or teleports.
-     const goalY=target.y+target.h/2+(random(p.seed+91)<.5?-.24:.24)*target.h;
+     const laneChoice=random(p.seed+91);
+     const laneOffset=laneChoice<.72?0:laneChoice<.86?-.23:.23;
+     const goalY=target.y+target.h/2+laneOffset*target.h;
      const desiredVy=Math.max(-11,Math.min(11,(goalY-p.y)*.25));
      p.vy+=(desiredVy-p.vy)*Math.min(1,dt*1.6);
-     p.vx+=(26+random(p.seed+71)*13-p.vx)*Math.min(1,dt*1.2);
+     p.vx+=(20+random(p.seed+71)*10-p.vx)*Math.min(1,dt*1.1);
      p.x+=p.vx*dt;p.y+=p.vy*dt;
      const edge=bounds(target,p.y);
      if(p.x>edge.left+10){
       p.chamber=p.next;p.next=p.chamber+1;p.travel=false;
-      p.wait=5+random(p.seed+Math.floor(p.age)*13)*12;p.age=0;
-      p.vx=8+random(p.seed+12)*13;p.vy=(random(p.seed+22)-.5)*22;
+      p.wait=8+random(p.seed+Math.floor(p.age)*13)*15;p.age=0;
+      p.vx=6+random(p.seed+12)*10;p.vy=(random(p.seed+22)-.5)*16;
      }
     }else{
      // Real velocity integration and wall reflection in each dark interior.
@@ -149,11 +151,12 @@ function MovingParticles({motion}:{motion:boolean}){
      // After an individual dwell, gradually turn toward the right opening.
      if(p.chamber<layout.length-1&&p.age>p.wait){
       const cy=box.y+box.h/2;
-      p.vx+=(19-p.vx)*Math.min(1,dt*.65);
-      const laneY=cy+(random(p.seed+91)<.5?-.24:.24)*box.h;
+      p.vx+=(box.kind==="pool"?13:16-p.vx)*Math.min(1,dt*.55);
+      const laneChoice=random(p.seed+91);
+      const laneY=cy+(laneChoice<.72?0:laneChoice<.86?-.23:.23)*box.h;
       p.vy+=((laneY-p.y)*.18-p.vy)*Math.min(1,dt*.7);
-      if(p.x>right-7&&Math.abs(p.y-laneY)<box.h*.13){
-       p.travel=true;p.next=p.chamber+1;p.vx=23+random(p.seed+73)*13;
+      if(p.x>right-7&&Math.abs(p.y-laneY)<box.h*.15){
+       p.travel=true;p.next=p.chamber+1;p.vx=(box.kind==="pool"?17:21)+random(p.seed+73)*9;
       }
      }
     }
