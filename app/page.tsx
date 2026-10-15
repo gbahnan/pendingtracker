@@ -272,9 +272,9 @@ export default function Page() {
     <section className="pt26-hero">
       <div className="pt26-hero-content">
         <div className="pt26-kicker">TRACK &nbsp; • &nbsp; <b>EXPLORE</b> &nbsp; • &nbsp; <em>UNDERSTAND</em></div>
-        <h1>A simpler <span>blockchain explorer.</span></h1>
-        <p>Explore the Bitcoin and Ethereum blockchains like never before. Track transactions, search wallet addresses, and understand complex blockchain data through clear, easy-to-understand summaries.</p>
-        <form className="pt26-search" onSubmit={e=>{e.preventDefault();search()}}><span className="magnify" aria-hidden="true">⌕</span><input aria-label="Search transaction or address" placeholder="Search a transaction hash or wallet address (Bitcoin or Ethereum)..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("")}}/><button type="submit" aria-label="Search blockchain">→</button></form>
+        <h1>Blockchain data. <span>Finally explained.</span></h1>
+        <p>Track transactions, explore wallets, and understand Bitcoin and Ethereum without the technical jargon.</p>
+        <form className="pt26-search" onSubmit={e=>{e.preventDefault();search()}}><span className="magnify" aria-hidden="true">⌕</span><input aria-label="Search transaction or address" placeholder="Search a Bitcoin or Ethereum transaction ID or wallet address..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("")}}/><button type="submit" aria-label="Search blockchain">→</button></form>
         <SearchGuidance query={query} chain="both"/>
         <div className="pt26-chain-select"><button type="button" className={"btc"+(network==="btc"?" active":"")} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button><button type="button" className={"eth"+(network==="eth"?" active":"")} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button></div>
         {ambiguousHash?<div className="pt26-chain-choice">Choose the blockchain: <button onClick={()=>router.push("/btc/"+ambiguousHash)}>Bitcoin →</button><button onClick={()=>router.push("/eth/0x"+ambiguousHash)}>Ethereum →</button></div>:null}
@@ -282,10 +282,10 @@ export default function Page() {
       </div>
     </section>
     <section className="pt26-live" aria-label="Live Bitcoin and Ethereum network activity">
-      <header className="pt26-live-title"><h2>Live Network Activity <span>● LIVE</span></h2><p>Real-time Bitcoin and Ethereum network activity. Click into either explorer for full details.</p></header>
+      <header className="pt26-live-title"><h2>Live Network Activity <span>● LIVE</span></h2><p>Live Bitcoin and Ethereum data at a glance. Open an explorer to investigate further.</p></header>
       <div className="pt26-grid">
         <article className="pt26-panel btc">
-          <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin</h2></div><a className="pt26-explore" href="/bitcoin">Explore Bitcoin ↗</a></div>
+          <div className="pt26-panel-head"><span className="coin">₿</span><div><h2>Bitcoin</h2></div><a className="pt26-explore" href="/bitcoin">Explore Bitcoin Blockchain ↗</a></div>
           <div className="pt26-card-visual"><div className="pt26-scene"><HeroEmblem chain="btc" variant="network"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{format(btc?.height)}</strong></div><div><small>Transactions waiting</small><strong>{format(btc?.pending)}</strong></div><div><small>Priority fee</small><strong>{btc?.fastestFee==null?"—":btc.fastestFee+" sat/vB"}</strong></div></div></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>₿ &nbsp;Latest Bitcoin Transactions</strong><a href="/bitcoin">View More →</a></div>
             {[...liveBtcTransactions.map(t=>({...t,value:null})),...(btc?.recentTransactions??[]).filter(t=>!liveBtcTransactions.some(l=>l.id===t.id))].slice(0,5).map(t=><a className="pt26-feed-row" href={"/btc/"+t.id} key={t.id}><span className="hash">{t.id.slice(0,7)}…{t.id.slice(-5)}</span><span className="detail">{t.fee!=null&&t.vsize?(t.fee/t.vsize).toFixed(1)+" sat/vB":"Fee pending"}</span><span className="age">Pending</span><b>›</b></a>)}
@@ -293,7 +293,7 @@ export default function Page() {
           </div><a className="pt26-cta" href="/bitcoin">Explore Bitcoin Blockchain →</a>
         </article>
         <article className="pt26-panel eth">
-          <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum</h2></div><a className="pt26-explore" href="/ethereum">Explore Ethereum ↗</a></div>
+          <div className="pt26-panel-head"><span className="coin">◆</span><div><h2>Ethereum</h2></div><a className="pt26-explore" href="/ethereum">Explore Ethereum Blockchain ↗</a></div>
           <div className="pt26-card-visual"><div className="pt26-scene"><HeroEmblem chain="eth" variant="network"/></div><div className="pt26-side-stats"><div><small>Latest block</small><strong>{eth?.latestBlock==null?"—":format(Number(eth.latestBlock))}</strong></div><div><small>Gas price</small><strong>{eth?.gasGwei==null?"—":eth.gasGwei.toLocaleString("en-US",{maximumFractionDigits:2})+" Gwei"}</strong></div><div><small>Slot time</small><strong>~12 sec</strong></div></div></div>
           <div className="pt26-feed"><div className="pt26-feed-head"><strong>◆ &nbsp;Latest Ethereum Transactions</strong><a href="/ethereum">View More →</a></div>
             {(eth?.recentTransactions??[]).slice(0,5).map(t=><a className="pt26-feed-row" href={"/eth/"+t.hash} key={t.hash}><span className="hash">{t.hash.slice(0,7)}…{t.hash.slice(-5)}</span><span className="detail">{t.block==null?"Pending":"Block "+format(t.block)}</span><span className="age">{t.status??"Recorded"}</span><b>›</b></a>)}
@@ -301,8 +301,42 @@ export default function Page() {
           </div><a className="pt26-cta" href="/ethereum">Explore Ethereum Blockchain →</a>
         </article>
       </div>
-      <div className="pt26-wallet-follow" aria-label="Explore notable blockchain wallets">
-        <div className="pt26-wallet-follow-copy"><strong>Explore Notable Wallets <span aria-hidden="true">↗</span></strong><span>See what major public wallets are holding and moving. Select a network to explore.</span></div>
+
+    </section>
+    <section className="pt-clarity" id="how-it-works" data-chain={comparisonChain}>
+      <div className="pt-clarity-inner">
+        <div className="pt-clarity-top">
+          <div className="pt-clarity-intro">
+            <h2>Same blockchain.<br/><span>A clearer picture.</span></h2>
+            <p>We show you the blockchain data — then translate it into clear explanations, so you understand what you're looking at and why it matters.</p>
+          </div>
+          <div className="pt-clarity-switch" role="group" aria-label="Choose blockchain explanations">
+            <button type="button" className={comparisonChain==="btc"?"active":""} aria-pressed={comparisonChain==="btc"} onClick={()=>{setComparisonChain("btc");setClarityExpanded(false)}}><span>₿</span> Bitcoin</button>
+            <button type="button" className={comparisonChain==="eth"?"active":""} aria-pressed={comparisonChain==="eth"} onClick={()=>{setComparisonChain("eth");setClarityExpanded(false)}}><span>◆</span> Ethereum</button>
+          </div>
+        </div>
+        <div className="pt-clarity-comparison" aria-label="Compare technical blockchain data with plain-English explanations">
+          <div className="pt-clarity-raw"><span className="pt-clarity-comparison-label">TRADITIONAL EXPLORER · EXAMPLE</span><h3>Raw blockchain data</h3><div className="pt-clarity-raw-lines">{(comparisonChain==="btc"?[["Status","Unconfirmed"],["Fee rate","1.2 sat/vB"],["Mempool position","3.4 vMB"]]:[["Status","Pending"],["Gas price","2.4 Gwei"],["Nonce","42"]]).map(([label,value])=><div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div><small>Technical fields without context</small></div>
+          <div className="pt-clarity-translation"><span className="pt-clarity-comparison-label">✦ PENDING TRACKER EXPLAINS</span><h3>{comparisonChain==="btc"?"Your Bitcoin is still waiting.":"Your Ethereum transaction is still pending."}</h3><p>{comparisonChain==="btc"?"This transaction has not been confirmed yet. Its example fee rate is relatively low, so it could take longer when the Bitcoin network is busy. Confirmation times are not guaranteed.":"This Ethereum transaction has not yet been included in a block. The offered gas fee and earlier transactions from the same account can affect when it is processed."}</p><div className="pt-clarity-translation-foot">The same public data, explained in everyday language.</div></div>
+        </div>
+        <p className="pt-clarity-comparison-note">Illustrative example only — not a live transaction or a confirmation prediction.</p>
+        <details className="pt-clarity-education"><summary>Explore blockchain terms <span aria-hidden="true">⌄</span></summary><div className="pt-clarity-education-inner"><p>Learn the important concepts behind Bitcoin and Ethereum data, with practical examples.</p>
+        <div className="pt-clarity-cards">
+          {clarityTopics[comparisonChain].slice(0,clarityExpanded?8:4).map(topic=><article className="pt-clarity-card" key={topic.title}>
+            <div className="pt-clarity-icon" aria-hidden="true"><span>{topic.icon}</span></div>
+            <h3>{topic.title}</h3>
+            <p>{topic.description}</p>
+            <div className="pt-clarity-example"><small>EXAMPLE</small><strong>{topic.example}</strong></div>
+          </article>)}
+        </div>
+        <button className="pt-clarity-more" type="button" aria-expanded={clarityExpanded} onClick={()=>setClarityExpanded(v=>!v)}>{clarityExpanded?"Show Fewer Explanations":"Show 4 More Explanations"} <span aria-hidden="true">{clarityExpanded?"⌃":"⌄"}</span></button>
+
+        <p className="pt-clarity-note">Examples are illustrative, not live blockchain measurements.</p></div></details>
+      </div>
+    </section>
+
+    <section className="pt26-wallet-feature" aria-label="Explore public Bitcoin and Ethereum wallets"><div className="pt26-wallet-feature-head"><div className="pt26-wallet-feature-kicker">EXPLORE PUBLIC ADDRESSES</div><h2>Discover notable <em>blockchain wallets.</em></h2><p>Look inside public Bitcoin and Ethereum addresses to understand balances, incoming funds, and outgoing transactions.</p></div>      <div className="pt26-wallet-follow" aria-label="Explore notable blockchain wallets">
+        <div className="pt26-wallet-follow-copy"><strong>Explore Bitcoin &amp; Ethereum Wallets <span aria-hidden="true">↗</span></strong><span>Explore notable public addresses and their transaction histories. Select a network to see examples.</span></div>
         <div className="pt26-wallet-follow-actions">
           <details className="pt26-wallet-dropdown btc"><summary><span>₿</span> Bitcoin wallets <b aria-hidden="true">⌄</b></summary>
             <div className="pt26-wallet-menu"><p>Large publicly tracked Bitcoin addresses</p>
@@ -329,32 +363,7 @@ export default function Page() {
             </div>
           </details>
         </div>
-      </div>
-    </section>
-    <section className="pt-clarity" id="how-it-works" data-chain={comparisonChain}>
-      <div className="pt-clarity-inner">
-        <div className="pt-clarity-top">
-          <div className="pt-clarity-intro">
-            <h2>Same blockchain.<br/><span>A clearer picture.</span></h2>
-            <p>We show you the blockchain data — then translate it into clear explanations, so you understand what you're looking at and why it matters.</p>
-          </div>
-          <div className="pt-clarity-switch" role="group" aria-label="Choose blockchain explanations">
-            <button type="button" className={comparisonChain==="btc"?"active":""} aria-pressed={comparisonChain==="btc"} onClick={()=>{setComparisonChain("btc");setClarityExpanded(false)}}><span>₿</span> Bitcoin</button>
-            <button type="button" className={comparisonChain==="eth"?"active":""} aria-pressed={comparisonChain==="eth"} onClick={()=>{setComparisonChain("eth");setClarityExpanded(false)}}><span>◆</span> Ethereum</button>
-          </div>
-        </div>
-        <div className="pt-clarity-cards">
-          {clarityTopics[comparisonChain].slice(0,clarityExpanded?8:4).map(topic=><article className="pt-clarity-card" key={topic.title}>
-            <div className="pt-clarity-icon" aria-hidden="true"><span>{topic.icon}</span></div>
-            <h3>{topic.title}</h3>
-            <p>{topic.description}</p>
-            <div className="pt-clarity-example"><small>EXAMPLE</small><strong>{topic.example}</strong></div>
-          </article>)}
-        </div>
-        <button className="pt-clarity-more" type="button" aria-expanded={clarityExpanded} onClick={()=>setClarityExpanded(v=>!v)}>{clarityExpanded?"Show Fewer Explanations":"Show 4 More Explanations"} <span aria-hidden="true">{clarityExpanded?"⌃":"⌄"}</span></button>
-        <p className="pt-clarity-note">Examples are illustrative, not live blockchain measurements.</p>
-      </div>
-    </section>
+      </div><p className="pt26-wallet-feature-note">These are individual public addresses, not complete wallet or exchange holdings. Public labels are third-party attributions.</p></section>
 <details className="pt-network-drawer" id="network-dashboard"><summary><span><b>Live network dashboard</b><small>Expand for Bitcoin and Ethereum blocks, fees and live transactions</small></span><span aria-hidden="true">＋</span></summary>    <section className="pt-section" id="network">
       <div className="pt-section-head"><div><div className="pt-eyebrow">LIVE BLOCKCHAIN EXPLORER</div><h2>{network==="btc"?"The Bitcoin Network, Live.":"The Ethereum Network, Live."}</h2><p>See what's happening on the network right now—and understand what it means for your transactions.</p></div><span className="pt-live" role="status">{loading?"Loading live data…":overview?"● Live data · refreshed every 5 seconds":"Network data temporarily unavailable"}</span></div>
       <div className="pt-tabs" role="tablist" aria-label="Choose blockchain">
