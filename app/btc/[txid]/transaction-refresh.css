@@ -1473,3 +1473,28 @@
   font-size:14px!important;
  }
 }
+
+/* Conservative shared lighting pass — background surfaces ONLY.
+   Each content surface gets one smoky radial highlight + one navy base.
+   No layout, type, border, glow, animation, or tab changes. */
+.txr .txr-new-metric,
+.txr .txr-understand-v2 .fresh-explore-body{
+ background:
+  radial-gradient(ellipse 90% 80% at 7% 5%,rgba(46,111,151,.20) 0%,rgba(29,79,111,.10) 37%,transparent 76%),
+  linear-gradient(135deg,#0a2030 0%,#081b29 52%,#061724 100%)!important;
+}
+/* Remove the redundant nested tint: the shared body already provides
+   the texture on the left, while the right retains one restrained glow. */
+.txr .txr-understand-v2 .fresh-data-premium{
+ background:transparent!important;
+}
+.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:
+  radial-gradient(ellipse 90% 80% at 7% 5%,rgba(46,111,151,.23) 0%,rgba(29,79,111,.12) 37%,transparent 76%),
+  linear-gradient(135deg,#0c2435 0%,#0a1e2e 52%,#071927 100%)!important;
+}
+.txr .txr-new-summary{
+ background:
+  radial-gradient(ellipse 85% 85% at 8% 0%,rgba(75,144,185,.20),transparent 65%),
+  linear-gradient(180deg,#1a3c52 0%,#123044 46%,#0a2131 100%)!important;
+}
