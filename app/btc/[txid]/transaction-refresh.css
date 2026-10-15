@@ -1228,3 +1228,40 @@
  }
  .txr .txr-new-learn{padding-top:10px!important}
 }
+
+/* Understanding Your Transaction: free-standing heading flush above a
+   restrained, fading premium outline enclosing only tabs and detail panels. */
+.txr .txr-understand-v2.fresh-explore-premium{
+ background:transparent!important;
+ padding:0!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+.txr .txr-understand-v2::before,
+.txr .txr-understand-v2::after{display:none!important}
+.txr .txr-understand-v2 .fresh-explore-title{
+ padding:0 18px 16px!important;
+ margin:0!important;
+ background:transparent!important;
+}
+.txr .txr-understand-v2 .txr-deeper-framed-content{
+ position:relative;
+ padding:1px;
+ border-radius:11px;
+ background:
+  linear-gradient(90deg,transparent,rgba(105,173,205,.42) 18%,rgba(105,173,205,.42) 82%,transparent) top/100% 1px no-repeat,
+  linear-gradient(90deg,transparent,rgba(105,173,205,.32) 18%,rgba(105,173,205,.32) 82%,transparent) bottom/100% 1px no-repeat,
+  linear-gradient(180deg,transparent,rgba(105,173,205,.28) 18%,rgba(105,173,205,.28) 82%,transparent) left/1px 100% no-repeat,
+  linear-gradient(180deg,transparent,rgba(105,173,205,.28) 18%,rgba(105,173,205,.28) 82%,transparent) right/1px 100% no-repeat;
+}
+.txr .txr-understand-v2 .fresh-tabs-six{
+ border:0!important;
+ border-bottom:1px solid rgba(98,159,188,.42)!important;
+ border-radius:10px 10px 0 0!important;
+}
+.txr .txr-understand-v2 .fresh-explore-body{
+ border-radius:0 0 10px 10px!important;
+}
+@media(max-width:650px){
+ .txr .txr-understand-v2 .fresh-explore-title{padding:0 8px 14px!important}
+}
