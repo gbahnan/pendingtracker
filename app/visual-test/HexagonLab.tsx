@@ -197,26 +197,28 @@ function MovingParticles({motion}:{motion:boolean}){
     }else{clipInterior(current);drawBall(p)}
     ctx.restore();
    }
-   // Ten simultaneous, independently staggered streams on EVERY link.
-   // All links share the same cadence, including the mempool connection.
-   // Stream particles are independent of chamber residents, so density never
-   // throttles a link or drains the mempool.
+   // Independent streams per link: irregular spacing, distinct vertical
+   // trajectories and gentle drift, so the particles never form a straight snake.
    for(let gap=0;gap<layout.length-1;gap++){
     const from=layout[gap],to=layout[gap+1];
-    const left=from.x+from.w*.79,right=to.x+to.w*.21;
+    const left=from.x+from.w*.77,right=to.x+to.w*.23;
     const centerY=(from.y+from.h/2+to.y+to.h/2)/2;
+    const height=Math.min(from.h,to.h);
     for(let j=0;j<10;j++){
      const seed=gap*101+j*17;
-     const phase=(flowClock/7+j/10+random(seed+4)*.035)%1;
-     const lane=random(seed+8)<.74?0:random(seed+8)<.87?-.20:.20;
-     const y=centerY+lane*Math.min(from.h,to.h)+Math.sin(phase*Math.PI*2+seed)*3.5;
+     const offset=(j+random(seed+4)*.72)/10;
+     const speed=.72+random(seed+12)*.42;
+     const phase=(flowClock*speed/10+offset)%1;
+     // Middle is the preferred region, not a single shared center line.
+     const lane=(random(seed+8)+random(seed+19)-1)*.27;
+     const wobble=Math.sin(flowClock*(.31+random(seed+23)*.18)+seed*1.7)*height*.038;
+     const arc=Math.sin(phase*Math.PI)*(random(seed+31)-.5)*height*.13;
+     const y=centerY+lane*height+wobble+arc;
      const x=left+(right-left)*phase;
-     const ball:Ball={chamber:gap,next:gap+1,x,y,vx:0,vy:0,r:2.4+random(seed+17)*.9,age:0,wait:0,travel:true,opacity:.63+random(seed+29)*.2,seed};
-     // The stream is visible through the opening and around its frame;
-     // particles stay below the central text by respecting label masks.
+     const ball:Ball={chamber:gap,next:gap+1,x,y,vx:0,vy:0,r:2.25+random(seed+17)*.85,age:0,wait:0,travel:true,opacity:.42+random(seed+29)*.18,seed};
      ctx.save();
-     ctx.beginPath();ctx.rect(from.x+from.w*.77,0,to.x+to.w*.23-(from.x+from.w*.77),h);ctx.clip();
-     if(x>from.x+from.w*.77&&x<to.x+to.w*.23)drawBall(ball);
+     ctx.beginPath();ctx.rect(left,0,right-left,h);ctx.clip();
+     drawBall(ball);
      ctx.restore();
     }
    }
