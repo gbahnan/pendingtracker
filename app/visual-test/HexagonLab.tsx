@@ -180,6 +180,32 @@ function MovingParticles({motion}:{motion:boolean}){
    const dt=last?Math.min((now-last)/1000,.05):0;last=now;
    if(motion){acc+=dt;let n=0;while(acc>=1/60&&n<4){step(1/60);acc-=1/60;n++}}
    ctx.clearRect(0,0,w,h);
+   // Hard render mask for the ENTIRE particle layer. Unlike individual
+   // stream clips, this also catches any legacy or in-flight particles.
+   // Build one union path: chamber interiors plus narrow crossing corridors.
+   ctx.save();
+   ctx.beginPath();
+   for(let c=0;c<layout.length;c++){
+    const box=layout[c];
+    if(box.kind==="pool"){
+     ctx.roundRect(box.x+13,box.y+13,box.w-26,box.h-26,22);
+    }else{
+     const cx=box.x+box.w/2,cy=box.y+box.h/2;
+     const rx=box.w*.295,ry=box.h*.335;
+     ctx.moveTo(cx,cy-ry);ctx.lineTo(cx+rx,cy-ry*.53);
+     ctx.lineTo(cx+rx,cy+ry*.53);ctx.lineTo(cx,cy+ry);
+     ctx.lineTo(cx-rx,cy+ry*.53);ctx.lineTo(cx-rx,cy-ry*.53);ctx.closePath();
+    }
+    if(c<layout.length-1){
+     const next=layout[c+1];
+     const corridorLeft=box.x+box.w*.76;
+     const corridorRight=next.x+next.w*.24;
+     const cy=(box.y+box.h/2+next.y+next.h/2)/2;
+     const corridorH=Math.min(box.h,next.h)*.32;
+     ctx.rect(corridorLeft,cy-corridorH/2,Math.max(0,corridorRight-corridorLeft),corridorH);
+    }
+   }
+   ctx.clip();
    for(const p of balls){
     const current=layout[p.chamber];if(!current)continue;
     ctx.save();
@@ -223,6 +249,7 @@ function MovingParticles({motion}:{motion:boolean}){
      ctx.restore();
     }
    }
+   ctx.restore(); // release the global particle containment mask
    raf=requestAnimationFrame(draw);
   };
   raf=requestAnimationFrame(draw);
