@@ -4880,71 +4880,20 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
 @media(max-width:700px){.pt-standard-tracker-flow{overflow-x:auto!important}.pt-standard-tracker-flow [class*="blockRow"]{min-width:710px!important}.pt-standard-tracker-flow .pt-chain-flow-confirmed{min-width:710px}}
 
 
-/* BTC transaction art direction — restrained editorial dark surfaces.
-   Preserve geometry, type metrics, controls, animation and responsive rules. */
-body:has(.pt-tx-page.pt-tx-detail-v2){
- background-color:#0b1119!important;
- background-image:
-  radial-gradient(ellipse 95% 42% at 50% 33%,rgba(29,54,68,.27),transparent 82%),
-  radial-gradient(ellipse 85% 38% at 50% 75%,rgba(27,48,62,.19),transparent 85%),
-  linear-gradient(180deg,#0b1119 0%,#101b26 48%,#0b1119 100%)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
- background:#142330!important;
- border-color:rgba(138,166,181,.18)!important;
- box-shadow:0 14px 36px rgba(0,0,0,.14),inset 0 1px 0 rgba(230,241,247,.035)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
- background:#142330!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
- background:transparent!important;
- border-bottom-color:rgba(138,166,181,.14)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{
- border-bottom-color:rgba(138,166,181,.18)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact{
- border-right-color:rgba(138,166,181,.14)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-footer{
- border-top-color:rgba(138,166,181,.14)!important;
-}
-
-
-/* BTC transaction — cohesive graphite/slate surface pass.
-   Scoped to Bitcoin transaction only; no layout or animation properties. */
+/* BTC transaction unified surface palette (replaces iterative visual overrides).
+   Only paint properties: no geometry, layout, animation, or responsive edits. */
 .pt-tx-page.pt-tx-detail-v2{
  background-color:#101923!important;
- background-image:radial-gradient(ellipse 90% 46% at 50% 44%,rgba(55,76,90,.27),transparent 82%),linear-gradient(180deg,#101923,#13212c 52%,#101923)!important;
+ background-image:radial-gradient(ellipse 85% 48% at 50% 48%,rgba(54,78,92,.24),transparent 82%),linear-gradient(180deg,#101923,#14212b 55%,#101923)!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
  background:#172633!important;
- border-color:rgba(157,175,185,.15)!important;
- box-shadow:0 12px 30px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.035)!important;
+ border-color:rgba(154,178,191,.17)!important;
+ box-shadow:0 12px 32px rgba(0,0,0,.13)!important;
 }
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact{
- border-right-color:rgba(170,186,195,.13)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-footer{
- border-top-color:rgba(170,186,195,.13)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
- background:#172633!important;
- border-color:rgba(170,186,195,.14)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
- background:transparent!important;
- border-bottom-color:rgba(170,186,195,.13)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{
- border-bottom-color:rgba(170,186,195,.15)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-summary,
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-details{
- background:#172633!important;
- border-color:rgba(170,186,195,.14)!important;
- box-shadow:none!important;
-}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact{border-right-color:rgba(154,178,191,.15)!important}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-footer{border-top-color:rgba(154,178,191,.15)!important}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{background:#172633!important;border-color:rgba(154,178,191,.15)!important}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){background:transparent!important;border-bottom-color:rgba(154,178,191,.15)!important}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{border-bottom-color:rgba(154,178,191,.15)!important}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-summary,.pt-tx-page.pt-tx-detail-v2 .pt-tx-details{background:#172633!important;border-color:rgba(154,178,191,.15)!important;box-shadow:none!important}
