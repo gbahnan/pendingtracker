@@ -1340,3 +1340,35 @@
   linear-gradient(130deg,rgba(13,41,60,.42) 0%,rgba(5,19,30,.16) 76%),
   rgba(5,19,30,.58)!important;
 }
+
+/* Compact Understanding section to share the Snapshot's tighter rhythm.
+   Do not reduce the available content width or hide expanded transaction data. */
+@media(min-width:951px){
+ .txr .txr-understand-v2.fresh-explore-premium{
+  margin-top:28px!important;
+  margin-bottom:22px!important;
+ }
+ .txr .txr-understand-v2 .fresh-explore-title{
+  padding:0 18px 4px!important;
+ }
+ .txr .txr-understand-v2 .fresh-tabs-six button{
+  padding-top:11px!important;
+  padding-bottom:11px!important;
+ }
+ .txr .txr-understand-v2 .fresh-explore-body{
+  padding:7px 3px 6px!important;
+ }
+ .txr .txr-understand-v2 .fresh-data-premium,
+ .txr .txr-understand-v2 .fresh-explainer-premium{
+  padding:14px 18px!important;
+ }
+ .txr .txr-understand-v2 .fresh-data-premium h3,
+ .txr .txr-understand-v2 .fresh-explainer-premium h3{
+  margin-top:0!important;
+  margin-bottom:9px!important;
+ }
+ .txr .txr-understand-v2 .txr-v2-address-row{
+  padding-top:9px!important;
+  padding-bottom:9px!important;
+ }
+}
