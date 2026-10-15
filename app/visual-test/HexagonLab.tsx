@@ -228,7 +228,7 @@ function MovingParticles({motion}:{motion:boolean}){
    // the last three links. Most paths remain central but are not collinear.
    for(let gap=0;gap<layout.length-1;gap++){
     const from=layout[gap],to=layout[gap+1];
-    const left=from.x+from.w+4,right=to.x-4;
+    const left=from.x+from.w*.51,right=to.x+to.w*.49;
     const centerY=(from.y+from.h/2+to.y+to.h/2)/2;
     const height=Math.min(from.h,to.h);
     for(let j=0;j<10;j++){
