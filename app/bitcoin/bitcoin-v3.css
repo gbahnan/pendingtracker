@@ -964,3 +964,98 @@
 @media(max-width:700px){
  .fresh-v3 .fresh-explainer-premium{border-left:0!important;border-top:1px solid rgba(166,191,199,.20)!important}
 }
+
+
+/* BTC Right Now — transaction snapshot editorial hierarchy */
+/* Eight live metrics retain their values, chart illustrations and click-to-explain behavior. */
+.fresh-v3 .pt-snapshot-grid{
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ grid-auto-rows:minmax(206px,auto)!important;
+ gap:0!important;
+ border-top:1px solid rgba(210,185,139,.18)!important;
+}
+.fresh-v3 .pt-snapshot-item{
+ height:auto!important;min-height:206px!important;
+ border-right:1px solid rgba(158,185,195,.16)!important;
+ border-bottom:1px solid rgba(158,185,195,.16)!important;
+}
+.fresh-v3 .pt-snapshot-item:nth-child(4n){border-right:0!important}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card{
+ height:100%!important;min-height:206px!important;
+ padding:21px 20px 16px!important;
+ background:transparent!important;
+ border:0!important;border-radius:0!important;
+ box-shadow:none!important;
+ transform:none!important;
+ text-align:left!important;
+}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card:hover,
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-card.selected{
+ background:linear-gradient(145deg,rgba(237,184,95,.075),rgba(62,95,112,.045))!important;
+}
+.fresh-v3 .pt-snapshot-card-top{
+ display:flex!important;align-items:flex-start!important;
+ gap:11px!important;min-height:0!important;
+}
+.fresh-v3 .pt-snapshot-icon{
+ flex:0 0 23px!important;width:23px!important;height:28px!important;
+ font-size:23px!important;line-height:1!important;
+ border:0!important;border-radius:0!important;
+ background:transparent!important;box-shadow:none!important;
+ color:#f3b94e!important;
+}
+.fresh-v3 .pt-snapshot-card-copy{
+ display:flex!important;flex-direction:column!important;
+ align-items:flex-start!important;gap:6px!important;min-width:0!important;
+}
+.fresh-v3 .pt-snapshot-label{
+ order:0!important;font-size:clamp(16px,1.5vw,21px)!important;
+ font-weight:800!important;line-height:1.2!important;
+ letter-spacing:-.03em!important;color:#e9c082!important;
+}
+.fresh-v3 .pt-snapshot-card-copy strong{
+ order:1!important;font-size:clamp(17px,1.55vw,22px)!important;
+ font-weight:750!important;line-height:1.25!important;
+ letter-spacing:-.025em!important;color:#f1f5f9!important;
+ overflow-wrap:anywhere!important;
+}
+.fresh-v3 .pt-snapshot-card-copy small{
+ order:2!important;font-size:12px!important;
+ line-height:1.4!important;color:#aec2d0!important;
+}
+.fresh-v3 .pt-snapshot-description{
+ display:block!important;min-height:0!important;
+ font-size:12px!important;line-height:1.5!important;
+ color:#9eb6c5!important;margin-top:10px!important;
+}
+.fresh-v3 .pt-snapshot-art{
+ display:none!important;
+}
+.fresh-v3 .pt-snapshot-more{
+ display:block!important;align-self:center!important;
+ margin-top:auto!important;padding-top:15px!important;
+ color:#e7b45e!important;font-size:12px!important;
+ font-weight:750!important;text-align:center!important;
+}
+.fresh-v3 .pt-snapshot-item>.pt-snapshot-detail.pt-snapshot-popover{
+ background:linear-gradient(140deg,#30414b,#1c3241)!important;
+ border-color:rgba(237,183,95,.45)!important;
+ box-shadow:0 24px 50px rgba(0,0,0,.35)!important;
+}
+@media(max-width:950px){
+ .fresh-v3 .pt-snapshot-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:minmax(208px,auto)!important}
+ .fresh-v3 .pt-snapshot-item:nth-child(4n){border-right:1px solid rgba(158,185,195,.16)!important}
+ .fresh-v3 .pt-snapshot-item:nth-child(2n){border-right:0!important}
+}
+@media(max-width:560px){
+ .fresh-v3 .pt-snapshot-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:minmax(212px,auto)!important}
+ .fresh-v3 .pt-snapshot-item{min-height:212px!important}
+ .fresh-v3 .pt-snapshot-item>.pt-snapshot-card{min-height:212px!important;padding:16px 11px 13px!important}
+ .fresh-v3 .pt-snapshot-card-top{gap:6px!important}
+ .fresh-v3 .pt-snapshot-icon{flex-basis:17px!important;width:17px!important;font-size:18px!important}
+ .fresh-v3 .pt-snapshot-label{font-size:15px!important}
+ .fresh-v3 .pt-snapshot-card-copy strong{font-size:16px!important}
+ .fresh-v3 .pt-snapshot-card-copy small{font-size:10px!important}
+ .fresh-v3 .pt-snapshot-description{font-size:10px!important}
+ .fresh-v3 .pt-snapshot-more{font-size:11px!important}
+}
