@@ -118,7 +118,7 @@ function MovingParticles({motion}:{motion:boolean}){
      const smooth=(t:number)=>{const q=Math.max(0,Math.min(1,t));return q*q*(3-2*q)};
      for(let j=0;j<24;j++){
       const seed=gap*37+j;
-      const speed=.055+random(seed+31)*.025;
+      const speed=.036+random(seed+31)*.014;
       const phase=(random(seed+11)+j*.00037+elapsed*speed)%1;
       const lane=random(seed+53)<.5?.27:.73;
       const exitV=lane+(random(seed+91)-.5)*.07;
@@ -133,11 +133,13 @@ function MovingParticles({motion}:{motion:boolean}){
       if(phase<.57){
        const toward=smooth((phase-.45)/.12);
        pos={x:originBounce.x*(1-toward)+start.x*toward,y:originBounce.y*(1-toward)+start.y*toward};
-      }else if(phase<.69){
-       const t=(phase-.57)/.12;
-       pos={x:start.x+(finish.x-start.x)*t,y:start.y+(finish.y-start.y)*t+Math.sin(t*Math.PI)*(random(seed+101)-.5)*4};
+      }else if(phase<.82){
+       const t=(phase-.57)/.25;
+       const curve=Math.sin(t*Math.PI)*((random(seed+101)-.5)*24);
+       const meander=Math.sin(t*Math.PI*2+seed*1.37)*Math.sin(t*Math.PI)*5;
+       pos={x:start.x+(finish.x-start.x)*smooth(t),y:start.y+(finish.y-start.y)*smooth(t)+curve+meander};
       }else{
-       const blend=smooth((phase-.69)/.13);
+       const blend=smooth((phase-.82)/.12);
        pos={x:finish.x*(1-blend)+arrivalBounce.x*blend,y:finish.y*(1-blend)+arrivalBounce.y*blend};
       }
       const radius=2.3+random(seed+131)*.8;
