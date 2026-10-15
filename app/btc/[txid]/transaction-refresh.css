@@ -1498,3 +1498,33 @@
   radial-gradient(ellipse 85% 85% at 8% 0%,rgba(75,144,185,.20),transparent 65%),
   linear-gradient(180deg,#1a3c52 0%,#123044 46%,#0a2131 100%)!important;
 }
+
+/* Seamless surface pass: lighting belongs to the shared section canvas,
+   not each individual card. Strictly background/color changes; retain all
+   grid sizing, padding, typography, border geometry and interaction rules. */
+.txr .txr-new-metrics{
+ background:
+  radial-gradient(ellipse 100% 105% at 14% 0%,rgba(44,102,137,.19) 0%,rgba(24,66,94,.09) 43%,transparent 80%),
+  linear-gradient(135deg,#0a2030 0%,#081b29 52%,#061724 100%)!important;
+}
+.txr .txr-new-metrics .txr-new-metric{
+ background:transparent!important;
+ box-shadow:none!important;
+}
+.txr .txr-understand-v2 .fresh-explore-body{
+ background:
+  radial-gradient(ellipse 100% 105% at 14% 0%,rgba(44,102,137,.19) 0%,rgba(24,66,94,.09) 43%,transparent 80%),
+  linear-gradient(135deg,#0a2030 0%,#081b29 52%,#061724 100%)!important;
+}
+.txr .txr-understand-v2 .fresh-data-premium,
+.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:transparent!important;
+ box-shadow:none!important;
+}
+/* Quiet the dividing lines without changing their location or geometry. */
+.txr .txr-new-metric::after{
+ background:linear-gradient(180deg,transparent,rgba(110,174,204,.18) 35%,rgba(110,174,204,.18) 65%,transparent)!important;
+}
+.txr .txr-new-metric::before{
+ background:linear-gradient(90deg,transparent,rgba(102,165,195,.18),transparent)!important;
+}
