@@ -1474,57 +1474,53 @@
  }
 }
 
-/* Conservative shared lighting pass — background surfaces ONLY.
-   Each content surface gets one smoky radial highlight + one navy base.
-   No layout, type, border, glow, animation, or tab changes. */
-.txr .txr-new-metric,
-.txr .txr-understand-v2 .fresh-explore-body{
- background:
-  radial-gradient(ellipse 90% 80% at 7% 5%,rgba(46,111,151,.20) 0%,rgba(29,79,111,.10) 37%,transparent 76%),
-  linear-gradient(135deg,#0a2030 0%,#081b29 52%,#061724 100%)!important;
+/* Reference theme: canonical BTC transaction colors and atmosphere.
+   Replaces old layered blue surface passes. Paint only, no geometry or type changes. */
+.txr{
+ background-color:#0b121b!important;
+ background-image:radial-gradient(ellipse 48% 24% at 0% 18%,rgba(208,140,47,.17),transparent 92%),radial-gradient(ellipse 44% 28% at 100% 27%,rgba(205,136,43,.15),transparent 92%),radial-gradient(ellipse 75% 45% at 50% 60%,rgba(48,72,95,.20),transparent 95%),linear-gradient(180deg,#0b111a,#111d2b 48%,#0b141e)!important;
 }
-/* Remove the redundant nested tint: the shared body already provides
-   the texture on the left, while the right retains one restrained glow. */
-.txr .txr-understand-v2 .fresh-data-premium{
- background:transparent!important;
-}
-.txr .txr-understand-v2 .fresh-explainer-premium{
- background:
-  radial-gradient(ellipse 90% 80% at 7% 5%,rgba(46,111,151,.23) 0%,rgba(29,79,111,.12) 37%,transparent 76%),
-  linear-gradient(135deg,#0c2435 0%,#0a1e2e 52%,#071927 100%)!important;
-}
-.txr .txr-new-summary{
- background:
-  radial-gradient(ellipse 85% 85% at 8% 0%,rgba(75,144,185,.20),transparent 65%),
-  linear-gradient(180deg,#1a3c52 0%,#123044 46%,#0a2131 100%)!important;
-}
-
-/* Seamless surface pass: lighting belongs to the shared section canvas,
-   not each individual card. Strictly background/color changes; retain all
-   grid sizing, padding, typography, border geometry and interaction rules. */
+.txr .txr-ambient-art,.txr .txr-ambient-grid,.txr .txr-ambient-cell,.txr .txr-ambient-coin{display:none!important}
 .txr .txr-new-metrics{
- background:
-  radial-gradient(ellipse 100% 105% at 14% 0%,rgba(44,102,137,.19) 0%,rgba(24,66,94,.09) 43%,transparent 80%),
-  linear-gradient(135deg,#0a2030 0%,#081b29 52%,#061724 100%)!important;
+ background:linear-gradient(112deg,#1d3042 0%,#142332 55%,#1a2937 100%)!important;
+ border-color:rgba(179,193,202,.19)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.045),0 12px 32px rgba(0,0,0,.14)!important;
 }
-.txr .txr-new-metrics .txr-new-metric{
+.txr .txr-new-metrics .txr-new-metric{background:transparent!important;box-shadow:none!important}
+.txr .txr-new-summary{
+ background:linear-gradient(110deg,#22384b,#15293a 60%,#182b3a)!important;
+ border-color:rgba(183,192,197,.2)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.05),0 12px 30px rgba(0,0,0,.13)!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six,
+.txr .txr-understand-v2 .fresh-explore-tabs{
+ background:linear-gradient(180deg,#2b3c4d,#162839)!important;
+ border-color:rgba(171,185,196,.25)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.06)!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six button{
  background:transparent!important;
- box-shadow:none!important;
+ color:#b9c9d7!important;
+ border-color:rgba(156,177,190,.17)!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six button[aria-selected="true"],
+.txr .txr-understand-v2 .fresh-tabs-six button[aria-pressed="true"],
+.txr .txr-understand-v2 .fresh-tabs-six button.active{
+ background:linear-gradient(180deg,rgba(119,101,72,.30),rgba(35,50,64,.45))!important;
+ color:#f2c36e!important;
+ border-bottom-color:#eab85b!important;
 }
 .txr .txr-understand-v2 .fresh-explore-body{
- background:
-  radial-gradient(ellipse 100% 105% at 14% 0%,rgba(44,102,137,.19) 0%,rgba(24,66,94,.09) 43%,transparent 80%),
-  linear-gradient(135deg,#0a2030 0%,#081b29 52%,#061724 100%)!important;
+ background:linear-gradient(112deg,#203348,#142333 56%,#1a2937)!important;
+ border-color:rgba(175,190,198,.24)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.045),0 15px 38px rgba(0,0,0,.15)!important;
+}
+.txr .txr-understand-v2 .fresh-data-premium{background:transparent!important;box-shadow:none!important}
+.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:radial-gradient(ellipse 95% 80% at 100% 3%,rgba(210,151,64,.10),transparent 75%)!important;
+ box-shadow:none!important;
 }
 .txr .txr-understand-v2 .fresh-data-premium,
-.txr .txr-understand-v2 .fresh-explainer-premium{
- background:transparent!important;
- box-shadow:none!important;
-}
-/* Quiet the dividing lines without changing their location or geometry. */
-.txr .txr-new-metric::after{
- background:linear-gradient(180deg,transparent,rgba(110,174,204,.18) 35%,rgba(110,174,204,.18) 65%,transparent)!important;
-}
-.txr .txr-new-metric::before{
- background:linear-gradient(90deg,transparent,rgba(102,165,195,.18),transparent)!important;
-}
+.txr .txr-understand-v2 .fresh-explainer-premium{border-color:rgba(170,185,194,.17)!important}
+.txr .txr-new-metric::after{background:linear-gradient(180deg,transparent,rgba(151,172,186,.18),transparent)!important}
+.txr .txr-new-metric::before{background:linear-gradient(90deg,transparent,rgba(151,172,186,.18),transparent)!important}
