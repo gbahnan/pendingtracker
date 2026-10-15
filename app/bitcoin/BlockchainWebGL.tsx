@@ -71,7 +71,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
   const drawBall=(x:number,y:number,r:number,blue:boolean,opacity=1)=>{
    const rgb=blue?"99,193,239":"228,159,70";
    ctx.globalAlpha=opacity;
-   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.24)";ctx.shadowColor="rgba("+rgb+",.65)";ctx.shadowBlur=overview?10:5;ctx.arc(x,y,r*(overview?1.6:1.48),0,Math.PI*2);ctx.fill();
+   ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.24)";ctx.shadowColor="rgba("+rgb+",.65)";ctx.shadowBlur=overview?3.5:5;ctx.arc(x,y,r*(overview?1.28:1.48),0,Math.PI*2);ctx.fill();
    // The actual sphere must be amber, not an ivory disk over amber glow.
    const sphere=ctx.createRadialGradient(x-r*.28,y-r*.3,r*.08,x,y,r);
    if(blue){sphere.addColorStop(0,"#e7f8ff");sphere.addColorStop(.25,"#93d9f6");sphere.addColorStop(.73,"#368ab9");sphere.addColorStop(1,"#15527a")}
@@ -97,7 +97,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
     for(let i=0;i<75;i++){
      const p=particles[i],uv=drift(p,elapsed*.72,i);
      const pos=point(pool,uv.u,uv.v);
-     drawBall(pos.x,pos.y,p.radius*(overview?1.04:1.15),false,overview?.84:.73);
+     drawBall(pos.x,pos.y,p.radius*(overview?.91:1.15),false,overview?.66:.73);
     }
     // More resident balls, with independent straight-line bounces across
     // the entire chamber rather than synchronized circular motion.
@@ -114,7 +114,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
        ? .13+.12*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009))
        : .75+.12*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009));
       const pos=box.kind==="gold"?point(box,u,v):point(box,uv.u,uv.v);
-      drawBall(pos.x,pos.y,p.radius*(overview?.84:.82*1.18),box.kind==="blue",overview?.79:.72);
+      drawBall(pos.x,pos.y,p.radius*(overview?.77:.82*1.18),box.kind==="blue",overview?.68:.72);
      }
     }
     // Six independent, continuously traveling balls per gap. Each has its
@@ -128,7 +128,7 @@ export default function BlockchainWebGL({pending,fee,blocks,projections=[],track
       const from=point(fromBox,.94,lane),to=point(toBox,.06,lane);
       const pos={x:from.x+(to.x-from.x)*phase,y:from.y+(to.y-from.y)*phase+sway};
       const blue=phase>.55?toBox.kind==="blue":fromBox.kind==="blue";
-      drawBall(pos.x,pos.y,(1.9+(j%3)*.35)*(overview?1.06:1.25),blue,(overview?.86:.80)*Math.min(1,phase*9,(1-phase)*9));
+      drawBall(pos.x,pos.y,(1.9+(j%3)*.35)*(overview?1.02:1.25),blue,(overview?.70:.80)*Math.min(1,phase*9,(1-phase)*9));
      }
     }
    }
