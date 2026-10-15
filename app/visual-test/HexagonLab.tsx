@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 const times = [60, 50, 40, 30, 20, 10];
+type ProjectedBlock = { transactions: number | null; fee: number | null };
+type LiveNetwork = { tip: number; projected: ProjectedBlock[]; updatedAt: number };
 const fees = ["0.20", "0.20", "0.30", "0.40", "1.3", "2.3"];
 // Visual placeholders only; replace with live fee-band transaction counts later.
 const transactionCounts = ["6,940", "6,730", "4,820", "3,230", "2,450", "1,980"];
@@ -10,7 +12,10 @@ const hex = "100,4 184,52 184,148 100,196 16,148 16,52";
 const inner = "100,18 171,59 171,141 100,182 29,141 29,59";
 const core = "100,29 161,65 161,135 100,171 39,135 39,65";
 const rand = (i:number, seed:number) => {const x=Math.sin(i*127.1+seed*311.7)*43758.5453;return x-Math.floor(x)};
-function Hexagon({index,blue=false,glow=true}:{index:number;blue?:boolean;glow?:boolean}) {
+function Hexagon({index,blue=false,glow=true,network}:{index:number;blue?:boolean;glow?:boolean;network:LiveNetwork|null}) {
+ const projected = network?.projected[5-index];
+ const feeText = network ? (projected && projected.fee!==null && Number.isFinite(projected.fee) ? projected.fee.toFixed(projected.fee<1?2:1) : "—") : "—";
+ const txText = network ? (projected && projected.transactions!==null ? projected.transactions.toLocaleString("en-US") : "—") : "—";
  const id = "vhex"+index;
  const main = blue?"#69c9ed":"#d9a75f";
  return <div className={"lab-cell "+(blue?"lab-blue":"")}>
@@ -31,9 +36,9 @@ function Hexagon({index,blue=false,glow=true}:{index:number;blue?:boolean;glow?:
     <ellipse cx="100" cy="100" rx="77" ry="77" fill={"url(#"+id+"shine)"} opacity=".18"/>
     {Array.from({length:13},(_,i)=>{const x=53+rand(i,index+3)*94;const y=48+rand(i,index+17)*103;return <circle key={i} cx={x} cy={y} r={1.3+rand(i,index+9)*2.1} fill={blue?"#79ddff":"#ffc05b"} opacity={.42+rand(i,index+7)*.55} className="lab-spark"/>})}
    </svg>
-   <div className="lab-hex-text">{blue?<><span className="lab-btc">₿</span></>:<><strong>~{times[index]} MIN</strong><small>{fees[index]} sat/vB</small></>}</div>
+   <div className="lab-hex-text">{blue?<><span className="lab-btc">₿</span></>:<><strong>~{times[index]} MIN</strong><small>{feeText} sat/vB</small></>}</div>
   </div>
-  <div className="lab-caption">{blue?<><b>CONFIRMED</b><small>Latest block</small></>:<span className="lab-tx-count">{transactionCounts[index]} <span>transactions</span></span>}</div>
+  <div className="lab-caption">{blue?<><b>CONFIRMED</b><small>{network ? "Block "+network.tip.toLocaleString("en-US") : "Awaiting live data"}</small></>:<span className="lab-tx-count">{txText} <span>transactions</span></span>}</div>
  </div>;
 }
 function Pool(){
@@ -262,15 +267,44 @@ function MovingParticles({motion}:{motion:boolean}){
 export default function HexagonLab(){
  const [glow,setGlow]=useState(true);
  const [motion,setMotion]=useState(true);
+ const [network,setNetwork]=useState<LiveNetwork|null>(null);
+ const [status,setStatus]=useState<"connecting"|"live"|"offline">("connecting");
+ const [blockTransition,setBlockTransition]=useState(false);
+ const tipRef=useRef<number|null>(null);
+ const transitionTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+ useEffect(()=>{
+  let active=true;
+  const refresh=async()=>{
+   try{
+    const response=await fetch("/api/visual-test/network",{cache:"no-store"});
+    if(!response.ok)throw new Error("Bitcoin data unavailable");
+    const next=await response.json() as LiveNetwork;
+    if(!Number.isSafeInteger(next.tip)||!Array.isArray(next.projected))throw new Error("Invalid data");
+    if(!active)return;
+    if(tipRef.current!==null&&next.tip>tipRef.current){
+     setBlockTransition(true);
+     if(transitionTimer.current)clearTimeout(transitionTimer.current);
+     transitionTimer.current=setTimeout(()=>{if(active){setNetwork(next);setBlockTransition(false)}},900);
+    }else{
+     setNetwork(next);
+    }
+    tipRef.current=next.tip;
+    setStatus("live");
+   }catch{if(active)setStatus("offline")}
+  };
+  void refresh();
+  const interval=setInterval(()=>{void refresh()},15000);
+  return()=>{active=false;clearInterval(interval);if(transitionTimer.current)clearTimeout(transitionTimer.current)};
+ },[]);
  return <section className="lab-shell">
- <div className="lab-controls"><span>BITCOIN · 2.5D VISUAL PROTOTYPE</span><div><button onClick={()=>setGlow(!glow)}>{glow?"Glow on":"Glow off"}</button><button onClick={()=>setMotion(!motion)}>{motion?"Motion on":"Motion off"}</button></div></div>
- <div className={"lab-scroller "+(!motion?"lab-paused":"")}><div className="lab-track">
- <MovingParticles motion={motion}/><Pool/>{times.map((_,i)=><Hexagon key={i} index={i} glow={glow}/>)}
- <Hexagon index={6} blue glow={glow}/>
+ <div className="lab-controls"><span>BITCOIN · 2.5D VISUAL PROTOTYPE <span className="lab-live-status">{status==="live"?"● LIVE NETWORK":status==="offline"?"● DATA UNAVAILABLE":"● CONNECTING"}</span></span><div><button onClick={()=>setGlow(!glow)}>{glow?"Glow on":"Glow off"}</button><button onClick={()=>setMotion(!motion)}>{motion?"Motion on":"Motion off"}</button></div></div>
+ <div className={"lab-scroller "+(!motion?"lab-paused":"")+(blockTransition?" lab-block-transition":"")}><div className="lab-track">
+ <MovingParticles motion={motion}/><Pool/>{times.map((_,i)=><Hexagon key={i} index={i} glow={glow} network={network}/>)}
+ <Hexagon index={6} blue glow={glow} network={network}/>
  </div></div>
- <p className="lab-note">Visual prototype only. Fee values and transaction count are placeholders; live data and confirmation behavior will be connected after design approval. Scroll horizontally to view the entire sequence.</p>
+ <p className="lab-note">Live Bitcoin mempool projections and latest confirmed block height refresh approximately every 15 seconds. Each hexagon represents an estimated confirmation window; fee rates and transaction counts are projected-block estimates, not guaranteed confirmation times or exact time-bucket totals. The block-confirmation animation is a visual cue, not a literal block moving through fee bands. Scroll horizontally to view the entire sequence.</p>
  <style jsx global>{`
- .lab-shell{margin-top:32px}.lab-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#edbc72;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px}.lab-controls>div{display:flex;gap:8px}.lab-controls button{border:1px solid #5e6974;background:#1c2a36;color:#e7eef4;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;letter-spacing:0}.lab-scroller{overflow-x:auto;overflow-y:hidden;border:1px solid rgba(218,173,103,.12);border-radius:18px;background:radial-gradient(ellipse at 21% 51%,rgba(174,109,43,.16),transparent 48%),radial-gradient(ellipse at 92% 48%,rgba(36,120,163,.15),transparent 38%),linear-gradient(180deg,#192734 0%,#13212e 52%,#111e2a 100%);scrollbar-color:#6b6d69 transparent}.lab-track{isolation:isolate;position:relative;display:flex;align-items:center;gap:21px;width:100%;min-width:max-content;min-height:305px;padding:36px 15px 22px}.lab-cell{position:relative;width:clamp(115px,11.1vw,161px);flex:none;text-align:center;z-index:2}.lab-hex-wrap{width:100%;height:auto;aspect-ratio:161/180;position:relative;filter:drop-shadow(0 2px 8px rgba(199,129,51,.24))}.lab-blue .lab-hex-wrap{filter:drop-shadow(0 0 13px rgba(57,153,206,.42))}.lab-hex-svg{width:100%;height:100%}.lab-hex-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-shadow:0 1px 7px #020912;pointer-events:none;white-space:nowrap}.lab-hex-text strong{font-size:17px;font-weight:800;letter-spacing:.025em;color:#f2f0e9;font-variant-numeric:tabular-nums}.lab-hex-text small{font-size:11px;color:#a9b8c3;letter-spacing:.02em;font-variant-numeric:tabular-nums}.lab-btc{font-size:52px;color:#a9dff0;text-shadow:0 0 16px rgba(60,167,222,.6)}.lab-caption{position:absolute;top:100%;left:0;width:100%;margin-top:3px;color:#6fd6ff;font-size:12px}.lab-caption small{display:block;color:#b4d1df;margin-top:4px}.lab-tx-count{display:block;font-size:12px;font-weight:700;color:#d8b47c;white-space:nowrap;letter-spacing:.01em}.lab-tx-count span{font-size:11px;font-weight:400;color:#98aab7}.lab-pool-col{width:clamp(180px,18vw,263px);flex:none;text-align:center;z-index:2;align-self:center;position:relative;height:180px;display:flex;flex-direction:column;justify-content:center}.lab-pool-title{position:absolute;top:-28px;width:100%}.lab-pool-sub{position:absolute;top:-7px;width:100%}.lab-pool{flex:none}.lab-pool-title{font-size:16px;font-weight:900;color:#f6bd62}.lab-pool-sub{font-size:12px;color:#c6d1da;margin:4px 0 8px}.lab-pool{width:100%;height:135px;border-radius:33px;position:relative;overflow:hidden;border:4px solid #d8943b;background:radial-gradient(ellipse,#27313a,#0a1825 75%);box-shadow:inset 0 0 0 3px #07101a,inset 0 0 0 6px #ffbd61,0 0 13px #f8a640,0 0 31px rgba(241,149,49,.4)}.lab-pool-inset{position:absolute;inset:10px;border-radius:24px;border:1px solid #805a2c;pointer-events:none}.lab-pool-dot{position:absolute;border-radius:50%;background:#ffcb71;box-shadow:0 0 5px 2px #e98e22;animation:labFloat 3s ease-in-out infinite alternate}.lab-particles{position:absolute;inset:0;z-index:3;pointer-events:none}.lab-stream{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}.lab-stream span{position:absolute;width:4px;height:4px;background:#ffca75;border-radius:50%;box-shadow:0 0 8px 3px #df8a2e;animation:labDrift 5s linear infinite}.lab-stream span:nth-child(9n){background:#73d5ff;box-shadow:0 0 9px 3px #168bd1}.lab-paused *{animation-play-state:paused!important}@media(min-width:1000px){.lab-track{gap:19px}.lab-cell{width:clamp(112px,10.4vw,154px)}.lab-pool-col{width:clamp(178px,17.2vw,248px)}}.lab-note{font-size:12px;color:#91aab9;line-height:1.7;margin-top:16px}@keyframes labFloat{to{transform:translate(7px,-8px);opacity:.65}}@keyframes labDrift{0%{transform:translateX(-35px);opacity:0}15%{opacity:.95}85%{opacity:.95}100%{transform:translateX(55px);opacity:0}}@media(max-width:700px){.lab-track{gap:14px;min-height:260px;padding:28px 12px}.lab-cell{width:135px}.lab-hex-wrap{width:135px;height:152px}.lab-pool-col{width:195px;height:152px}.lab-pool{height:110px}.lab-controls{align-items:flex-start;flex-direction:column}}
+ .lab-shell{margin-top:32px}.lab-live-status{font-size:10px;letter-spacing:.08em;color:#95c9b7;margin-left:12px}.lab-block-transition .lab-cell:not(.lab-blue){animation:lab-block-shift .9s ease-in-out both}.lab-block-transition .lab-blue .lab-hex-wrap{animation:lab-confirm-pulse .9s ease-in-out both}@keyframes lab-block-shift{0%,100%{transform:translateX(0)}45%{transform:translateX(12px)}}@keyframes lab-confirm-pulse{0%,100%{filter:drop-shadow(0 0 13px rgba(57,153,206,.42))}50%{filter:drop-shadow(0 0 24px rgba(90,207,255,.85))}}@media(prefers-reduced-motion:reduce){.lab-block-transition .lab-cell:not(.lab-blue),.lab-block-transition .lab-blue .lab-hex-wrap{animation:none}}.lab-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#edbc72;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px}.lab-controls>div{display:flex;gap:8px}.lab-controls button{border:1px solid #5e6974;background:#1c2a36;color:#e7eef4;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;letter-spacing:0}.lab-scroller{overflow-x:auto;overflow-y:hidden;border:1px solid rgba(218,173,103,.12);border-radius:18px;background:radial-gradient(ellipse at 21% 51%,rgba(174,109,43,.16),transparent 48%),radial-gradient(ellipse at 92% 48%,rgba(36,120,163,.15),transparent 38%),linear-gradient(180deg,#192734 0%,#13212e 52%,#111e2a 100%);scrollbar-color:#6b6d69 transparent}.lab-track{isolation:isolate;position:relative;display:flex;align-items:center;gap:21px;width:100%;min-width:max-content;min-height:305px;padding:36px 15px 22px}.lab-cell{position:relative;width:clamp(115px,11.1vw,161px);flex:none;text-align:center;z-index:2}.lab-hex-wrap{width:100%;height:auto;aspect-ratio:161/180;position:relative;filter:drop-shadow(0 2px 8px rgba(199,129,51,.24))}.lab-blue .lab-hex-wrap{filter:drop-shadow(0 0 13px rgba(57,153,206,.42))}.lab-hex-svg{width:100%;height:100%}.lab-hex-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-shadow:0 1px 7px #020912;pointer-events:none;white-space:nowrap}.lab-hex-text strong{font-size:17px;font-weight:800;letter-spacing:.025em;color:#f2f0e9;font-variant-numeric:tabular-nums}.lab-hex-text small{font-size:11px;color:#a9b8c3;letter-spacing:.02em;font-variant-numeric:tabular-nums}.lab-btc{font-size:52px;color:#a9dff0;text-shadow:0 0 16px rgba(60,167,222,.6)}.lab-caption{position:absolute;top:100%;left:0;width:100%;margin-top:3px;color:#6fd6ff;font-size:12px}.lab-caption small{display:block;color:#b4d1df;margin-top:4px}.lab-tx-count{display:block;font-size:12px;font-weight:700;color:#d8b47c;white-space:nowrap;letter-spacing:.01em}.lab-tx-count span{font-size:11px;font-weight:400;color:#98aab7}.lab-pool-col{width:clamp(180px,18vw,263px);flex:none;text-align:center;z-index:2;align-self:center;position:relative;height:180px;display:flex;flex-direction:column;justify-content:center}.lab-pool-title{position:absolute;top:-28px;width:100%}.lab-pool-sub{position:absolute;top:-7px;width:100%}.lab-pool{flex:none}.lab-pool-title{font-size:16px;font-weight:900;color:#f6bd62}.lab-pool-sub{font-size:12px;color:#c6d1da;margin:4px 0 8px}.lab-pool{width:100%;height:135px;border-radius:33px;position:relative;overflow:hidden;border:4px solid #d8943b;background:radial-gradient(ellipse,#27313a,#0a1825 75%);box-shadow:inset 0 0 0 3px #07101a,inset 0 0 0 6px #ffbd61,0 0 13px #f8a640,0 0 31px rgba(241,149,49,.4)}.lab-pool-inset{position:absolute;inset:10px;border-radius:24px;border:1px solid #805a2c;pointer-events:none}.lab-pool-dot{position:absolute;border-radius:50%;background:#ffcb71;box-shadow:0 0 5px 2px #e98e22;animation:labFloat 3s ease-in-out infinite alternate}.lab-particles{position:absolute;inset:0;z-index:3;pointer-events:none}.lab-stream{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}.lab-stream span{position:absolute;width:4px;height:4px;background:#ffca75;border-radius:50%;box-shadow:0 0 8px 3px #df8a2e;animation:labDrift 5s linear infinite}.lab-stream span:nth-child(9n){background:#73d5ff;box-shadow:0 0 9px 3px #168bd1}.lab-paused *{animation-play-state:paused!important}@media(min-width:1000px){.lab-track{gap:19px}.lab-cell{width:clamp(112px,10.4vw,154px)}.lab-pool-col{width:clamp(178px,17.2vw,248px)}}.lab-note{font-size:12px;color:#91aab9;line-height:1.7;margin-top:16px}@keyframes labFloat{to{transform:translate(7px,-8px);opacity:.65}}@keyframes labDrift{0%{transform:translateX(-35px);opacity:0}15%{opacity:.95}85%{opacity:.95}100%{transform:translateX(55px);opacity:0}}@media(max-width:700px){.lab-track{gap:14px;min-height:260px;padding:28px 12px}.lab-cell{width:135px}.lab-hex-wrap{width:135px;height:152px}.lab-pool-col{width:195px;height:152px}.lab-pool{height:110px}.lab-controls{align-items:flex-start;flex-direction:column}}
  `}</style>
  </section>;
 }
