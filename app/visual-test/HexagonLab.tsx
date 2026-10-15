@@ -46,7 +46,7 @@ function MovingParticles({motion}:{motion:boolean}){
   const ctx=canvas.getContext("2d");if(!ctx)return;
   type Chamber={x:number;y:number;w:number;h:number;kind:"pool"|"gold"|"blue"};
   let w=0,h=0,raf=0,last=0,elapsed=0,layout:Chamber[]=[];
-  const particles=Array.from({length:310},(_,i)=>({angle:i*2.39996,lane:(i*.754877666)%1,radius:2+(i%4)*.48}));
+  const particles=Array.from({length:310},(_,i)=>({angle:i*2.39996,lane:(i*.754877666)%1,radius:2.6+(i%4)*.62}));
   // Same triangle-wave wall reflection as the production Bitcoin explorer.
   const bounce=(t:number)=>{const n=((t%2)+2)%2;return n<=1?n:2-n};
   const drift=(p:{angle:number;lane:number},time:number,seed:number)=>{
@@ -88,31 +88,32 @@ function MovingParticles({motion}:{motion:boolean}){
     const pool=layout[0];
     // Independently bouncing particles stay inside the mempool, never spawn behind it.
     ctx.save();ctx.beginPath();ctx.roundRect(pool.x+13,pool.y+13,pool.w-26,pool.h-26,22);ctx.clip();
-    for(let i=0;i<75;i++){const p=particles[i],uv=drift(p,elapsed*.72,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*.91,false,.72)}
+    for(let i=0;i<75;i++){const p=particles[i],uv=drift(p,elapsed*.72,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*1.06,false,.76)}
     ctx.restore();
     for(let chamber=1;chamber<layout.length;chamber++){
      const box=layout[chamber];
      for(let j=0;j<9;j++){
       const seed=75+(chamber*13+j)%130,p=particles[seed],uv=drift(p,elapsed*.65,seed);
       const top=j%2===0,u=.12+.76*bounce(p.lane+elapsed*(.065+(seed%5)*.007)+p.angle*.17);
-      const v=(top?.13:.75)+.12*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009));
+      const v=(top?.12:.77)+.10*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009));
       const pos=point(box,box.kind==="gold"?u:uv.u,box.kind==="gold"?v:uv.v);
-      drawBall(pos.x,pos.y,p.radius*.78,box.kind==="blue",.68);
+      drawBall(pos.x,pos.y,p.radius*.94,box.kind==="blue",.72);
      }
     }
-    // Use the original per-gap traversal, rather than one giant stream through every block.
+    // Production-style six independent travelers in every adjacent gap.
+    // They enter and exit each hexagon through its sides rather than vanishing
+    // in the gap; the path stays in upper/lower lanes to preserve label clarity.
     for(let gap=0;gap<layout.length-1;gap++){
      const from=layout[gap],to=layout[gap+1];
      for(let j=0;j<6;j++){
       const phase=(j/6+gap*.173+elapsed*(.043+(j%3)*.004))%1;
-      const lane=.20+((j*.381966+gap*.113)%1)*.60;
-      const start=point(from,.94,lane),end=point(to,.06,lane);
-      // Confine travel to the space between adjacent chambers.
-      const fromEdge=from.x+from.w+3,toEdge=to.x-3;
-      if(toEdge<=fromEdge)continue;
-      const x=fromEdge+(toEdge-fromEdge)*phase;
-      const y=start.y+(end.y-start.y)*phase+Math.sin(phase*Math.PI)*Math.sin(j*2.17+gap)*4;
-      drawBall(x,y,1.9+(j%3)*.35,to.kind==="blue"&&phase>.55,.75*Math.min(1,phase*9,(1-phase)*9));
+      const upper=j%2===0;
+      const lane=upper?.25:.75;
+      const start=point(from,.80,lane),end=point(to,.20,lane);
+      const x=start.x+(end.x-start.x)*phase;
+      const y=start.y+(end.y-start.y)*phase+Math.sin(phase*Math.PI)*Math.sin(j*2.17+gap)*3;
+      const blue=to.kind==="blue"&&phase>.55;
+      drawBall(x,y,(2.2+(j%3)*.4)*1.24,blue,.82*Math.min(1,phase*12,(1-phase)*12));
      }
     }
    }
