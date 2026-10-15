@@ -394,7 +394,7 @@
    so the transaction snapshot below does not move. */
 @media(min-width:1050px){
  .txr .txr-network-v2{
-  transform:translateY(-58px)!important;
+  transform:translateY(-30px)!important;
   margin-bottom:0!important;
  }
  .txr .txr-network-v2 .motion-arrows{
@@ -402,5 +402,20 @@
  }
  .txr .txr-network-v2 + *{
   position:relative;
+ }
+}
+
+/* Seamless header-to-timeline transition: remove dark strip and unclip arrows. */
+@media(min-width:1050px){
+ .txr{
+  background:#020b13!important;
+  background-image:none!important;
+ }
+ .txr .txr-network-v2 .motion-arrows{
+  top:0!important;
+ }
+ .txr .txr-network-v2 .motion-arrows button{
+  position:relative!important;
+  z-index:12!important;
  }
 }
