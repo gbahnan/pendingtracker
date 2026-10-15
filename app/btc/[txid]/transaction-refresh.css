@@ -466,3 +466,37 @@
   top:174px!important;
  }
 }
+
+/* Keep the transaction marker visible after removing the horizontal rail.
+   The pointer lives beneath its hexagon, not behind the captions. */
+.txr .txr-network-v2 .motion-cell{overflow:visible!important}
+.txr .txr-network-v2 .motion-tracked-arrow{
+ top:192px!important;
+ display:block!important;
+ visibility:visible!important;
+ opacity:1!important;
+ z-index:30!important;
+ overflow:visible!important;
+}
+.txr .txr-network-v2 .motion-tracked-pointer{
+ display:block!important;
+ visibility:visible!important;
+ opacity:1!important;
+ position:absolute!important;
+ top:0!important;
+ left:-11px!important;
+ border-left:11px solid transparent!important;
+ border-right:11px solid transparent!important;
+ border-bottom:16px solid #f5b942!important;
+ filter:drop-shadow(0 0 6px rgba(245,185,66,.85))!important;
+ z-index:31!important;
+}
+@media(max-width:700px){
+ .txr .txr-network-v2 .motion-tracked-arrow{top:144px!important}
+ .txr .txr-network-v2 .motion-tracked-pointer{
+  left:-9px!important;
+  border-left-width:9px!important;
+  border-right-width:9px!important;
+  border-bottom-width:13px!important;
+ }
+}
