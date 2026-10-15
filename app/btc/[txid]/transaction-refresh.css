@@ -679,14 +679,18 @@
 }
 .txr .txr-new-heading:after{
  content:""!important;position:absolute!important;
- left:50%!important;top:-20px!important;width:114px!important;height:20px!important;
- transform:translateX(-50%)!important;
- border:0!important;border-bottom:1.5px solid rgba(244,177,55,.85)!important;
- border-radius:0 0 55% 55%!important;
- background:none!important;box-shadow:0 5px 10px -8px rgba(244,177,55,.5)!important;
- filter:drop-shadow(0 0 4px rgba(244,177,55,.38));
- opacity:.9;pointer-events:none;
+ left:0!important;right:0!important;top:-51px!important;
+ width:100%!important;height:52px!important;
+ transform:none!important;border:0!important;border-radius:0!important;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 52' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop stop-color='%23f5b439' stop-opacity='0'/%3E%3Cstop offset='.2' stop-color='%23f5b439' stop-opacity='.34'/%3E%3Cstop offset='.5' stop-color='%23f5b439' stop-opacity='.65'/%3E%3Cstop offset='.8' stop-color='%23f5b439' stop-opacity='.34'/%3E%3Cstop offset='1' stop-color='%23f5b439' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 49 Q600 5 1200 49' fill='none' stroke='url(%23g)' stroke-width='1.4'/%3E%3C/svg%3E")!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important;
+ box-shadow:none!important;filter:drop-shadow(0 0 4px rgba(245,180,57,.24))!important;
+ opacity:1!important;pointer-events:none;
 }
+.txr .txr-new-heading h2{color:#f4f7fc!important}
+.txr .txr-new-heading h2 em{color:#f7b83d!important}
+.txr .txr-new-heading .txr-hash-label{color:#c3d6e3!important}
+.txr .txr-new-heading .txr-new-hash code{color:#eaf3fa!important}
 @media(max-width:900px){
  .txr .txr-new-heading{gap:9px!important;padding-inline:5px!important}
  .txr .txr-new-heading h2{font-size:21px!important}
@@ -704,5 +708,5 @@
  .txr .txr-new-heading .txr-new-hash{
   grid-column:1/-1;grid-row:2;padding-bottom:8px!important;
  }
- .txr .txr-new-heading:after{width:72px!important;height:14px!important;top:-14px!important}
+ .txr .txr-new-heading:after{height:25px!important;top:-24px!important;width:100%!important}
 }
