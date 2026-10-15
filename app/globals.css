@@ -583,14 +583,14 @@ body:has(.pt-shell) .logo { background:linear-gradient(145deg,#a8bac9,#7997aa); 
 .pt-tx-block>small{display:block;margin-top:6px;font-size:11px;color:#b4c3ca}
 .pt-tx-block-caveat{font-size:12px;line-height:1.6;color:#a4b9c5;margin:15px 0 0}
 .pt-tx-confirmed-banner{margin-top:15px;color:#b5e0cc;font-size:12px;line-height:1.6}
-.pt-tx-summary{background:linear-gradient(135deg,#233d4b,#192f3e);border-color:#789fb9}
+.pt-tx-summary{background:#172633;border-color:rgba(154,178,191,.16)}
 .pt-tx-summary>p{font-size:16px;line-height:1.8;color:#d5e1e8;max-width:900px}
 .pt-tx-summary-actions{display:flex;flex-wrap:wrap;gap:15px;align-items:center;margin-top:18px}
 .pt-tx-summary-actions button{border:0;border-radius:9px;background:#b8cad7;color:#15242d;padding:12px 17px;font-weight:800;cursor:pointer}
 .pt-tx-summary-actions a{color:#bdc8d1;text-decoration:none;font-size:13px}
 .pt-tx-ai{border-top:1px solid #526778;padding-top:15px}
 .pt-tx-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:19px 0}
-.pt-tx-facts>div{border:1px solid #405c6c;background:#1c3342;padding:17px;border-radius:12px}
+.pt-tx-facts>div{border:1px solid rgba(154,178,191,.16);background:#172633;padding:17px;border-radius:12px}
 .pt-tx-facts span,.pt-tx-facts small{display:block;color:#adc1cc;font-size:12px}
 .pt-tx-facts strong{display:block;font-size:clamp(17px,1.8vw,23px);color:#bdc8d1;margin:8px 0;overflow-wrap:anywhere}
 .pt-tx-more{border-top:1px solid #425b6b;padding-top:16px}
