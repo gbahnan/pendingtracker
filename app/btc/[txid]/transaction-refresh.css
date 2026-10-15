@@ -394,7 +394,7 @@
    so the transaction snapshot below does not move. */
 @media(min-width:1050px){
  .txr .txr-network-v2{
-  transform:translateY(-30px)!important;
+  transform:none!important;
   margin-bottom:0!important;
  }
  .txr .txr-network-v2 .motion-arrows{
@@ -417,5 +417,25 @@
  .txr .txr-network-v2 .motion-arrows button{
   position:relative!important;
   z-index:12!important;
+ }
+}
+
+/* Remove the 28px blue-toned strip below the site header.
+   Pull the entire transaction page into that space rather than translating
+   only the hexagon canvas; retain the header and timeline interaction. */
+@media(min-width:1050px){
+ .pt-tx-page.txr{
+  margin-top:-28px!important;
+  padding-top:0!important;
+  background:#020b13!important;
+  background-image:none!important;
+ }
+ .pt-tx-page.txr .txr-shell{padding-top:0!important}
+ .pt-tx-page.txr .txr-network-v2{
+  transform:none!important;
+  margin-top:0!important;
+ }
+ .pt-tx-page.txr .txr-network-v2 .motion-arrows{
+  top:0!important;
  }
 }
