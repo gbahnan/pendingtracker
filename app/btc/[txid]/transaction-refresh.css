@@ -1000,3 +1000,16 @@
  .txr .txr-new-metric-copy{padding-left:39px!important}
  .txr .txr-new-metric>p{margin-left:39px!important}
 }
+
+
+/* Final snapshot polish: connect icons and headings more tightly and keep
+   centered actions visually quieter than champagne-gold headings. */
+.txr .txr-new-metric-heading{gap:7px!important}
+.txr .txr-new-metric-copy{padding-left:39px!important}
+.txr .txr-new-metric>p{margin-left:39px!important}
+.txr .txr-new-learn{color:#caa86f!important}
+@media(max-width:550px){
+ .txr .txr-new-metric-heading{gap:6px!important}
+ .txr .txr-new-metric-copy{padding-left:36px!important}
+ .txr .txr-new-metric>p{margin-left:36px!important}
+}
