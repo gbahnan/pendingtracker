@@ -1746,3 +1746,71 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
 .pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
  background:radial-gradient(ellipse 95% 78% at 100% 0%,rgba(228,169,84,.14),transparent 84%)!important;
 }
+
+/* 2026-10-15 — BTC elite finishing: five coordinated lighting refinements.
+   Scoped to the live transaction route; preserves all geometry and content. */
+.pt-tx-page.txr{
+ background:
+  radial-gradient(ellipse 60% 27% at 49% 27%,rgba(218,155,68,.15),transparent 82%),
+  radial-gradient(ellipse 35% 34% at 0% 48%,rgba(209,145,60,.11),transparent 86%),
+  radial-gradient(ellipse 35% 32% at 100% 59%,rgba(216,154,70,.105),transparent 86%),
+  radial-gradient(ellipse 52% 25% at 52% 70%,rgba(180,132,69,.075),transparent 89%),
+  linear-gradient(180deg,#141e2a 0%,#1b2934 34%,#1c2a35 61%,#17232e 81%,#0a111a 100%)!important;
+}
+.pt-tx-page.txr .txr-new-summary{
+ background:
+  radial-gradient(ellipse 65% 115% at 0% 0%,rgba(230,166,78,.115),transparent 78%),
+  linear-gradient(115deg,rgba(42,61,74,.94),rgba(32,50,64,.92))!important;
+ border-top:1px solid rgba(248,193,104,.33)!important;
+ border-bottom:1px solid rgba(236,179,90,.12)!important;
+ box-shadow:inset 0 1px 0 rgba(255,224,165,.055),0 -13px 44px rgba(218,151,65,.065)!important;
+}
+.pt-tx-page.txr .txr-new-metrics{
+ background:
+  radial-gradient(ellipse 80% 80% at 45% -10%,rgba(211,151,73,.09),transparent 78%),
+  radial-gradient(ellipse 65% 70% at 100% 100%,rgba(192,139,70,.055),transparent 84%),
+  linear-gradient(180deg,rgba(38,57,70,.94),rgba(31,49,63,.92) 65%,rgba(26,44,58,.86))!important;
+ box-shadow:inset 0 1px rgba(244,195,116,.095),0 22px 50px rgba(5,11,18,.105)!important;
+}
+.pt-tx-page.txr .txr-deeper-framed-content{
+ background:
+  linear-gradient(90deg,transparent,rgba(247,190,100,.37) 23%,rgba(247,190,100,.37) 77%,transparent) top/100% 1px no-repeat,
+  linear-gradient(90deg,transparent,rgba(224,166,82,.13) 24%,rgba(224,166,82,.13) 76%,transparent) bottom/100% 1px no-repeat,
+  linear-gradient(180deg,transparent,rgba(233,169,79,.14) 20%,rgba(233,169,79,.14) 75%,transparent) left/1px 100% no-repeat,
+  linear-gradient(180deg,transparent,rgba(233,169,79,.14) 20%,rgba(233,169,79,.14) 75%,transparent) right/1px 100% no-repeat!important;
+ box-shadow:0 0 58px rgba(208,145,62,.07)!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-tabs-six{
+ background:linear-gradient(180deg,rgba(46,65,78,.95),rgba(33,51,65,.93))!important;
+ border-bottom:1px solid rgba(242,184,93,.22)!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ background:
+  radial-gradient(ellipse 60% 68% at 100% 0%,rgba(218,157,73,.095),transparent 84%),
+  radial-gradient(ellipse 65% 66% at 0% 100%,rgba(193,139,65,.055),transparent 87%),
+  linear-gradient(180deg,rgba(39,58,72,.93),rgba(31,49,63,.91) 72%,rgba(26,43,57,.86))!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:radial-gradient(ellipse 95% 75% at 100% 0%,rgba(226,170,89,.12),transparent 83%)!important;
+}
+@media(hover:hover){
+ .pt-tx-page.txr .txr-understand-v2 .fresh-tabs-six button,
+ .pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium a,
+ .pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium button{
+  transition:background-color .22s ease,color .22s ease,border-color .22s ease,box-shadow .22s ease!important;
+ }
+ .pt-tx-page.txr .txr-understand-v2 .fresh-tabs-six button:hover{
+  background:linear-gradient(180deg,rgba(173,129,70,.19),rgba(47,61,70,.22))!important;
+  color:#f3cb82!important;
+  box-shadow:inset 0 -2px rgba(237,182,94,.52)!important;
+ }
+ .pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium a:hover,
+ .pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium button:hover{
+  border-color:rgba(246,187,95,.75)!important;
+  box-shadow:0 0 23px rgba(223,159,71,.14)!important;
+ }
+}
+.pt-tx-page.txr .txr-footer{
+ background:linear-gradient(180deg,rgba(19,31,43,0),rgba(10,17,26,.22))!important;
+ border-top-color:rgba(205,162,98,.085)!important;
+}
