@@ -1344,3 +1344,88 @@
 @media(prefers-reduced-motion:reduce){
  .fresh-v3 .fresh-tabs-six button{transition:none!important}
 }
+
+
+/* Explore summary mirrors the transaction page: clear answer first, details below. */
+.fresh-v3 .fresh-explainer-premium{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+}
+.fresh-v3 .fresh-explainer-premium>.fresh-explainer-icon{
+ width:33px!important;height:33px!important;
+ display:grid!important;place-items:center!important;
+ border:1px solid rgba(235,188,109,.35)!important;
+ border-radius:10px!important;
+ background:rgba(233,176,86,.08)!important;
+ font-size:18px!important;
+ margin:0 0 13px!important;
+}
+.fresh-v3 .fresh-explainer-premium>span{
+ display:block!important;
+ font-size:11px!important;
+ font-weight:800!important;
+ letter-spacing:.14em!important;
+ color:#eec27b!important;
+}
+.fresh-v3 .fresh-explainer-premium>h3{
+ font-size:clamp(21px,2vw,28px)!important;
+ line-height:1.25!important;
+ letter-spacing:-.035em!important;
+ margin:11px 0 12px!important;
+ color:#f4f6f8!important;
+}
+.fresh-v3 .fresh-explainer-premium>p{
+ font-size:clamp(14px,1.1vw,16px)!important;
+ line-height:1.75!important;
+ font-weight:450!important;
+ color:#d3e0e8!important;
+ margin:0 0 18px!important;
+}
+.fresh-v3 .fresh-block-selection-help{
+ margin:3px 0 19px!important;
+ padding:13px 0 13px 16px!important;
+ border-left:2px solid #e8b96e!important;
+ border-radius:0!important;
+ background:transparent!important;
+ color:#cbdce5!important;
+ line-height:1.6!important;
+}
+.fresh-v3 .fresh-explain-accordion{
+ margin-top:8px!important;
+ border-top:1px solid rgba(178,195,200,.22)!important;
+}
+.fresh-v3 .fresh-explain-accordion button{
+ display:flex!important;
+ align-items:center!important;
+ width:100%!important;
+ gap:10px!important;
+ padding:15px 2px!important;
+ background:transparent!important;
+ border:0!important;
+ border-bottom:1px solid rgba(178,195,200,.20)!important;
+ border-radius:0!important;
+ text-align:left!important;
+ color:#e3ebef!important;
+ font-weight:700!important;
+}
+.fresh-v3 .fresh-explain-accordion button>span{color:#eec27b!important}
+.fresh-v3 .fresh-explain-accordion button>b{
+ margin-left:auto!important;
+ color:#eec27b!important;
+ font-size:18px!important;
+}
+.fresh-v3 .fresh-explain-accordion button:hover,
+.fresh-v3 .fresh-explain-accordion button[aria-expanded="true"]{
+ color:#f4c780!important;
+ background:transparent!important;
+}
+.fresh-v3 .fresh-explain-accordion>p{
+ padding:11px 2px 17px 16px!important;
+ margin:0!important;
+ border-left:2px solid #e9bc6b!important;
+ background:transparent!important;
+ color:#d0dee7!important;
+ font-size:13px!important;
+ line-height:1.7!important;
+}
