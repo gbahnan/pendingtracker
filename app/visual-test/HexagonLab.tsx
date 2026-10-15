@@ -202,7 +202,7 @@ function MovingParticles({motion}:{motion:boolean}){
    // the last three links. Most paths remain central but are not collinear.
    for(let gap=0;gap<layout.length-1;gap++){
     const from=layout[gap],to=layout[gap+1];
-    const left=from.x+from.w*.77,right=to.x+to.w*.23;
+    const left=from.x+from.w+4,right=to.x-4;
     const centerY=(from.y+from.h/2+to.y+to.h/2)/2;
     const height=Math.min(from.h,to.h);
     for(let j=0;j<10;j++){
@@ -211,14 +211,14 @@ function MovingParticles({motion}:{motion:boolean}){
      const speed=.72+random(seed+12)*.42;
      const phase=(flowClock*speed/10+offset)%1;
      // A wide, irregular spread instead of a thin line.
-     const lane=(random(seed+8)+random(seed+19)-1)*.54;
-     const wobble=Math.sin(flowClock*(.25+random(seed+23)*.16)+seed*1.7)*height*.065;
-     const arc=Math.sin(phase*Math.PI)*(random(seed+31)-.5)*height*.20;
-     const y=centerY+lane*height+wobble+arc;
+     const lane=(random(seed+8)+random(seed+19)-1)*.19;
+     const wobble=Math.sin(flowClock*(.25+random(seed+23)*.16)+seed*1.7)*height*.022;
+     const arc=Math.sin(phase*Math.PI)*(random(seed+31)-.5)*height*.055;
+     const y=Math.max(centerY-height*.16,Math.min(centerY+height*.16,centerY+lane*height+wobble+arc));
      const x=left+(right-left)*phase;
      const ball:Ball={chamber:gap,next:gap+1,x,y,vx:0,vy:0,r:2.25+random(seed+17)*.85,age:0,wait:0,travel:true,opacity:.42+random(seed+29)*.18,seed};
      ctx.save();
-     ctx.beginPath();ctx.rect(left,0,right-left,h);ctx.clip();
+     ctx.beginPath();ctx.rect(left,centerY-height*.18,right-left,height*.36);ctx.clip();
      drawBall(ball);
      ctx.restore();
     }
