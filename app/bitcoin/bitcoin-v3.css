@@ -1691,9 +1691,6 @@
  background:linear-gradient(180deg,rgba(38,58,69,.07),rgba(16,32,45,.02))!important;
  color:#9cb4c1!important;
 }
-.pt-bitcoin-explorer-redesign{
- background-image:linear-gradient(180deg,transparent 87%,rgba(7,22,35,.30) 100%)!important;
-}
 @media(min-width:951px){
  .fresh-v3>.fresh-learn.fresh-learn-compact{margin-top:33px!important}
 }
