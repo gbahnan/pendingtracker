@@ -785,3 +785,36 @@
  .txr .txr-understand-v2 .fresh-tabs-six{grid-template-columns:repeat(3,minmax(0,1fr))!important}
  .txr .txr-understand-v2 .fresh-data-premium,.txr .txr-understand-v2 .fresh-explainer-premium{padding:17px 11px!important}
 }
+
+/* Transaction snapshot metrics: restrained financial-dashboard hierarchy.
+   Keep plain-English guidance visible and preserve floating detail panels. */
+.txr .txr-new-metrics{gap:0!important}
+.txr .txr-new-metric{
+ min-height:172px!important;padding:19px 19px 16px!important;gap:0!important;
+ background:radial-gradient(ellipse at 0% 0%,rgba(32,85,115,.10),transparent 70%),linear-gradient(135deg,rgba(9,29,43,.38),rgba(4,16,26,.12))!important;
+ border:0!important;border-radius:3px!important;
+}
+.txr .txr-new-metric-main{display:flex;flex-direction:row;align-items:flex-start;gap:12px!important}
+.txr .txr-new-metric-copy{flex:1;min-width:0}
+.txr .txr-new-metric-label{color:#91afc1!important;font-size:11px!important;font-weight:650!important;letter-spacing:.075em;text-transform:uppercase;line-height:1.35}
+.txr .txr-new-metric-copy strong{font-size:clamp(20px,2.05vw,28px)!important;font-weight:750!important;line-height:1.15!important;letter-spacing:-.035em!important;margin:9px 0 7px!important;color:#f4f8fb!important;overflow-wrap:anywhere}
+.txr .txr-new-metric-copy small{color:#c5a46a!important;font-size:11px!important;line-height:1.45!important;font-weight:600!important}
+.txr .txr-new-metric-icon{
+ flex:0 0 25px!important;width:25px!important;height:25px!important;
+ font-size:17px!important;border-radius:0!important;background:none!important;
+ box-shadow:none!important;text-shadow:none!important;color:#8aa9bc!important;opacity:.9;
+}
+.txr .txr-new-metric>p{color:#adc3d0!important;font-size:12px!important;line-height:1.5!important;margin:12px 0 12px!important;max-width:36ch}
+.txr .txr-new-learn{
+ margin-top:auto!important;padding:10px 0 0!important;width:100%;text-align:left;
+ border-top:1px solid rgba(91,149,180,.19)!important;color:#b7ccda!important;
+ font-size:12px!important;font-weight:650!important;transition:color .15s ease;
+}
+.txr .txr-new-learn:hover,.txr .txr-new-learn:focus-visible{color:#f6b941!important}
+.txr .txr-new-metric:hover{background:radial-gradient(ellipse at 0% 0%,rgba(40,96,129,.16),transparent 70%),linear-gradient(135deg,rgba(12,36,53,.48),rgba(4,16,26,.15))!important}
+@media(max-width:850px){.txr .txr-new-metric{min-height:188px!important}}
+@media(max-width:550px){
+ .txr .txr-new-metric{min-height:154px!important;padding:17px 13px!important}
+ .txr .txr-new-metric-copy strong{font-size:22px!important}
+ .txr .txr-new-metric>p{max-width:none}
+}
