@@ -4878,3 +4878,27 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
 .pt-standard-tracker-flow .pt-chain-flow-head span:last-child{font-size:11px;color:#9eb4c5}
 .pt-standard-tracker-flow .pt-chain-flow-status{font-size:11px;letter-spacing:.1em}
 @media(max-width:700px){.pt-standard-tracker-flow{overflow-x:auto!important}.pt-standard-tracker-flow [class*="blockRow"]{min-width:710px!important}.pt-standard-tracker-flow .pt-chain-flow-confirmed{min-width:710px}}
+
+
+/* BTC transaction surface harmony — color-only refinement, 2026-10-15.
+   Intentionally no dimensions, spacing, layout, typography or animation changes. */
+body:has(.pt-tx-page.pt-tx-detail-v2){
+ background-color:#06111b!important;
+ background-image:radial-gradient(ellipse 85% 55% at 50% 29%,#0b2333 0%,#081a28 52%,#06111b 100%)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
+ background:linear-gradient(155deg,#102b3d 0%,#0b2131 36%,#091c2b 100%)!important;
+ border-color:#27465a!important;
+ box-shadow:0 12px 38px #00000030,inset 0 1px 0 #d6e7f012!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
+ background:linear-gradient(155deg,#0b2131,#091c2b)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
+ background:transparent!important;
+ border-bottom-color:#1b3545!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{
+ border-bottom-color:#1b3545!important;
+}
