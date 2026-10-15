@@ -862,3 +862,105 @@
  .fresh-v3 .fresh-fee-list>div{column-gap:12px!important}
  .fresh-v3 .fresh-fee-list>div>b{font-size:14px!important}
 }
+
+
+/* BTC EXPLORER — transaction-page premium visual system v1 */
+/* Visual-only treatment: no changes to network data, layout grids, interactions or timeline geometry. */
+.pt-bitcoin-explorer-redesign{
+  background-color:#101b26!important;
+  background-image:
+    radial-gradient(ellipse 85% 26% at 52% 13%,rgba(69,104,123,.24),transparent 80%),
+    radial-gradient(ellipse 76% 33% at 9% 55%,rgba(204,151,70,.095),transparent 80%),
+    radial-gradient(ellipse 72% 30% at 94% 78%,rgba(74,119,148,.16),transparent 80%),
+    linear-gradient(180deg,#111d29 0%,#1b2a35 43%,#14232f 73%,#0d1823 100%)!important;
+}
+.fresh-v3{
+  --gold:#f5b946!important;
+  --line:rgba(155,183,197,.20)!important;
+  --muted:#acc0ce!important;
+  color:#eef3f7!important;
+}
+.fresh-v3>.fresh-journey{
+  background:radial-gradient(ellipse at 50% 43%,rgba(35,72,99,.31),transparent 72%)!important;
+}
+.fresh-v3>.fresh-hero h1{
+  font-family:inherit!important;
+  font-weight:800!important;
+  letter-spacing:-.045em!important;
+  color:#f4f6fa!important;
+}
+.fresh-v3>.fresh-hero h1 em,
+.fresh-v3 .fresh-kicker,
+.fresh-v3 .fresh-explore-kicker{color:#f5b946!important}
+.fresh-v3>.fresh-hero p{color:#d0dce5!important}
+.fresh-v3 .fresh-search form{
+  background:linear-gradient(115deg,rgba(39,58,71,.97),rgba(25,43,58,.95))!important;
+  border:1px solid rgba(222,176,96,.35)!important;
+  box-shadow:0 14px 42px rgba(0,0,0,.17),0 0 30px rgba(218,159,65,.045)!important;
+}
+.fresh-v3 .pt-snapshot,
+.fresh-v3 .fresh-v3-context,
+.fresh-v3 .fresh-explore-premium,
+.fresh-v3 .fresh-learn-compact{
+  position:relative;
+  background:
+    radial-gradient(ellipse at 4% 0%,rgba(226,174,96,.105),transparent 48%),
+    radial-gradient(ellipse at 96% 18%,rgba(120,163,185,.15),transparent 55%),
+    linear-gradient(125deg,rgba(43,63,76,.95),rgba(26,46,62,.95) 64%,rgba(22,40,55,.94))!important;
+  border-color:rgba(207,178,128,.18)!important;
+  box-shadow:0 24px 55px rgba(0,0,0,.12),inset 0 1px rgba(255,222,162,.075)!important;
+}
+.fresh-v3 .pt-snapshot,
+.fresh-v3 .fresh-v3-context,
+.fresh-v3 .fresh-explore-premium,
+.fresh-v3 .fresh-learn-compact{border-radius:14px!important}
+.fresh-v3 .pt-snapshot-grid,
+.fresh-v3 .pt-snapshot-grid>div,
+.fresh-v3 .fresh-now-secondary-metric,
+.fresh-v3 .fresh-faq details{
+  background:linear-gradient(135deg,rgba(57,77,88,.37),rgba(21,40,54,.32))!important;
+  border-color:rgba(169,190,197,.17)!important;
+}
+.fresh-v3 .fresh-now-secondary-metric,
+.fresh-v3 .fresh-faq details{box-shadow:inset 0 1px rgba(255,255,255,.045)!important}
+.fresh-v3 .fresh-now-expanded{
+  background:linear-gradient(130deg,rgba(47,66,78,.96),rgba(25,44,59,.95))!important;
+  border-color:rgba(213,172,102,.23)!important;
+}
+.fresh-v3 .fresh-explore-body{
+  background:
+    radial-gradient(ellipse at 90% 4%,rgba(213,159,78,.09),transparent 49%),
+    linear-gradient(130deg,rgba(40,61,75,.80),rgba(22,42,57,.78))!important;
+}
+.fresh-v3 .fresh-explainer-premium{
+  background:radial-gradient(ellipse at 95% 12%,rgba(211,166,99,.12),transparent 73%)!important;
+  border-left-color:rgba(166,191,199,.20)!important;
+}
+.fresh-v3 .fresh-tabs-six,
+.fresh-v3 .fresh-tabs-six button{
+  background:linear-gradient(180deg,rgba(48,66,76,.97),rgba(29,49,63,.97))!important;
+  border-color:rgba(155,179,188,.20)!important;
+}
+.fresh-v3 .fresh-tabs-six button.active{
+  background:linear-gradient(180deg,rgba(119,98,65,.35),rgba(55,62,61,.58))!important;
+  box-shadow:inset 0 -3px #f5b946,inset 0 1px rgba(255,214,148,.12)!important;
+}
+.fresh-v3 .fresh-tabs-six button:not(.active):hover{
+  background:linear-gradient(180deg,rgba(79,92,95,.92),rgba(37,60,74,.96))!important;
+}
+.fresh-v3 .fresh-tabs-six button:not(.active) .fresh-tab-icon{color:#dfb76c!important}
+.fresh-v3 .fresh-table-head{color:#e7bc77!important}
+.fresh-v3 .fresh-table-row:hover{background:rgba(198,156,92,.10)!important}
+.fresh-v3 .fresh-fee-list>div,
+.fresh-v3 .fresh-table-row,
+.fresh-v3 .fresh-explain-accordion button{
+  border-bottom-color:rgba(162,187,198,.19)!important;
+}
+.fresh-v3 .fresh-footer{
+  border-top:1px solid rgba(224,180,107,.23)!important;
+  color:#aebfc9!important;
+  background:radial-gradient(ellipse at 50% 0%,rgba(193,149,84,.055),transparent 72%)!important;
+}
+@media(max-width:700px){
+ .fresh-v3 .fresh-explainer-premium{border-left:0!important;border-top:1px solid rgba(166,191,199,.20)!important}
+}
