@@ -1824,3 +1824,6 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
 @media(min-width:701px){
  .pt-tx-page.txr .txr-network-v2{margin-top:-40px!important}
 }
+
+/* Give the Snapshot and Understanding sections a little more breathing room. */
+.pt-tx-page.txr .txr-understand-v2.fresh-explore-premium{margin-top:76px!important}
