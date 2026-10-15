@@ -109,22 +109,36 @@ function MovingParticles({motion}:{motion:boolean}){
      }
      ctx.restore();
     }
-    // Stable, slow gap-only movement: independent dots with no hard
-    // visibility threshold, no fast edge spawning, and no frame overlap.
+    // A single traveling particle retains its identity while moving from
+    // the interior of one chamber, across the gap, into the next chamber.
+    // Frames mask the crossing; text remains clear via upper/lower lanes.
     for(let gap=0;gap<layout.length-1;gap++){
      const from=layout[gap],to=layout[gap+1];
-     const left=from.x+from.w+5,right=to.x-5;
-     const available=right-left;
-     if(available<12)continue;
-     const cy=(from.y+from.h/2+to.y+to.h/2)/2;
+     const fromCenter=from.x+from.w/2,toCenter=to.x+to.w/2;
+     const distance=toCenter-fromCenter;
+     if(distance<=0)continue;
      for(let j=0;j<12;j++){
       const seed=gap*12+j;
-      const phase=(j/12+gap*.071+elapsed*(.045+(seed%5)*.002))%1;
-      const x=left+available*phase;
-      const lane=((seed*.61803398875)%1-.5)*62;
-      const y=cy+lane+Math.sin(elapsed*.6+seed*1.7)*2;
-      const fade=Math.min(1,phase*7,(1-phase)*7);
-      drawBall(x,y,2.2+(seed%3)*.35,to.kind==="blue",.7*Math.max(0,fade));
+      const speed=.085+(seed%5)*.004;
+      const phase=(j/12+gap*.113+elapsed*speed)%1;
+      const upper=j%2===0;
+      const lane=upper?-.28:.28;
+      const wave=Math.sin(elapsed*.95+seed*2.39996)*5;
+      const y=from.y+from.h/2+lane*from.h*.56+wave;
+      // Travel through the full chamber-to-chamber distance, not just
+      // the tiny gap. No teleportation at the edge of a frame.
+      const x=fromCenter+distance*phase;
+      const radius=2.3+(seed%3)*.37;
+      const inFrom=x<from.x+from.w;
+      const inTo=x>to.x;
+      const inGap=!inFrom&&!inTo;
+      ctx.save();
+      if(inFrom){if(from.kind==="pool"){ctx.beginPath();ctx.roundRect(from.x+13,from.y+13,from.w-26,from.h-26,22);ctx.clip()}else clipInterior(from)}
+      else if(inTo){clipInterior(to)}
+      else if(inGap){ctx.beginPath();ctx.rect(from.x+from.w+2,0,Math.max(0,to.x-from.x-from.w-4),h);ctx.clip()}
+      const opacity=.76*Math.min(1,phase*14,(1-phase)*14);
+      drawBall(x,y,radius,to.kind==="blue"&&phase>.65,opacity);
+      ctx.restore();
      }
     }
    }
