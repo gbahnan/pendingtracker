@@ -1171,3 +1171,26 @@
  }
  .txr .txr-new-metric:nth-child(6)::before{display:none!important}
 }
+
+
+/* Correct the snapshot perimeter: one real four-sided border, no stacked
+   pseudo-element side rails or masked-away right/bottom edges. */
+.txr .txr-new-content{
+ border:1px solid rgba(113,176,207,.38)!important;
+ border-radius:12px 12px 3px 3px!important;
+ box-shadow:inset 0 1px 0 rgba(163,209,229,.11),0 0 13px rgba(70,140,177,.045)!important;
+ box-sizing:border-box!important;
+}
+.txr .txr-new-content::before,
+.txr .txr-new-content::after{
+ content:none!important;
+ display:none!important;
+}
+.txr .txr-new-summary{
+ border:0!important;
+ border-radius:11px 11px 0 0!important;
+}
+@media(max-width:550px){
+ .txr .txr-new-content{border-radius:10px 10px 3px 3px!important}
+ .txr .txr-new-summary{border-radius:9px 9px 0 0!important}
+}
