@@ -109,18 +109,28 @@ function MovingParticles({motion}:{motion:boolean}){
      }
      ctx.restore();
     }
-    // Twelve staggered travelers per gap, never crossing the metallic frames.
+    // Long continuous trajectories: particles travel across each chamber and
+    // the following gap at a steady speed. Metallic frames and label zone mask
+    // them, while each gap receives different phases and heights.
     for(let gap=0;gap<layout.length-1;gap++){
      const from=layout[gap],to=layout[gap+1];
-     const x0=from.x+from.w+4,x1=to.x-4;
-     if(x1<=x0)continue;
+     const x0=from.x+from.w*.55,x1=to.x+to.w*.45;
+     const cy=(from.y+from.h/2+to.y+to.h/2)/2;
      for(let j=0;j<12;j++){
-      const phase=(j/12+gap*.137+elapsed*(.09+(j%4)*.009))%1;
-      const lane=(j*.61803398875+gap*.17)%1;
-      const midY=(from.y+from.h/2+to.y+to.h/2)/2;
-      const y=midY+(lane-.5)*46+Math.sin(phase*Math.PI)*Math.sin(j*2.17+gap)*3;
+      const seed=j+gap*12;
+      const speed=.105+(seed%7)*.009;
+      const phase=(j/12+gap*.173+elapsed*speed)%1;
+      const lane=((seed*.61803398875)%1-.5)*66;
       const x=x0+(x1-x0)*phase;
-      drawBall(x,y,2.5+(j%3)*.43,to.kind==="blue"&&phase>.5,.82*Math.min(1,phase*8,(1-phase)*8));
+      const y=cy+lane+Math.sin(phase*Math.PI*2+seed*1.71)*2.5;
+      const radius=2.25+(seed%3)*.42;
+      // Only reveal the particle in the physical open gap. The long
+      // travel distance prevents the whole group from bunching at an edge.
+      const edge0=from.x+from.w+3,edge1=to.x-3;
+      if(x>edge0+radius&&x<edge1-radius){
+       const edgeFade=Math.min(1,(x-edge0-radius)/9,(edge1-radius-x)/9);
+       drawBall(x,y,radius,to.kind==="blue",.82*Math.max(0,edgeFade));
+      }
      }
     }
    }
