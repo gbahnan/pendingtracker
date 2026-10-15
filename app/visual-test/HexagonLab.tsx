@@ -90,8 +90,16 @@ function MovingParticles({motion}:{motion:boolean}){
     ctx.save();ctx.beginPath();ctx.roundRect(pool.x+13,pool.y+13,pool.w-26,pool.h-26,22);ctx.clip();
     for(let i=0;i<75;i++){const p=particles[i],uv=drift(p,elapsed*.72,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*1.06,false,.76)}
     ctx.restore();
+    const clipInterior=(box:Chamber)=>{
+     const cx=box.x+box.w/2,cy=box.y+box.h/2,rx=box.w*.295,ry=box.h*.335;
+     ctx.beginPath();ctx.moveTo(cx,cy-ry);ctx.lineTo(cx+rx,cy-ry*.53);
+     ctx.lineTo(cx+rx,cy+ry*.53);ctx.lineTo(cx,cy+ry);
+     ctx.lineTo(cx-rx,cy+ry*.53);ctx.lineTo(cx-rx,cy-ry*.53);
+     ctx.closePath();ctx.clip();
+    };
     for(let chamber=1;chamber<layout.length;chamber++){
      const box=layout[chamber];
+     ctx.save();clipInterior(box);
      for(let j=0;j<9;j++){
       const seed=75+(chamber*13+j)%130,p=particles[seed],uv=drift(p,elapsed*.65,seed);
       const top=j%2===0,u=.12+.76*bounce(p.lane+elapsed*(.065+(seed%5)*.007)+p.angle*.17);
@@ -99,21 +107,20 @@ function MovingParticles({motion}:{motion:boolean}){
       const pos=point(box,box.kind==="gold"?u:uv.u,box.kind==="gold"?v:uv.v);
       drawBall(pos.x,pos.y,p.radius*.94,box.kind==="blue",.72);
      }
+     ctx.restore();
     }
-    // Production-style six independent travelers in every adjacent gap.
-    // They enter and exit each hexagon through its sides rather than vanishing
-    // in the gap; the path stays in upper/lower lanes to preserve label clarity.
+    // Twelve staggered travelers per gap, never crossing the metallic frames.
     for(let gap=0;gap<layout.length-1;gap++){
      const from=layout[gap],to=layout[gap+1];
-     for(let j=0;j<6;j++){
-      const phase=(j/6+gap*.173+elapsed*(.043+(j%3)*.004))%1;
-      const upper=j%2===0;
-      const lane=upper?.25:.75;
-      const start=point(from,.80,lane),end=point(to,.20,lane);
-      const x=start.x+(end.x-start.x)*phase;
-      const y=start.y+(end.y-start.y)*phase+Math.sin(phase*Math.PI)*Math.sin(j*2.17+gap)*3;
-      const blue=to.kind==="blue"&&phase>.55;
-      drawBall(x,y,(2.2+(j%3)*.4)*1.24,blue,.82*Math.min(1,phase*12,(1-phase)*12));
+     const x0=from.x+from.w+4,x1=to.x-4;
+     if(x1<=x0)continue;
+     for(let j=0;j<12;j++){
+      const phase=(j/12+gap*.137+elapsed*(.09+(j%4)*.009))%1;
+      const lane=(j*.61803398875+gap*.17)%1;
+      const midY=(from.y+from.h/2+to.y+to.h/2)/2;
+      const y=midY+(lane-.5)*46+Math.sin(phase*Math.PI)*Math.sin(j*2.17+gap)*3;
+      const x=x0+(x1-x0)*phase;
+      drawBall(x,y,2.5+(j%3)*.43,to.kind==="blue"&&phase>.5,.82*Math.min(1,phase*8,(1-phase)*8));
      }
     }
    }
@@ -135,7 +142,7 @@ export default function HexagonLab(){
  </div></div>
  <p className="lab-note">Visual prototype only. Fee values and transaction count are placeholders; live data and confirmation behavior will be connected after design approval. Scroll horizontally to view the entire sequence.</p>
  <style jsx global>{`
- .lab-shell{margin-top:32px}.lab-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#edbc72;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px}.lab-controls>div{display:flex;gap:8px}.lab-controls button{border:1px solid #5e6974;background:#1c2a36;color:#e7eef4;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;letter-spacing:0}.lab-scroller{overflow-x:auto;overflow-y:hidden;border:1px solid rgba(218,173,103,.12);border-radius:18px;background:radial-gradient(ellipse at 24% 50%,rgba(181,112,42,.12),transparent 57%),radial-gradient(ellipse at 96% 50%,rgba(31,128,195,.12),transparent 33%),#15232f;scrollbar-color:#6b6d69 transparent}.lab-track{isolation:isolate;position:relative;display:flex;align-items:center;gap:5px;width:100%;min-width:max-content;min-height:305px;padding:36px 15px 22px}.lab-cell{position:relative;width:clamp(115px,11.1vw,161px);flex:none;text-align:center;z-index:2}.lab-hex-wrap{width:100%;height:auto;aspect-ratio:161/180;position:relative;filter:drop-shadow(0 0 11px rgba(246,163,57,.3))}.lab-blue .lab-hex-wrap{filter:drop-shadow(0 0 14px rgba(56,171,246,.48))}.lab-hex-svg{width:100%;height:100%}.lab-hex-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-shadow:0 1px 7px #020912;pointer-events:none;white-space:nowrap}.lab-hex-text strong{font-size:16px;font-weight:900}.lab-hex-text small{font-size:12px;color:#e0e7ef}.lab-btc{font-size:52px;color:#b9edff;text-shadow:0 0 14px #35a9ff}.lab-caption{position:absolute;top:-30px;left:0;width:100%;color:#6fd6ff;font-size:12px}.lab-caption small{display:block;color:#b4d1df;margin-top:4px}.lab-pool-col{width:clamp(180px,18vw,263px);flex:none;text-align:center;z-index:2;align-self:center;position:relative;height:180px;display:flex;flex-direction:column;justify-content:center}.lab-pool-title{position:absolute;top:-28px;width:100%}.lab-pool-sub{position:absolute;top:-7px;width:100%}.lab-pool{flex:none}.lab-pool-title{font-size:16px;font-weight:900;color:#f6bd62}.lab-pool-sub{font-size:12px;color:#c6d1da;margin:4px 0 8px}.lab-pool{width:100%;height:135px;border-radius:33px;position:relative;overflow:hidden;border:4px solid #d8943b;background:radial-gradient(ellipse,#27313a,#0a1825 75%);box-shadow:inset 0 0 0 3px #07101a,inset 0 0 0 6px #ffbd61,0 0 13px #f8a640,0 0 31px rgba(241,149,49,.4)}.lab-pool-inset{position:absolute;inset:10px;border-radius:24px;border:1px solid #805a2c;pointer-events:none}.lab-pool-dot{position:absolute;border-radius:50%;background:#ffcb71;box-shadow:0 0 5px 2px #e98e22;animation:labFloat 3s ease-in-out infinite alternate}.lab-particles{position:absolute;inset:0;z-index:3;pointer-events:none}.lab-stream{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}.lab-stream span{position:absolute;width:4px;height:4px;background:#ffca75;border-radius:50%;box-shadow:0 0 8px 3px #df8a2e;animation:labDrift 5s linear infinite}.lab-stream span:nth-child(9n){background:#73d5ff;box-shadow:0 0 9px 3px #168bd1}.lab-paused *{animation-play-state:paused!important}@media(min-width:1000px){.lab-track{gap:2px}.lab-cell{width:clamp(112px,10.4vw,154px)}.lab-pool-col{width:clamp(178px,17.2vw,248px)}}.lab-note{font-size:12px;color:#91aab9;line-height:1.7;margin-top:16px}@keyframes labFloat{to{transform:translate(7px,-8px);opacity:.65}}@keyframes labDrift{0%{transform:translateX(-35px);opacity:0}15%{opacity:.95}85%{opacity:.95}100%{transform:translateX(55px);opacity:0}}@media(max-width:700px){.lab-track{min-height:260px;padding:28px 12px}.lab-cell{width:135px}.lab-hex-wrap{width:135px;height:152px}.lab-pool-col{width:195px;height:152px}.lab-pool{height:110px}.lab-controls{align-items:flex-start;flex-direction:column}}
+ .lab-shell{margin-top:32px}.lab-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#edbc72;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px}.lab-controls>div{display:flex;gap:8px}.lab-controls button{border:1px solid #5e6974;background:#1c2a36;color:#e7eef4;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;letter-spacing:0}.lab-scroller{overflow-x:auto;overflow-y:hidden;border:1px solid rgba(218,173,103,.12);border-radius:18px;background:radial-gradient(ellipse at 24% 50%,rgba(181,112,42,.12),transparent 57%),radial-gradient(ellipse at 96% 50%,rgba(31,128,195,.12),transparent 33%),#15232f;scrollbar-color:#6b6d69 transparent}.lab-track{isolation:isolate;position:relative;display:flex;align-items:center;gap:21px;width:100%;min-width:max-content;min-height:305px;padding:36px 15px 22px}.lab-cell{position:relative;width:clamp(115px,11.1vw,161px);flex:none;text-align:center;z-index:2}.lab-hex-wrap{width:100%;height:auto;aspect-ratio:161/180;position:relative;filter:drop-shadow(0 0 11px rgba(246,163,57,.3))}.lab-blue .lab-hex-wrap{filter:drop-shadow(0 0 14px rgba(56,171,246,.48))}.lab-hex-svg{width:100%;height:100%}.lab-hex-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-shadow:0 1px 7px #020912;pointer-events:none;white-space:nowrap}.lab-hex-text strong{font-size:16px;font-weight:900}.lab-hex-text small{font-size:12px;color:#e0e7ef}.lab-btc{font-size:52px;color:#b9edff;text-shadow:0 0 14px #35a9ff}.lab-caption{position:absolute;top:-30px;left:0;width:100%;color:#6fd6ff;font-size:12px}.lab-caption small{display:block;color:#b4d1df;margin-top:4px}.lab-pool-col{width:clamp(180px,18vw,263px);flex:none;text-align:center;z-index:2;align-self:center;position:relative;height:180px;display:flex;flex-direction:column;justify-content:center}.lab-pool-title{position:absolute;top:-28px;width:100%}.lab-pool-sub{position:absolute;top:-7px;width:100%}.lab-pool{flex:none}.lab-pool-title{font-size:16px;font-weight:900;color:#f6bd62}.lab-pool-sub{font-size:12px;color:#c6d1da;margin:4px 0 8px}.lab-pool{width:100%;height:135px;border-radius:33px;position:relative;overflow:hidden;border:4px solid #d8943b;background:radial-gradient(ellipse,#27313a,#0a1825 75%);box-shadow:inset 0 0 0 3px #07101a,inset 0 0 0 6px #ffbd61,0 0 13px #f8a640,0 0 31px rgba(241,149,49,.4)}.lab-pool-inset{position:absolute;inset:10px;border-radius:24px;border:1px solid #805a2c;pointer-events:none}.lab-pool-dot{position:absolute;border-radius:50%;background:#ffcb71;box-shadow:0 0 5px 2px #e98e22;animation:labFloat 3s ease-in-out infinite alternate}.lab-particles{position:absolute;inset:0;z-index:3;pointer-events:none}.lab-stream{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}.lab-stream span{position:absolute;width:4px;height:4px;background:#ffca75;border-radius:50%;box-shadow:0 0 8px 3px #df8a2e;animation:labDrift 5s linear infinite}.lab-stream span:nth-child(9n){background:#73d5ff;box-shadow:0 0 9px 3px #168bd1}.lab-paused *{animation-play-state:paused!important}@media(min-width:1000px){.lab-track{gap:19px}.lab-cell{width:clamp(112px,10.4vw,154px)}.lab-pool-col{width:clamp(178px,17.2vw,248px)}}.lab-note{font-size:12px;color:#91aab9;line-height:1.7;margin-top:16px}@keyframes labFloat{to{transform:translate(7px,-8px);opacity:.65}}@keyframes labDrift{0%{transform:translateX(-35px);opacity:0}15%{opacity:.95}85%{opacity:.95}100%{transform:translateX(55px);opacity:0}}@media(max-width:700px){.lab-track{gap:14px;min-height:260px;padding:28px 12px}.lab-cell{width:135px}.lab-hex-wrap{width:135px;height:152px}.lab-pool-col{width:195px;height:152px}.lab-pool{height:110px}.lab-controls{align-items:flex-start;flex-direction:column}}
  `}</style>
  </section>;
 }
