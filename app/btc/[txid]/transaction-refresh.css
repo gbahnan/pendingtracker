@@ -965,7 +965,7 @@
 }
 
 
-/* Snapshot heading hierarchy: champagne-gold category, framed icon, white live value.
+/* Snapshot heading hierarchy: champagne-gold category, larger unframed icon, white live value.
    Preserve the compact cards, grid, copy, links, and existing navy gradients. */
 .txr .txr-new-metric-heading{
  gap:10px!important;
@@ -975,9 +975,8 @@
  width:32px!important;
  height:32px!important;
  flex:0 0 32px!important;
- border-radius:7px!important;
- background:rgba(221,182,111,.10)!important;
- color:#e0b96f!important;
+ background:transparent!important;
+ color:#c7a46a!important;
  font-size:21px!important;
  opacity:1!important;
 }
