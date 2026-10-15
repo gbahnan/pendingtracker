@@ -605,3 +605,27 @@
  .txr .txr-new-heading{padding-top:12px}
  .txr .txr-new-heading:after{height:12px;top:-12px}
 }
+
+/* Premium connected snapshot: airy blue summary, softly textured open metrics,
+   and a deliberate visual break before the optional deeper exploration. */
+.txr .txr-new-summary{
+ background:radial-gradient(ellipse at 8% 0%,rgba(67,135,179,.16),transparent 55%),linear-gradient(115deg,#10283b 0%,#0a1c2b 65%,#071522 100%)!important;
+ border:1px solid rgba(78,135,169,.25)!important;
+ border-radius:12px!important;
+ padding:17px 18px 19px!important;
+ margin:4px 0 8px!important;
+ box-shadow:inset 0 1px 0 rgba(146,197,221,.09),0 12px 30px rgba(0,0,0,.09);
+}
+.txr .txr-new-summary:after{left:16px;right:16px;opacity:.45}
+.txr .txr-new-summary-copy p{color:#e0ebf3!important;line-height:1.65!important}
+.txr .txr-new-metric{
+ background:radial-gradient(ellipse at 4% 2%,rgba(40,103,143,.14),transparent 68%),linear-gradient(135deg,rgba(12,34,50,.57),rgba(4,16,27,.13))!important;
+ border-radius:8px!important;
+}
+.txr .txr-new-metric-icon{box-shadow:0 0 18px rgba(235,161,42,.10)}
+.txr .txr-new-metric:hover{background:linear-gradient(135deg,rgba(17,48,69,.7),rgba(7,22,35,.35))!important}
+.txr .txr-snapshot-v2 + .txr-understand-v2{margin-top:48px!important}
+@media(max-width:700px){
+ .txr .txr-new-summary{padding:14px 12px 16px!important}
+ .txr .txr-snapshot-v2 + .txr-understand-v2{margin-top:28px!important}
+}
