@@ -109,36 +109,55 @@ function MovingParticles({motion}:{motion:boolean}){
      }
      ctx.restore();
     }
-    // Asynchronous particle traffic: varied intervals, independent speeds
-    // and gently curving lanes instead of synchronized conveyor-belt motion.
+    // Each traveler dwells and bounces inside its origin, exits to the
+    // neighboring chamber, then bounces on arrival. Stable per-particle
+    // parameters avoid synchronized motion and sudden position changes.
     for(let gap=0;gap<layout.length-1;gap++){
      const from=layout[gap],to=layout[gap+1];
-     const fromCenter=from.x+from.w/2,toCenter=to.x+to.w/2;
-     const distance=toCenter-fromCenter;
-     if(distance<=0)continue;
+     const random=(n:number)=>rand(n,19);
+     const smooth=(t:number)=>t*t*(3-2*t);
+     const inside=(box:Chamber,u:number,v:number)=>point(box,u,v);
      for(let j=0;j<14;j++){
-      const seed=gap*29+j;
-      const random=(n:number)=>{const v=Math.sin(n*127.1+78.233)*43758.5453;return v-Math.floor(v)};
-      const offset=random(seed+11);
-      const speed=.048+random(seed+31)*.052;
-      const phase=(offset+elapsed*speed)%1;
+      const seed=gap*37+j;
+      const speed=.065+random(seed+31)*.035;
+      const phase=(random(seed+11)+elapsed*speed)%1;
       const upper=random(seed+53)<.5;
-      const baseLane=(upper?-.29:.29)+(random(seed+71)-.5)*.17;
-      const arc=Math.sin(phase*Math.PI*2+random(seed+91)*6.283)*5;
-      const sway=Math.sin(elapsed*(.42+random(seed+113)*.32)+seed*1.91)*3;
-      const y=from.y+from.h/2+baseLane*from.h*.53+arc+sway;
-      const x=fromCenter+distance*phase;
-      const radius=2.2+random(seed+131)*1.05;
-      const inFrom=x<from.x+from.w;
-      const inTo=x>to.x;
+      const lane=upper?.25:.75;
+      const oscillation=(t:number)=>({
+       u:.22+.56*bounce(random(seed+71)+t*(2.1+random(seed+72)*1.5)),
+       v:lane+(bounce(random(seed+81)+t*(1.6+random(seed+82)))-.5)*.18
+      });
+      const exitV=lane+(random(seed+91)-.5)*.1;
+      const start=inside(from,.82,exitV);
+      const finish=inside(to,.18,exitV);
+      let pos:{x:number;y:number};
+      if(phase<.48){
+       // Visible residence in the source chamber with reflected motion.
+       const p=oscillation(phase/.48);
+       const toward=smooth(Math.max(0,(phase-.37)/.11));
+       const bouncePos=inside(from,p.u,p.v);
+       pos={x:bouncePos.x*(1-toward)+start.x*toward,y:bouncePos.y*(1-toward)+start.y*toward};
+      }else if(phase<.70){
+       // A short, smooth crossing, including the border-to-border gap.
+       const t=smooth((phase-.48)/.22);
+       pos={x:start.x+(finish.x-start.x)*t,y:start.y+(finish.y-start.y)*t+Math.sin(t*Math.PI)*((random(seed+101)-.5)*9)};
+      }else{
+       // Bounce inside the destination before the next cycle.
+       const t=(phase-.70)/.30;
+       const p=oscillation(t+.63);
+       const bouncePos=inside(to,p.u,p.v);
+       const blend=smooth(Math.min(1,t*4));
+       pos={x:finish.x*(1-blend)+bouncePos.x*blend,y:finish.y*(1-blend)+bouncePos.y*blend};
+      }
+      const radius=2.3+random(seed+131)*1.05;
       ctx.save();
-      if(inFrom){
+      if(pos.x<from.x+from.w){
        if(from.kind==="pool"){ctx.beginPath();ctx.roundRect(from.x+13,from.y+13,from.w-26,from.h-26,22);ctx.clip()}
        else clipInterior(from);
-      }else if(inTo){clipInterior(to)}
-      else{ctx.beginPath();ctx.rect(from.x+from.w+2,0,Math.max(0,to.x-from.x-from.w-4),h);ctx.clip()}
-      const opacity=(.56+random(seed+151)*.25)*Math.min(1,phase*14,(1-phase)*14);
-      drawBall(x,y,radius,to.kind==="blue"&&phase>.65,opacity);
+      }else if(pos.x>to.x){clipInterior(to)}
+      else{ctx.beginPath();ctx.rect(from.x+from.w,0,Math.max(0,to.x-from.x-from.w),h);ctx.clip()}
+      const opacity=(.64+random(seed+151)*.22)*Math.min(1,phase*22,(1-phase)*22);
+      drawBall(pos.x,pos.y,radius,to.kind==="blue"&&phase>.55,opacity);
       ctx.restore();
      }
     }
