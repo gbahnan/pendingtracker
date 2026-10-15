@@ -1077,3 +1077,62 @@
  .fresh-v3 .pt-snapshot-art.art-chain{font-size:12px!important}
  .fresh-v3 .pt-snapshot-more{font-size:11px!important}
 }
+
+
+/* Premium miniature network illustrations: distinct, restrained, decorative. */
+.fresh-v3 .pt-snapshot-art{
+ position:relative!important;
+ height:51px!important;flex-basis:51px!important;
+ margin:11px 0 7px!important;
+ padding:5px 4px 2px!important;
+ border-radius:7px!important;
+ background:linear-gradient(180deg,rgba(203,165,105,.035),rgba(15,32,44,.07))!important;
+ border-bottom:1px solid rgba(201,170,114,.16)!important;
+}
+.fresh-v3 .pt-snapshot-art.art-bars{
+ align-items:flex-end!important;gap:3px!important;
+}
+.fresh-v3 .pt-snapshot-art.art-bars i{
+ border-radius:2px 2px 0 0!important;
+ min-width:2px!important;
+ background:linear-gradient(to top,rgba(193,116,40,.12),#d89940 68%,#ffdb8d)!important;
+ box-shadow:0 0 9px rgba(241,183,83,.15)!important;
+}
+.fresh-v3 .pt-snapshot-art.metric-fee.art-bars i{
+ background:linear-gradient(to top,rgba(35,122,166,.10),#3a9fd2 70%,#a1e2ff)!important;
+ box-shadow:0 0 9px rgba(88,190,241,.18)!important;
+}
+.fresh-v3 .pt-snapshot-art.metric-mempool.art-bars i{
+ background:linear-gradient(to top,rgba(166,75,43,.12),#d77d52 70%,#ffc194)!important;
+ box-shadow:0 0 9px rgba(248,147,93,.15)!important;
+}
+.fresh-v3 .pt-snapshot-art svg{height:100%!important;width:100%!important;overflow:visible!important}
+.fresh-v3 .pt-snapshot-art svg .chart-guide{
+ fill:none!important;stroke:rgba(162,192,207,.16)!important;stroke-width:1!important;filter:none!important;
+}
+.fresh-v3 .pt-snapshot-art svg .chart-fill{
+ fill:rgba(228,170,79,.10)!important;stroke:none!important;filter:none!important;
+}
+.fresh-v3 .pt-snapshot-art svg .chart-stroke{
+ fill:none!important;stroke:#f1b75b!important;stroke-width:2.5!important;
+ stroke-linecap:round!important;filter:drop-shadow(0 0 3px rgba(239,175,78,.35))!important;
+}
+.fresh-v3 .pt-snapshot-art svg .chart-end{
+ fill:#ffe0a1!important;stroke:#f3b65a!important;stroke-width:1!important;filter:none!important;
+}
+.fresh-v3 .pt-snapshot-art.metric-congestion svg .chart-fill{fill:rgba(83,171,222,.10)!important}
+.fresh-v3 .pt-snapshot-art.metric-congestion svg .chart-stroke{stroke:#76c9ee!important}
+.fresh-v3 .pt-snapshot-art.metric-congestion svg .chart-end{fill:#b8eaff!important;stroke:#76c9ee!important}
+.fresh-v3 .pt-snapshot-art.metric-hashrate svg .chart-stroke{stroke:#e3c47f!important}
+.fresh-v3 .pt-snapshot-art.art-chain svg .chain-link{
+ fill:none!important;stroke:rgba(112,189,229,.46)!important;stroke-width:2!important;filter:none!important;
+}
+.fresh-v3 .pt-snapshot-art.art-chain svg .chain-hex{
+ fill:rgba(35,92,121,.28)!important;stroke:#6ac7ef!important;stroke-width:2!important;
+ filter:drop-shadow(0 0 3px rgba(84,191,236,.26))!important;
+}
+.fresh-v3 .pt-snapshot-art.art-chain svg .chain-dot{fill:#d0efff!important;stroke:none!important;filter:none!important}
+@media(max-width:560px){
+ .fresh-v3 .pt-snapshot-art{height:37px!important;flex-basis:37px!important;margin:8px 0 5px!important;padding:3px 2px 1px!important}
+ .fresh-v3 .pt-snapshot-art.art-bars{gap:2px!important}
+}
