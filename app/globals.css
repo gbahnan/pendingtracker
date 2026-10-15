@@ -4911,3 +4911,40 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-footer{
  border-top-color:rgba(138,166,181,.14)!important;
 }
+
+
+/* BTC transaction — cohesive graphite/slate surface pass.
+   Scoped to Bitcoin transaction only; no layout or animation properties. */
+.pt-tx-page.pt-tx-detail-v2{
+ background-color:#101923!important;
+ background-image:radial-gradient(ellipse 90% 46% at 50% 44%,rgba(55,76,90,.27),transparent 82%),linear-gradient(180deg,#101923,#13212c 52%,#101923)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
+ background:#172633!important;
+ border-color:rgba(157,175,185,.15)!important;
+ box-shadow:0 12px 30px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact{
+ border-right-color:rgba(170,186,195,.13)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-footer{
+ border-top-color:rgba(170,186,195,.13)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
+ background:#172633!important;
+ border-color:rgba(170,186,195,.14)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
+ background:transparent!important;
+ border-bottom-color:rgba(170,186,195,.13)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{
+ border-bottom-color:rgba(170,186,195,.15)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-summary,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-details{
+ background:#172633!important;
+ border-color:rgba(170,186,195,.14)!important;
+ box-shadow:none!important;
+}
