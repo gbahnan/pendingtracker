@@ -109,34 +109,35 @@ function MovingParticles({motion}:{motion:boolean}){
      }
      ctx.restore();
     }
-    // A single traveling particle retains its identity while moving from
-    // the interior of one chamber, across the gap, into the next chamber.
-    // Frames mask the crossing; text remains clear via upper/lower lanes.
+    // Asynchronous particle traffic: varied intervals, independent speeds
+    // and gently curving lanes instead of synchronized conveyor-belt motion.
     for(let gap=0;gap<layout.length-1;gap++){
      const from=layout[gap],to=layout[gap+1];
      const fromCenter=from.x+from.w/2,toCenter=to.x+to.w/2;
      const distance=toCenter-fromCenter;
      if(distance<=0)continue;
-     for(let j=0;j<12;j++){
-      const seed=gap*12+j;
-      const speed=.085+(seed%5)*.004;
-      const phase=(j/12+gap*.113+elapsed*speed)%1;
-      const upper=j%2===0;
-      const lane=upper?-.28:.28;
-      const wave=Math.sin(elapsed*.95+seed*2.39996)*5;
-      const y=from.y+from.h/2+lane*from.h*.56+wave;
-      // Travel through the full chamber-to-chamber distance, not just
-      // the tiny gap. No teleportation at the edge of a frame.
+     for(let j=0;j<14;j++){
+      const seed=gap*29+j;
+      const random=(n:number)=>{const v=Math.sin(n*127.1+78.233)*43758.5453;return v-Math.floor(v)};
+      const offset=random(seed+11);
+      const speed=.048+random(seed+31)*.052;
+      const phase=(offset+elapsed*speed)%1;
+      const upper=random(seed+53)<.5;
+      const baseLane=(upper?-.29:.29)+(random(seed+71)-.5)*.17;
+      const arc=Math.sin(phase*Math.PI*2+random(seed+91)*6.283)*5;
+      const sway=Math.sin(elapsed*(.42+random(seed+113)*.32)+seed*1.91)*3;
+      const y=from.y+from.h/2+baseLane*from.h*.53+arc+sway;
       const x=fromCenter+distance*phase;
-      const radius=2.3+(seed%3)*.37;
+      const radius=2.2+random(seed+131)*1.05;
       const inFrom=x<from.x+from.w;
       const inTo=x>to.x;
-      const inGap=!inFrom&&!inTo;
       ctx.save();
-      if(inFrom){if(from.kind==="pool"){ctx.beginPath();ctx.roundRect(from.x+13,from.y+13,from.w-26,from.h-26,22);ctx.clip()}else clipInterior(from)}
-      else if(inTo){clipInterior(to)}
-      else if(inGap){ctx.beginPath();ctx.rect(from.x+from.w+2,0,Math.max(0,to.x-from.x-from.w-4),h);ctx.clip()}
-      const opacity=.76*Math.min(1,phase*14,(1-phase)*14);
+      if(inFrom){
+       if(from.kind==="pool"){ctx.beginPath();ctx.roundRect(from.x+13,from.y+13,from.w-26,from.h-26,22);ctx.clip()}
+       else clipInterior(from);
+      }else if(inTo){clipInterior(to)}
+      else{ctx.beginPath();ctx.rect(from.x+from.w+2,0,Math.max(0,to.x-from.x-from.w-4),h);ctx.clip()}
+      const opacity=(.56+random(seed+151)*.25)*Math.min(1,phase*14,(1-phase)*14);
       drawBall(x,y,radius,to.kind==="blue"&&phase>.65,opacity);
       ctx.restore();
      }
