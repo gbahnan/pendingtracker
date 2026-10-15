@@ -1265,3 +1265,48 @@
 @media(max-width:650px){
  .txr .txr-understand-v2 .fresh-explore-title{padding:0 8px 14px!important}
 }
+
+/* Tighten the free-standing introduction so the description rests just above
+   the tabs. Align the title and tab navigation on a consistent grid. */
+.txr .txr-understand-v2 .fresh-explore-title{
+ padding:0 18px 5px!important;
+ margin:0!important;
+ align-items:center!important;
+}
+.txr .txr-understand-v2 .fresh-explore-title .fresh-kicker{
+ margin-bottom:8px!important;
+}
+.txr .txr-understand-v2 .fresh-explore-title h2{
+ margin:0 0 4px!important;
+}
+.txr .txr-understand-v2 .fresh-explore-title p{
+ margin:0!important;
+ line-height:1.35!important;
+}
+.txr .txr-understand-v2 .fresh-explore-decoration{
+ align-self:center!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six{
+ align-items:stretch!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six button{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ gap:9px!important;
+ min-width:0!important;
+ text-align:center!important;
+ white-space:nowrap!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six .fresh-tab-icon{
+ display:inline-flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ flex:0 0 18px!important;
+ width:18px!important;
+}
+@media(max-width:650px){
+ .txr .txr-understand-v2 .fresh-explore-title{padding:0 8px 7px!important}
+ .txr .txr-understand-v2 .fresh-tabs-six button{gap:5px!important;white-space:normal!important}
+ .txr .txr-understand-v2 .fresh-tabs-six .fresh-tab-icon{flex-basis:15px!important;width:15px!important}
+}
