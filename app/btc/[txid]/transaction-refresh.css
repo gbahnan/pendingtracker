@@ -1055,3 +1055,28 @@
   font-size:19px!important;
  }
 }
+
+
+/* Keep all snapshot text fixed. Place small gold icons just above each heading,
+   fully inside the card rather than hanging across column boundaries. */
+.txr .txr-new-metric-heading .txr-new-metric-icon{
+ position:absolute!important;
+ left:0!important;
+ top:-14px!important;
+ transform:none!important;
+ width:17px!important;
+ height:15px!important;
+ flex:0 0 17px!important;
+ font-size:16px!important;
+ color:#c7a46a!important;
+ background:transparent!important;
+}
+@media(max-width:550px){
+ .txr .txr-new-metric-heading .txr-new-metric-icon{
+  left:0!important;
+  top:-13px!important;
+  width:16px!important;
+  height:14px!important;
+  font-size:15px!important;
+ }
+}
