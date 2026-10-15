@@ -4954,8 +4954,7 @@ body:has(.pt-tx-page.pt-tx-detail-v2)::after{
    Deliberately high-contrast design test; restore commit 2d4ed33 to roll back.
    Scoped visual paint only: geometry, responsive layout, content and motion untouched. */
 .pt-tx-page.pt-tx-detail-v2{
- background-color:#292724!important;
- background-image:
+ background:
  radial-gradient(ellipse 82% 31% at 50% 48%,rgba(237,169,78,.33) 0%,rgba(170,111,47,.17) 47%,transparent 86%),
  radial-gradient(ellipse 48% 55% at 0% 45%,rgba(225,151,64,.29),transparent 83%),
  radial-gradient(ellipse 48% 55% at 100% 55%,rgba(225,151,64,.28),transparent 83%),
@@ -4963,8 +4962,7 @@ body:has(.pt-tx-page.pt-tx-detail-v2)::after{
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary,
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
- background-color:#332f2b!important;
- background-image:
+ background:
  radial-gradient(ellipse 115% 92% at 5% -18%,rgba(239,183,99,.29),transparent 68%),
  radial-gradient(ellipse 94% 95% at 102% 4%,rgba(201,137,68,.20),transparent 78%),
  repeating-linear-gradient(115deg,rgba(255,231,194,.018) 0px,rgba(255,231,194,.018) 1px,transparent 1px,transparent 9px),
