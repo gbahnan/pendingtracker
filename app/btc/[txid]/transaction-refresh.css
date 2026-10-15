@@ -1460,3 +1460,16 @@
  .txr .txr-new-heading .txr-hash-label{font-size:12px!important}
  .txr .txr-new-heading .txr-new-hash code{font-size:12px!important}
 }
+
+/* Transaction ID header: label and hash share one larger readable type size. */
+.txr .txr-new-heading .txr-hash-label,
+.txr .txr-new-heading .txr-new-hash code{
+ font-size:16px!important;
+ line-height:1.4!important;
+}
+@media(max-width:900px){
+ .txr .txr-new-heading .txr-hash-label,
+ .txr .txr-new-heading .txr-new-hash code{
+  font-size:14px!important;
+ }
+}
