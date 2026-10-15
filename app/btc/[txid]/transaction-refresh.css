@@ -1600,3 +1600,41 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
 .pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
  box-shadow:none!important;
 }
+
+/* BTC visual continuity v2: eliminate solid slab boundaries, retain grid geometry. */
+/* A transparent grid wrapper allows one canvas to read between the six facts. */
+.pt-tx-page.txr .txr-new-metrics{
+ background:linear-gradient(180deg,rgba(24,42,57,.64) 0%,rgba(19,35,49,.30) 68%,rgba(12,21,32,0) 100%)!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-new-summary{
+ background:linear-gradient(180deg,rgba(30,49,65,.84),rgba(25,43,58,.62))!important;
+ border:0!important;
+ border-bottom:1px solid rgba(159,179,189,.10)!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-tabs-six{
+ background:linear-gradient(180deg,rgba(39,57,72,.91),rgba(24,41,55,.78))!important;
+ border-bottom:1px solid rgba(161,180,192,.12)!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ background:linear-gradient(180deg,rgba(26,44,59,.72) 0%,rgba(22,39,53,.63) 72%,rgba(17,29,42,.42) 100%)!important;
+ border:0!important;
+ border-radius:0 0 12px 12px!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-data-premium{
+ background:transparent!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:radial-gradient(ellipse at 100% 0%,rgba(205,161,92,.065),transparent 75%)!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body::before,
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body::after{
+ box-shadow:none!important;
+}
