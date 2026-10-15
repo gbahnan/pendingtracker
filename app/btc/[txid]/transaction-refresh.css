@@ -388,3 +388,19 @@
   padding-top:0!important;
  }
 }
+
+/* Align transaction navigation arrows directly below the header's blue rule.
+   Shift the whole timeline up while reserving its original document height,
+   so the transaction snapshot below does not move. */
+@media(min-width:1050px){
+ .txr .txr-network-v2{
+  transform:translateY(-58px)!important;
+  margin-bottom:-58px!important;
+ }
+ .txr .txr-network-v2 .motion-arrows{
+  top:0!important;
+ }
+ .txr .txr-network-v2 + *{
+  position:relative;
+ }
+}
