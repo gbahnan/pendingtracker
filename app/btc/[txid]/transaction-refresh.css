@@ -1479,23 +1479,23 @@
 .pt-tx-page.txr{
  background-color:#080d14!important;
  background-image:
- radial-gradient(ellipse 44% 32% at -12% 24%,rgba(221,164,83,.19) 0%,rgba(150,103,47,.085) 43%,transparent 86%),
- radial-gradient(ellipse 41% 34% at 110% 28%,rgba(225,168,84,.18) 0%,rgba(151,103,47,.08) 44%,transparent 86%),
+ radial-gradient(ellipse 48% 43% at -13% 27%,rgba(221,164,83,.15) 0%,rgba(150,103,47,.075) 44%,transparent 88%),
+ radial-gradient(ellipse 46% 45% at 112% 32%,rgba(225,168,84,.15) 0%,rgba(151,103,47,.07) 46%,transparent 90%),
  radial-gradient(ellipse 45% 34% at 107% 78%,rgba(192,137,67,.09),transparent 88%),
  radial-gradient(ellipse 46% 32% at -8% 81%,rgba(188,132,63,.075),transparent 88%),
- linear-gradient(180deg,#080b11 0%,#0b1018 50%,#090e15 100%)!important;
+ linear-gradient(180deg,#090d14 0%,#0b111b 35%,#0c131e 65%,#090e16 100%)!important;
 }
 .txr .txr-ambient-art,.txr .txr-ambient-grid,.txr .txr-ambient-cell,.txr .txr-ambient-coin{display:none!important}
 .txr .txr-new-metrics{
  background:linear-gradient(112deg,#1b2b39 0%,#14212e 55%,#182632 100%)!important;
  border-color:rgba(179,193,202,.19)!important;
- box-shadow:inset 0 1px rgba(255,255,255,.045),0 12px 32px rgba(0,0,0,.14)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.035),0 12px 35px rgba(0,0,0,.09)!important;
 }
 .txr .txr-new-metrics .txr-new-metric{background:transparent!important;box-shadow:none!important}
 .txr .txr-new-summary{
  background:linear-gradient(110deg,#1e3141,#152534 60%,#182a38)!important;
  border-color:rgba(183,192,197,.2)!important;
- box-shadow:inset 0 1px rgba(255,255,255,.05),0 12px 30px rgba(0,0,0,.13)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.04),0 12px 34px rgba(0,0,0,.09)!important;
 }
 .txr .txr-understand-v2 .fresh-tabs-six,
 .txr .txr-understand-v2 .fresh-explore-tabs{
@@ -1518,7 +1518,7 @@
 .txr .txr-understand-v2 .fresh-explore-body{
  background:radial-gradient(ellipse 48% 65% at 96% 4%,rgba(192,146,82,.075),transparent 88%),linear-gradient(112deg,#1d3042,#142332 56%,#192937)!important;
  border-color:rgba(175,190,198,.24)!important;
- box-shadow:inset 0 1px rgba(255,255,255,.045),0 15px 38px rgba(0,0,0,.15)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.035),0 15px 42px rgba(0,0,0,.09)!important;
 }
 .txr .txr-understand-v2 .fresh-data-premium{background:transparent!important;box-shadow:none!important}
 .txr .txr-understand-v2 .fresh-explainer-premium{
@@ -1533,3 +1533,23 @@
 /* Ensure the global page background does not cover the gold/black canvas. */
 .pt-tx-page.txr::before,.pt-tx-page.txr::after{background-image:none!important;display:none!important}
 body:has(.pt-tx-page.txr){background:#080d14!important}
+
+/* Continuous page atmosphere: soften section boundaries without moving anything. */
+.pt-tx-page.txr .txr-new-metrics,
+.pt-tx-page.txr .txr-new-summary,
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ border-color:rgba(158,179,191,.14)!important;
+}
+.pt-tx-page.txr .txr-new-summary{
+ background:linear-gradient(115deg,#1b2e3e 0%,#142535 65%,#152737 100%)!important;
+}
+.pt-tx-page.txr .txr-new-metrics{
+ background:linear-gradient(125deg,#1a2b3a,#152331 58%,#172634)!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ background:radial-gradient(ellipse 55% 65% at 100% 0%,rgba(199,151,81,.055),transparent 87%),linear-gradient(120deg,#1b2c3b,#142331 65%,#182734)!important;
+}
+.pt-tx-page.txr .txr-footer{
+ border-top-color:rgba(147,169,182,.13)!important;
+ background:transparent!important;
+}
