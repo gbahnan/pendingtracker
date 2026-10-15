@@ -316,3 +316,50 @@
   mask-image:linear-gradient(to right,#000 0%,#000 85%,rgba(0,0,0,.92) 89%,rgba(0,0,0,.45) 95%,transparent 100%)!important;
  }
 }
+
+/* Match Bitcoin Explorer's top-of-page timeline spacing on desktop.
+   Keep breadcrumb and help accessible without stacking three header rows. */
+@media(min-width:1050px){
+ .txr{padding-top:0!important}
+ .txr .txr-shell{padding-top:0!important}
+ .txr .txr-breadcrumb{
+  position:absolute!important;
+  top:12px!important;
+  left:0!important;
+  z-index:4!important;
+  margin:0!important;
+ }
+ .txr .txr-network-v2{padding-top:0!important}
+ .txr .txr-network-v2 .motion{position:relative!important}
+ .txr .txr-network-v2 .motion-top{
+  position:absolute!important;
+  top:7px!important;
+  left:0!important;
+  right:0!important;
+  z-index:5!important;
+  margin:0!important;
+  padding:0!important;
+  pointer-events:none!important;
+ }
+ .txr .txr-network-v2 .motion-top .motion-live{visibility:hidden!important}
+ .txr .txr-network-v2 .motion-top .motion-info{pointer-events:auto!important}
+ .txr .txr-network-v2 .motion-arrows{
+  margin:0 0 2px!important;
+  min-height:40px!important;
+  padding:0!important;
+  justify-content:center!important;
+ }
+ .txr .txr-network-v2 .motion-arrows>span{display:none!important}
+ .txr .txr-network-v2 .motion-arrows>div{margin:0 auto!important}
+ .txr .txr-network-v2 .motion-window{margin-top:0!important}
+ .txr .txr-network-v2 .motion-track{padding-top:5px!important}
+ .txr .txr-network-v2 .motion-explain{
+  position:relative!important;
+  z-index:7!important;
+  margin:6px auto!important;
+  padding:12px!important;
+  background:#081725!important;
+  border:1px solid #365875!important;
+  border-radius:8px!important;
+ }
+}
