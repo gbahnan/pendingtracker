@@ -1053,3 +1053,21 @@
   width:20px!important;height:20px!important;flex-basis:20px!important;font-size:18px!important;
  }
 }
+
+
+/* Final icon scale: legible, balanced with 21px snapshot headings.
+   Retain existing inline icon placement and full-width left-aligned body. */
+.txr .txr-new-metric-heading .txr-new-metric-icon{
+ width:24px!important;
+ height:24px!important;
+ flex:0 0 24px!important;
+ font-size:23px!important;
+}
+@media(max-width:550px){
+ .txr .txr-new-metric-heading .txr-new-metric-icon{
+  width:22px!important;
+  height:22px!important;
+  flex-basis:22px!important;
+  font-size:21px!important;
+ }
+}
