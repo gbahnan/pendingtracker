@@ -88,7 +88,7 @@ function MovingParticles({motion}:{motion:boolean}){
     const pool=layout[0];
     // Independently bouncing particles stay inside the mempool, never spawn behind it.
     ctx.save();ctx.beginPath();ctx.roundRect(pool.x+13,pool.y+13,pool.w-26,pool.h-26,22);ctx.clip();
-    for(let i=0;i<30;i++){const p=particles[i],uv=drift(p,elapsed*.53,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*1.06,false,.76)}
+    for(let i=0;i<52;i++){const p=particles[i],uv=drift(p,elapsed*.53,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*1.06,false,.76)}
     ctx.restore();
     const clipInterior=(box:Chamber)=>{
      const cx=box.x+box.w/2,cy=box.y+box.h/2,rx=box.w*.295,ry=box.h*.335;
@@ -116,9 +116,9 @@ function MovingParticles({motion}:{motion:boolean}){
      const from=layout[gap],to=layout[gap+1];
      const random=(n:number)=>rand(n,19);
      const smooth=(t:number)=>{const q=Math.max(0,Math.min(1,t));return q*q*(3-2*q)};
-     for(let j=0;j<40;j++){
+     for(let j=0;j<52;j++){
       const seed=gap*37+j;
-      const speed=.036+random(seed+31)*.014;
+      const speed=.034+random(seed+31)*.013;
       const phase=(random(seed+11)+j*.00037+elapsed*speed)%1;
       const lane=random(seed+53)<.5?.27:.73;
       const exitV=lane+(random(seed+91)-.5)*.07;
@@ -131,7 +131,7 @@ function MovingParticles({motion}:{motion:boolean}){
       const arrivalBounce=point(to,.46+wave*amplitude,lane+waveY*.07);
       let pos:{x:number;y:number};
       if(phase<.57){
-       const toward=smooth((phase-.45)/.12);
+       const toward=smooth((phase-.39)/.18);
        pos={x:originBounce.x*(1-toward)+start.x*toward,y:originBounce.y*(1-toward)+start.y*toward};
       }else if(phase<.82){
        const t=(phase-.57)/.25;
@@ -139,7 +139,7 @@ function MovingParticles({motion}:{motion:boolean}){
        const meander=Math.sin(t*Math.PI*2+seed*1.37)*Math.sin(t*Math.PI)*5;
        pos={x:start.x+(finish.x-start.x)*smooth(t),y:start.y+(finish.y-start.y)*smooth(t)+curve+meander};
       }else{
-       const blend=smooth((phase-.82)/.12);
+       const blend=smooth((phase-.82)/.18);
        pos={x:finish.x*(1-blend)+arrivalBounce.x*blend,y:finish.y*(1-blend)+arrivalBounce.y*blend};
       }
       const radius=2.3+random(seed+131)*.8;
@@ -149,7 +149,7 @@ function MovingParticles({motion}:{motion:boolean}){
        else clipInterior(from);
       }else if(pos.x>to.x){clipInterior(to)}
       else{ctx.beginPath();ctx.rect(from.x+from.w,0,Math.max(0,to.x-from.x-from.w),h);ctx.clip()}
-      const opacity=(.56+random(seed+151)*.2)*Math.min(1,phase*18,(1-phase)*18);
+      const opacity=(.56+random(seed+151)*.2)*smooth(Math.min(1,phase*12))*smooth(Math.min(1,(1-phase)*12));
       drawBall(pos.x,pos.y,radius,to.kind==="blue"&&phase>.68,opacity);
       ctx.restore();
      }
