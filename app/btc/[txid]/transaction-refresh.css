@@ -1664,3 +1664,28 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
  border-top-color:rgba(155,173,184,.065)!important;
  box-shadow:none!important;
 }
+
+/* BTC final lighting balance — snapshot matched to the clearer Understanding panel. */
+/* Restore a readable navy canvas through both rows instead of fading into black. */
+.pt-tx-page.txr .txr-new-metrics{
+ background:linear-gradient(180deg,rgba(29,49,65,.96) 0%,rgba(25,44,59,.94) 54%,rgba(23,41,56,.89) 100%)!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+/* Keep the introductory summary within the same family, with a restrained warm highlight. */
+.pt-tx-page.txr .txr-new-summary{
+ background:radial-gradient(ellipse 55% 125% at 98% 0%,rgba(202,151,78,.045),transparent 90%),linear-gradient(180deg,rgba(32,53,69,.95),rgba(28,47,63,.92))!important;
+ border-bottom:1px solid rgba(163,183,193,.12)!important;
+ box-shadow:none!important;
+}
+/* Use matching light levels in the explanation canvas, but keep its stronger readability. */
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ background:linear-gradient(180deg,rgba(29,48,63,.88) 0%,rgba(25,43,58,.82) 64%,rgba(22,39,53,.74) 100%)!important;
+ border-top:0!important;
+ box-shadow:none!important;
+}
+/* Avoid a second visible card behind the explanatory prose. */
+.pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:radial-gradient(ellipse 90% 75% at 96% 4%,rgba(206,160,90,.07),transparent 88%),linear-gradient(120deg,rgba(46,56,61,.12),rgba(24,39,52,.015) 80%)!important;
+ box-shadow:none!important;
+}
