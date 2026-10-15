@@ -1814,3 +1814,8 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
  background:linear-gradient(180deg,rgba(19,31,43,0),rgba(10,17,26,.22))!important;
  border-top-color:rgba(205,162,98,.085)!important;
 }
+
+/* Lift only the Bitcoin transaction visualization closer to the navigation. */
+@media(min-width:701px){
+ .pt-tx-page.txr .txr-network-v2{margin-top:-28px!important}
+}
