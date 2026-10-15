@@ -1703,3 +1703,51 @@
 @media(prefers-reduced-motion:reduce){
  .fresh-v3 .fresh-data-table .fresh-table-row.fresh-tx-new{transition:none!important}
 }
+
+
+/* Visual parity with Bitcoin Transaction Detail: shared atmospheric graphite,
+   champagne typography and outer-section rhythm. Explorer geometry untouched. */
+.pt-bitcoin-explorer-redesign{
+ background-color:#17212b!important;
+ background-image:
+ radial-gradient(ellipse 56% 23% at 50% 90%,rgba(207,146,66,.13),transparent 85%),
+ radial-gradient(ellipse 62% 34% at 3% 48%,rgba(206,151,79,.18),transparent 86%),
+ radial-gradient(ellipse 54% 31% at 98% 55%,rgba(208,150,70,.15),transparent 87%),
+ repeating-linear-gradient(120deg,rgba(255,230,180,.008) 0px,rgba(255,230,180,.008) 1px,transparent 1px,transparent 9px),
+ linear-gradient(180deg,#17212b 0%,#202b34 45%,#1b2934 78%,#16232f 94%,#141f2b 100%)!important;
+}
+.fresh-v3{
+ --gold:#e9bb70!important;
+ --line:rgba(230,180,99,.20)!important;
+ --muted:#a9bfcc!important;
+ color:#eef3f7!important;
+}
+.fresh-v3 .fresh-kicker,
+.fresh-v3 .fresh-explore-kicker,
+.fresh-v3 .pt-snapshot-label,
+.fresh-v3 .pt-snapshot-more,
+.fresh-v3 .fresh-explainer-premium>span{
+ color:#e9bb70!important;
+}
+.fresh-v3>.pt-external-section-heading h2{
+ color:#f1f4f6!important;
+ letter-spacing:-.035em!important;
+}
+.fresh-v3>.pt-external-section-heading p{
+ color:#a9bfcc!important;
+ line-height:1.55!important;
+}
+.fresh-v3 .pt-snapshot-description,
+.fresh-v3 .fresh-explainer-premium>p,
+.fresh-v3 .fresh-faq details p{color:#b9cbd6!important}
+.fresh-v3 .fresh-explore-premium{
+ background:
+ radial-gradient(ellipse 83% 63% at 5% 0%,rgba(242,185,94,.095),transparent 75%),
+ radial-gradient(ellipse 72% 72% at 96% 92%,rgba(201,147,68,.055),transparent 80%),
+ repeating-linear-gradient(135deg,rgba(255,255,255,.007) 0px,rgba(255,255,255,.007) 1px,transparent 1px,transparent 9px),
+ linear-gradient(155deg,#293944,#1c2c38 85%)!important;
+}
+body:has(.pt-bitcoin-explorer-redesign) .pt-founder-footer{
+ background:radial-gradient(ellipse 42% 48% at 50% 0%,rgba(222,159,72,.07),transparent 95%),linear-gradient(180deg,#141f2b 0%,#111b26 65%,#101923 100%)!important;
+ border-top-color:rgba(228,177,91,.10)!important;
+}
