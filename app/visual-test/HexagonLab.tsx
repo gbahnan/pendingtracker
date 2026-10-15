@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 const times = [60, 50, 40, 30, 20, 10];
 type ProjectedBlock = { transactions: number | null; fee: number | null };
-type LiveNetwork = { tip: number; projected: ProjectedBlock[]; updatedAt: number };
+type ConfirmedBlock = { height: number|null; id: string|null; transactions: number|null };
+type LiveNetwork = { tip: number; projected: ProjectedBlock[]; confirmed?: ConfirmedBlock[]; updatedAt: number };
 const fees = ["0.20", "0.20", "0.30", "0.40", "1.3", "2.3"];
 // Visual placeholders only; replace with live fee-band transaction counts later.
 const transactionCounts = ["6,940", "6,730", "4,820", "3,230", "2,450", "1,980"];
@@ -12,7 +13,7 @@ const hex = "100,4 184,52 184,148 100,196 16,148 16,52";
 const inner = "100,18 171,59 171,141 100,182 29,141 29,59";
 const core = "100,29 161,65 161,135 100,171 39,135 39,65";
 const rand = (i:number, seed:number) => {const x=Math.sin(i*127.1+seed*311.7)*43758.5453;return x-Math.floor(x)};
-function Hexagon({index,blue=false,glow=true,network}:{index:number;blue?:boolean;glow?:boolean;network:LiveNetwork|null}) {
+function Hexagon({index,blue=false,glow=true,network,confirmedBlock}:{index:number;blue?:boolean;glow?:boolean;network:LiveNetwork|null;confirmedBlock?:ConfirmedBlock}) {
  const projected = network?.projected[5-index];
  const feeText = network ? (projected && projected.fee!==null && Number.isFinite(projected.fee) ? projected.fee.toFixed(projected.fee<1?2:1) : "—") : "—";
  const txText = network ? (projected && projected.transactions!==null ? projected.transactions.toLocaleString("en-US") : "—") : "—";
@@ -38,7 +39,7 @@ function Hexagon({index,blue=false,glow=true,network}:{index:number;blue?:boolea
    </svg>
    <div className="lab-hex-text">{blue?<><span className="lab-btc">₿</span></>:<><strong>~{times[index]} MIN</strong><small>{feeText} sat/vB</small></>}</div>
   </div>
-  <div className="lab-caption">{blue?<><b>CONFIRMED</b><small>{network ? "Block "+network.tip.toLocaleString("en-US") : "Awaiting live data"}</small></>:<span className="lab-tx-count">{txText} <span>transactions</span></span>}</div>
+  <div className="lab-caption">{blue?<><b>CONFIRMED</b><small>{network ? "Block "+(confirmedBlock?.height??network.tip).toLocaleString("en-US") : "Awaiting live data"}</small></>:<span className="lab-tx-count">{txText} <span>transactions</span></span>}</div>
  </div>;
 }
 function Pool(){
@@ -300,7 +301,7 @@ export default function HexagonLab({embedded=false,trackedPosition=null,trackedF
  {!embedded&&<div className="lab-controls"><span>BITCOIN · 2.5D VISUAL PROTOTYPE <span className="lab-live-status">{status==="live"?"● LIVE NETWORK":status==="offline"?"● DATA UNAVAILABLE":"● CONNECTING"}</span></span><div><button onClick={()=>setGlow(!glow)}>{glow?"Glow on":"Glow off"}</button><button onClick={()=>setMotion(!motion)}>{motion?"Motion on":"Motion off"}</button></div></div>}
  <div className={"lab-scroller "+(!motion?"lab-paused":"")+(blockTransition?" lab-block-transition":"")}><div className="lab-track">
  <MovingParticles motion={motion}/><Pool/>{times.map((_,i)=><div key={i} className="lab-stage-slot"><Hexagon index={i} glow={glow} network={network}/>{trackedPosition===6-i&&<span className="lab-tracked-marker" style={{left:`${Math.round(20+60*Math.max(0,Math.min(1,trackedFraction??.5)))}%`}} aria-label="Your transaction estimated position">▲</span>}</div>)}
- <div className="lab-stage-slot"><Hexagon index={6} blue glow={glow} network={network}/>{trackedConfirmedHeight!==null&&network?.tip===trackedConfirmedHeight&&<span className="lab-tracked-marker" aria-label="Your confirmed transaction">▲</span>}</div>
+ {Array.from({length:6},(_,i)=>{const block=network?.confirmed?.[i];return <div className="lab-stage-slot" key={"confirmed-"+i}><Hexagon index={6+i} blue glow={glow} network={network} confirmedBlock={block}/>{trackedConfirmedHeight!==null&&block?.height===trackedConfirmedHeight&&<span className="lab-tracked-marker" aria-label="Your confirmed transaction">▲</span>}</div>})}
  </div></div>
  {!embedded&&<p className="lab-note">Live Bitcoin mempool projections and latest confirmed block height refresh approximately every 5 seconds. Each hexagon represents an estimated confirmation window; fee rates and transaction counts are projected-block estimates, not guaranteed confirmation times or exact time-bucket totals. The block-confirmation animation is a visual cue, not a literal block moving through fee bands. Scroll horizontally to view the entire sequence.</p>}
  <style jsx global>{`
