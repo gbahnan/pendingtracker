@@ -363,3 +363,28 @@
   border-radius:8px!important;
  }
 }
+
+/* Transaction hero: match Explorer's tight top spacing, no extra help/header copy. */
+.txr .txr-breadcrumb{display:none!important}
+.txr .txr-network-v2 .motion-top{display:none!important}
+.txr .txr-network-v2 .motion-explain{display:none!important}
+@media(min-width:1050px){
+ .txr .txr-network-v2 .motion{position:relative!important}
+ .txr .txr-network-v2 .motion-arrows{
+  position:absolute!important;
+  top:0!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  width:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  z-index:9!important;
+ }
+ .txr .txr-network-v2 .motion-window{
+  padding-top:23px!important;
+ }
+ .txr .txr-network-v2 .motion-track{
+  padding-top:0!important;
+ }
+}
