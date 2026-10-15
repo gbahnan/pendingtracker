@@ -4905,3 +4905,28 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{
  border-bottom-color:#1b3545!important;
 }
+
+
+/* BTC transaction premium finish: visible ambient depth without layout edits.
+   Scoped to transaction detail; no positioning, sizing or animations modified. */
+body:has(.pt-tx-page.pt-tx-detail-v2){
+ background-color:#071521!important;
+ background-image:
+  radial-gradient(ellipse 72vw 55vh at 50% 38%,rgba(30,91,126,.32),transparent 78%),
+  radial-gradient(ellipse 78vw 65vh at 48% 88%,rgba(20,74,109,.27),transparent 80%),
+  linear-gradient(180deg,#071521,#0a1b29 50%,#071521)!important;
+ background-attachment:fixed!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
+ background:linear-gradient(165deg,#17384b 0%,#102b3d 21%,#0c2333 55%,#0a1e2d 100%)!important;
+ border-color:#33566a!important;
+ box-shadow:0 14px 42px rgba(0,0,0,.20),inset 0 1px 0 rgba(200,230,246,.10)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
+ background:linear-gradient(145deg,#102c3d 0%,#0c2333 45%,#0a1e2d 100%)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
+ background:transparent!important;
+ border-bottom-color:rgba(101,147,170,.23)!important;
+}
