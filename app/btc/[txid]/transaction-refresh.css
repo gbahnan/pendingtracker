@@ -1476,9 +1476,14 @@
 
 /* Reference theme: canonical BTC transaction colors and atmosphere.
    Replaces old layered blue surface passes. Paint only, no geometry or type changes. */
-.txr{
- background-color:#0b121b!important;
- background-image:radial-gradient(ellipse 48% 24% at 0% 18%,rgba(208,140,47,.17),transparent 92%),radial-gradient(ellipse 44% 28% at 100% 27%,rgba(205,136,43,.15),transparent 92%),radial-gradient(ellipse 75% 45% at 50% 60%,rgba(48,72,95,.20),transparent 95%),linear-gradient(180deg,#0b111a,#111d2b 48%,#0b141e)!important;
+.pt-tx-page.txr{
+ background-color:#080d14!important;
+ background-image:
+ radial-gradient(ellipse 38% 32% at 0% 21%,rgba(193,112,26,.33) 0%,rgba(119,66,19,.16) 37%,transparent 82%),
+ radial-gradient(ellipse 38% 34% at 100% 24%,rgba(213,132,35,.34) 0%,rgba(123,70,24,.17) 38%,transparent 83%),
+ radial-gradient(ellipse 45% 31% at 100% 79%,rgba(177,104,30,.15),transparent 88%),
+ radial-gradient(ellipse 45% 29% at 0% 83%,rgba(159,94,25,.12),transparent 87%),
+ linear-gradient(180deg,#080b11 0%,#0a111b 48%,#0b1018 100%)!important;
 }
 .txr .txr-ambient-art,.txr .txr-ambient-grid,.txr .txr-ambient-cell,.txr .txr-ambient-coin{display:none!important}
 .txr .txr-new-metrics{
@@ -1524,3 +1529,7 @@
 .txr .txr-understand-v2 .fresh-explainer-premium{border-color:rgba(170,185,194,.17)!important}
 .txr .txr-new-metric::after{background:linear-gradient(180deg,transparent,rgba(151,172,186,.18),transparent)!important}
 .txr .txr-new-metric::before{background:linear-gradient(90deg,transparent,rgba(151,172,186,.18),transparent)!important}
+
+/* Ensure the global page background does not cover the gold/black canvas. */
+.pt-tx-page.txr::before,.pt-tx-page.txr::after{background-image:none!important;display:none!important}
+body:has(.pt-tx-page.txr){background:#080d14!important}
