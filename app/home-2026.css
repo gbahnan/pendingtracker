@@ -98,3 +98,15 @@
   .pt26-card-visual{grid-template-columns:minmax(0,1fr) 135px}
   .pt26-side-stats{padding-left:14px}
 }
+
+
+/* Compact live network previews while preserving the animated hexagons. */
+.pt26-panel .pt26-card-visual{min-height:0}
+.pt26-panel .pt26-scene{transform:scale(.89);transform-origin:center center}
+.pt26-panel .pt26-side-stats{gap:13px}
+.pt26-panel .pt26-side-stats strong{font-size:19px}
+.pt26-panel .pt26-feed-row{min-height:31px;padding-top:7px;padding-bottom:7px}
+.pt26-panel .pt26-feed-row .hash{font-weight:650}
+.pt26-panel .pt26-explore{font-weight:800}
+.pt26-live{margin-bottom:20px}
+@media(max-width:700px){.pt26-panel .pt26-scene{transform:scale(.95)}.pt26-panel .pt26-side-stats strong{font-size:16px}}
