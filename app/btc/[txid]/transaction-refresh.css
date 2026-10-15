@@ -1689,3 +1689,60 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
  background:radial-gradient(ellipse 90% 75% at 96% 4%,rgba(206,160,90,.07),transparent 88%),linear-gradient(120deg,rgba(46,56,61,.12),rgba(24,39,52,.015) 80%)!important;
  box-shadow:none!important;
 }
+
+
+/* 2026-10-15 — ACTUAL BTC transaction route visual fix.
+   The rendered route uses .pt-tx-page.txr, NOT .pt-tx-detail-v2.
+   A single shared warm atmospheric canvas joins the snapshot and explanation. */
+.pt-tx-page.txr{
+ background:
+  radial-gradient(ellipse 76% 36% at 50% 38%,rgba(202,142,56,.17),transparent 82%),
+  radial-gradient(ellipse 44% 39% at 0% 56%,rgba(209,143,47,.14),transparent 88%),
+  radial-gradient(ellipse 47% 37% at 100% 66%,rgba(216,152,57,.13),transparent 87%),
+  radial-gradient(ellipse 65% 29% at 48% 81%,rgba(113,88,52,.13),transparent 92%),
+  linear-gradient(180deg,#121b27 0%,#1a2530 42%,#1b2630 69%,#131e29 100%)!important;
+}
+.pt-tx-page.txr .txr-snapshot-v2,
+.pt-tx-page.txr .txr-understand-v2.fresh-explore-premium{
+ background:transparent!important;
+ border-color:transparent!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-new-summary{
+ background:
+  radial-gradient(ellipse 60% 125% at 3% 0%,rgba(239,173,79,.14),transparent 78%),
+  linear-gradient(110deg,rgba(42,60,72,.91),rgba(31,48,61,.89))!important;
+ border-top:1px solid rgba(244,185,93,.26)!important;
+ border-bottom:1px solid rgba(237,180,87,.13)!important;
+ box-shadow:0 -10px 45px rgba(222,155,61,.08)!important;
+}
+.pt-tx-page.txr .txr-new-metrics{
+ background:
+  radial-gradient(ellipse 78% 110% at 50% -12%,rgba(220,153,60,.105),transparent 80%),
+  radial-gradient(ellipse 70% 100% at 100% 92%,rgba(194,132,48,.075),transparent 86%),
+  linear-gradient(180deg,rgba(36,55,68,.93) 0%,rgba(31,50,63,.90) 65%,rgba(25,43,56,.78) 100%)!important;
+ border:0!important;
+ box-shadow:inset 0 1px rgba(247,191,100,.11),0 24px 52px rgba(7,12,18,.12)!important;
+}
+.pt-tx-page.txr .txr-deeper-framed-content{
+ background:
+  linear-gradient(90deg,transparent,rgba(236,176,82,.38) 19%,rgba(236,176,82,.38) 81%,transparent) top/100% 1px no-repeat,
+  linear-gradient(90deg,transparent,rgba(218,157,70,.18) 19%,rgba(218,157,70,.18) 81%,transparent) bottom/100% 1px no-repeat,
+  linear-gradient(180deg,transparent,rgba(231,165,74,.19) 20%,rgba(231,165,74,.19) 76%,transparent) left/1px 100% no-repeat,
+  linear-gradient(180deg,transparent,rgba(231,165,74,.19) 20%,rgba(231,165,74,.19) 76%,transparent) right/1px 100% no-repeat!important;
+ box-shadow:0 0 65px rgba(209,141,53,.095)!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-tabs-six{
+ background:linear-gradient(180deg,rgba(48,65,75,.94),rgba(34,52,65,.91))!important;
+ border-bottom:1px solid rgba(239,181,87,.19)!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ background:
+  radial-gradient(ellipse 66% 72% at 95% 8%,rgba(218,157,71,.12),transparent 86%),
+  radial-gradient(ellipse 65% 65% at 4% 94%,rgba(201,139,58,.075),transparent 88%),
+  linear-gradient(180deg,rgba(38,57,70,.91) 0%,rgba(31,49,63,.89) 72%,rgba(27,44,57,.85) 100%)!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:radial-gradient(ellipse 95% 78% at 100% 0%,rgba(228,169,84,.14),transparent 84%)!important;
+}
