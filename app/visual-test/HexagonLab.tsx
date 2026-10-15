@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const times = [60, 50, 40, 30, 20, 10];
 const fees = ["0.20", "0.20", "0.30", "0.40", "1.3", "2.3"];
@@ -20,7 +20,7 @@ function Hexagon({index,blue=false,glow=true}:{index:number;blue?:boolean;glow?:
      <filter id={id+"glow"} x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="8"/></filter>
      <radialGradient id={id+"shine"}><stop stopColor={blue?"#5ccfff":"#ffb84e"} stopOpacity=".55"/><stop offset="1" stopColor={blue?"#5ccfff":"#ffb84e"} stopOpacity="0"/></radialGradient>
     </defs>
-    {glow&&<polygon points={hex} fill="none" stroke={main} strokeWidth="14" opacity=".6" filter={"url(#"+id+"glow)"}/>}
+    {glow&&<polygon points={hex} fill="none" stroke={main} strokeWidth="14" opacity=".42" filter={"url(#"+id+"glow)"}/>}
     <polygon points={hex} fill={"url(#"+id+"metal)"} stroke={blue?"#9be9ff":"#ffe1a2"} strokeWidth="1.8"/>
     <polygon points={inner} fill="#091522" stroke={blue?"#1576b3":"#a45d20"} strokeWidth="3"/>
     <polygon points={core} fill={"url(#"+id+"inner)"} stroke={blue?"#5bb6ec":"#d7964b"} strokeOpacity=".65" strokeWidth="1.5"/>
@@ -35,7 +35,32 @@ function Hexagon({index,blue=false,glow=true}:{index:number;blue?:boolean;glow?:
  </div>;
 }
 function Pool(){
- return <div className="lab-pool-col"><div className="lab-pool-title">MEMPOOL</div><div className="lab-pool-sub">Waiting transactions</div><div className="lab-pool"><div className="lab-pool-inset"/>{Array.from({length:85},(_,i)=><span key={i} className="lab-pool-dot" style={{left:(12+rand(i,4)*76)+"%",top:(17+rand(i,8)*66)+"%",width:(2+rand(i,2)*5)+"px",height:(2+rand(i,2)*5)+"px",animationDelay:-(rand(i,3)*6)+"s",animationDuration:(2+rand(i,5)*4)+"s"}}/>)}</div></div>;
+ return <div className="lab-pool-col"><div className="lab-pool-title">MEMPOOL</div><div className="lab-pool-sub">Waiting transactions</div><div className="lab-pool"><div className="lab-pool-inset"/></div></div>;
+}
+
+function MovingParticles({motion}:{motion:boolean}){
+ const ref=useRef<HTMLCanvasElement>(null);
+ useEffect(()=>{
+  const canvas=ref.current,track=canvas?.parentElement;
+  if(!canvas||!track)return;
+  const ctx=canvas.getContext("2d");if(!ctx)return;
+  let w=0,h=0,raf=0,last=performance.now();
+  const resize=()=>{w=track.scrollWidth;h=track.clientHeight;const d=Math.min(devicePixelRatio||1,2);canvas.width=w*d;canvas.height=h*d;canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(d,0,0,d,0,0)};
+  const obs=new ResizeObserver(resize);obs.observe(track);resize();
+  const poolBalls=Array.from({length:110},(_,i)=>({x:rand(i,40),y:rand(i,41),v:.015+rand(i,42)*.05,r:1.1+rand(i,43)*2.4}));
+  const flowBalls=Array.from({length:110},(_,i)=>({p:rand(i,50),v:.035+rand(i,51)*.065,lane:rand(i,52),r:1+rand(i,53)*1.8}));
+  const dot=(x:number,y:number,r:number,blue:boolean,a:number)=>{ctx.globalAlpha=a;const c=blue?"83,204,255":"255,173,61";const g=ctx.createRadialGradient(x,y,0,x,y,r*3.5);g.addColorStop(0,"rgba(255,249,224,1)");g.addColorStop(.22,"rgba("+c+",.9)");g.addColorStop(1,"rgba("+c+",0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*3.5,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1};
+  const draw=(now:number)=>{
+   const dt=Math.min((now-last)/1000,.05);last=now;ctx.clearRect(0,0,w,h);
+   const origin=track.getBoundingClientRect(),pool=track.querySelector(".lab-pool")?.getBoundingClientRect(),hexes=Array.from(track.querySelectorAll(".lab-hex-wrap")).map(e=>e.getBoundingClientRect());
+   if(pool){const x=pool.left-origin.left,y=pool.top-origin.top;ctx.save();ctx.beginPath();ctx.roundRect(x+10,y+10,pool.width-20,pool.height-20,22);ctx.clip();
+    poolBalls.forEach((b,i)=>{if(motion)b.x=(b.x+dt*b.v)%1;const bx=x+23+b.x*(pool.width-46),by=y+22+b.y*(pool.height-44)+Math.sin(now*.001+i)*2;dot(bx,by,b.r,false,.65)});ctx.restore()}
+   if(pool&&hexes.length){const x0=pool.right-origin.left-4,x1=hexes[hexes.length-1].right-origin.left;
+    flowBalls.forEach((b,i)=>{if(motion)b.p=(b.p+dt*b.v)%1;const x=x0+(x1-x0)*b.p,y=h*.53+(b.lane-.5)*46+Math.sin(b.p*20+i)*4;dot(x,y,b.r,b.p>.88,.65*Math.min(1,b.p*18,(1-b.p)*18))})}
+   raf=requestAnimationFrame(draw);
+  };raf=requestAnimationFrame(draw);return()=>{cancelAnimationFrame(raf);obs.disconnect()};
+ },[motion]);
+ return <canvas className="lab-particles" ref={ref} aria-hidden="true"/>;
 }
 export default function HexagonLab(){
  const [glow,setGlow]=useState(true);
@@ -43,13 +68,12 @@ export default function HexagonLab(){
  return <section className="lab-shell">
  <div className="lab-controls"><span>BITCOIN · 2.5D VISUAL PROTOTYPE</span><div><button onClick={()=>setGlow(!glow)}>{glow?"Glow on":"Glow off"}</button><button onClick={()=>setMotion(!motion)}>{motion?"Motion on":"Motion off"}</button></div></div>
  <div className={"lab-scroller "+(!motion?"lab-paused":"")}><div className="lab-track">
- <div className="lab-stream" aria-hidden="true">{Array.from({length:76},(_,i)=><span key={i} style={{top:(39+rand(i,22)*22)+"%",left:(rand(i,24)*98)+"%",animationDelay:-(rand(i,26)*8)+"s",animationDuration:(3+rand(i,29)*5)+"s"}}/>)}</div>
- <Pool/>{times.map((_,i)=><Hexagon key={i} index={i} glow={glow}/>)}
+ <MovingParticles motion={motion}/><Pool/>{times.map((_,i)=><Hexagon key={i} index={i} glow={glow}/>)}
  <Hexagon index={6} blue glow={glow}/>
  </div></div>
  <p className="lab-note">Visual prototype only. Fee values and transaction count are placeholders; live data and confirmation behavior will be connected after design approval. Scroll horizontally to view the entire sequence.</p>
  <style jsx global>{`
- .lab-shell{margin-top:32px}.lab-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#edbc72;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px}.lab-controls>div{display:flex;gap:8px}.lab-controls button{border:1px solid #5e6974;background:#1c2a36;color:#e7eef4;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;letter-spacing:0}.lab-scroller{overflow-x:auto;overflow-y:hidden;border:1px solid rgba(218,173,103,.12);border-radius:18px;background:radial-gradient(ellipse at 24% 50%,rgba(181,112,42,.12),transparent 57%),radial-gradient(ellipse at 96% 50%,rgba(31,128,195,.12),transparent 33%),#15232f;scrollbar-color:#6b6d69 transparent}.lab-track{position:relative;display:flex;align-items:center;gap:5px;width:max-content;min-height:305px;padding:36px 23px 22px}.lab-cell{position:relative;width:161px;flex:none;text-align:center;z-index:2}.lab-hex-wrap{width:161px;height:180px;position:relative;filter:drop-shadow(0 0 11px rgba(246,163,57,.3))}.lab-blue .lab-hex-wrap{filter:drop-shadow(0 0 14px rgba(56,171,246,.48))}.lab-hex-svg{width:100%;height:100%}.lab-hex-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-shadow:0 1px 7px #020912;pointer-events:none;white-space:nowrap}.lab-hex-text strong{font-size:16px;font-weight:900}.lab-hex-text small{font-size:12px;color:#e0e7ef}.lab-btc{font-size:52px;color:#b9edff;text-shadow:0 0 14px #35a9ff}.lab-caption{position:absolute;top:-30px;left:0;width:100%;color:#6fd6ff;font-size:12px}.lab-caption small{display:block;color:#b4d1df;margin-top:4px}.lab-pool-col{width:263px;flex:none;text-align:center;z-index:2;align-self:center}.lab-pool-title{font-size:16px;font-weight:900;color:#f6bd62}.lab-pool-sub{font-size:12px;color:#c6d1da;margin:4px 0 15px}.lab-pool{width:100%;height:135px;border-radius:33px;position:relative;overflow:hidden;border:4px solid #d8943b;background:radial-gradient(ellipse,#27313a,#0a1825 75%);box-shadow:inset 0 0 0 3px #07101a,inset 0 0 0 6px #ffbd61,0 0 13px #f8a640,0 0 31px rgba(241,149,49,.4)}.lab-pool-inset{position:absolute;inset:10px;border-radius:24px;border:1px solid #805a2c;pointer-events:none}.lab-pool-dot{position:absolute;border-radius:50%;background:#ffcb71;box-shadow:0 0 5px 2px #e98e22;animation:labFloat 3s ease-in-out infinite alternate}.lab-stream{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}.lab-stream span{position:absolute;width:4px;height:4px;background:#ffca75;border-radius:50%;box-shadow:0 0 8px 3px #df8a2e;animation:labDrift 5s linear infinite}.lab-stream span:nth-child(9n){background:#73d5ff;box-shadow:0 0 9px 3px #168bd1}.lab-paused *{animation-play-state:paused!important}.lab-note{font-size:12px;color:#91aab9;line-height:1.7;margin-top:16px}@keyframes labFloat{to{transform:translate(7px,-8px);opacity:.65}}@keyframes labDrift{0%{transform:translateX(-35px);opacity:0}15%{opacity:.95}85%{opacity:.95}100%{transform:translateX(55px);opacity:0}}@media(max-width:700px){.lab-track{min-height:260px;padding:28px 12px}.lab-cell{width:135px}.lab-hex-wrap{width:135px;height:152px}.lab-pool-col{width:195px}.lab-pool{height:110px}.lab-controls{align-items:flex-start;flex-direction:column}}
+ .lab-shell{margin-top:32px}.lab-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#edbc72;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px}.lab-controls>div{display:flex;gap:8px}.lab-controls button{border:1px solid #5e6974;background:#1c2a36;color:#e7eef4;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;letter-spacing:0}.lab-scroller{overflow-x:auto;overflow-y:hidden;border:1px solid rgba(218,173,103,.12);border-radius:18px;background:radial-gradient(ellipse at 24% 50%,rgba(181,112,42,.12),transparent 57%),radial-gradient(ellipse at 96% 50%,rgba(31,128,195,.12),transparent 33%),#15232f;scrollbar-color:#6b6d69 transparent}.lab-track{isolation:isolate;position:relative;display:flex;align-items:center;gap:5px;width:max-content;min-height:305px;padding:36px 23px 22px}.lab-cell{position:relative;width:161px;flex:none;text-align:center;z-index:2}.lab-hex-wrap{width:161px;height:180px;position:relative;filter:drop-shadow(0 0 11px rgba(246,163,57,.3))}.lab-blue .lab-hex-wrap{filter:drop-shadow(0 0 14px rgba(56,171,246,.48))}.lab-hex-svg{width:100%;height:100%}.lab-hex-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-shadow:0 1px 7px #020912;pointer-events:none;white-space:nowrap}.lab-hex-text strong{font-size:16px;font-weight:900}.lab-hex-text small{font-size:12px;color:#e0e7ef}.lab-btc{font-size:52px;color:#b9edff;text-shadow:0 0 14px #35a9ff}.lab-caption{position:absolute;top:-30px;left:0;width:100%;color:#6fd6ff;font-size:12px}.lab-caption small{display:block;color:#b4d1df;margin-top:4px}.lab-pool-col{width:263px;flex:none;text-align:center;z-index:2;align-self:center}.lab-pool-title{font-size:16px;font-weight:900;color:#f6bd62}.lab-pool-sub{font-size:12px;color:#c6d1da;margin:4px 0 15px}.lab-pool{width:100%;height:135px;border-radius:33px;position:relative;overflow:hidden;border:4px solid #d8943b;background:radial-gradient(ellipse,#27313a,#0a1825 75%);box-shadow:inset 0 0 0 3px #07101a,inset 0 0 0 6px #ffbd61,0 0 13px #f8a640,0 0 31px rgba(241,149,49,.4)}.lab-pool-inset{position:absolute;inset:10px;border-radius:24px;border:1px solid #805a2c;pointer-events:none}.lab-pool-dot{position:absolute;border-radius:50%;background:#ffcb71;box-shadow:0 0 5px 2px #e98e22;animation:labFloat 3s ease-in-out infinite alternate}.lab-particles{position:absolute;inset:0;z-index:3;pointer-events:none}.lab-stream{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}.lab-stream span{position:absolute;width:4px;height:4px;background:#ffca75;border-radius:50%;box-shadow:0 0 8px 3px #df8a2e;animation:labDrift 5s linear infinite}.lab-stream span:nth-child(9n){background:#73d5ff;box-shadow:0 0 9px 3px #168bd1}.lab-paused *{animation-play-state:paused!important}.lab-note{font-size:12px;color:#91aab9;line-height:1.7;margin-top:16px}@keyframes labFloat{to{transform:translate(7px,-8px);opacity:.65}}@keyframes labDrift{0%{transform:translateX(-35px);opacity:0}15%{opacity:.95}85%{opacity:.95}100%{transform:translateX(55px);opacity:0}}@media(max-width:700px){.lab-track{min-height:260px;padding:28px 12px}.lab-cell{width:135px}.lab-hex-wrap{width:135px;height:152px}.lab-pool-col{width:195px}.lab-pool{height:110px}.lab-controls{align-items:flex-start;flex-direction:column}}
  `}</style>
  </section>;
 }
