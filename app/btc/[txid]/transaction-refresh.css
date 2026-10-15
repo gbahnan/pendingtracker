@@ -1390,3 +1390,59 @@
   linear-gradient(130deg,rgba(13,41,60,.26) 0%,rgba(5,19,30,.10) 76%),
   rgba(5,19,30,.65)!important;
 }
+
+/* Snapshot-style information hierarchy throughout Understanding:
+   gold field labels, larger white values, muted blue descriptions.
+   Styling only; preserve all data, tabs, and panel geometry. */
+.txr .txr-understand-v2 .fresh-data-premium>h3{
+ color:#f5f8fc!important;font-weight:700!important;
+ letter-spacing:-.015em!important;
+}
+.txr .txr-understand-v2 .fresh-data-premium>p{
+ color:#a7bdcb!important;font-size:13px!important;line-height:1.5!important;
+}
+.txr .txr-understand-v2 .fresh-fee-list>div{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:16px;
+}
+.txr .txr-understand-v2 .fresh-fee-list>div>span{
+ display:flex;flex-direction:column;gap:4px;min-width:0;
+}
+.txr .txr-understand-v2 .fresh-fee-list>div>span>strong{
+ color:#f0b94c!important;font-weight:650!important;
+ font-size:13px!important;line-height:1.3!important;
+}
+.txr .txr-understand-v2 .fresh-fee-list>div>span>small{
+ color:#a7bdcb!important;font-size:12px!important;
+ line-height:1.45!important;
+}
+.txr .txr-understand-v2 .fresh-fee-list>div>b{
+ color:#f5f8fc!important;font-size:clamp(14px,1.18vw,17px)!important;
+ font-weight:700!important;line-height:1.35!important;
+ text-align:right;overflow-wrap:anywhere;
+}
+.txr .txr-understand-v2 .fresh-explainer-premium>span{
+ color:#f0b94c!important;font-weight:650!important;
+ letter-spacing:.07em!important;
+}
+.txr .txr-understand-v2 .fresh-explainer-premium>h3{
+ color:#f5f8fc!important;font-weight:700!important;
+}
+.txr .txr-understand-v2 .pt-context-explained>div>strong{
+ color:#f0b94c!important;font-weight:650!important;
+ font-size:13px!important;line-height:1.4!important;
+}
+.txr .txr-understand-v2 .pt-context-explained>div>p{
+ color:#a7bdcb!important;font-size:12px!important;line-height:1.55!important;
+}
+.txr .txr-understand-v2 .txr-v2-address-row>span>small{
+ color:#f0b94c!important;
+}
+.txr .txr-understand-v2 .txr-v2-address-row>strong{
+ color:#f5f8fc!important;font-weight:700!important;
+}
+@media(max-width:650px){
+ .txr .txr-understand-v2 .fresh-fee-list>div>b{
+  font-size:14px!important;
+ }
+}
