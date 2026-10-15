@@ -1310,3 +1310,15 @@
  .txr .txr-understand-v2 .fresh-tabs-six button{gap:5px!important;white-space:normal!important}
  .txr .txr-understand-v2 .fresh-tabs-six .fresh-tab-icon{flex-basis:15px!important;width:15px!important}
 }
+
+/* Match the entire Understanding navigation strip to the blue Transaction
+   Summary treatment, while retaining active gold indicators and separators. */
+.txr .txr-understand-v2 .fresh-tabs-six{
+ background:linear-gradient(180deg,#1b4059 0%,#123149 48%,#092234 100%)!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six button{
+ background:transparent!important;
+}
+.txr .txr-understand-v2 .fresh-tabs-six button.active{
+ background:linear-gradient(180deg,rgba(44,79,97,.74),rgba(24,52,69,.66))!important;
+}
