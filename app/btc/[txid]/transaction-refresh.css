@@ -1023,3 +1023,35 @@
  .txr .txr-new-metric-copy{padding-left:0!important}
  .txr .txr-new-metric>p{margin-left:0!important}
 }
+
+
+/* Align heading text with values/body; icon hangs left of the shared text edge.
+   Keep current left-aligned body position and centered Learn More action. */
+.txr .txr-new-metric-heading{
+ position:relative!important;
+ padding-left:0!important;
+ margin-left:0!important;
+ gap:0!important;
+}
+.txr .txr-new-metric-heading .txr-new-metric-icon{
+ position:absolute!important;
+ left:-27px!important;
+ top:50%!important;
+ transform:translateY(-50%)!important;
+ width:23px!important;
+ height:27px!important;
+ flex:0 0 23px!important;
+ font-size:21px!important;
+}
+.txr .txr-new-metric-heading .txr-new-metric-label{
+ margin-left:0!important;
+}
+@media(max-width:550px){
+ .txr .txr-new-metric-heading{gap:0!important}
+ .txr .txr-new-metric-heading .txr-new-metric-icon{
+  left:-23px!important;
+  width:20px!important;
+  height:26px!important;
+  font-size:19px!important;
+ }
+}
