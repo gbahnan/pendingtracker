@@ -47,7 +47,7 @@ function MovingParticles({motion}:{motion:boolean}){
   type Chamber={x:number;y:number;w:number;h:number;kind:"pool"|"gold"|"blue"};
   type Ball={chamber:number;next:number;x:number;y:number;vx:number;vy:number;r:number;age:number;wait:number;travel:boolean;opacity:number;seed:number};
   let w=0,h=0,raf=0,last=0,acc=0,layout:Chamber[]=[];
-  let balls:Ball[]=[];let nextSeed=10000;let flowClock=0;let departureSlots:number[]=[];
+  let balls:Ball[]=[];let nextSeed=10000;let flowClock=0;
   const random=(n:number)=>rand(n,37);
   const bounds=(box:Chamber,y:number)=>{
    const cy=box.y+box.h/2;
@@ -75,7 +75,7 @@ function MovingParticles({motion}:{motion:boolean}){
     return {x:box.left-boundsRect.left,y:box.top-boundsRect.top,w:box.width,h:box.height,kind:el.classList.contains("lab-pool")?"pool" as const:el.closest(".lab-blue")?"blue" as const:"gold" as const};
    }).sort((a,b)=>a.x-b.x);
    // Rebuild only when the layout changes, not on each animation frame.
-   balls=[];flowClock=0;departureSlots=Array.from({length:Math.max(0,layout.length-1)},(_,i)=>i*.22);
+   balls=[];flowClock=0;
    if(layout.length){
     let seed=0;
     for(let c=0;c<layout.length;c++){
@@ -107,18 +107,6 @@ function MovingParticles({motion}:{motion:boolean}){
   };
   const step=(dt:number)=>{
    flowClock+=dt;
-   // One departure opportunity per link every 2.8s, staggered across links.
-   // Pool and hexagons therefore have identical throughput, regardless of density.
-   for(let c=0;c<layout.length-1;c++){
-    if(flowClock<departureSlots[c])continue;
-    departureSlots[c]=flowClock+2.8;
-    const box=layout[c],cy=box.y+box.h/2;
-    const eligible=balls.filter(p=>p.chamber===c&&!p.travel&&p.wait>=0);
-    if(!eligible.length)continue;
-    const p=eligible[Math.floor(random(nextSeed++ + c*31)*eligible.length)];
-    p.wait=-1;
-    // Pick a preferred lane, middle most of the time; steer, don't teleport.
-   }
    for(const p of balls){
     const box=layout[p.chamber];if(!box)continue;
     p.age+=dt;
@@ -162,7 +150,7 @@ function MovingParticles({motion}:{motion:boolean}){
       }
      }
      // After an individual dwell, gradually turn toward the right opening.
-     if(p.chamber<layout.length-1&&p.wait<0){
+     if(false&&p.chamber<layout.length-1&&p.wait<0){
       const cy=box.y+box.h/2;
       p.vx+=((box.kind==="pool"?13:16)-p.vx)*Math.min(1,dt*.55);
       const laneChoice=random(p.seed+91);
@@ -208,6 +196,29 @@ function MovingParticles({motion}:{motion:boolean}){
      }
     }else{clipInterior(current);drawBall(p)}
     ctx.restore();
+   }
+   // Ten simultaneous, independently staggered streams on EVERY link.
+   // All links share the same cadence, including the mempool connection.
+   // Stream particles are independent of chamber residents, so density never
+   // throttles a link or drains the mempool.
+   for(let gap=0;gap<layout.length-1;gap++){
+    const from=layout[gap],to=layout[gap+1];
+    const left=from.x+from.w*.79,right=to.x+to.w*.21;
+    const centerY=(from.y+from.h/2+to.y+to.h/2)/2;
+    for(let j=0;j<10;j++){
+     const seed=gap*101+j*17;
+     const phase=(flowClock/7+j/10+random(seed+4)*.035)%1;
+     const lane=random(seed+8)<.74?0:random(seed+8)<.87?-.20:.20;
+     const y=centerY+lane*Math.min(from.h,to.h)+Math.sin(phase*Math.PI*2+seed)*3.5;
+     const x=left+(right-left)*phase;
+     const ball:Ball={chamber:gap,next:gap+1,x,y,vx:0,vy:0,r:2.4+random(seed+17)*.9,age:0,wait:0,travel:true,opacity:.63+random(seed+29)*.2,seed};
+     // The stream is visible through the opening and around its frame;
+     // particles stay below the central text by respecting label masks.
+     ctx.save();
+     ctx.beginPath();ctx.rect(from.x+from.w*.77,0,to.x+to.w*.23-(from.x+from.w*.77),h);ctx.clip();
+     if(x>from.x+from.w*.77&&x<to.x+to.w*.23)drawBall(ball);
+     ctx.restore();
+    }
    }
    raf=requestAnimationFrame(draw);
   };
