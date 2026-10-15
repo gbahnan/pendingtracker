@@ -1819,3 +1819,8 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
 @media(min-width:701px){
  .pt-tx-page.txr .txr-network-v2{margin-top:-28px!important}
 }
+
+/* Final desktop alignment: slightly closer to the header, marker clear of counts. */
+@media(min-width:701px){
+ .pt-tx-page.txr .txr-network-v2{margin-top:-40px!important}
+}
