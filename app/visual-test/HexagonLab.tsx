@@ -116,10 +116,10 @@ function MovingParticles({motion}:{motion:boolean}){
      const from=layout[gap],to=layout[gap+1];
      const random=(n:number)=>rand(n,19);
      const smooth=(t:number)=>{const q=Math.max(0,Math.min(1,t));return q*q*(3-2*q)};
-     for(let j=0;j<14;j++){
+     for(let j=0;j<48;j++){
       const seed=gap*37+j;
-      const speed=.023+random(seed+31)*.012;
-      const phase=(random(seed+11)+elapsed*speed)%1;
+      const speed=.027+random(seed+31)*.013;
+      const phase=(random(seed+11)+j*.00037+elapsed*speed)%1;
       const lane=random(seed+53)<.5?.27:.73;
       const exitV=lane+(random(seed+91)-.5)*.07;
       const start=point(from,.78,exitV),finish=point(to,.22,exitV);
