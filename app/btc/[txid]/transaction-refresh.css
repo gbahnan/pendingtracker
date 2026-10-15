@@ -395,7 +395,7 @@
 @media(min-width:1050px){
  .txr .txr-network-v2{
   transform:translateY(-58px)!important;
-  margin-bottom:-58px!important;
+  margin-bottom:0!important;
  }
  .txr .txr-network-v2 .motion-arrows{
   top:0!important;
