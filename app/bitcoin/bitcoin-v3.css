@@ -1429,3 +1429,87 @@
  font-size:13px!important;
  line-height:1.7!important;
 }
+
+
+/* Transaction-detail style: headings live OUTSIDE their panels, flush left. */
+.fresh-v3>.pt-external-section-heading{
+ position:relative!important;
+ z-index:2!important;
+ display:flex!important;
+ justify-content:flex-start!important;
+ align-items:flex-start!important;
+ text-align:left!important;
+ width:100%!important;
+ box-sizing:border-box!important;
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+ padding:0 3px!important;
+ margin:35px 0 14px!important;
+}
+.fresh-v3>.pt-snapshot-header.pt-external-section-heading .pt-snapshot-title{
+ justify-content:flex-start!important;
+ align-items:flex-start!important;
+ text-align:left!important;
+ width:100%!important;
+ margin:0!important;
+ padding:0!important;
+}
+.fresh-v3>.pt-snapshot-header.pt-external-section-heading .pt-snapshot-title>div{
+ text-align:left!important;
+ width:100%!important;
+}
+.fresh-v3>.pt-snapshot-header.pt-external-section-heading .pt-snapshot-title h2{
+ text-align:left!important;
+ font-size:clamp(25px,2.65vw,36px)!important;
+ line-height:1.15!important;
+ letter-spacing:-.035em!important;
+ margin:0!important;
+}
+.fresh-v3>.pt-snapshot-header.pt-external-section-heading .pt-snapshot-title p{
+ text-align:left!important;
+ margin:8px 0 0!important;
+ max-width:760px!important;
+ color:#b9cbd6!important;
+ font-size:14px!important;
+ line-height:1.55!important;
+}
+.fresh-v3>.fresh-explore-title.pt-external-section-heading{
+ padding:0 3px!important;
+ margin:42px 0 14px!important;
+}
+.fresh-v3>.fresh-explore-title.pt-external-section-heading>div:first-child{
+ width:100%!important;
+ text-align:left!important;
+}
+.fresh-v3>.fresh-explore-title.pt-external-section-heading h2,
+.fresh-v3>.fresh-explore-title.pt-external-section-heading p,
+.fresh-v3>.fresh-explore-title.pt-external-section-heading .fresh-explore-kicker{
+ text-align:left!important;
+}
+.fresh-v3>.fresh-explore-title.pt-external-section-heading h2{
+ margin:0!important;
+ font-size:clamp(26px,2.85vw,39px)!important;
+}
+.fresh-v3>.fresh-explore-title.pt-external-section-heading p{
+ margin:8px 0 0!important;
+ max-width:760px!important;
+}
+.fresh-v3>.pt-snapshot{
+ margin-top:0!important;
+ padding-top:17px!important;
+}
+.fresh-v3>.fresh-explore-premium{
+ margin-top:0!important;
+ padding-top:20px!important;
+}
+.fresh-v3>.fresh-explore-premium>.fresh-tabs-six{
+ padding-top:0!important;
+}
+@media(max-width:700px){
+ .fresh-v3>.pt-external-section-heading{margin:26px 0 12px!important;padding:0 4px!important}
+ .fresh-v3>.fresh-explore-title.pt-external-section-heading{margin:30px 0 12px!important}
+ .fresh-v3>.pt-snapshot{padding-top:13px!important}
+ .fresh-v3>.fresh-explore-premium{padding-top:14px!important}
+ .fresh-v3>.pt-snapshot-header.pt-external-section-heading .pt-snapshot-title p{font-size:12px!important}
+}
