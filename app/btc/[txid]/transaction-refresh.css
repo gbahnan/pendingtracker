@@ -1025,58 +1025,31 @@
 }
 
 
-/* Align heading text with values/body; icon hangs left of the shared text edge.
-   Keep current left-aligned body position and centered Learn More action. */
+/* Restore the earlier inline icon-and-heading treatment. Values and descriptions
+   remain left-aligned to the card padding; links stay centered. */
 .txr .txr-new-metric-heading{
  position:relative!important;
  padding-left:0!important;
  margin-left:0!important;
- gap:0!important;
+ gap:7px!important;
+ align-items:center!important;
 }
 .txr .txr-new-metric-heading .txr-new-metric-icon{
- position:absolute!important;
- left:-27px!important;
- top:50%!important;
- transform:translateY(-50%)!important;
- width:23px!important;
- height:27px!important;
- flex:0 0 23px!important;
- font-size:21px!important;
+ position:static!important;
+ transform:none!important;
+ width:22px!important;
+ height:22px!important;
+ flex:0 0 22px!important;
+ font-size:19px!important;
+ color:#c7a46a!important;
+ background:transparent!important;
 }
 .txr .txr-new-metric-heading .txr-new-metric-label{
  margin-left:0!important;
 }
 @media(max-width:550px){
- .txr .txr-new-metric-heading{gap:0!important}
+ .txr .txr-new-metric-heading{gap:6px!important}
  .txr .txr-new-metric-heading .txr-new-metric-icon{
-  left:-23px!important;
-  width:20px!important;
-  height:26px!important;
-  font-size:19px!important;
- }
-}
-
-
-/* Keep all snapshot text fixed. Place small gold icons just above each heading,
-   fully inside the card rather than hanging across column boundaries. */
-.txr .txr-new-metric-heading .txr-new-metric-icon{
- position:absolute!important;
- left:0!important;
- top:-14px!important;
- transform:none!important;
- width:17px!important;
- height:15px!important;
- flex:0 0 17px!important;
- font-size:16px!important;
- color:#c7a46a!important;
- background:transparent!important;
-}
-@media(max-width:550px){
- .txr .txr-new-metric-heading .txr-new-metric-icon{
-  left:0!important;
-  top:-13px!important;
-  width:16px!important;
-  height:14px!important;
-  font-size:15px!important;
+  width:20px!important;height:20px!important;flex-basis:20px!important;font-size:18px!important;
  }
 }
