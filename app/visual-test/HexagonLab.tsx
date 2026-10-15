@@ -88,7 +88,7 @@ function MovingParticles({motion}:{motion:boolean}){
     const pool=layout[0];
     // Independently bouncing particles stay inside the mempool, never spawn behind it.
     ctx.save();ctx.beginPath();ctx.roundRect(pool.x+13,pool.y+13,pool.w-26,pool.h-26,22);ctx.clip();
-    for(let i=0;i<75;i++){const p=particles[i],uv=drift(p,elapsed*.72,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*1.06,false,.76)}
+    for(let i=0;i<30;i++){const p=particles[i],uv=drift(p,elapsed*.72,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*1.06,false,.76)}
     ctx.restore();
     const clipInterior=(box:Chamber)=>{
      const cx=box.x+box.w/2,cy=box.y+box.h/2,rx=box.w*.295,ry=box.h*.335;
@@ -100,7 +100,7 @@ function MovingParticles({motion}:{motion:boolean}){
     for(let chamber=1;chamber<layout.length;chamber++){
      const box=layout[chamber];
      ctx.save();clipInterior(box);
-     for(let j=0;j<9;j++){
+     for(let j=0;j<6;j++){
       const seed=75+(chamber*13+j)%130,p=particles[seed],uv=drift(p,elapsed*.65,seed);
       const top=j%2===0,u=.12+.76*bounce(p.lane+elapsed*(.065+(seed%5)*.007)+p.angle*.17);
       const v=(top?.12:.77)+.10*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009));
@@ -116,9 +116,9 @@ function MovingParticles({motion}:{motion:boolean}){
      const from=layout[gap],to=layout[gap+1];
      const random=(n:number)=>rand(n,19);
      const smooth=(t:number)=>{const q=Math.max(0,Math.min(1,t));return q*q*(3-2*q)};
-     for(let j=0;j<48;j++){
+     for(let j=0;j<24;j++){
       const seed=gap*37+j;
-      const speed=.027+random(seed+31)*.013;
+      const speed=.055+random(seed+31)*.025;
       const phase=(random(seed+11)+j*.00037+elapsed*speed)%1;
       const lane=random(seed+53)<.5?.27:.73;
       const exitV=lane+(random(seed+91)-.5)*.07;
@@ -130,14 +130,14 @@ function MovingParticles({motion}:{motion:boolean}){
       const originBounce=point(from,.46+wave*amplitude,lane+waveY*.07);
       const arrivalBounce=point(to,.46+wave*amplitude,lane+waveY*.07);
       let pos:{x:number;y:number};
-      if(phase<.55){
-       const toward=smooth((phase-.39)/.16);
+      if(phase<.57){
+       const toward=smooth((phase-.45)/.12);
        pos={x:originBounce.x*(1-toward)+start.x*toward,y:originBounce.y*(1-toward)+start.y*toward};
-      }else if(phase<.79){
-       const t=smooth((phase-.55)/.24);
+      }else if(phase<.69){
+       const t=(phase-.57)/.12;
        pos={x:start.x+(finish.x-start.x)*t,y:start.y+(finish.y-start.y)*t+Math.sin(t*Math.PI)*(random(seed+101)-.5)*4};
       }else{
-       const blend=smooth((phase-.79)/.13);
+       const blend=smooth((phase-.69)/.13);
        pos={x:finish.x*(1-blend)+arrivalBounce.x*blend,y:finish.y*(1-blend)+arrivalBounce.y*blend};
       }
       const radius=2.3+random(seed+131)*.8;
