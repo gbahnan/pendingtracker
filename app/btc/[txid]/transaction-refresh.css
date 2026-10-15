@@ -933,3 +933,33 @@
   radial-gradient(ellipse 105% 90% at 5% 4%,rgba(44,111,151,.31) 0%,rgba(25,73,103,.17) 35%,rgba(7,25,39,0) 76%),
   linear-gradient(130deg,rgba(13,41,60,.45) 0%,rgba(5,19,30,.16) 76%)!important;
 }
+
+
+/* Compact transaction snapshot: keep the 3x2 grid, typography, colors and blue texture.
+   Place the centered action beneath the copy instead of in a tall divided footer. */
+.txr .txr-new-metric{
+ min-height:174px!important;
+ padding:18px 19px 15px!important;
+}
+.txr .txr-new-metric>p{
+ margin-bottom:0!important;
+}
+.txr .txr-new-learn{
+ border-top:0!important;
+ margin-top:auto!important;
+ padding:14px 2px 0!important;
+}
+.txr .txr-understand-v2.fresh-explore-premium{
+ margin-top:36px!important;
+}
+@media(max-width:900px){
+ .txr .txr-new-metric{min-height:174px!important}
+}
+@media(max-width:550px){
+ .txr .txr-new-metric{
+  min-height:168px!important;
+  padding:16px 13px 14px!important;
+ }
+ .txr .txr-new-learn{padding-top:13px!important}
+ .txr .txr-understand-v2.fresh-explore-premium{margin-top:32px!important}
+}
