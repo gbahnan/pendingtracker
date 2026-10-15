@@ -15,6 +15,6 @@ type Props={
  compactTransactionLabels?:boolean;
  overview?:boolean;
 };
-export default function BlockchainWebGL({trackedPosition=null,trackedFraction=null,trackedConfirmedHeight=null}:Props){
- return <HexagonLab embedded trackedPosition={trackedPosition} trackedFraction={trackedFraction} trackedConfirmedHeight={trackedConfirmedHeight}/>;
+export default function BlockchainWebGL({trackedPosition=null,trackedFraction=null,trackedConfirmedHeight=null,compactTransactionLabels=false}:Props){
+ return <HexagonLab embedded transactionMode={compactTransactionLabels} trackedPosition={trackedPosition} trackedFraction={trackedFraction} trackedConfirmedHeight={trackedConfirmedHeight}/>;
 }
