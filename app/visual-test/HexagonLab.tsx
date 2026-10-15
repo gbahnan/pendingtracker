@@ -178,7 +178,7 @@ function MovingParticles({motion}:{motion:boolean}){
   };
   const draw=(now:number)=>{
    const dt=last?Math.min((now-last)/1000,.05):0;last=now;
-   if(motion){acc+=dt;let n=0;while(acc>=1/60&&n<4){step(1/60);acc-=1/60;n++}}
+   if(motion){acc+=dt*.88;let n=0;while(acc>=1/60&&n<4){step(1/60);acc-=1/60;n++}}
    ctx.clearRect(0,0,w,h);
    // Hard render mask for the ENTIRE particle layer. Unlike individual
    // stream clips, this also catches any legacy or in-flight particles.
