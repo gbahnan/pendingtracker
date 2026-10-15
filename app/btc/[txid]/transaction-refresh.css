@@ -439,3 +439,30 @@
   top:0!important;
  }
 }
+
+/* Transaction timeline final composition: raised controls, clean floating tracker,
+   and one clear confirmed block followed by a half-visible fading second. */
+.txr .txr-network-v2 .motion-track::after{
+ content:none!important;
+ display:none!important;
+}
+.txr .txr-network-v2 .motion-tracked-pointer{
+ border-bottom-color:#f5b942!important;
+ filter:drop-shadow(0 0 5px rgba(245,185,66,.65))!important;
+}
+@media(min-width:1050px){
+ .pt-tx-page.txr .txr-network-v2{
+  margin-top:-12px!important;
+ }
+ .txr .txr-network-v2 .motion-arrows{
+  top:0!important;
+ }
+ .txr .txr-network-v2 .motion-window{
+  padding-top:23px!important;
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 87%,rgba(0,0,0,.96) 90%,rgba(0,0,0,.58) 94%,transparent 97%,transparent 100%)!important;
+  mask-image:linear-gradient(to right,#000 0%,#000 87%,rgba(0,0,0,.96) 90%,rgba(0,0,0,.58) 94%,transparent 97%,transparent 100%)!important;
+ }
+ .txr .txr-network-v2 .motion-tracked-arrow{
+  top:174px!important;
+ }
+}
