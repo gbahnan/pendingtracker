@@ -4897,3 +4897,54 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){background:transparent!important;border-bottom-color:rgba(154,178,191,.15)!important}
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{border-bottom-color:rgba(154,178,191,.15)!important}
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-summary,.pt-tx-page.pt-tx-detail-v2 .pt-tx-details{background:#172633!important;border-color:rgba(154,178,191,.15)!important;box-shadow:none!important}
+
+/* Bitcoin transaction reference art direction — gold atmospheric light, no decorative artwork.
+   Paint-only changes; keep all component geometry, content and animated blockchain artwork. */
+body:has(.pt-tx-page.pt-tx-detail-v2)::before,
+body:has(.pt-tx-page.pt-tx-detail-v2)::after{
+ content:none!important;display:none!important;background-image:none!important;
+}
+.pt-tx-page.pt-tx-detail-v2{
+ background-color:#0b121c!important;
+ background-image:
+ radial-gradient(ellipse 36% 23% at 0% 14%,rgba(185,121,36,.16),transparent 92%),
+ radial-gradient(ellipse 36% 28% at 100% 25%,rgba(205,137,48,.14),transparent 92%),
+ radial-gradient(ellipse 66% 40% at 50% 64%,rgba(43,69,91,.23),transparent 94%),
+ linear-gradient(180deg,#0c111a 0%,#101b29 44%,#0b131e 100%)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
+ background:linear-gradient(112deg,#1c2c3d 0%,#142231 55%,#192634 100%)!important;
+ border-color:rgba(174,185,190,.23)!important;
+ box-shadow:inset 0 1px 0 rgba(237,243,250,.06),0 14px 38px rgba(0,0,0,.17)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-summary,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-details{
+ background:linear-gradient(120deg,#1c2c3c,#12202e)!important;
+ border-color:rgba(177,188,193,.2)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 15px 35px rgba(0,0,0,.12)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
+ background:linear-gradient(115deg,#1d3043 0%,#132130 62%,#1a2733 100%)!important;
+ border-color:rgba(184,191,195,.2)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 18px 45px rgba(0,0,0,.12)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
+ background:transparent!important;
+ border-bottom-color:rgba(153,175,187,.19)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{border-bottom-color:rgba(153,175,187,.2)!important}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-question-buttons button{
+ background:linear-gradient(180deg,rgba(43,62,80,.65),rgba(18,34,49,.75))!important;
+ border-bottom-color:rgba(145,169,182,.28)!important;
+ color:#bdcbd7!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-question-buttons button[aria-pressed="true"],
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-question-buttons button[aria-selected="true"]{
+ color:#f1bd62!important;
+ border-bottom-color:#eab95f!important;
+ background:linear-gradient(180deg,rgba(94,83,64,.58),rgba(31,44,57,.85))!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row>div>strong,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-hash code{color:#f0be68!important}
