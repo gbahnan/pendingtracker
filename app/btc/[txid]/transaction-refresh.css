@@ -1638,3 +1638,29 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
 .pt-tx-page.txr .txr-understand-v2 .fresh-explore-body::after{
  box-shadow:none!important;
 }
+
+/* BTC finishing pass: unified tab seam, edge fade, and restrained ambient light. */
+/* Keep the tab labels and geometry, remove the black trough underneath. */
+.pt-tx-page.txr .txr-understand-v2 .fresh-tabs-six{
+ background:linear-gradient(180deg,rgba(39,57,72,.91),rgba(26,44,59,.78))!important;
+ border-bottom-color:rgba(161,180,192,.08)!important;
+ margin-bottom:0!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ background:linear-gradient(180deg,rgba(26,44,59,.80) 0%,rgba(22,39,53,.68) 62%,rgba(17,29,42,0) 100%)!important;
+ border-top:0!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:radial-gradient(ellipse 85% 72% at 95% 4%,rgba(210,168,105,.09),transparent 86%),linear-gradient(135deg,rgba(44,50,53,.19),rgba(20,33,45,.035) 75%)!important;
+}
+/* Preserve the existing vertical spacing while letting the background glow across sections. */
+.pt-tx-page.txr .txr-understand-v2.fresh-explore-premium{
+ background:radial-gradient(ellipse 57% 35% at 48% 0%,rgba(192,141,70,.045),transparent 95%)!important;
+}
+.pt-tx-page.txr .txr-footer{
+ background:transparent!important;
+ border-top-color:rgba(155,173,184,.065)!important;
+ box-shadow:none!important;
+}
