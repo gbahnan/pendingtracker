@@ -45,115 +45,130 @@ function MovingParticles({motion}:{motion:boolean}){
   if(!canvas||!track)return;
   const ctx=canvas.getContext("2d");if(!ctx)return;
   type Chamber={x:number;y:number;w:number;h:number;kind:"pool"|"gold"|"blue"};
-  let w=0,h=0,raf=0,last=0,elapsed=0,layout:Chamber[]=[];
-  const particles=Array.from({length:310},(_,i)=>({angle:i*2.39996,lane:(i*.754877666)%1,radius:2.6+(i%4)*.62}));
-  // Same triangle-wave wall reflection as the production Bitcoin explorer.
-  const bounce=(t:number)=>{const n=((t%2)+2)%2;return n<=1?n:2-n};
-  const drift=(p:{angle:number;lane:number},time:number,seed:number)=>{
-   const vx=.075+.055*((seed*.61803398875)%1);
-   const vy=.065+.06*((seed*.41421356237)%1);
-   return {u:.08+.84*bounce(p.lane+time*vx+p.angle*.17),v:.08+.84*bounce(p.angle*.31+time*vy)};
+  type Ball={chamber:number;next:number;x:number;y:number;vx:number;vy:number;r:number;age:number;wait:number;travel:boolean;opacity:number;seed:number};
+  let w=0,h=0,raf=0,last=0,acc=0,layout:Chamber[]=[];
+  let balls:Ball[]=[];
+  const random=(n:number)=>rand(n,37);
+  const bounds=(box:Chamber,y:number)=>{
+   const cy=box.y+box.h/2;
+   if(box.kind==="pool")return {left:box.x+box.w*.15,right:box.x+box.w*.85,top:box.y+box.h*.20,bottom:box.y+box.h*.80};
+   const dy=Math.min(1,Math.abs(y-cy)/(box.h*.33));
+   const half=box.w*.295*(1-.47*dy);
+   return {left:box.x+box.w/2-half,right:box.x+box.w/2+half,top:cy-box.h*.33,bottom:cy+box.h*.33};
+  };
+  const makeBall=(chamber:number,seed:number):Ball=>{
+   const box=layout[chamber],cy=box.y+box.h/2;
+   const y=cy+(random(seed+9)-.5)*box.h*.42;
+   const edge=bounds(box,y);
+   const x=edge.left+12+random(seed+13)*Math.max(2,edge.right-edge.left-24);
+   const angle=random(seed+21)*Math.PI*2;
+   const speed=9+random(seed+31)*12;
+   return {chamber,next:chamber+1,x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,r:2.35+random(seed+41)*1.15,age:0,wait:4+random(seed+51)*13,travel:false,opacity:.62+random(seed+61)*.22,seed};
   };
   const measure=()=>{
-   const bounds=track.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);
+   const boundsRect=track.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);
    w=track.scrollWidth;h=track.clientHeight;
    canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);
    canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(d,0,0,d,0,0);
    layout=Array.from(track.querySelectorAll<HTMLElement>(".lab-pool,.lab-hex-wrap")).map(el=>{
     const box=el.getBoundingClientRect();
-    return {x:box.left-bounds.left,y:box.top-bounds.top,w:box.width,h:box.height,kind:el.classList.contains("lab-pool")?"pool" as const:el.closest(".lab-blue")?"blue" as const:"gold" as const};
+    return {x:box.left-boundsRect.left,y:box.top-boundsRect.top,w:box.width,h:box.height,kind:el.classList.contains("lab-pool")?"pool" as const:el.closest(".lab-blue")?"blue" as const:"gold" as const};
    }).sort((a,b)=>a.x-b.x);
+   // Rebuild only when the layout changes, not on each animation frame.
+   balls=[];
+   if(layout.length){
+    let seed=0;
+    for(let c=0;c<layout.length;c++){
+     const count=c===0?52:c===layout.length-1?15:25;
+     for(let i=0;i<count;i++)balls.push(makeBall(c,seed++));
+    }
+   }
   };
   const observer=new ResizeObserver(measure);observer.observe(track);measure();
-  const drawBall=(x:number,y:number,r:number,blue:boolean,opacity:number)=>{
+  const drawBall=(p:Ball)=>{
+   const blue=layout[p.chamber]?.kind==="blue";
    const rgb=blue?"99,193,239":"228,159,70";
-   ctx.globalAlpha=opacity;ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.24)";
-   ctx.shadowColor="rgba("+rgb+",.65)";ctx.shadowBlur=4;
-   ctx.arc(x,y,r*1.35,0,Math.PI*2);ctx.fill();
-   const sphere=ctx.createRadialGradient(x-r*.28,y-r*.3,r*.08,x,y,r);
-   if(blue){sphere.addColorStop(0,"#e7f8ff");sphere.addColorStop(.25,"#93d9f6");sphere.addColorStop(.73,"#368ab9");sphere.addColorStop(1,"#15527a")}
-   else{sphere.addColorStop(0,"#ffedc5");sphere.addColorStop(.25,"#efb864");sphere.addColorStop(.72,"#bf792d");sphere.addColorStop(1,"#754319")}
-   ctx.beginPath();ctx.fillStyle=sphere;ctx.shadowBlur=1.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.globalAlpha=1;
+   ctx.globalAlpha=p.opacity;
+   ctx.shadowColor="rgba("+rgb+",.55)";ctx.shadowBlur=3;
+   ctx.beginPath();ctx.fillStyle=blue?"#82d9f7":"#eeb46a";
+   ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+   ctx.shadowBlur=0;ctx.globalAlpha=1;
   };
-  const point=(box:Chamber,u:number,v:number)=>{
-   const cx=box.x+box.w/2,cy=box.y+box.h/2;
-   if(box.kind==="pool")return {x:cx+(u-.5)*box.w*.72,y:cy+(v-.5)*box.h*.61};
-   const ny=Math.max(-1,Math.min(1,(v-.5)*2)),nx=Math.max(-1,Math.min(1,(u-.5)*2));
-   return {x:cx+nx*box.w*.39*(1-.48*Math.abs(ny)),y:cy+ny*box.h*.4};
+  const clipInterior=(box:Chamber)=>{
+   const cx=box.x+box.w/2,cy=box.y+box.h/2,rx=box.w*.295,ry=box.h*.335;
+   ctx.beginPath();
+   if(box.kind==="pool"){ctx.roundRect(box.x+13,box.y+13,box.w-26,box.h-26,22)}
+   else{
+    ctx.moveTo(cx,cy-ry);ctx.lineTo(cx+rx,cy-ry*.53);
+    ctx.lineTo(cx+rx,cy+ry*.53);ctx.lineTo(cx,cy+ry);
+    ctx.lineTo(cx-rx,cy+ry*.53);ctx.lineTo(cx-rx,cy-ry*.53);ctx.closePath();
+   }
+   ctx.clip();
+  };
+  const step=(dt:number)=>{
+   for(const p of balls){
+    const box=layout[p.chamber];if(!box)continue;
+    p.age+=dt;
+    if(p.travel){
+     const target=layout[p.next];
+     if(!target){p.travel=false;continue}
+     // Keep a single continuous position and velocity across both chambers.
+     // Gentle acceleration toward the next opening; no positional lerps or teleports.
+     const goalY=target.y+target.h/2+(random(p.seed+91)-.5)*target.h*.24;
+     const desiredVy=Math.max(-11,Math.min(11,(goalY-p.y)*.25));
+     p.vy+=(desiredVy-p.vy)*Math.min(1,dt*1.6);
+     p.vx+=(26+random(p.seed+71)*13-p.vx)*Math.min(1,dt*1.2);
+     p.x+=p.vx*dt;p.y+=p.vy*dt;
+     const edge=bounds(target,p.y);
+     if(p.x>edge.left+10){
+      p.chamber=p.next;p.next=p.chamber+1;p.travel=false;
+      p.wait=5+random(p.seed+Math.floor(p.age)*13)*12;p.age=0;
+      p.vx=8+random(p.seed+12)*13;p.vy=(random(p.seed+22)-.5)*22;
+     }
+    }else{
+     // Real velocity integration and wall reflection in each dark interior.
+     p.x+=p.vx*dt;p.y+=p.vy*dt;
+     let edge=bounds(box,p.y);
+     const top=edge.top+p.r+6,bottom=edge.bottom-p.r-6;
+     if(p.y<top){p.y=top+(top-p.y);p.vy=Math.abs(p.vy)}
+     if(p.y>bottom){p.y=bottom-(p.y-bottom);p.vy=-Math.abs(p.vy)}
+     edge=bounds(box,p.y);
+     const left=edge.left+p.r+6,right=edge.right-p.r-6;
+     if(p.x<left){p.x=left+(left-p.x);p.vx=Math.abs(p.vx)}
+     if(p.x>right){p.x=right-(p.x-right);p.vx=-Math.abs(p.vx)}
+     // After an individual dwell, gradually turn toward the right opening.
+     if(p.chamber<layout.length-1&&p.age>p.wait){
+      const cy=box.y+box.h/2;
+      p.vx+=(19-p.vx)*Math.min(1,dt*.65);
+      p.vy+=((cy-p.y)*.18-p.vy)*Math.min(1,dt*.7);
+      if(p.x>right-7&&Math.abs(p.y-cy)<box.h*.20){
+       p.travel=true;p.next=p.chamber+1;p.vx=23+random(p.seed+73)*13;
+      }
+     }
+    }
+   }
   };
   const draw=(now:number)=>{
-   const dt=Math.min((now-last)/1000||0,.05);last=now;if(motion)elapsed+=dt;
+   const dt=last?Math.min((now-last)/1000,.05):0;last=now;
+   if(motion){acc+=dt;let n=0;while(acc>=1/60&&n<4){step(1/60);acc-=1/60;n++}}
    ctx.clearRect(0,0,w,h);
-   if(layout.length){
-    const pool=layout[0];
-    // Independently bouncing particles stay inside the mempool, never spawn behind it.
-    ctx.save();ctx.beginPath();ctx.roundRect(pool.x+13,pool.y+13,pool.w-26,pool.h-26,22);ctx.clip();
-    for(let i=0;i<52;i++){const p=particles[i],uv=drift(p,elapsed*.53,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*1.06,false,.76)}
-    ctx.restore();
-    const clipInterior=(box:Chamber)=>{
-     const cx=box.x+box.w/2,cy=box.y+box.h/2,rx=box.w*.295,ry=box.h*.335;
-     ctx.beginPath();ctx.moveTo(cx,cy-ry);ctx.lineTo(cx+rx,cy-ry*.53);
-     ctx.lineTo(cx+rx,cy+ry*.53);ctx.lineTo(cx,cy+ry);
-     ctx.lineTo(cx-rx,cy+ry*.53);ctx.lineTo(cx-rx,cy-ry*.53);
-     ctx.closePath();ctx.clip();
-    };
-    for(let chamber=1;chamber<layout.length;chamber++){
-     const box=layout[chamber];
-     ctx.save();clipInterior(box);
-     for(let j=0;j<6;j++){
-      const seed=75+(chamber*13+j)%130,p=particles[seed],uv=drift(p,elapsed*.48,seed);
-      const top=j%2===0,u=.12+.76*bounce(p.lane+elapsed*(.046+(seed%5)*.005)+p.angle*.17);
-      const v=(top?.12:.77)+.10*bounce(p.angle*.31+elapsed*(.033+(seed%3)*.006));
-      const pos=point(box,box.kind==="gold"?u:uv.u,box.kind==="gold"?v:uv.v);
-      drawBall(pos.x,pos.y,p.radius*.94,box.kind==="blue",.72);
-     }
-     ctx.restore();
-    }
-    // Calm, continuous movement: slow oscillation in the chamber, a
-    // deliberate crossing, and a soft arrival. No high-frequency bounce
-    // or abrupt changes of direction at phase boundaries.
-    for(let gap=0;gap<layout.length-1;gap++){
-     const from=layout[gap],to=layout[gap+1];
-     const random=(n:number)=>rand(n,19);
-     const smooth=(t:number)=>{const q=Math.max(0,Math.min(1,t));return q*q*(3-2*q)};
-     for(let j=0;j<52;j++){
-      const seed=gap*37+j;
-      const speed=.034+random(seed+31)*.013;
-      const phase=(random(seed+11)+j*.00037+elapsed*speed)%1;
-      const lane=random(seed+53)<.5?.27:.73;
-      const exitV=lane+(random(seed+91)-.5)*.07;
-      const start=point(from,.78,exitV),finish=point(to,.22,exitV);
-      const amplitude=.10+random(seed+71)*.075;
-      const frequency=.27+random(seed+72)*.17;
-      const wave=Math.sin(elapsed*frequency+seed*2.39996);
-      const waveY=Math.sin(elapsed*(frequency*.77)+seed*1.711);
-      const originBounce=point(from,.46+wave*amplitude,lane+waveY*.07);
-      const arrivalBounce=point(to,.46+wave*amplitude,lane+waveY*.07);
-      let pos:{x:number;y:number};
-      if(phase<.57){
-       const toward=smooth((phase-.39)/.18);
-       pos={x:originBounce.x*(1-toward)+start.x*toward,y:originBounce.y*(1-toward)+start.y*toward};
-      }else if(phase<.82){
-       const t=(phase-.57)/.25;
-       const curve=Math.sin(t*Math.PI)*((random(seed+101)-.5)*24);
-       const meander=Math.sin(t*Math.PI*2+seed*1.37)*Math.sin(t*Math.PI)*5;
-       pos={x:start.x+(finish.x-start.x)*smooth(t),y:start.y+(finish.y-start.y)*smooth(t)+curve+meander};
-      }else{
-       const blend=smooth((phase-.82)/.18);
-       pos={x:finish.x*(1-blend)+arrivalBounce.x*blend,y:finish.y*(1-blend)+arrivalBounce.y*blend};
-      }
-      const radius=2.3+random(seed+131)*.8;
-      ctx.save();
-      if(pos.x<from.x+from.w){
-       if(from.kind==="pool"){ctx.beginPath();ctx.roundRect(from.x+13,from.y+13,from.w-26,from.h-26,22);ctx.clip()}
-       else clipInterior(from);
-      }else if(pos.x>to.x){clipInterior(to)}
-      else{ctx.beginPath();ctx.rect(from.x+from.w,0,Math.max(0,to.x-from.x-from.w),h);ctx.clip()}
-      const opacity=(.56+random(seed+151)*.2)*smooth(Math.min(1,phase*12))*smooth(Math.min(1,(1-phase)*12));
-      drawBall(pos.x,pos.y,radius,to.kind==="blue"&&phase>.68,opacity);
+   for(const p of balls){
+    const current=layout[p.chamber];if(!current)continue;
+    ctx.save();
+    if(p.travel){
+     const target=layout[p.next];
+     if(target){
+      // Draw across open space, with the metallic faces masking the crossing.
+      ctx.beginPath();ctx.rect(current.x+current.w,0,Math.max(0,target.x-current.x-current.w),h);ctx.clip();
+      drawBall(p);
       ctx.restore();
+      ctx.save();
+      clipInterior(current);drawBall(p);
+      ctx.restore();ctx.save();
+      clipInterior(target);drawBall(p);
      }
-    }
+    }else{clipInterior(current);drawBall(p)}
+    ctx.restore();
    }
    raf=requestAnimationFrame(draw);
   };
