@@ -4969,3 +4969,73 @@ body:has(.pt-tx-page.pt-tx-detail-v2)::after{
  border-color:rgba(221,170,92,.16)!important;
  box-shadow:inset 0 1px 0 rgba(255,212,140,.15),inset 1px 0 0 rgba(255,198,111,.06),inset -1px 0 0 rgba(255,198,111,.05),0 0 76px rgba(208,137,48,.15),0 20px 50px rgba(0,0,0,.09)!important;
 }
+
+
+/* BTC transaction premium finishing pass — 2026-10-15.
+   Paint-only enhancements, preserving dimensions, data, animations and interactions. */
+body:has(.pt-tx-page.pt-tx-detail-v2){
+ background-color:#111a25!important;
+ background-image:linear-gradient(180deg,#101823 0%,#182631 68%,#111b26 100%)!important;
+}
+.pt-tx-page.pt-tx-detail-v2{
+ background-color:#19232c!important;
+ background-image:
+ radial-gradient(ellipse 56% 23% at 50% 90%,rgba(207,146,66,.13),transparent 85%),
+ radial-gradient(ellipse 62% 34% at 3% 48%,rgba(206,151,79,.18),transparent 86%),
+ radial-gradient(ellipse 54% 31% at 98% 55%,rgba(208,150,70,.15),transparent 87%),
+ repeating-linear-gradient(120deg,rgba(255,230,180,.008) 0px,rgba(255,230,180,.008) 1px,transparent 1px,transparent 9px),
+ linear-gradient(180deg,#17212b 0%,#202b34 45%,#1b2934 78%,#16232f 100%)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
+ background:
+ radial-gradient(ellipse 85% 65% at 7% 0%,rgba(242,185,94,.13),transparent 75%),
+ radial-gradient(ellipse 75% 90% at 95% 95%,rgba(204,142,58,.09),transparent 83%),
+ repeating-linear-gradient(135deg,rgba(255,255,255,.009) 0px,rgba(255,255,255,.009) 1px,transparent 1px,transparent 8px),
+ linear-gradient(165deg,#293c49,#1a2b3a 85%)!important;
+ border-color:rgba(232,180,96,.22)!important;
+ box-shadow:inset 0 1px 0 rgba(255,219,152,.15),0 0 65px rgba(207,147,65,.12),0 24px 52px rgba(4,12,20,.12)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
+ background:
+ radial-gradient(ellipse 68% 72% at 99% 3%,rgba(228,166,78,.14),transparent 80%),
+ radial-gradient(ellipse 90% 70% at 0% 100%,rgba(130,151,152,.08),transparent 90%),
+ repeating-linear-gradient(135deg,rgba(255,255,255,.008) 0px,rgba(255,255,255,.008) 1px,transparent 1px,transparent 9px),
+ linear-gradient(155deg,#273a48 0%,#1a2b39 75%,#192a37 100%)!important;
+ border-color:rgba(228,177,91,.18)!important;
+ box-shadow:inset 0 1px 0 rgba(250,208,135,.1),0 15px 46px rgba(5,14,23,.12),0 0 55px rgba(202,139,58,.08)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity{
+ background:radial-gradient(ellipse 70% 45% at 50% 100%,rgba(210,150,66,.075),transparent 85%)!important;
+ border-color:rgba(225,174,91,.13)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer{
+ background:linear-gradient(90deg,rgba(213,154,70,.055),transparent 35%,rgba(213,154,70,.045))!important;
+ border-top-color:rgba(230,180,99,.19)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-details-link,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer a{
+ color:#f0bd6b!important;
+}
+body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer{
+ position:relative;
+ background:
+ radial-gradient(ellipse 36% 38% at 50% 5%,rgba(222,159,72,.09),transparent 95%),
+ linear-gradient(180deg,rgba(24,37,49,.95),#111b26 70%,#101923)!important;
+ border-top:1px solid rgba(228,177,91,.14)!important;
+ box-shadow:0 -35px 80px rgba(203,145,65,.035)!important;
+}
+body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer::before{
+ content:"";display:block;position:absolute;top:-1px;left:17%;right:17%;height:1px;
+ background:linear-gradient(90deg,transparent,rgba(239,186,96,.47),transparent);
+ pointer-events:none;
+}
+body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer .founder-name{
+ color:#f3f5f6!important;
+ text-shadow:0 0 28px rgba(235,177,82,.22)!important;
+}
+body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer .founder-eyebrow{
+ color:#dfb977!important;
+}
+@media(prefers-reduced-motion:reduce){
+ body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer{transition:none!important}
+}
