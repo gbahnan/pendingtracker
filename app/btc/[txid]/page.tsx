@@ -111,6 +111,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const outputs: Array<{value?:number;scriptpubkey_address?:string}>=(tx?.vout??[]) as Array<{value?:number;scriptpubkey_address?:string}>;
  const inputTotal=inputs.length>0&&inputs.every(i=>i.prevout?.value!=null)?inputs.reduce((sum,i)=>sum+(i.prevout?.value??0),0):null;
  const outputTotal=outputs.length>0&&outputs.every(o=>o.value!=null)?outputs.reduce((sum,o)=>sum+(o.value??0),0):null;
+ const firstSeen=typeof (result as unknown as {firstSeen?:number})?.firstSeen==="number"?(result as unknown as {firstSeen:number}).firstSeen:null;
  const rbf=inputs.some(i=>i.sequence!=null&&i.sequence<0xfffffffe);
  const networkFee=result?.fees?.halfHourFee??null;
  const feeAssessment=!observed?"Cannot assess yet":confirmed?"Already confirmed":feeRate==null||networkFee==null?"Not enough fee data":feeRate>=networkFee?"At or above the 30-minute fee guide":"Below the 30-minute fee guide";
@@ -187,8 +188,8 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker">GO DEEPER, ONLY IF YOU WANT TO</div><h2>Understanding Your <em>Transaction</em></h2><p>Explore the actual transaction data. Choose a topic and we'll explain what it means.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
      <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore transaction details">
       {[
-       {id:"overview",label:"Overview",icon:"⬡"},{id:"fees",label:"Fees",icon:"≋"},{id:"confirmations",label:"Confirmations",icon:"◷"},
-       {id:"inputs",label:"Inputs",icon:"↘"},{id:"outputs",label:"Outputs",icon:"↗"},{id:"advanced",label:"Advanced",icon:"▤"}
+       {id:"overview",label:"Overview",icon:"⬡"},{id:"confirmations",label:"Confirmations",icon:"◷"},{id:"fees",label:"Fees",icon:"≋"},
+       {id:"outputs",label:"Outputs",icon:"↗"},{id:"inputs",label:"Inputs",icon:"↘"},{id:"advanced",label:"Advanced",icon:"▤"}
       ].map(t=><button type="button" role="tab" aria-selected={transactionTab===t.id} key={t.id} className={transactionTab===t.id?"active":""} onClick={()=>{setTransactionTab(t.id);setUnderstandingExpanded(false)}}><span className="fresh-tab-icon" aria-hidden="true">{t.icon}</span>{t.label}</button>)}
      </div>
      <div className="fresh-explore-body">
@@ -197,24 +198,34 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
        <p>{({overview:"The essential details of this specific Bitcoin transaction.",fees:"What your transaction paid miners and how that affects confirmation priority.",confirmations:"Whether your transaction is in a block and how many confirmations it has.",inputs:"Previous Bitcoin outputs this transaction spends. Addresses do not identify their owners.",outputs:"New Bitcoin outputs created by this transaction, potentially including change.",advanced:"The underlying blockchain fields for people who want to inspect them."} as Record<string,string>)[transactionTab]}</p>
        {(transactionTab==="overview"||transactionTab==="fees"||transactionTab==="confirmations"||transactionTab==="advanced")&&<div className="fresh-fee-list">
         {(transactionTab==="overview"?[
-         {name:"Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",note:"Current blockchain status"},
-         {name:"Amount in outputs",value:btc(outputTotal),note:"May include change sent back to the sender"},
-         {name:"Network fee",value:btc(tx?.fee),note:"Amount paid to Bitcoin miners"},
-         {name:"Estimated wait",value:feeEstimate,note:"Not a guarantee"}
+         {name:"Transaction status",value:confirmed?"Confirmed":observed?"Pending":"Not found",note:"Has this payment reached the blockchain?"},
+         {name:confirmed?"Confirmations":"Estimated confirmation",value:confirmed?number(confirmations):feeEstimate,note:confirmed?"Blocks confirming this transaction":"Fee-based estimate, not a guarantee"},
+         {name:"Total outputs",value:btc(outputTotal),note:"Includes all outputs, potentially sender change"},
+         {name:"Receiving outputs",value:number(outputs.length),note:"View addresses under Outputs; recipients cannot always be identified"},
+         {name:"Transaction fee",value:tx?.fee!=null?number(tx.fee)+" sats":"—",note:"Fee paid to miners"},
+         {name:"Fee rate",value:rate(feeRate),note:"Priority compared with other transactions"},
+         {name:"First seen",value:firstSeen!=null?new Date(firstSeen*1000).toLocaleString():"Not available",note:"Only shown when the network provides a reliable timestamp"}
         ]:transactionTab==="fees"?[
-         {name:"Total network fee",value:btc(tx?.fee),note:"Fee paid to miners"},
+         {name:"Total network fee",value:tx?.fee!=null?number(tx.fee)+" sats ("+btc(tx.fee)+")":"—",note:"Total paid to miners, not a wallet service charge"},
          {name:"Fee rate",value:rate(feeRate),note:"Satoshis paid per virtual byte"},
+         {name:"Current fee assessment",value:feeAssessment,note:"Compared with the live 30-minute network guide"},
+         {name:"Network fee guide",value:rate(networkFee),note:"Current approximate 30-minute fee rate"},
          {name:"Virtual size",value:tx?.vsize!=null?number(tx.vsize)+" vB":"—",note:"Used to calculate the fee rate"},
          {name:"Replace-by-fee",value:rbf?"Signaled":"Not signaled",note:"Whether opt-in replacement is indicated"}
         ]:transactionTab==="confirmations"?[
          {name:"Current status",value:confirmed?"Confirmed":observed?"Pending":"Not found",note:"Based on the live Bitcoin network"},
          {name:"Confirmations",value:confirmed?number(confirmations):"0",note:"Additional blocks increase this number"},
          {name:"Block height",value:confirmed?"#"+number(blockHeight):"Not yet included",note:"The block containing the transaction"},
-         {name:"Estimated wait",value:feeEstimate,note:"Only applicable while pending"}
+         {name:"Estimated wait",value:feeEstimate,note:"Only applicable while pending"},
+         {name:"Block timestamp",value:confirmed&&blockTime!=null?new Date(blockTime*1000).toLocaleString():"Not yet confirmed",note:"Time the confirming block was mined"},
+         {name:"First seen",value:firstSeen!=null?new Date(firstSeen*1000).toLocaleString():"Not available",note:"Not all data providers expose first-broadcast time"}
         ]:[
          {name:"Version",value:String(tx?.version??"—"),note:"Transaction format version"},
          {name:"Locktime",value:String(tx?.locktime??"—"),note:"Transaction locktime field"},
          {name:"Weight",value:tx?.weight!=null?number(tx.weight)+" WU":"—",note:"Block weight consumed"},
+         {name:"Transaction size",value:tx?.size!=null?number(tx.size)+" bytes":"—",note:"Raw serialized transaction size"},
+         {name:"Virtual size",value:tx?.vsize!=null?number(tx.vsize)+" vB":"—",note:"Fee calculation size"},
+         {name:"RBF",value:rbf?"Signaled":"Not signaled",note:"Opt-in replace-by-fee signal"},
          {name:"Transaction ID",value:short(txid),note:"Unique identifier for this transaction"}
         ]).map(row=><div key={row.name}><span><strong>{row.name}</strong><small>{row.note}</small></span><b>{row.value}</b></div>)}
        </div>}
