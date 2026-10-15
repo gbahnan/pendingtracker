@@ -1553,3 +1553,50 @@ body:has(.pt-tx-page.txr){background:#080d14!important}
  border-top-color:rgba(147,169,182,.13)!important;
  background:transparent!important;
 }
+
+/* BTC surface integration — borderless section edges, same layout and typography. */
+/* Remove framing from the section containers, not their internal information hierarchy. */
+.pt-tx-page.txr .txr-new-content{
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-new-content::before,
+.pt-tx-page.txr .txr-new-content::after{
+ content:none!important;
+ display:none!important;
+}
+.pt-tx-page.txr .txr-new-summary{
+ border:0!important;
+ border-radius:10px 10px 0 0!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-new-metrics{
+ border:0!important;
+ box-shadow:none!important;
+ background:linear-gradient(180deg,rgba(24,42,57,.96),rgba(19,35,49,.94))!important;
+}
+.pt-tx-page.txr .txr-understand-v2.fresh-explore-premium{
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2.fresh-explore-premium::before,
+.pt-tx-page.txr .txr-understand-v2.fresh-explore-premium::after{
+ content:none!important;
+ display:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-tabs-six{
+ border-bottom-color:rgba(165,186,196,.16)!important;
+ box-shadow:none!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-explore-body{
+ border:0!important;
+ border-top:0!important;
+ box-shadow:none!important;
+ background:radial-gradient(ellipse 52% 70% at 96% 0%,rgba(195,148,82,.05),transparent 87%),linear-gradient(180deg,rgba(27,45,60,.96),rgba(21,37,51,.94))!important;
+}
+.pt-tx-page.txr .txr-understand-v2 .fresh-data-premium,
+.pt-tx-page.txr .txr-understand-v2 .fresh-explainer-premium{
+ box-shadow:none!important;
+}
