@@ -900,3 +900,23 @@
  .txr .txr-new-metric>p{margin-left:29px!important}
  .txr .txr-new-metric-copy strong{font-size:16px!important}
 }
+
+/* Snapshot palette refinement: preserve layout, typography and spacing. */
+.txr .txr-new-metric-heading .txr-new-metric-icon{
+ color:#c7a46a!important;
+}
+.txr .txr-new-metric-heading .txr-new-metric-label{
+ color:#f5f8fb!important;
+}
+.txr .txr-new-metric-copy strong{
+ color:#e1eaf1!important;
+}
+.txr .txr-new-metric-copy small{
+ color:#9db5c6!important;
+}
+.txr .txr-new-metric>p{
+ color:#829dad!important;
+}
+.txr .txr-new-learn{
+ color:#ddb66f!important;
+}
