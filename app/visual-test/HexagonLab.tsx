@@ -47,7 +47,7 @@ function MovingParticles({motion}:{motion:boolean}){
   type Chamber={x:number;y:number;w:number;h:number;kind:"pool"|"gold"|"blue"};
   type Ball={chamber:number;next:number;x:number;y:number;vx:number;vy:number;r:number;age:number;wait:number;travel:boolean;opacity:number;seed:number};
   let w=0,h=0,raf=0,last=0,acc=0,layout:Chamber[]=[];
-  let balls:Ball[]=[];let nextSeed=10000;
+  let balls:Ball[]=[];let nextSeed=10000;let flowClock=0;let departureSlots:number[]=[];
   const random=(n:number)=>rand(n,37);
   const bounds=(box:Chamber,y:number)=>{
    const cy=box.y+box.h/2;
@@ -75,11 +75,11 @@ function MovingParticles({motion}:{motion:boolean}){
     return {x:box.left-boundsRect.left,y:box.top-boundsRect.top,w:box.width,h:box.height,kind:el.classList.contains("lab-pool")?"pool" as const:el.closest(".lab-blue")?"blue" as const:"gold" as const};
    }).sort((a,b)=>a.x-b.x);
    // Rebuild only when the layout changes, not on each animation frame.
-   balls=[];
+   balls=[];flowClock=0;departureSlots=Array.from({length:Math.max(0,layout.length-1)},(_,i)=>i*.22);
    if(layout.length){
     let seed=0;
     for(let c=0;c<layout.length;c++){
-     const count=c===0?52:c===layout.length-1?12:17;
+     const count=c===0?75:c===layout.length-1?12:17;
      for(let i=0;i<count;i++)balls.push(makeBall(c,seed++));
     }
    }
@@ -106,6 +106,19 @@ function MovingParticles({motion}:{motion:boolean}){
    ctx.clip();
   };
   const step=(dt:number)=>{
+   flowClock+=dt;
+   // One departure opportunity per link every 2.8s, staggered across links.
+   // Pool and hexagons therefore have identical throughput, regardless of density.
+   for(let c=0;c<layout.length-1;c++){
+    if(flowClock<departureSlots[c])continue;
+    departureSlots[c]=flowClock+2.8;
+    const box=layout[c],cy=box.y+box.h/2;
+    const eligible=balls.filter(p=>p.chamber===c&&!p.travel&&p.wait>=0);
+    if(!eligible.length)continue;
+    const p=eligible[Math.floor(random(nextSeed++ + c*31)*eligible.length)];
+    p.wait=-1;
+    // Pick a preferred lane, middle most of the time; steer, don't teleport.
+   }
    for(const p of balls){
     const box=layout[p.chamber];if(!box)continue;
     p.age+=dt;
@@ -149,7 +162,7 @@ function MovingParticles({motion}:{motion:boolean}){
       }
      }
      // After an individual dwell, gradually turn toward the right opening.
-     if(p.chamber<layout.length-1&&p.age>p.wait){
+     if(p.chamber<layout.length-1&&p.wait<0){
       const cy=box.y+box.h/2;
       p.vx+=((box.kind==="pool"?13:16)-p.vx)*Math.min(1,dt*.55);
       const laneChoice=random(p.seed+91);
@@ -162,8 +175,17 @@ function MovingParticles({motion}:{motion:boolean}){
     }
    }
    // Maintain a permanent supply in the mempool, including after departures.
-   const inPool=balls.filter(p=>p.chamber===0).length;
-   for(let i=inPool;i<52;i++)balls.push(makeBall(0,nextSeed++));
+   const inPool=balls.filter(p=>p.chamber===0&&!p.travel).length;
+   for(let i=inPool;i<75;i++)balls.push(makeBall(0,nextSeed++));
+   // Recycle confirmed particles back into the mempool to avoid unlimited growth.
+   const confirmed=layout.length-1;
+   if(confirmed>0){
+    const finished=balls.filter(p=>p.chamber===confirmed&&!p.travel);
+    if(finished.length>15){
+     const recycle=new Set(finished.slice(0,finished.length-15));
+     balls=balls.filter(p=>!recycle.has(p));
+    }
+   }
   };
   const draw=(now:number)=>{
    const dt=last?Math.min((now-last)/1000,.05):0;last=now;
