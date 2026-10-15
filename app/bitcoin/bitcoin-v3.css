@@ -1155,3 +1155,192 @@
 .fresh-v3 .pt-snapshot-art svg .gauge-tick{fill:none!important;stroke:#b6d7e8!important;stroke-width:2!important;filter:none!important}
 .fresh-v3 .pt-snapshot-art svg .mempool-slot{fill:rgba(228,151,96,.08)!important;stroke:rgba(242,166,108,.22)!important;stroke-width:1!important;filter:none!important}
 .fresh-v3 .pt-snapshot-art svg .mempool-cell{fill:#e69c6d!important;stroke:none!important;filter:none!important}
+
+
+/* Explore and Understand — match Understanding Your Transaction editorial system */
+.fresh-v3 .fresh-explore-premium{
+ overflow:visible!important;
+ border-radius:19px!important;
+ background:
+ radial-gradient(ellipse 83% 63% at 5% 0%,rgba(242,185,94,.115),transparent 75%),
+ radial-gradient(ellipse 72% 72% at 96% 92%,rgba(201,147,68,.07),transparent 80%),
+ repeating-linear-gradient(135deg,rgba(255,255,255,.007) 0px,rgba(255,255,255,.007) 1px,transparent 1px,transparent 9px),
+ linear-gradient(155deg,#2a3d49,#1b2d3b 85%)!important;
+ border:1px solid rgba(232,180,96,.20)!important;
+ box-shadow:inset 0 1px rgba(255,219,152,.11),0 17px 47px rgba(4,12,20,.13),0 0 46px rgba(207,147,65,.06)!important;
+}
+.fresh-v3 .fresh-explore-title{
+ display:flex!important;
+ padding:27px 24px 21px!important;
+ margin:0!important;
+}
+.fresh-v3 .fresh-explore-title h2{
+ font-size:clamp(26px,3vw,38px)!important;
+ line-height:1.15!important;
+ letter-spacing:-.04em!important;
+ font-weight:800!important;
+ color:#f2f5f7!important;
+}
+.fresh-v3 .fresh-explore-title h2 span{color:#f3c475!important}
+.fresh-v3 .fresh-explore-title p{
+ margin-top:8px!important;
+ font-size:14px!important;
+ line-height:1.5!important;
+ color:#b8cbd6!important;
+}
+.fresh-v3 .fresh-explore-kicker{
+ font-size:11px!important;
+ letter-spacing:.16em!important;
+ color:#e6b873!important;
+ margin-bottom:8px!important;
+}
+.fresh-v3 .fresh-tabs-six{
+ display:grid!important;
+ grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ gap:7px!important;
+ padding:0 19px 19px!important;
+ border:0!important;
+ background:transparent!important;
+ box-shadow:none!important;
+}
+.fresh-v3 .fresh-tabs-six button,
+.fresh-v3 .fresh-tabs-six button+button{
+ min-height:67px!important;
+ padding:11px 8px!important;
+ border:1px solid rgba(161,184,195,.22)!important;
+ border-radius:10px!important;
+ background:rgba(21,40,53,.38)!important;
+ box-shadow:none!important;
+ color:#d7e2e9!important;
+ transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease!important;
+}
+.fresh-v3 .fresh-tabs-six button.active{
+ background:linear-gradient(145deg,rgba(184,132,62,.24),rgba(46,57,61,.50))!important;
+ border-color:rgba(244,192,107,.65)!important;
+ box-shadow:inset 0 1px rgba(255,222,164,.13),0 0 20px rgba(217,156,69,.10)!important;
+}
+.fresh-v3 .fresh-tabs-six button:not(.active):hover{
+ background:rgba(83,93,92,.32)!important;
+ border-color:rgba(231,184,110,.50)!important;
+}
+.fresh-v3 .fresh-tab-icon{
+ font-size:22px!important;
+ color:#d9b777!important;
+}
+.fresh-v3 .fresh-tabs-six button.active .fresh-tab-icon,
+.fresh-v3 .fresh-tabs-six button.active .fresh-tab-copy strong{color:#ffd18a!important}
+.fresh-v3 .fresh-tab-copy{gap:4px!important}
+.fresh-v3 .fresh-tab-copy strong{
+ font-size:13px!important;
+ font-weight:750!important;
+ color:#e8eef2!important;
+}
+.fresh-v3 .fresh-tab-copy small{
+ font-size:10px!important;
+ line-height:1.35!important;
+ color:#a9bdc9!important;
+}
+.fresh-v3 .fresh-explore-body{
+ grid-template-columns:minmax(0,1.7fr) minmax(275px,.9fr)!important;
+ gap:0!important;
+ padding:21px 22px 25px!important;
+ border-top:1px solid rgba(182,196,197,.14)!important;
+ border-radius:0 0 18px 18px!important;
+ background:
+ radial-gradient(ellipse 70% 75% at 98% 3%,rgba(226,166,78,.11),transparent 78%),
+ linear-gradient(150deg,rgba(36,56,70,.80),rgba(22,40,54,.82))!important;
+}
+.fresh-v3 .fresh-data-premium{padding:7px 24px 7px 4px!important}
+.fresh-v3 .fresh-data h3{
+ font-size:clamp(20px,2vw,27px)!important;
+ font-weight:800!important;
+ letter-spacing:-.03em!important;
+ line-height:1.2!important;
+ margin-bottom:9px!important;
+ color:#f4f6f8!important;
+}
+.fresh-v3 .fresh-data h3::first-letter{color:inherit!important}
+.fresh-v3 .fresh-data p{
+ font-size:13px!important;
+ line-height:1.65!important;
+ color:#b5c8d4!important;
+}
+.fresh-v3 .fresh-table-head{
+ font-size:10px!important;
+ letter-spacing:.1em!important;
+ color:#e7bd7d!important;
+}
+.fresh-v3 .fresh-table-row{
+ font-size:12px!important;
+ line-height:1.5!important;
+ padding-top:13px!important;
+ padding-bottom:13px!important;
+ border-bottom-color:rgba(165,185,195,.17)!important;
+}
+.fresh-v3 .fresh-explainer-premium{
+ padding:8px 5px 7px 24px!important;
+ border-left:1px solid rgba(188,193,186,.20)!important;
+ background:radial-gradient(ellipse at 100% 3%,rgba(214,166,92,.10),transparent 78%)!important;
+}
+.fresh-v3 .fresh-explainer-icon{
+ font-size:23px!important;
+ margin-bottom:10px!important;
+ color:#f1bc6b!important;
+}
+.fresh-v3 .fresh-explainer>span{
+ font-size:10px!important;
+ font-weight:800!important;
+ letter-spacing:.14em!important;
+ color:#e2b876!important;
+}
+.fresh-v3 .fresh-explainer h3{
+ font-size:clamp(19px,1.8vw,25px)!important;
+ font-weight:800!important;
+ line-height:1.23!important;
+ letter-spacing:-.025em!important;
+ margin:12px 0 13px!important;
+ color:#f4f6f8!important;
+}
+.fresh-v3 .fresh-explainer p{
+ font-size:13px!important;
+ line-height:1.75!important;
+ color:#c0d0d9!important;
+}
+.fresh-v3 .fresh-explain-accordion button{
+ font-size:13px!important;
+ line-height:1.5!important;
+ padding:14px 4px!important;
+ border-top-color:rgba(166,186,193,.18)!important;
+ color:#e9bd75!important;
+}
+.fresh-v3 .fresh-explain-accordion button:hover{
+ background:rgba(220,172,94,.06)!important;
+ color:#ffdb9d!important;
+}
+.fresh-v3 .fresh-tabs-six button:focus-visible,
+.fresh-v3 .fresh-explain-accordion button:focus-visible{
+ outline:2px solid #f0bc68!important;outline-offset:3px!important;
+}
+@media(max-width:950px){
+ .fresh-v3 .fresh-tabs-six{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .fresh-v3 .fresh-explore-body{grid-template-columns:1fr!important}
+ .fresh-v3 .fresh-data-premium{padding:4px 0 18px!important}
+ .fresh-v3 .fresh-explainer-premium{
+  border-left:0!important;
+  border-top:1px solid rgba(188,193,186,.20)!important;
+  padding:20px 3px 5px!important;
+ }
+}
+@media(max-width:560px){
+ .fresh-v3 .fresh-explore-title{padding:23px 14px 17px!important}
+ .fresh-v3 .fresh-tabs-six{gap:6px!important;padding:0 10px 13px!important}
+ .fresh-v3 .fresh-tabs-six button{min-height:63px!important;padding:8px 5px!important;gap:5px!important}
+ .fresh-v3 .fresh-tab-icon{font-size:17px!important}
+ .fresh-v3 .fresh-tab-copy strong{font-size:11px!important}
+ .fresh-v3 .fresh-tab-copy small{font-size:9px!important}
+ .fresh-v3 .fresh-explore-body{padding:17px 14px 20px!important}
+ .fresh-v3 .fresh-data h3{font-size:21px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .fresh-v3 .fresh-tabs-six button{transition:none!important}
+}
