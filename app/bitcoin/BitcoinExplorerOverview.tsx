@@ -39,10 +39,11 @@ export default function BitcoinExplorerOverview(){
    <div className="fresh-hero-copy"><div className="fresh-kicker">BITCOIN EXPLORER <span>● LIVE NETWORK</span></div><h1>Explore the <em>Bitcoin</em> Blockchain</h1><p>See what’s happening on Bitcoin right now, with clear explanations and live data.</p></div>
   </section>
   <section className="fresh-search" aria-label="Search Bitcoin"><form onSubmit={e=>{e.preventDefault();search()}}><span aria-hidden="true">⌕</span><input aria-label="Search Bitcoin transaction or address" value={query} onChange={e=>{setQuery(e.target.value);setError("")}} placeholder="Search transactions, blocks, or addresses…"/><button type="submit" aria-label="Search">→</button></form>{error&&<p role="alert" className="fresh-error">{error}</p>}<SearchGuidance query={query} chain="btc"/></section>
-  <section className="pt-snapshot" aria-label="Bitcoin right now">
-    <header className="pt-snapshot-header">
+  <header className="pt-snapshot-header pt-external-section-heading">
+
       <div className="pt-snapshot-title"><span className="pt-snapshot-pulse" aria-hidden="true">〰</span><div><h2><span>BITCOIN</span> RIGHT NOW <small title="Live readings and estimates; not guaranteed confirmation times">ⓘ</small></h2><p>A real-time snapshot of the Bitcoin network. Here's what's happening right now and what it means.</p></div></div>
     </header>
+  <section className="pt-snapshot" aria-label="Bitcoin right now">
     <div className="pt-snapshot-status-row">
       <div className="pt-snapshot-status"><span className="pt-now-green" aria-hidden="true"/><strong>{btc?.congestion==="Busy"?"Busy network":btc?.congestion==="Moderate"?"Moderate activity":btc?.congestion==="Light"?"Light activity":"Connecting to Bitcoin…"}</strong></div>
       <span className="pt-snapshot-live"><i/> {lastNetworkCheck!==null&&Date.now()-lastNetworkCheck<15000?"LIVE":lastNetworkCheck===null?"CONNECTING":"DELAYED"} <small>{lastNetworkCheck!==null?"· Checked "+Math.floor(Math.max(0,Date.now()-lastNetworkCheck)/1000)+"s ago": "· Waiting for network data"}</small></span>
@@ -84,8 +85,8 @@ export default function BitcoinExplorerOverview(){
     </div>}</div>)}
     </div>
   </section>
+  <div className="fresh-section-head fresh-explore-title pt-external-section-heading"><div><div className="fresh-kicker fresh-explore-kicker">GO DEEPER</div><h2>Explore. <span>Understand.</span></h2><p>Live blockchain data, explained simply.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
   <section className="fresh-explore fresh-explore-premium" id="explore-bitcoin">
-   <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker fresh-explore-kicker">GO DEEPER</div><h2>Explore. <span>Understand.</span></h2><p>Live blockchain data, explained simply.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
    <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore Bitcoin data">{tabs.map(t=><button role="tab" aria-selected={tab===t.id} key={t.id} className={tab===t.id?"active":""} onClick={()=>{setTab(t.id);setAdvanced(false);setExplainOpen(null)}}><span className="fresh-tab-icon" aria-hidden="true">{t.icon}</span><span className="fresh-tab-copy"><strong>{t.label}</strong><small>{{blocks:"Confirmed payments",transactions:"Live network activity",fees:"Rates & trends",network:"Network health",mining:"Hashrate & difficulty",insights:"Historical data"}[t.id]}</small></span></button>)}</div>
    <div className="fresh-explore-body">
     <div className="fresh-data fresh-data-premium">
