@@ -1446,3 +1446,17 @@
   font-size:14px!important;
  }
 }
+
+/* Increase only the Transaction Snapshot ID readability.
+   Preserve its single-line ellipsis and responsive header grid. */
+.txr .txr-new-heading .txr-hash-label{
+ font-size:13px!important;
+}
+.txr .txr-new-heading .txr-new-hash code{
+ font-size:14px!important;
+ letter-spacing:-.02em!important;
+}
+@media(max-width:900px){
+ .txr .txr-new-heading .txr-hash-label{font-size:12px!important}
+ .txr .txr-new-heading .txr-new-hash code{font-size:12px!important}
+}
