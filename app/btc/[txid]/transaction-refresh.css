@@ -920,3 +920,16 @@
 .txr .txr-new-learn{
  color:#ddb66f!important;
 }
+
+/* Restore the soft, fading navy-blue texture inside snapshot cards.
+   Only backgrounds change; preserve all typography, spacing and interactions. */
+.txr .txr-new-metric{
+ background:
+  radial-gradient(ellipse 105% 90% at 5% 4%,rgba(38,101,139,.27) 0%,rgba(23,69,99,.14) 35%,rgba(7,25,39,0) 76%),
+  linear-gradient(130deg,rgba(13,41,60,.42) 0%,rgba(5,19,30,.16) 76%)!important;
+}
+.txr .txr-new-metric:hover{
+ background:
+  radial-gradient(ellipse 105% 90% at 5% 4%,rgba(44,111,151,.31) 0%,rgba(25,73,103,.17) 35%,rgba(7,25,39,0) 76%),
+  linear-gradient(130deg,rgba(13,41,60,.45) 0%,rgba(5,19,30,.16) 76%)!important;
+}
