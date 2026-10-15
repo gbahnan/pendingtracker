@@ -1013,3 +1013,13 @@
  .txr .txr-new-metric-copy{padding-left:36px!important}
  .txr .txr-new-metric>p{margin-left:36px!important}
 }
+
+
+/* Anchor card values and descriptions to the left padding, rather than
+   indenting them under the title. Keep headings/icons and centered links. */
+.txr .txr-new-metric-copy{padding-left:0!important}
+.txr .txr-new-metric>p{margin-left:0!important}
+@media(max-width:550px){
+ .txr .txr-new-metric-copy{padding-left:0!important}
+ .txr .txr-new-metric>p{margin-left:0!important}
+}
