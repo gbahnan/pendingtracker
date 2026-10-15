@@ -291,3 +291,28 @@
  .txr .txr-network-v2 .motion-tracked-arrow{top:141px!important}
  .txr .txr-network-v2 .motion-tracked-pointer{border-left-width:9px!important;border-right-width:9px!important;border-bottom-width:13px!important;left:-9px!important}
 }
+
+/* Transaction timeline: full-bleed desktop canvas matching Bitcoin Explorer.
+   Only the visualization expands; transaction snapshot and details stay centered. */
+@media(min-width:1050px){
+ .txr .txr-network-v2{
+  width:100vw!important;
+  max-width:none!important;
+  margin-left:calc(50% - 50vw)!important;
+  margin-right:calc(50% - 50vw)!important;
+ }
+ .txr .txr-network-v2 .txr-explorer-motion,
+ .txr .txr-network-v2 .motion,
+ .txr .txr-network-v2 .motion-window{
+  width:100%!important;
+  max-width:none!important;
+ }
+ .txr .txr-network-v2 .motion-track{
+  padding-left:30px!important;
+  padding-right:30px!important;
+ }
+ .txr .txr-network-v2 .motion-window{
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 85%,rgba(0,0,0,.92) 89%,rgba(0,0,0,.45) 95%,transparent 100%)!important;
+  mask-image:linear-gradient(to right,#000 0%,#000 85%,rgba(0,0,0,.92) 89%,rgba(0,0,0,.45) 95%,transparent 100%)!important;
+ }
+}
