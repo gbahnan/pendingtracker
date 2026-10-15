@@ -4884,7 +4884,10 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
    Intentionally no dimensions, spacing, layout, typography or animation changes. */
 body:has(.pt-tx-page.pt-tx-detail-v2){
  background-color:#06111b!important;
- background-image:radial-gradient(ellipse 85% 55% at 50% 29%,#0b2333 0%,#081a28 52%,#06111b 100%)!important;
+ background-image:
+  radial-gradient(ellipse 66% 24% at 49% 48%,rgba(34,94,126,.22) 0%,rgba(19,61,88,.12) 48%,transparent 100%),
+  radial-gradient(ellipse 72% 30% at 52% 72%,rgba(29,82,113,.20) 0%,rgba(17,52,76,.10) 52%,transparent 100%),
+  linear-gradient(180deg,#06111b 0%,#081824 45%,#071622 76%,#06111b 100%)!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
  background:linear-gradient(155deg,#102b3d 0%,#0b2131 36%,#091c2b 100%)!important;
