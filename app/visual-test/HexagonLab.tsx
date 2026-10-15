@@ -47,7 +47,7 @@ function MovingParticles({motion}:{motion:boolean}){
   type Chamber={x:number;y:number;w:number;h:number;kind:"pool"|"gold"|"blue"};
   type Ball={chamber:number;next:number;x:number;y:number;vx:number;vy:number;r:number;age:number;wait:number;travel:boolean;opacity:number;seed:number};
   let w=0,h=0,raf=0,last=0,acc=0,layout:Chamber[]=[];
-  let balls:Ball[]=[];
+  let balls:Ball[]=[];let nextSeed=10000;
   const random=(n:number)=>rand(n,37);
   const bounds=(box:Chamber,y:number)=>{
    const cy=box.y+box.h/2;
@@ -79,7 +79,7 @@ function MovingParticles({motion}:{motion:boolean}){
    if(layout.length){
     let seed=0;
     for(let c=0;c<layout.length;c++){
-     const count=c===0?52:c===layout.length-1?15:25;
+     const count=c===0?52:c===layout.length-1?12:17;
      for(let i=0;i<count;i++)balls.push(makeBall(c,seed++));
     }
    }
@@ -114,7 +114,7 @@ function MovingParticles({motion}:{motion:boolean}){
      if(!target){p.travel=false;continue}
      // Keep a single continuous position and velocity across both chambers.
      // Gentle acceleration toward the next opening; no positional lerps or teleports.
-     const goalY=target.y+target.h/2+(random(p.seed+91)-.5)*target.h*.24;
+     const goalY=target.y+target.h/2+(random(p.seed+91)<.5?-.24:.24)*target.h;
      const desiredVy=Math.max(-11,Math.min(11,(goalY-p.y)*.25));
      p.vy+=(desiredVy-p.vy)*Math.min(1,dt*1.6);
      p.vx+=(26+random(p.seed+71)*13-p.vx)*Math.min(1,dt*1.2);
@@ -136,17 +136,31 @@ function MovingParticles({motion}:{motion:boolean}){
      const left=edge.left+p.r+6,right=edge.right-p.r-6;
      if(p.x<left){p.x=left+(left-p.x);p.vx=Math.abs(p.vx)}
      if(p.x>right){p.x=right-(p.x-right);p.vx=-Math.abs(p.vx)}
+     // Reflect off the central label area rather than moving over fee/time text.
+     if(box.kind!=="pool"){
+      const cx=box.x+box.w/2,cy=box.y+box.h/2;
+      const halfW=box.w*.28+p.r,halfH=box.h*.135+p.r;
+      if(Math.abs(p.x-cx)<halfW&&Math.abs(p.y-cy)<halfH){
+       const dx=halfW-Math.abs(p.x-cx),dy=halfH-Math.abs(p.y-cy);
+       if(dx<dy){const side=p.x<cx?-1:1;p.x=cx+side*halfW;p.vx=side*Math.max(8,Math.abs(p.vx))}
+       else{const side=p.y<cy?-1:1;p.y=cy+side*halfH;p.vy=side*Math.max(8,Math.abs(p.vy))}
+      }
+     }
      // After an individual dwell, gradually turn toward the right opening.
      if(p.chamber<layout.length-1&&p.age>p.wait){
       const cy=box.y+box.h/2;
       p.vx+=(19-p.vx)*Math.min(1,dt*.65);
-      p.vy+=((cy-p.y)*.18-p.vy)*Math.min(1,dt*.7);
-      if(p.x>right-7&&Math.abs(p.y-cy)<box.h*.20){
+      const laneY=cy+(random(p.seed+91)<.5?-.24:.24)*box.h;
+      p.vy+=((laneY-p.y)*.18-p.vy)*Math.min(1,dt*.7);
+      if(p.x>right-7&&Math.abs(p.y-laneY)<box.h*.13){
        p.travel=true;p.next=p.chamber+1;p.vx=23+random(p.seed+73)*13;
       }
      }
     }
    }
+   // Maintain a permanent supply in the mempool, including after departures.
+   const inPool=balls.filter(p=>p.chamber===0).length;
+   for(let i=inPool;i<52;i++)balls.push(makeBall(0,nextSeed++));
   };
   const draw=(now:number)=>{
    const dt=last?Math.min((now-last)/1000,.05):0;last=now;
