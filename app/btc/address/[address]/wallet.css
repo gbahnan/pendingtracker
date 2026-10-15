@@ -81,3 +81,85 @@
 .ptw-footer{border-top:1px solid rgba(177,195,205,.12);margin-top:40px}
 @media(max-width:850px){.ptw-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ptw-stat:nth-child(3n){border-right:1px solid rgba(153,185,201,.13)}.ptw-stat:nth-child(2n){border-right:0}.ptw-balance-summary{grid-template-columns:1fr}.ptw-balance{border-right:0;border-bottom:1px solid rgba(159,185,199,.17)}}
 @media(max-width:580px){.ptw-shell{padding:22px 15px 55px}.ptw-heading{margin-bottom:32px}.ptw-heading h1{font-size:33px}.ptw-panel{margin-bottom:34px}.ptw-identity{align-items:flex-start}.ptw-snapshot-heading h2,.ptw-understanding-heading h2{font-size:27px}.ptw-balance,.ptw-understanding{padding:20px 15px}.ptw-stat{padding:16px 13px;min-height:145px}.ptw-stat span{font-size:14px}.ptw-stat strong{font-size:16px}.ptw-chart-panel{margin-top:42px;margin-bottom:46px}.ptw-tx{padding:14px 11px}.ptw-search{padding:8px 10px}}
+
+
+/* Wallet refinement: use the transaction page's layered surfaces and compact hierarchy. */
+.ptw-shell{
+ max-width:none!important;
+ padding:26px max(22px,calc((100vw - 1240px)/2)) 76px!important;
+ background:
+ radial-gradient(ellipse 60% 27% at 49% 27%,rgba(218,155,68,.15),transparent 82%),
+ radial-gradient(ellipse 35% 34% at 0% 48%,rgba(209,145,60,.11),transparent 86%),
+ radial-gradient(ellipse 35% 32% at 100% 59%,rgba(216,154,70,.105),transparent 86%),
+ radial-gradient(ellipse 52% 25% at 52% 70%,rgba(180,132,69,.075),transparent 89%),
+ linear-gradient(180deg,#141e2a 0%,#1b2934 34%,#1c2a35 61%,#17232e 81%,#0a111a 100%)!important;
+}
+.ptw-ambient{display:none}
+.ptw-heading{max-width:100%;margin:0 auto 27px;padding:0;text-align:left;display:grid;grid-template-columns:1fr minmax(260px,420px);gap:6px 26px;align-items:center}
+.ptw-heading>.ptw-eyebrow{grid-column:1/-1;margin:0 0 3px}
+.ptw-heading h1{grid-column:1;grid-row:2;font-size:clamp(29px,3.1vw,39px);line-height:1.14;letter-spacing:-.045em;margin:0;color:#f5f7fa}
+.ptw-heading p{grid-column:1;grid-row:3;margin:0;font-size:13px;line-height:1.5;max-width:620px;color:#bbcad5}
+.ptw-search{grid-column:2;grid-row:2;max-width:none;width:100%;margin:0;padding:7px 9px 7px 13px;min-height:52px;border:1px solid rgba(228,182,112,.32);border-radius:8px;background:rgba(41,61,75,.85)}
+.ptw-search input{font-size:13px}
+.ptw-search button{height:36px;width:48px;border-radius:7px}
+.ptw-heading>small{grid-column:2;grid-row:3;text-align:left;margin:0;font-size:10px;color:#96a9b9}
+.ptw-heading>.ptw-error{grid-column:1/-1}
+.ptw-snapshot-heading{border:0;margin:0 0 13px;padding:0}
+.ptw-snapshot-heading h2{font-size:clamp(25px,2.5vw,31px);margin:0 0 6px;letter-spacing:-.045em}
+.ptw-snapshot-heading p{font-size:13px;color:#b9c9d3}
+.ptw-wallet{margin:0 0 32px}
+.ptw-identity{padding:16px 20px 14px;margin:0;background:linear-gradient(115deg,rgba(48,67,79,.91),rgba(35,55,70,.92));border:1px solid rgba(218,173,104,.27);border-bottom:0;border-radius:10px 10px 0 0}
+.ptw-wallet-icon{width:40px;height:43px;border:0;background:rgba(220,169,83,.09);font-size:24px}
+.ptw-identity h2{font-size:21px;margin:3px 0 6px}
+.ptw-tag{border-color:rgba(229,174,88,.35);color:#eabb73}
+.ptw-live-status{margin:0;padding:10px 20px;background:rgba(42,63,76,.93);border:1px solid rgba(218,173,104,.23);border-bottom:0;border-top:1px solid rgba(177,201,214,.14)}
+.ptw-monitor-actions{margin:0;padding:10px 20px 14px;background:rgba(42,63,76,.92);border-left:1px solid rgba(218,173,104,.23);border-right:1px solid rgba(218,173,104,.23)}
+.ptw-monitor-actions button{font-size:11px;padding:9px 12px}
+.ptw-pending-spotlight{border-radius:0;margin:0;border-left:1px solid rgba(218,173,104,.23);border-right:1px solid rgba(218,173,104,.23)}
+.ptw-balance-summary{
+ background:radial-gradient(ellipse 65% 115% at 0% 0%,rgba(230,166,78,.115),transparent 78%),linear-gradient(115deg,rgba(42,61,74,.94),rgba(32,50,64,.92))!important;
+ border:1px solid rgba(218,173,104,.26);border-bottom:0;border-radius:0;
+}
+.ptw-balance,.ptw-understanding{padding:22px 23px}
+.ptw-balance-number{font-size:clamp(25px,2.9vw,39px);color:#e9b86b}
+.ptw-balance>span{color:#e8b76c}
+.ptw-balance>strong{font-size:22px}
+.ptw-understanding p{font-size:13px;line-height:1.6;color:#d0dbe3}
+.ptw-stats{
+ background:radial-gradient(ellipse 80% 80% at 45% -10%,rgba(211,151,73,.09),transparent 78%),linear-gradient(180deg,rgba(38,57,70,.94),rgba(31,49,63,.92) 65%,rgba(26,44,58,.86))!important;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ border:1px solid rgba(218,173,104,.25);border-top:1px solid rgba(235,184,105,.17);border-radius:0 0 10px 10px;overflow:hidden
+}
+.ptw-stat{padding:19px 22px;min-height:135px;border-right:1px solid rgba(173,195,208,.12);border-bottom:1px solid rgba(173,195,208,.13)}
+.ptw-stat span{color:#e6b777;font-size:16px;font-weight:800}
+.ptw-stat strong{font-size:19px}
+.ptw-stat-mark{font-size:17px}
+.ptw-chart-panel{margin:50px 0 64px}
+.ptw-chart-panel .ptw-section-head h2,.ptw-understanding-heading h2{font-size:clamp(26px,2.6vw,32px)}
+.ptw-chart-panel{padding:23px 24px 24px;border:1px solid rgba(221,177,108,.2);border-radius:9px;background:linear-gradient(180deg,rgba(41,60,74,.85),rgba(30,48,63,.84))}
+.ptw-understanding-heading{padding:0;margin:0 0 22px;border:0}
+.ptw-understanding-heading .ptw-eyebrow{margin-bottom:9px}
+.ptw-transactions>.ptw-section-head{background:linear-gradient(180deg,rgba(46,65,78,.95),rgba(33,51,65,.93));border-bottom:1px solid rgba(242,184,93,.22);padding:17px 19px;margin:0;border-radius:9px 9px 0 0}
+.ptw-tx-list{border:0;border-radius:0 0 9px 9px;overflow:hidden;background:linear-gradient(180deg,rgba(39,58,72,.93),rgba(31,49,63,.91) 72%,rgba(26,43,57,.86))}
+.ptw-tx{background:transparent}
+.ptw-section-head h3{color:#e9bc77}
+@media(max-width:850px){
+ .ptw-heading{grid-template-columns:1fr;gap:9px}
+ .ptw-heading>.ptw-eyebrow,.ptw-heading h1,.ptw-heading p,.ptw-search,.ptw-heading>small{grid-column:1;grid-row:auto}
+ .ptw-heading>small{margin:0}
+ .ptw-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:580px){
+ .ptw-shell{padding:20px 12px 56px!important}
+ .ptw-heading{margin-bottom:27px}
+ .ptw-heading h1{font-size:30px}
+ .ptw-identity{padding:13px 12px}
+ .ptw-live-status{padding:12px}
+ .ptw-monitor-actions{padding:12px}
+ .ptw-balance,.ptw-understanding{padding:17px 14px}
+ .ptw-stat{padding:16px 12px;min-height:128px}
+ .ptw-stat span{font-size:14px}
+ .ptw-stat strong{font-size:15px}
+ .ptw-chart-panel{padding:18px 12px;margin:35px 0 44px}
+ .ptw-transactions>.ptw-section-head{padding:14px 12px}
+}
