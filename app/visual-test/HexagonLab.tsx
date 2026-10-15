@@ -44,21 +44,82 @@ function MovingParticles({motion}:{motion:boolean}){
   const canvas=ref.current,track=canvas?.parentElement;
   if(!canvas||!track)return;
   const ctx=canvas.getContext("2d");if(!ctx)return;
-  let w=0,h=0,raf=0,last=performance.now();
-  const resize=()=>{w=track.scrollWidth;h=track.clientHeight;const d=Math.min(devicePixelRatio||1,2);canvas.width=w*d;canvas.height=h*d;canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(d,0,0,d,0,0)};
-  const obs=new ResizeObserver(resize);obs.observe(track);resize();
-  const poolBalls=Array.from({length:110},(_,i)=>({x:rand(i,40),y:rand(i,41),v:.015+rand(i,42)*.05,r:1.1+rand(i,43)*2.4}));
-  const flowBalls=Array.from({length:110},(_,i)=>({p:rand(i,50),v:.035+rand(i,51)*.065,lane:rand(i,52),r:1+rand(i,53)*1.8}));
-  const dot=(x:number,y:number,r:number,blue:boolean,a:number)=>{ctx.globalAlpha=a;const c=blue?"83,204,255":"255,173,61";const g=ctx.createRadialGradient(x,y,0,x,y,r*3.5);g.addColorStop(0,"rgba(255,249,224,1)");g.addColorStop(.22,"rgba("+c+",.9)");g.addColorStop(1,"rgba("+c+",0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*3.5,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1};
+  type Chamber={x:number;y:number;w:number;h:number;kind:"pool"|"gold"|"blue"};
+  let w=0,h=0,raf=0,last=0,elapsed=0,layout:Chamber[]=[];
+  const particles=Array.from({length:310},(_,i)=>({angle:i*2.39996,lane:(i*.754877666)%1,radius:2+(i%4)*.48}));
+  // Same triangle-wave wall reflection as the production Bitcoin explorer.
+  const bounce=(t:number)=>{const n=((t%2)+2)%2;return n<=1?n:2-n};
+  const drift=(p:{angle:number;lane:number},time:number,seed:number)=>{
+   const vx=.075+.055*((seed*.61803398875)%1);
+   const vy=.065+.06*((seed*.41421356237)%1);
+   return {u:.08+.84*bounce(p.lane+time*vx+p.angle*.17),v:.08+.84*bounce(p.angle*.31+time*vy)};
+  };
+  const measure=()=>{
+   const bounds=track.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);
+   w=track.scrollWidth;h=track.clientHeight;
+   canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);
+   canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(d,0,0,d,0,0);
+   layout=Array.from(track.querySelectorAll<HTMLElement>(".lab-pool,.lab-hex-wrap")).map(el=>{
+    const box=el.getBoundingClientRect();
+    return {x:box.left-bounds.left,y:box.top-bounds.top,w:box.width,h:box.height,kind:el.classList.contains("lab-pool")?"pool" as const:el.closest(".lab-blue")?"blue" as const:"gold" as const};
+   }).sort((a,b)=>a.x-b.x);
+  };
+  const observer=new ResizeObserver(measure);observer.observe(track);measure();
+  const drawBall=(x:number,y:number,r:number,blue:boolean,opacity:number)=>{
+   const rgb=blue?"99,193,239":"228,159,70";
+   ctx.globalAlpha=opacity;ctx.beginPath();ctx.fillStyle="rgba("+rgb+",.24)";
+   ctx.shadowColor="rgba("+rgb+",.65)";ctx.shadowBlur=4;
+   ctx.arc(x,y,r*1.35,0,Math.PI*2);ctx.fill();
+   const sphere=ctx.createRadialGradient(x-r*.28,y-r*.3,r*.08,x,y,r);
+   if(blue){sphere.addColorStop(0,"#e7f8ff");sphere.addColorStop(.25,"#93d9f6");sphere.addColorStop(.73,"#368ab9");sphere.addColorStop(1,"#15527a")}
+   else{sphere.addColorStop(0,"#ffedc5");sphere.addColorStop(.25,"#efb864");sphere.addColorStop(.72,"#bf792d");sphere.addColorStop(1,"#754319")}
+   ctx.beginPath();ctx.fillStyle=sphere;ctx.shadowBlur=1.5;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.globalAlpha=1;
+  };
+  const point=(box:Chamber,u:number,v:number)=>{
+   const cx=box.x+box.w/2,cy=box.y+box.h/2;
+   if(box.kind==="pool")return {x:cx+(u-.5)*box.w*.72,y:cy+(v-.5)*box.h*.61};
+   const ny=Math.max(-1,Math.min(1,(v-.5)*2)),nx=Math.max(-1,Math.min(1,(u-.5)*2));
+   return {x:cx+nx*box.w*.39*(1-.48*Math.abs(ny)),y:cy+ny*box.h*.4};
+  };
   const draw=(now:number)=>{
-   const dt=Math.min((now-last)/1000,.05);last=now;ctx.clearRect(0,0,w,h);
-   const origin=track.getBoundingClientRect(),pool=track.querySelector(".lab-pool")?.getBoundingClientRect(),hexes=Array.from(track.querySelectorAll(".lab-hex-wrap")).map(e=>e.getBoundingClientRect());
-   if(pool){const x=pool.left-origin.left,y=pool.top-origin.top;ctx.save();ctx.beginPath();ctx.roundRect(x+10,y+10,pool.width-20,pool.height-20,22);ctx.clip();
-    poolBalls.forEach((b,i)=>{if(motion)b.x=(b.x+dt*b.v)%1;const bx=x+23+b.x*(pool.width-46),by=y+22+b.y*(pool.height-44)+Math.sin(now*.001+i)*2;dot(bx,by,b.r,false,.65)});ctx.restore()}
-   if(pool&&hexes.length){const x0=pool.right-origin.left+12,x1=hexes[hexes.length-1].right-origin.left;
-    flowBalls.forEach((b,i)=>{if(motion)b.p=(b.p+dt*b.v)%1;const x=x0+(x1-x0)*b.p,y=(pool.top-origin.top+pool.height/2)+(b.lane-.5)*46+Math.sin(b.p*20+i)*4;dot(x,y,b.r,b.p>.88,.65*Math.min(1,b.p*18,(1-b.p)*18))})}
+   const dt=Math.min((now-last)/1000||0,.05);last=now;if(motion)elapsed+=dt;
+   ctx.clearRect(0,0,w,h);
+   if(layout.length){
+    const pool=layout[0];
+    // Independently bouncing particles stay inside the mempool, never spawn behind it.
+    ctx.save();ctx.beginPath();ctx.roundRect(pool.x+13,pool.y+13,pool.w-26,pool.h-26,22);ctx.clip();
+    for(let i=0;i<75;i++){const p=particles[i],uv=drift(p,elapsed*.72,i),pos=point(pool,uv.u,uv.v);drawBall(pos.x,pos.y,p.radius*.91,false,.72)}
+    ctx.restore();
+    for(let chamber=1;chamber<layout.length;chamber++){
+     const box=layout[chamber];
+     for(let j=0;j<9;j++){
+      const seed=75+(chamber*13+j)%130,p=particles[seed],uv=drift(p,elapsed*.65,seed);
+      const top=j%2===0,u=.12+.76*bounce(p.lane+elapsed*(.065+(seed%5)*.007)+p.angle*.17);
+      const v=(top?.13:.75)+.12*bounce(p.angle*.31+elapsed*(.047+(seed%3)*.009));
+      const pos=point(box,box.kind==="gold"?u:uv.u,box.kind==="gold"?v:uv.v);
+      drawBall(pos.x,pos.y,p.radius*.78,box.kind==="blue",.68);
+     }
+    }
+    // Use the original per-gap traversal, rather than one giant stream through every block.
+    for(let gap=0;gap<layout.length-1;gap++){
+     const from=layout[gap],to=layout[gap+1];
+     for(let j=0;j<6;j++){
+      const phase=(j/6+gap*.173+elapsed*(.043+(j%3)*.004))%1;
+      const lane=.20+((j*.381966+gap*.113)%1)*.60;
+      const start=point(from,.94,lane),end=point(to,.06,lane);
+      // Confine travel to the space between adjacent chambers.
+      const fromEdge=from.x+from.w+3,toEdge=to.x-3;
+      if(toEdge<=fromEdge)continue;
+      const x=fromEdge+(toEdge-fromEdge)*phase;
+      const y=start.y+(end.y-start.y)*phase+Math.sin(phase*Math.PI)*Math.sin(j*2.17+gap)*4;
+      drawBall(x,y,1.9+(j%3)*.35,to.kind==="blue"&&phase>.55,.75*Math.min(1,phase*9,(1-phase)*9));
+     }
+    }
+   }
    raf=requestAnimationFrame(draw);
-  };raf=requestAnimationFrame(draw);return()=>{cancelAnimationFrame(raf);obs.disconnect()};
+  };
+  raf=requestAnimationFrame(draw);
+  return()=>{cancelAnimationFrame(raf);observer.disconnect()};
  },[motion]);
  return <canvas className="lab-particles" ref={ref} aria-hidden="true"/>;
 }
