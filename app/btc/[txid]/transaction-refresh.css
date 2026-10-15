@@ -539,3 +539,44 @@
 .txr-new-output-link{margin-top:14px;border:0;background:none;color:#f6b941;cursor:pointer;font-weight:700}
 @media(max-width:850px){.txr-new-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.txr-new-summary{grid-template-columns:35px minmax(0,1fr)}.txr-new-summary-eta{grid-column:2;border-left:0;border-top:1px solid #355267;padding:9px 0 0}.txr-new-metric:nth-child(3n) .txr-new-popover{left:0;right:auto}.txr-new-metric:nth-child(2n) .txr-new-popover{left:auto;right:0}}
 @media(max-width:550px){.txr .txr-snapshot-v2{padding:15px 12px!important}.txr-new-heading{align-items:flex-start}.txr-new-heading h2{font-size:26px!important}.txr-new-heading .txr-v2-status small{display:none}.txr-new-summary{grid-template-columns:1fr;padding:13px;gap:6px}.txr-new-summary-mark{display:none}.txr-new-summary-eta{grid-column:1}.txr-new-metrics{grid-template-columns:1fr}.txr-new-metric{min-height:172px}.txr-new-metric .txr-new-popover{left:0!important;right:auto!important;width:100%}}
+
+/* Snapshot premium open layout: unboxed heading/hash; summary and compact metrics
+   share the same dark canvas with soft fading dividers. */
+.txr .txr-snapshot-v2{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:12px 0 8px!important}
+.txr-new-heading{margin-bottom:7px}
+.txr-new-heading h2{font-size:clamp(27px,2.7vw,37px)!important}
+.txr .txr-new-hash{background:transparent;border:0;border-radius:0;padding:5px 0 13px;margin-bottom:0!important;border-bottom:1px solid rgba(93,146,173,.3);min-height:36px}
+.txr-new-content{position:relative;margin-top:12px;padding:0 10px 12px;background:transparent}
+.txr-new-content:before,.txr-new-content:after{content:"";pointer-events:none;position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(83,143,176,.35) 18%,rgba(83,143,176,.35) 80%,transparent)}
+.txr-new-content:before{left:0}.txr-new-content:after{right:0}
+.txr-new-summary{grid-template-columns:36px minmax(0,1fr)!important;gap:11px!important;border:0!important;border-radius:0!important;background:transparent!important;padding:15px 13px 17px!important;margin:0!important;position:relative}
+.txr-new-summary:after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(83,143,176,.45) 12%,rgba(83,143,176,.45) 88%,transparent)}
+.txr-new-summary-eta{display:none!important}
+.txr-new-summary-mark{font-size:22px}
+.txr-new-summary-copy p{font-size:13px;line-height:1.65}
+.txr-new-metrics{gap:0!important;grid-template-columns:repeat(3,minmax(0,1fr))}
+.txr-new-metric{min-height:136px!important;border:0!important;border-radius:0!important;background:transparent!important;padding:15px 14px 11px!important;gap:3px!important}
+.txr-new-metric:not(:nth-child(3n)):after{content:"";position:absolute;right:0;top:12%;height:76%;width:1px;background:linear-gradient(to bottom,transparent,rgba(83,143,176,.4) 22%,rgba(83,143,176,.4) 78%,transparent)}
+.txr-new-metric:nth-child(n+4):before{content:"";position:absolute;top:0;left:5%;right:5%;height:1px;background:linear-gradient(to right,transparent,rgba(83,143,176,.35) 20%,rgba(83,143,176,.35) 80%,transparent)}
+.txr-new-metric-main{gap:10px}
+.txr-new-metric-icon{flex-basis:33px;width:33px;height:33px;font-size:19px;border-radius:9px}
+.txr-new-metric-copy strong{font-size:clamp(16px,1.65vw,22px);margin:2px 0}
+.txr-new-spark{display:none!important}
+.txr-new-metric>p{font-size:11px;line-height:1.4;margin:5px 0 2px}
+.txr-new-learn{margin-top:5px}
+.txr-new-popover{z-index:100}
+@media(max-width:850px){
+ .txr-new-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .txr-new-metric:not(:nth-child(3n)):after{display:none}
+ .txr-new-metric:nth-child(odd):after{content:"";display:block;position:absolute;right:0;top:12%;height:76%;width:1px;background:linear-gradient(to bottom,transparent,rgba(83,143,176,.4) 22%,rgba(83,143,176,.4) 78%,transparent)}
+ .txr-new-metric:nth-child(n+3):before{content:"";position:absolute;top:0;left:5%;right:5%;height:1px;background:linear-gradient(to right,transparent,rgba(83,143,176,.35) 20%,rgba(83,143,176,.35) 80%,transparent)}
+}
+@media(max-width:550px){
+ .txr .txr-snapshot-v2{padding:10px 0!important}
+ .txr-new-content{padding:0 4px 10px}
+ .txr-new-summary{grid-template-columns:1fr!important;padding:13px 10px 16px!important}
+ .txr-new-metrics{grid-template-columns:1fr}
+ .txr-new-metric{min-height:118px!important;padding:12px 11px!important}
+ .txr-new-metric:after{display:none!important}
+ .txr-new-metric:nth-child(n+2):before{content:"";position:absolute;top:0;left:5%;right:5%;height:1px;background:linear-gradient(to right,transparent,rgba(83,143,176,.35) 20%,rgba(83,143,176,.35) 80%,transparent)}
+}
