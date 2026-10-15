@@ -1479,21 +1479,21 @@
 .pt-tx-page.txr{
  background-color:#080d14!important;
  background-image:
- radial-gradient(ellipse 38% 32% at 0% 21%,rgba(193,112,26,.33) 0%,rgba(119,66,19,.16) 37%,transparent 82%),
- radial-gradient(ellipse 38% 34% at 100% 24%,rgba(213,132,35,.34) 0%,rgba(123,70,24,.17) 38%,transparent 83%),
- radial-gradient(ellipse 45% 31% at 100% 79%,rgba(177,104,30,.15),transparent 88%),
- radial-gradient(ellipse 45% 29% at 0% 83%,rgba(159,94,25,.12),transparent 87%),
- linear-gradient(180deg,#080b11 0%,#0a111b 48%,#0b1018 100%)!important;
+ radial-gradient(ellipse 44% 32% at -12% 24%,rgba(221,164,83,.19) 0%,rgba(150,103,47,.085) 43%,transparent 86%),
+ radial-gradient(ellipse 41% 34% at 110% 28%,rgba(225,168,84,.18) 0%,rgba(151,103,47,.08) 44%,transparent 86%),
+ radial-gradient(ellipse 45% 34% at 107% 78%,rgba(192,137,67,.09),transparent 88%),
+ radial-gradient(ellipse 46% 32% at -8% 81%,rgba(188,132,63,.075),transparent 88%),
+ linear-gradient(180deg,#080b11 0%,#0b1018 50%,#090e15 100%)!important;
 }
 .txr .txr-ambient-art,.txr .txr-ambient-grid,.txr .txr-ambient-cell,.txr .txr-ambient-coin{display:none!important}
 .txr .txr-new-metrics{
- background:linear-gradient(112deg,#1d3042 0%,#142332 55%,#1a2937 100%)!important;
+ background:linear-gradient(112deg,#1b2b39 0%,#14212e 55%,#182632 100%)!important;
  border-color:rgba(179,193,202,.19)!important;
  box-shadow:inset 0 1px rgba(255,255,255,.045),0 12px 32px rgba(0,0,0,.14)!important;
 }
 .txr .txr-new-metrics .txr-new-metric{background:transparent!important;box-shadow:none!important}
 .txr .txr-new-summary{
- background:linear-gradient(110deg,#22384b,#15293a 60%,#182b3a)!important;
+ background:linear-gradient(110deg,#1e3141,#152534 60%,#182a38)!important;
  border-color:rgba(183,192,197,.2)!important;
  box-shadow:inset 0 1px rgba(255,255,255,.05),0 12px 30px rgba(0,0,0,.13)!important;
 }
@@ -1516,13 +1516,13 @@
  border-bottom-color:#eab85b!important;
 }
 .txr .txr-understand-v2 .fresh-explore-body{
- background:linear-gradient(112deg,#203348,#142333 56%,#1a2937)!important;
+ background:radial-gradient(ellipse 48% 65% at 96% 4%,rgba(192,146,82,.075),transparent 88%),linear-gradient(112deg,#1d3042,#142332 56%,#192937)!important;
  border-color:rgba(175,190,198,.24)!important;
  box-shadow:inset 0 1px rgba(255,255,255,.045),0 15px 38px rgba(0,0,0,.15)!important;
 }
 .txr .txr-understand-v2 .fresh-data-premium{background:transparent!important;box-shadow:none!important}
 .txr .txr-understand-v2 .fresh-explainer-premium{
- background:radial-gradient(ellipse 95% 80% at 100% 3%,rgba(210,151,64,.10),transparent 75%)!important;
+ background:radial-gradient(ellipse 95% 80% at 100% 3%,rgba(213,167,97,.075),transparent 75%)!important;
  box-shadow:none!important;
 }
 .txr .txr-understand-v2 .fresh-data-premium,
