@@ -1372,3 +1372,21 @@
   padding-bottom:9px!important;
  }
 }
+
+/* Color and texture only: bring Understanding panels into visual parity
+   with the darker Bitcoin Snapshot cards. No geometry or typography changes. */
+.txr .txr-understand-v2 .fresh-explore-body{
+ background:
+  radial-gradient(ellipse 75% 75% at 5% 4%,rgba(38,101,139,.14) 0%,rgba(23,69,99,.07) 35%,rgba(7,25,39,0) 76%),
+  linear-gradient(130deg,rgba(13,41,60,.20) 0%,rgba(5,19,30,.08) 76%),
+  #04111b!important;
+}
+.txr .txr-understand-v2 .fresh-data-premium{
+ background:transparent!important;
+}
+.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:
+  radial-gradient(ellipse 75% 75% at 5% 4%,rgba(38,101,139,.19) 0%,rgba(23,69,99,.09) 35%,rgba(7,25,39,0) 76%),
+  linear-gradient(130deg,rgba(13,41,60,.26) 0%,rgba(5,19,30,.10) 76%),
+  rgba(5,19,30,.65)!important;
+}
