@@ -79,6 +79,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const [question,setQuestion]=useState<string|null>(null);
  const [understandingExpanded,setUnderstandingExpanded]=useState(false);
  const [transactionTab,setTransactionTab]=useState("overview");
+ const [snapshotDetail,setSnapshotDetail]=useState<string|null>(null);
  const refresh=useCallback(async()=>{
   if(!valid)return;
   try{
@@ -163,25 +164,27 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      <div className="txr-explorer-motion fresh-journey"><BlockchainWebGL compactTransactionLabels pending={overview?.btc?.pending} fee={blocks[0]?.medianFee??null} projectedCount={blocks[0]?.transactionCount??null} projections={blocks} blocks={overview?.btc?.recentBlocks??[]} trackedPosition={!confirmed&&observed?selectedPosition:null} trackedFraction={trackedFraction} trackedConfirmedHeight={confirmed?blockHeight??null:null}/></div>
     </section>
     <section className="txr-snapshot-v2" aria-label="Your transaction snapshot">
-     <header className="txr-page-title"><h1>Bitcoin <em>Transaction</em></h1><div className="txr-id"><code title={txid}>{txid}</code><button type="button" onClick={copy} aria-label="Copy transaction ID">{copied?"✓ Copied":"▢"}</button></div></header>
-     <div className="txr-snapshot-v2-head"><div><span className="txr-v2-kicker">YOUR TRANSACTION</span><h2>Your Transaction <em>Snapshot</em></h2><p>{confirmed?"Your transaction is included in a Bitcoin block.":observed?"Your transaction is pending and waiting for confirmation.":"This transaction has not yet been located on the Bitcoin network."}</p></div><div className="txr-v2-status"><strong>{confirmed?"✓ Confirmed":observed?"⬡ Pending":"? Not found"}</strong><small>{confirmed?"Block #"+number(blockHeight):observed?"Waiting to be included in a block":"Verify transaction broadcast"}</small></div></div>
-     <div className="txr-v2-primary">
+     <div className="txr-new-heading"><div><span className="txr-v2-kicker">YOUR TRANSACTION</span><h2>Transaction <em>Snapshot</em></h2></div><div className="txr-v2-status"><strong>{confirmed?"✓ Confirmed":observed?"⬡ Pending":"? Not found"}</strong><small>{confirmed?"Block #"+number(blockHeight):observed?"Waiting for confirmation":"Check transaction ID"}</small></div></div>
+     <div className="txr-id txr-new-hash"><code title={txid}>{txid}</code><button type="button" onClick={copy} aria-label="Copy transaction ID">{copied?"✓ Copied":"▢"}</button></div>
+     <div className="txr-new-summary"><div className="txr-new-summary-mark">✦</div><div className="txr-new-summary-copy"><span className="txr-v2-kicker">PENDING TRACKER EXPLAINS · TRANSACTION SUMMARY</span><p>{summary}</p></div><div className="txr-new-summary-eta"><small>{confirmed?"Confirmations":observed?"Estimated confirmation":"Transaction status"}</small><strong>{confirmed?number(confirmations):observed?feeEstimate:"Not found"}</strong><span>{confirmed?"Recorded on Bitcoin":observed?"Estimate, not guaranteed":"Not yet observed"}</span></div></div>
+     <div className="txr-new-metrics">
       {[
-       {icon:"₿",label:"Amount in Outputs",value:btc(outputTotal),help:"Total sent to new outputs; may include change."},
-       {icon:"≋",label:"Transaction Fee",value:btc(tx?.fee),help:tx?.fee==null?"Fee unavailable":rate(feeRate)+" · "+number(tx.fee)+" sats paid to miners"},
-       {icon:"◷",label:confirmed?"Confirmations":"ETA",value:confirmed?number(confirmations):feeEstimate,help:confirmed?"Confirmed in block #"+number(blockHeight):"Fee-based estimate; timing may change."},
-       {icon:"⬡",label:"Transaction Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",help:confirmed?"Included in the Bitcoin blockchain.":observed?"Waiting for a miner to include it in a block.":"Check whether it was broadcast."}
-      ].map(x=><article className="txr-v2-primary-card" key={x.label}><span className="txr-v2-icon">{x.icon}</span><div><small>{x.label}</small><strong>{x.value}</strong><p>{x.help}</p></div></article>)}
-     </div>
-     <div className="txr-v2-secondary">
-      {[
-       ["Transaction Size",tx?.vsize!=null?number(tx.vsize)+" vB":tx?.weight!=null?number(Math.ceil(tx.weight/4))+" vB":"—"],
-       ["Fee Rate",rate(feeRate)],["Inputs",number(inputs.length)],["Outputs",number(outputs.length)],
-       ["Total Input",btc(inputTotal)],["Total Output",btc(outputTotal)]
-      ].map(([label,value])=><div className="txr-v2-secondary-item" key={label}><small>{label}</small><strong>{value}</strong></div>)}
+       {id:"status",icon:"⬡",label:"Transaction Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",sub:confirmed?number(confirmations)+" confirmation(s)":observed?"Waiting for confirmation":"Not currently visible on network",help:confirmed?"This transaction is included in block #"+number(blockHeight)+". Confirmations increase as new blocks are mined.":observed?"Your transaction has been broadcast but is still waiting to be included in a Bitcoin block.":"The network data does not currently show this transaction. Check the transaction ID and broadcasting wallet.",color:"gold"},
+       {id:"arrival",icon:"◷",label:confirmed?"Confirmation Time":"Estimated Arrival",value:confirmed?(blockTime?new Date(blockTime*1000).toLocaleString():"Confirmed"):feeEstimate,sub:confirmed?"Actual block time":observed?"Based on current network conditions":"No reliable estimate",help:confirmed?"This is when the block containing your transaction was mined, not necessarily when your wallet credited it.":"The estimated wait is based on the transaction's fee and projected blocks. It is not a countdown or a guarantee.",color:"gold"},
+       {id:"amount",icon:"₿",label:"Transaction Amount",value:btc(outputTotal),sub:"Total outputs · USD not available",help:"This is the sum of all new outputs. It may include change returned to the sender and should not be mistaken for the amount one recipient received.",color:"gold"},
+       {id:"fee",icon:"≋",label:"Transaction Fee",value:tx?.fee==null?"Unavailable":number(tx.fee)+" sats",sub:rate(feeRate)+" · "+feeHint,help:"This is the Bitcoin network fee paid to miners. Fee rate measures satoshis per virtual byte. Effective fee rate can differ for transactions in fee-paying packages.",color:"blue"},
+       {id:"seen",icon:"▦",label:confirmed?"Confirmed At":"First Seen / Age",value:confirmed&&blockTime?new Date(blockTime*1000).toLocaleTimeString():"Not available",sub:confirmed&&blockTime?new Date(blockTime*1000).toLocaleDateString():"First-broadcast timestamp not supplied",help:"First seen means when a node initially observed a transaction. The current data source does not supply a reliable first-seen timestamp, so we do not substitute the block time or page-load time.",color:"blue"},
+       {id:"outputs",icon:"⇄",label:"Recipients / Outputs",value:number(outputs.length)+" outputs",sub:outputs.length===1&&outputs[0]?.scriptpubkey_address?short(outputs[0].scriptpubkey_address):"View receiving addresses →",help:"Outputs show where Bitcoin is assigned. Some outputs may be change returned to the sender, so output count does not necessarily equal the number of recipients.",color:"blue"}
+      ].map((item,index)=><article className={"txr-new-metric txr-new-metric-"+item.color} key={item.id}>
+       <div className="txr-new-metric-main"><span className="txr-new-metric-icon">{item.icon}</span><div className="txr-new-metric-copy"><div className="txr-new-metric-label">{item.label}<button type="button" aria-label={"Explain "+item.label} onClick={()=>setSnapshotDetail(snapshotDetail===item.id?null:item.id)}>ⓘ</button></div><strong>{item.value}</strong><small>{item.sub}</small></div></div>
+       <div className={"txr-new-spark txr-new-spark-"+(index%3)} aria-hidden="true"><svg viewBox="0 0 300 42" preserveAspectRatio="none"><path d={index%3===0?"M0 32 Q25 29 45 17 T100 25 T160 18 T220 27 T300 7":index%3===1?"M0 34 L22 24 L45 16 L65 12 L90 19 L110 23 L138 20 L165 27 L193 22 L221 29 L250 30 L280 34 L300 32":"M0 28 Q30 3 60 22 T120 22 T180 18 T240 19 T300 7"} fill="none" stroke="currentColor" strokeWidth="2.3"/></svg></div>
+       <p>{item.id==="status"?(confirmed?"Included in the blockchain.":observed?"Waiting to be included in a block.":"Not currently found on the network."):item.id==="arrival"?"Fee-based timing can change.":item.id==="amount"?"Total sent to outputs; may include change.":item.id==="fee"?"Total miner fee and rate per virtual byte.":item.id==="seen"?"When this transaction was first observed.":"Outputs may include recipients and change."}</p>
+       <button className="txr-new-learn" type="button" onClick={()=>setSnapshotDetail(snapshotDetail===item.id?null:item.id)} aria-expanded={snapshotDetail===item.id}>Learn more →</button>
+       {snapshotDetail===item.id&&<div className="txr-new-popover" role="dialog" aria-label={"About "+item.label}><button type="button" className="txr-new-close" onClick={()=>setSnapshotDetail(null)} aria-label="Close explanation">×</button><span className="txr-v2-kicker">PENDING TRACKER EXPLAINS</span><h3>{item.label}</h3><p>{item.help}</p>{item.id==="outputs"&&<button type="button" className="txr-new-output-link" onClick={()=>{setTransactionTab("outputs");setSnapshotDetail(null);document.getElementById("txr-deeper")?.scrollIntoView({behavior:"smooth"});}}>View output addresses →</button>}</div>}
+      </article>)}
      </div>
     </section>
-    <section className="txr-understand-v2 fresh-explore fresh-explore-premium">
+    <section id="txr-deeper" className="txr-understand-v2 fresh-explore fresh-explore-premium">
      <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker">GO DEEPER, ONLY IF YOU WANT TO</div><h2>Understanding Your <em>Transaction</em></h2><p>Explore the actual transaction data. Choose a topic and we'll explain what it means.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
      <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore transaction details">
       {[
