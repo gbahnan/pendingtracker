@@ -109,28 +109,22 @@ function MovingParticles({motion}:{motion:boolean}){
      }
      ctx.restore();
     }
-    // Long continuous trajectories: particles travel across each chamber and
-    // the following gap at a steady speed. Metallic frames and label zone mask
-    // them, while each gap receives different phases and heights.
+    // Stable, slow gap-only movement: independent dots with no hard
+    // visibility threshold, no fast edge spawning, and no frame overlap.
     for(let gap=0;gap<layout.length-1;gap++){
      const from=layout[gap],to=layout[gap+1];
-     const x0=from.x+from.w*.55,x1=to.x+to.w*.45;
+     const left=from.x+from.w+5,right=to.x-5;
+     const available=right-left;
+     if(available<12)continue;
      const cy=(from.y+from.h/2+to.y+to.h/2)/2;
      for(let j=0;j<12;j++){
-      const seed=j+gap*12;
-      const speed=.105+(seed%7)*.009;
-      const phase=(j/12+gap*.173+elapsed*speed)%1;
-      const lane=((seed*.61803398875)%1-.5)*66;
-      const x=x0+(x1-x0)*phase;
-      const y=cy+lane+Math.sin(phase*Math.PI*2+seed*1.71)*2.5;
-      const radius=2.25+(seed%3)*.42;
-      // Only reveal the particle in the physical open gap. The long
-      // travel distance prevents the whole group from bunching at an edge.
-      const edge0=from.x+from.w+3,edge1=to.x-3;
-      if(x>edge0+radius&&x<edge1-radius){
-       const edgeFade=Math.min(1,(x-edge0-radius)/9,(edge1-radius-x)/9);
-       drawBall(x,y,radius,to.kind==="blue",.82*Math.max(0,edgeFade));
-      }
+      const seed=gap*12+j;
+      const phase=(j/12+gap*.071+elapsed*(.045+(seed%5)*.002))%1;
+      const x=left+available*phase;
+      const lane=((seed*.61803398875)%1-.5)*62;
+      const y=cy+lane+Math.sin(elapsed*.6+seed*1.7)*2;
+      const fade=Math.min(1,phase*7,(1-phase)*7);
+      drawBall(x,y,2.2+(seed%3)*.35,to.kind==="blue",.7*Math.max(0,fade));
      }
     }
    }
