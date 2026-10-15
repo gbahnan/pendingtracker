@@ -249,3 +249,105 @@
  .motion-explorer .motion-halo{transition:none!important}
  .motion-explorer .motion-cell:hover .motion-halo{transform:none!important}
 }
+
+
+/* Hero visualization v2: approved luminous gold/blue direction, no faux 3D polygon stacking.
+   Overview-only so transaction detail timelines remain unchanged. */
+.motion-explorer .motion-track{
+ gap:9px!important;
+ padding:16px 12px 17px 6px!important;
+ background:
+ radial-gradient(ellipse 48% 65% at 25% 53%,rgba(236,158,61,.14),transparent 80%),
+ radial-gradient(ellipse 30% 65% at 92% 53%,rgba(58,167,237,.11),transparent 84%)!important;
+}
+.motion-explorer .motion-cell{min-height:210px!important}
+.motion-explorer .motion-label{height:36px!important}
+.motion-explorer .motion-halo{
+ width:134px!important;height:155px!important;
+ filter:drop-shadow(0 0 2px rgba(255,235,174,.95)) drop-shadow(0 0 9px rgba(250,169,61,.80)) drop-shadow(0 0 20px rgba(235,135,35,.35))!important;
+}
+.motion-explorer .motion-halo:after{
+ inset:13px 10px!important;
+ background:rgba(248,164,47,.17)!important;
+ filter:blur(19px)!important;
+}
+.motion-explorer .motion-hex{
+ width:130px!important;height:151px!important;
+ background:linear-gradient(133deg,#fff3c7 0%,#ffc76a 18%,#ec9b33 38%,#98551d 59%,#f4b954 78%,#ffe5a3 94%,#c17b30 100%)!important;
+}
+.motion-explorer .motion-hex:before{
+ inset:3px!important;
+ background:radial-gradient(ellipse at 50% 46%,#1c2d38 0%,#102130 50%,#081725 100%)!important;
+ box-shadow:none!important;
+}
+.motion-explorer .motion-hex:after{
+ inset:6px!important;
+ clip-path:polygon(50% 0,95% 24%,95% 76%,50% 100%,5% 76%,5% 24%)!important;
+ background:transparent!important;
+ border:1px solid rgba(255,196,96,.30)!important;
+ box-shadow:none!important;
+}
+.motion-explorer .motion-halo.blue{
+ filter:drop-shadow(0 0 3px rgba(184,236,255,.95)) drop-shadow(0 0 11px rgba(69,188,252,.85)) drop-shadow(0 0 22px rgba(33,139,224,.43))!important;
+}
+.motion-explorer .motion-halo.blue:after{background:rgba(46,168,246,.21)!important}
+.motion-explorer .motion-hex.blue{
+ background:linear-gradient(135deg,#e3faff 0%,#94deff 19%,#4ab9f5 41%,#196ba8 61%,#68c9fb 81%,#b7efff 96%)!important;
+}
+.motion-explorer .motion-hex.blue:before{
+ background:radial-gradient(ellipse at 50% 44%,#193e5c 0%,#0d2940 55%,#081725 100%)!important;
+}
+.motion-explorer .motion-hex.blue:after{border-color:rgba(124,212,255,.38)!important}
+.motion-explorer .motion-cell:hover .motion-halo{
+ filter:drop-shadow(0 0 4px #fff0be) drop-shadow(0 0 13px rgba(255,181,72,.95)) drop-shadow(0 0 24px rgba(235,135,35,.44))!important;
+}
+.motion-explorer .motion-cell.confirmed:hover .motion-halo{
+ filter:drop-shadow(0 0 4px #d4f5ff) drop-shadow(0 0 13px rgba(100,203,255,.95)) drop-shadow(0 0 25px rgba(37,141,225,.46))!important;
+}
+.motion-explorer .motion-hex-content{
+ background:radial-gradient(ellipse,rgba(8,19,31,.98) 14%,rgba(8,19,31,.87) 50%,transparent 81%)!important;
+ padding:9px 5px!important;
+}
+.motion-explorer .motion-pool{
+ width:217px!important;height:126px!important;
+ margin-top:13px!important;
+ border:2px solid #f0b65e!important;
+ border-radius:31px!important;
+ background:radial-gradient(ellipse at 46% 49%,#29313a 0%,#162534 56%,#091827 100%)!important;
+ box-shadow:
+ inset 0 0 0 4px rgba(7,20,31,.88),
+ inset 0 0 0 6px rgba(249,185,92,.36),
+ inset 0 0 23px rgba(231,137,37,.20),
+ 0 0 4px rgba(255,222,155,.90),
+ 0 0 16px rgba(241,155,52,.58),
+ 0 0 31px rgba(226,130,40,.24)!important;
+}
+.motion-explorer .motion-pool:before{
+ inset:8px!important;border:1px solid rgba(255,214,137,.34)!important;
+ border-radius:23px!important;
+}
+.motion-explorer .motion-pool-glow{
+ opacity:.5!important;
+ background:radial-gradient(ellipse at 48% 50%,rgba(241,153,46,.20),transparent 75%)!important;
+ animation:none!important;
+}
+.motion-explorer .motion-caption{margin-top:6px!important}
+@media(min-width:701px){
+ .motion-explorer .motion-track{gap:9px!important}
+ .motion-explorer .motion-cell.mempool{width:231px!important;min-width:231px!important;flex:0 0 231px!important}
+ .motion-explorer .motion-cell.motion-stage{width:157px!important;min-width:157px!important;flex:0 0 157px!important}
+ .motion-explorer .motion-cell.confirmed{width:157px!important;min-width:157px!important;flex:0 0 157px!important}
+}
+@media(max-width:700px){
+ .motion-explorer .motion-track{gap:6px!important;padding:12px 8px 14px 3px!important}
+ .motion-explorer .motion-cell.mempool{width:183px!important;min-width:183px!important;flex-basis:183px!important}
+ .motion-explorer .motion-pool{width:171px!important;height:105px!important;margin-top:16px!important;border-radius:27px!important}
+ .motion-explorer .motion-pool:before{border-radius:20px!important}
+ .motion-explorer .motion-cell.motion-stage,.motion-explorer .motion-cell.confirmed{width:140px!important;min-width:140px!important;flex-basis:140px!important}
+ .motion-explorer .motion-halo{width:121px!important;height:141px!important}
+ .motion-explorer .motion-hex{width:118px!important;height:138px!important}
+ .motion-explorer .motion-cell{min-height:195px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .motion-explorer .motion-halo{transition:none!important}
+}
