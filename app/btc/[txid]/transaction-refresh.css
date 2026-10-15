@@ -580,3 +580,28 @@
  .txr-new-metric:after{display:none!important}
  .txr-new-metric:nth-child(n+2):before{content:"";position:absolute;top:0;left:5%;right:5%;height:1px;background:linear-gradient(to right,transparent,rgba(83,143,176,.35) 20%,rgba(83,143,176,.35) 80%,transparent)}
 }
+
+/* Connected transaction journey: timeline flows into the snapshot instead of
+   reading as a separate panel. Keep tracked-position marker and its motion intact. */
+@media(min-width:701px){
+ .txr .txr-network-v2{margin-bottom:-38px!important}
+ .txr .txr-snapshot-v2{margin-top:0!important}
+}
+.txr .txr-snapshot-v2{position:relative}
+.txr .txr-new-heading{position:relative;padding-top:15px}
+.txr .txr-new-heading:before{
+ content:"";position:absolute;left:0;right:0;top:0;height:1px;
+ background:linear-gradient(to right,transparent 0%,rgba(94,147,177,.24) 12%,rgba(94,147,177,.48) 50%,rgba(94,147,177,.24) 88%,transparent 100%);
+ pointer-events:none;
+}
+.txr .txr-new-heading:after{
+ content:"";position:absolute;top:-17px;left:50%;height:17px;width:1px;
+ background:linear-gradient(to bottom,rgba(247,184,65,.68),rgba(247,184,65,.08));
+ box-shadow:0 0 10px rgba(247,184,65,.15);pointer-events:none;
+}
+.txr .txr-new-content{margin-top:6px}
+@media(max-width:700px){
+ .txr .txr-network-v2{margin-bottom:-12px!important}
+ .txr .txr-new-heading{padding-top:12px}
+ .txr .txr-new-heading:after{height:12px;top:-12px}
+}
