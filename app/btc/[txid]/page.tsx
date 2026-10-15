@@ -186,6 +186,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
     </section>
     <section id="txr-deeper" className="txr-understand-v2 fresh-explore fresh-explore-premium">
      <div className="fresh-section-head fresh-explore-title"><div><div className="fresh-kicker">GO DEEPER, ONLY IF YOU WANT TO</div><h2>Understanding Your <em>Transaction</em></h2><p>Explore the actual transaction data. Choose a topic and we'll explain what it means.</p></div><div className="fresh-explore-decoration" aria-hidden="true">₿</div></div>
+     <div className="txr-deeper-framed-content">
      <div className="fresh-tabs fresh-tabs-six" role="tablist" aria-label="Explore transaction details">
       {[
        {id:"overview",label:"Overview",icon:"⬡"},{id:"confirmations",label:"Confirmations",icon:"◷"},{id:"fees",label:"Fees",icon:"≋"},
@@ -275,6 +276,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
        </div>
        <div className="fresh-explain-learn"><details><summary>Learn more about this topic</summary><p>{transactionTab==="fees"?"The effective fee rate of a package of related transactions can differ from the standalone rate shown here. Do not infer package priority without parent and child transaction data.":transactionTab==="confirmations"?"Bitcoin blocks arrive at irregular intervals, approximately every ten minutes on average. There is no single confirmation threshold used by every wallet or exchange.":transactionTab==="outputs"?"Change outputs often return unused funds to the sender's wallet. Without wallet-specific context, a blockchain explorer should not claim to know which output is change.":transactionTab==="inputs"?"Bitcoin uses unspent transaction outputs (UTXOs). The difference between total inputs and total outputs is generally the miner fee when all input values are known.":transactionTab==="advanced"?"Transaction weight measures block resource usage. Virtual size is derived from weight and is the denominator used for sat/vB fee rates.":"The Bitcoin ledger shows transactions, not people's identities. Check the destination address and your wallet's transaction history when verifying a payment."}</p></details></div>
       </aside>
+     </div>
      </div>
     </section>
     <footer className="txr-footer"><span>Transaction ID: <code>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"Copy"}</button></span><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">Verify on Mempool.space ↗</a></footer>
