@@ -4950,22 +4950,23 @@ body:has(.pt-tx-page.pt-tx-detail-v2)::after{
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-hash code{color:#f0be68!important}
 
 
-/* BTC transaction — warm charcoal and continuous gold light, revised.
-   Visual paint only; preserves layout, animation, typography and interactions. */
+/* BTC transaction — unified warm graphite, luminous gold transitions.
+   Paint-only revision; no layout, content, or animation changes. */
 .pt-tx-page.pt-tx-detail-v2{
- background-color:#151923!important;
+ background-color:#1b2027!important;
  background-image:
- radial-gradient(ellipse 60% 28% at 50% 53%,rgba(191,123,43,.19) 0%,rgba(164,103,38,.085) 55%,transparent 100%),
- radial-gradient(ellipse 39% 44% at 0% 46%,rgba(212,142,55,.24) 0%,rgba(176,112,40,.10) 48%,transparent 100%),
- radial-gradient(ellipse 40% 44% at 100% 54%,rgba(216,147,62,.22) 0%,rgba(175,109,42,.095) 48%,transparent 100%),
- radial-gradient(ellipse 78% 66% at 50% 55%,rgba(54,69,80,.29),transparent 100%),
- linear-gradient(180deg,#151821 0%,#1a2029 42%,#1b2029 68%,#151922 100%)!important;
+ radial-gradient(ellipse 65% 34% at 50% 55%,rgba(214,148,59,.25) 0%,rgba(186,122,47,.13) 51%,transparent 100%),
+ radial-gradient(ellipse 49% 47% at 0% 43%,rgba(223,153,65,.30) 0%,rgba(189,120,42,.12) 52%,transparent 100%),
+ radial-gradient(ellipse 49% 47% at 100% 58%,rgba(223,153,65,.28) 0%,rgba(189,120,42,.12) 52%,transparent 100%),
+ linear-gradient(180deg,#1a1e26 0%,#20252d 40%,#22252c 68%,#191e26 100%)!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
- border-color:rgba(222,175,100,.32)!important;
- box-shadow:inset 0 1px 0 rgba(255,214,141,.17),inset 1px 0 0 rgba(227,167,76,.12),inset -1px 0 0 rgba(227,167,76,.09),0 0 50px rgba(208,131,42,.13),0 18px 40px rgba(0,0,0,.13)!important;
+ background:linear-gradient(115deg,rgba(35,48,58,.94),rgba(31,42,51,.91) 58%,rgba(38,47,53,.91))!important;
+ border-color:rgba(224,179,109,.21)!important;
+ box-shadow:inset 0 1px 0 rgba(255,218,154,.18),inset 1px 0 0 rgba(227,167,76,.10),inset -1px 0 0 rgba(227,167,76,.08),0 0 75px rgba(210,138,49,.19),0 14px 34px rgba(0,0,0,.08)!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
- border-color:rgba(222,175,100,.30)!important;
- box-shadow:inset 0 1px 0 rgba(255,214,141,.17),inset 1px 0 0 rgba(227,167,76,.11),inset -1px 0 0 rgba(227,167,76,.09),0 0 55px rgba(208,131,42,.12),0 18px 42px rgba(0,0,0,.12)!important;
+ background:linear-gradient(115deg,rgba(35,48,58,.94),rgba(31,42,51,.91) 58%,rgba(38,47,53,.91))!important;
+ border-color:rgba(224,179,109,.20)!important;
+ box-shadow:inset 0 1px 0 rgba(255,218,154,.18),inset 1px 0 0 rgba(227,167,76,.10),inset -1px 0 0 rgba(227,167,76,.08),0 0 75px rgba(210,138,49,.17),0 14px 34px rgba(0,0,0,.08)!important;
 }
