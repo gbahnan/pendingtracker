@@ -1136,3 +1136,22 @@
  .fresh-v3 .pt-snapshot-art{height:37px!important;flex-basis:37px!important;margin:8px 0 5px!important;padding:3px 2px 1px!important}
  .fresh-v3 .pt-snapshot-art.art-bars{gap:2px!important}
 }
+
+
+/* Eight distinctive mini-diagrams; illustrative rather than sampled time-series. */
+.fresh-v3 .pt-snapshot-art svg .pending-bar{fill:#dba34f!important;stroke:none!important;filter:drop-shadow(0 0 2px rgba(241,185,91,.24))!important}
+.fresh-v3 .pt-snapshot-art svg .queue-arrow{fill:none!important;stroke:#ffe0a1!important;stroke-width:2!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .fee-bar{fill:#61bce8!important;stroke:none!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .fee-threshold{fill:none!important;stroke:#ffcb72!important;stroke-width:1.6!important;stroke-dasharray:5 5!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .clock-ring{fill:rgba(225,171,89,.06)!important;stroke:#e9b766!important;stroke-width:3!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .clock-ring-inner{fill:none!important;stroke:rgba(233,183,102,.25)!important;stroke-width:1!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .clock-hand,.fresh-v3 .pt-snapshot-art svg .clock-ticks{fill:none!important;stroke:#ffdb97!important;stroke-width:2.5!important;stroke-linecap:round!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .clock-center{fill:#fff0c5!important;stroke:none!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .hash-pulse{fill:none!important;stroke:#e9c77d!important;stroke-width:3!important;stroke-linecap:round!important;stroke-linejoin:round!important;filter:drop-shadow(0 0 3px rgba(235,192,105,.22))!important}
+.fresh-v3 .pt-snapshot-art svg .gauge-track{fill:none!important;stroke:rgba(109,172,203,.26)!important;stroke-width:8!important;stroke-linecap:round!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .gauge-progress{fill:none!important;stroke:#6fc4ed!important;stroke-width:8!important;stroke-linecap:round!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .gauge-needle{fill:none!important;stroke:#f6c16e!important;stroke-width:3!important;stroke-linecap:round!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .gauge-center{fill:#f6c16e!important;stroke:none!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .gauge-tick{fill:none!important;stroke:#b6d7e8!important;stroke-width:2!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .mempool-slot{fill:rgba(228,151,96,.08)!important;stroke:rgba(242,166,108,.22)!important;stroke-width:1!important;filter:none!important}
+.fresh-v3 .pt-snapshot-art svg .mempool-cell{fill:#e69c6d!important;stroke:none!important;filter:none!important}
