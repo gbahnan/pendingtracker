@@ -5039,3 +5039,54 @@ body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer .founder-eyebrow{
 @media(prefers-reduced-motion:reduce){
  body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer{transition:none!important}
 }
+
+
+/* BTC transaction final usability polish: verification, contrast, responsive behavior.
+   Scoped to transaction detail page; existing artwork, data and layout preserved. */
+.pt-tx-page.pt-tx-detail-v2{
+ background-image:
+ radial-gradient(ellipse 56% 23% at 50% 90%,rgba(207,146,66,.13),transparent 85%),
+ radial-gradient(ellipse 62% 34% at 3% 48%,rgba(206,151,79,.18),transparent 86%),
+ radial-gradient(ellipse 54% 31% at 98% 55%,rgba(208,150,70,.15),transparent 87%),
+ repeating-linear-gradient(120deg,rgba(255,230,180,.008) 0px,rgba(255,230,180,.008) 1px,transparent 1px,transparent 9px),
+ linear-gradient(180deg,#17212b 0%,#202b34 45%,#1b2934 78%,#16232f 94%,#141f2b 100%)!important;
+}
+body:has(.pt-tx-page.pt-tx-detail-v2) .pt-founder-footer{
+ background:radial-gradient(ellipse 42% 48% at 50% 0%,rgba(222,159,72,.07),transparent 95%),linear-gradient(180deg,#141f2b 0%,#111b26 65%,#101923 100%)!important;
+ border-top-color:rgba(228,177,91,.10)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer{
+ background:linear-gradient(90deg,rgba(213,154,70,.055),transparent 35%,rgba(213,154,70,.045))!important;
+ border-top-color:rgba(230,180,99,.24)!important;
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer a,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer button,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-details-link,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-question-buttons button{
+ transition:color .18s ease,border-color .18s ease,background-color .18s ease,box-shadow .18s ease!important;
+}
+@media(hover:hover){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer a:hover,
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-details-link:hover{color:#ffda91!important;text-shadow:0 0 14px rgba(239,182,87,.2)!important}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-question-buttons button:hover{color:#ffda91!important;border-bottom-color:#f0bc68!important;box-shadow:inset 0 -2px 0 rgba(240,188,104,.28)!important}
+}
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact p,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact small,
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows p{
+ color:#a9bfcc!important;
+}
+.pt-tx-page.pt-tx-detail-v2 a:focus-visible,
+.pt-tx-page.pt-tx-detail-v2 button:focus-visible{
+ outline:2px solid #f0bc68!important;outline-offset:3px!important;
+}
+@media(max-width:700px){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer{overflow-wrap:anywhere}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{min-width:0}
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows code{overflow-wrap:anywhere;word-break:break-word}
+}
+@media(prefers-reduced-motion:reduce){
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer a,
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-footer button,
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-simple-details-link,
+ .pt-tx-page.pt-tx-detail-v2 .pt-tx-question-buttons button{transition:none!important}
+}
