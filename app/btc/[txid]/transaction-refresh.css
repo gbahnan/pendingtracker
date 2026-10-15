@@ -1322,3 +1322,21 @@
 .txr .txr-understand-v2 .fresh-tabs-six button.active{
  background:linear-gradient(180deg,rgba(44,79,97,.74),rgba(24,52,69,.66))!important;
 }
+
+/* Carry the Snapshot cards' smoky blue texture through the entire
+   Understanding content area, preserving its existing layout and dividers. */
+.txr .txr-understand-v2 .fresh-explore-body{
+ background:
+  radial-gradient(ellipse 105% 90% at 5% 4%,rgba(38,101,139,.27) 0%,rgba(23,69,99,.14) 35%,rgba(7,25,39,0) 76%),
+  linear-gradient(130deg,rgba(13,41,60,.42) 0%,rgba(5,19,30,.16) 76%),
+  #05131f!important;
+}
+.txr .txr-understand-v2 .fresh-data-premium{
+ background:transparent!important;
+}
+.txr .txr-understand-v2 .fresh-explainer-premium{
+ background:
+  radial-gradient(ellipse 105% 90% at 5% 4%,rgba(38,101,139,.27) 0%,rgba(23,69,99,.14) 35%,rgba(7,25,39,0) 76%),
+  linear-gradient(130deg,rgba(13,41,60,.42) 0%,rgba(5,19,30,.16) 76%),
+  rgba(5,19,30,.58)!important;
+}
