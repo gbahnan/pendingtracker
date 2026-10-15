@@ -4880,53 +4880,34 @@ body:has(.pt-tx-page.pt-tx-detail-v2){
 @media(max-width:700px){.pt-standard-tracker-flow{overflow-x:auto!important}.pt-standard-tracker-flow [class*="blockRow"]{min-width:710px!important}.pt-standard-tracker-flow .pt-chain-flow-confirmed{min-width:710px}}
 
 
-/* BTC transaction surface harmony — color-only refinement, 2026-10-15.
-   Intentionally no dimensions, spacing, layout, typography or animation changes. */
+/* BTC transaction art direction — restrained editorial dark surfaces.
+   Preserve geometry, type metrics, controls, animation and responsive rules. */
 body:has(.pt-tx-page.pt-tx-detail-v2){
- background-color:#06111b!important;
+ background-color:#0b1119!important;
  background-image:
-  radial-gradient(ellipse 66% 24% at 49% 48%,rgba(34,94,126,.22) 0%,rgba(19,61,88,.12) 48%,transparent 100%),
-  radial-gradient(ellipse 72% 30% at 52% 72%,rgba(29,82,113,.20) 0%,rgba(17,52,76,.10) 52%,transparent 100%),
-  linear-gradient(180deg,#06111b 0%,#081824 45%,#071622 76%,#06111b 100%)!important;
+  radial-gradient(ellipse 95% 42% at 50% 33%,rgba(29,54,68,.27),transparent 82%),
+  radial-gradient(ellipse 85% 38% at 50% 75%,rgba(27,48,62,.19),transparent 85%),
+  linear-gradient(180deg,#0b1119 0%,#101b26 48%,#0b1119 100%)!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
- background:linear-gradient(155deg,#102b3d 0%,#0b2131 36%,#091c2b 100%)!important;
- border-color:#27465a!important;
- box-shadow:0 12px 38px #00000030,inset 0 1px 0 #d6e7f012!important;
+ background:#142330!important;
+ border-color:rgba(138,166,181,.18)!important;
+ box-shadow:0 14px 36px rgba(0,0,0,.14),inset 0 1px 0 rgba(230,241,247,.035)!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
- background:linear-gradient(155deg,#0b2131,#091c2b)!important;
+ background:#142330!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
  background:transparent!important;
- border-bottom-color:#1b3545!important;
+ border-bottom-color:rgba(138,166,181,.14)!important;
 }
 .pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-head{
- border-bottom-color:#1b3545!important;
+ border-bottom-color:rgba(138,166,181,.18)!important;
 }
-
-
-/* BTC transaction premium finish: visible ambient depth without layout edits.
-   Scoped to transaction detail; no positioning, sizing or animations modified. */
-body:has(.pt-tx-page.pt-tx-detail-v2){
- background-color:#071521!important;
- background-image:
-  radial-gradient(ellipse 72vw 55vh at 50% 38%,rgba(30,91,126,.32),transparent 78%),
-  radial-gradient(ellipse 78vw 65vh at 48% 88%,rgba(20,74,109,.27),transparent 80%),
-  linear-gradient(180deg,#071521,#0a1b29 50%,#071521)!important;
- background-attachment:fixed!important;
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-fact{
+ border-right-color:rgba(138,166,181,.14)!important;
 }
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary{
- background:linear-gradient(165deg,#17384b 0%,#102b3d 21%,#0c2333 55%,#0a1e2d 100%)!important;
- border-color:#33566a!important;
- box-shadow:0 14px 42px rgba(0,0,0,.20),inset 0 1px 0 rgba(200,230,246,.10)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-rows{
- background:linear-gradient(145deg,#102c3d 0%,#0c2333 45%,#0a1e2d 100%)!important;
-}
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row,
-.pt-tx-page.pt-tx-detail-v2 .pt-tx-clarity-row:nth-child(even){
- background:transparent!important;
- border-bottom-color:rgba(101,147,170,.23)!important;
+.pt-tx-page.pt-tx-detail-v2 .pt-tx-mock-summary .pt-tx-simple-footer{
+ border-top-color:rgba(138,166,181,.14)!important;
 }
