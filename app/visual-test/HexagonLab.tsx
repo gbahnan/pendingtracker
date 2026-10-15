@@ -151,7 +151,7 @@ function MovingParticles({motion}:{motion:boolean}){
      // After an individual dwell, gradually turn toward the right opening.
      if(p.chamber<layout.length-1&&p.age>p.wait){
       const cy=box.y+box.h/2;
-      p.vx+=(box.kind==="pool"?13:16-p.vx)*Math.min(1,dt*.55);
+      p.vx+=((box.kind==="pool"?13:16)-p.vx)*Math.min(1,dt*.55);
       const laneChoice=random(p.seed+91);
       const laneY=cy+(laneChoice<.72?0:laneChoice<.86?-.23:.23)*box.h;
       p.vy+=((laneY-p.y)*.18-p.vy)*Math.min(1,dt*.7);
