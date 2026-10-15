@@ -193,3 +193,30 @@
 .ptw-monitor-actions{border-bottom:1px solid rgba(218,173,104,.23);border-radius:0 0 9px 9px;margin-bottom:23px}
 @media(max-width:900px){.ptw-snapshot-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.ptw-snapshot-metric:nth-child(3n){border-right:1px solid rgba(158,182,198,.15)}.ptw-snapshot-metric:nth-child(2n){border-right:0}.ptw-snapshot-metric:nth-last-child(-n+3){border-bottom:1px solid rgba(158,182,198,.15)}.ptw-snapshot-metric:nth-last-child(-n+2){border-bottom:0}}
 @media(max-width:550px){.ptw-snapshot-summary{padding:17px 14px;gap:12px}.ptw-snapshot-summary-copy p{font-size:12px}.ptw-snapshot-summary-copy .ptw-eyebrow{font-size:9px}.ptw-snapshot-metric{padding:15px 12px;min-height:204px}.ptw-snapshot-metric-title{gap:6px}.ptw-snapshot-metric-title h3{font-size:15px}.ptw-snapshot-metric-title>span{font-size:16px;min-width:17px}.ptw-snapshot-metric>strong{font-size:16px}.ptw-snapshot-metric>small,.ptw-snapshot-metric>p{font-size:11px}.ptw-snapshot-metric>button{font-size:11px}.ptw-snapshot-detail{left:0;right:0}}
+
+
+/* Understanding Your Wallet: match the Bitcoin transaction page's six tabs and split explanation. */
+.ptw-understanding-heading{margin:0 0 22px;padding:0;border:0}
+.ptw-understanding-heading h2{font-size:clamp(27px,3vw,34px);font-weight:850;letter-spacing:-.045em}
+.ptw-understanding-heading p{font-size:14px;color:#c5d1d9}
+.ptw-wallet-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border:1px solid rgba(164,188,203,.22);border-bottom:0;border-radius:9px 9px 0 0;background:linear-gradient(90deg,rgba(43,65,79,.95),rgba(37,58,74,.95));overflow:hidden}
+.ptw-wallet-tabs button{border:0;border-right:1px solid rgba(159,187,204,.16);border-bottom:2px solid transparent;background:transparent;color:#b9cad6;font-size:13px;font-weight:750;padding:15px 7px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;min-width:0}
+.ptw-wallet-tabs button:last-child{border-right:0}
+.ptw-wallet-tabs button span{font-size:17px;color:#e1ae60}
+.ptw-wallet-tabs button.active{color:#f1bf70;background:rgba(236,171,75,.095);border-bottom-color:#e8ad50}
+.ptw-wallet-tabs button:hover:not(.active){background:rgba(125,164,189,.08);color:#edf3f7}
+.ptw-wallet-tab-body{display:grid;grid-template-columns:1.75fr 1fr;border:1px solid rgba(164,188,203,.23);border-top:0;border-radius:0 0 9px 9px;background:linear-gradient(125deg,rgba(39,60,76,.95),rgba(29,48,64,.94));overflow:hidden;margin-bottom:38px;min-height:290px}
+.ptw-wallet-tab-data{padding:25px 25px 30px}
+.ptw-wallet-tab-data h3{font-size:23px;color:#f1f5f8;letter-spacing:-.035em;margin:0 0 8px}
+.ptw-wallet-tab-data>p{font-size:13px;line-height:1.6;color:#b8c9d4;margin:0 0 26px}
+.ptw-wallet-tab-facts{display:flex;flex-direction:column;gap:0}
+.ptw-wallet-tab-facts>div{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:11px 3px;border-bottom:1px solid rgba(158,183,200,.14)}
+.ptw-wallet-tab-facts span{color:#e6b874;font-size:13px;font-weight:750}
+.ptw-wallet-tab-facts strong{color:#f0f3f7;font-size:14px;font-weight:800;text-align:right;overflow-wrap:anywhere;min-width:0}
+.ptw-wallet-tab-explains{padding:25px 23px;background:radial-gradient(ellipse 90% 80% at 100% 0%,rgba(231,170,79,.14),transparent 75%),linear-gradient(145deg,rgba(54,72,81,.65),rgba(33,51,64,.7));border-left:1px solid rgba(163,190,203,.2)}
+.ptw-wallet-tab-explains .ptw-eyebrow{font-size:10px;letter-spacing:.13em}
+.ptw-wallet-tab-explains h3{font-size:23px;letter-spacing:-.045em;line-height:1.15;color:#f5f6f8;margin:15px 0 15px}
+.ptw-wallet-tab-explains p{font-size:13px;color:#c6d4dc;line-height:1.75;margin:0}
+.ptw-transactions>.ptw-section-head{border-radius:9px 9px 0 0}
+@media(max-width:850px){.ptw-wallet-tabs button{font-size:11px;gap:5px;padding:13px 3px}.ptw-wallet-tabs button span{font-size:14px}.ptw-wallet-tab-body{grid-template-columns:1.2fr 1fr}.ptw-wallet-tab-data,.ptw-wallet-tab-explains{padding:20px 16px}}
+@media(max-width:580px){.ptw-wallet-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.ptw-wallet-tabs button:nth-child(3){border-right:0}.ptw-wallet-tabs button:nth-child(-n+3){border-bottom:1px solid rgba(159,187,204,.15)}.ptw-wallet-tabs button.active{box-shadow:inset 0 -2px #e8ad50}.ptw-wallet-tab-body{grid-template-columns:1fr}.ptw-wallet-tab-data,.ptw-wallet-tab-explains{padding:19px 15px}.ptw-wallet-tab-data h3,.ptw-wallet-tab-explains h3{font-size:21px}.ptw-wallet-tab-explains{border-left:0;border-top:1px solid rgba(163,190,203,.2)}.ptw-wallet-tab-facts strong{font-size:12px}}
