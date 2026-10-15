@@ -8,3 +8,76 @@
 
 /* Wallet monitoring: prominent pending transfers and opt-in browser alerts */
 .ptw-monitor-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:0 0 13px}.ptw-monitor-actions button{border:1px solid #c69236;border-radius:10px;background:#241b10;color:#f6c977;padding:10px 14px;cursor:pointer;font-size:12px;font-weight:700}.ptw-monitor-actions span{color:#8da0b3;font-size:11px}.ptw-alert-message{color:#f6cf83;font-size:12px;margin:0 0 14px}.ptw-pending-spotlight{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:0 0 16px;padding:21px;border:1px solid #e5a437;border-radius:13px;background:linear-gradient(120deg,rgba(104,67,15,.28),rgba(12,22,32,.97));box-shadow:0 0 20px rgba(223,154,34,.12)}.ptw-pending-spotlight h3{margin:9px 0;color:#fff1ce;font-size:20px}.ptw-pending-spotlight p{color:#bcc9d6;font-size:13px;max-width:620px;line-height:1.6}.ptw-pending-spotlight strong{color:#f7bc4b;font-size:22px}.ptw-pending-spotlight small{font-size:12px;color:#b8c6d6;font-weight:400}.ptw-pending-links{display:flex;flex-direction:column;gap:9px;justify-content:center}.ptw-pending-links a{color:#f2c675;font-size:12px;text-decoration:none;border:1px solid #70521f;border-radius:8px;padding:9px 12px}.ptw-activity-subtitle{font-size:12px;color:#9db0c3;margin:7px 0 0}@media(max-width:580px){.ptw-pending-spotlight{padding:15px}.ptw-pending-spotlight h3{font-size:17px}.ptw-pending-spotlight strong{font-size:18px}}
+
+
+/* Bitcoin wallet redesign — shared visual language with transaction tracker. */
+.ptw-shell{
+ background:radial-gradient(ellipse at 50% 13%,rgba(51,75,88,.28),transparent 48%),linear-gradient(180deg,#142330 0%,#1a2934 43%,#14222e 100%);
+ color:#edf2f6;padding-top:26px;overflow:hidden;
+}
+.ptw-ambient{height:100%;background:radial-gradient(ellipse at 20% 29%,rgba(216,160,76,.045),transparent 45%),radial-gradient(ellipse at 85% 58%,rgba(73,121,148,.065),transparent 50%)}
+.ptw-ambient:before,.ptw-ambient:after{display:none}
+.ptw-heading{margin:8px auto 46px;max-width:960px}
+.ptw-eyebrow{color:#f1b957;font-size:11px;letter-spacing:.18em;font-weight:850}
+.ptw-heading h1{font-size:clamp(34px,4.3vw,53px);letter-spacing:-.045em;line-height:1.08;margin:13px 0 12px;color:#f4f7fa;font-weight:850}
+.ptw-heading h1 span{color:#f3b94f}
+.ptw-heading p{font-size:15px;color:#c1ccd5;line-height:1.65;margin:0 auto 23px}
+.ptw-search{max-width:950px;border:1px solid rgba(206,161,100,.36);border-radius:10px;box-shadow:none;background:rgba(37,57,71,.85);padding:11px 17px}
+.ptw-btc{background:transparent;color:#eabb6a;font-size:26px}
+.ptw-search button{background:#e8b968;color:#121b25;border-radius:8px;font-size:24px;width:66px;height:43px}
+.ptw-panel{border:0;border-radius:0;box-shadow:none;background:transparent;padding:0;margin:0 0 42px}
+.ptw-wallet{border:0;box-shadow:none}
+.ptw-snapshot-heading{margin:0 0 20px;border-bottom:1px solid rgba(221,175,104,.18);padding:0 0 15px}
+.ptw-snapshot-heading h2,.ptw-understanding-heading h2{font-size:clamp(26px,3vw,34px);line-height:1.2;letter-spacing:-.04em;color:#f1f4f7;margin:0 0 8px;font-weight:850}
+.ptw-snapshot-heading em,.ptw-understanding-heading em,.ptw-section-head h2 em{font-style:normal;color:#eeb85d}
+.ptw-snapshot-heading p,.ptw-understanding-heading p{margin:0;color:#b7c7d2;font-size:14px;line-height:1.6}
+.ptw-identity{padding:13px 4px 18px;margin:0;gap:14px}
+.ptw-wallet-icon{width:46px;height:52px;border:1px solid rgba(229,170,78,.6);border-radius:10px;font-size:26px;color:#e7b866;box-shadow:none;background:rgba(219,162,76,.08)}
+.ptw-identity h2{font-size:20px;color:#f0f4f8;margin:4px 0 6px}
+.ptw-address{font-size:14px;color:#cbd5de}
+.ptw-address button{color:#f1c57c;font-weight:700}
+.ptw-follow,.ptw-monitor-actions button{border:1px solid rgba(229,181,102,.4);border-radius:8px;background:rgba(224,171,85,.08);color:#eac17e}
+.ptw-live-status{border:0;border-top:1px solid rgba(158,188,203,.16);border-bottom:1px solid rgba(158,188,203,.16);border-radius:0;background:rgba(46,75,88,.16);padding:13px 15px}
+.ptw-monitor-actions{margin:17px 0}
+.ptw-monitor-actions span{color:#aebfc9}
+.ptw-pending-spotlight{border:1px solid rgba(230,173,85,.28);border-radius:9px;background:linear-gradient(115deg,rgba(122,83,33,.19),rgba(38,58,72,.34));box-shadow:none}
+.ptw-pending-spotlight h3{color:#f5f5f3}
+.ptw-balance-summary{grid-template-columns:1fr 1.25fr;border:0;border-top:1px solid rgba(224,177,111,.22);border-bottom:1px solid rgba(224,177,111,.22);border-radius:0;background:linear-gradient(110deg,rgba(54,79,90,.28),rgba(31,56,72,.25));overflow:visible}
+.ptw-balance,.ptw-understanding{padding:24px 25px}
+.ptw-balance{border-right:1px solid rgba(159,185,199,.17)}
+.ptw-balance>span{color:#f0bd70;font-size:12px;letter-spacing:.075em}
+.ptw-balance-number{color:#f1bd69;font-size:clamp(28px,3.2vw,42px)}
+.ptw-balance>strong{color:#f3f6f8}
+.ptw-balance>p,.ptw-understanding p{color:#b5c5d0}
+.ptw-understanding .ptw-eyebrow{font-size:10px}
+.ptw-understanding p{font-size:14px;line-height:1.7}
+.ptw-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0;background:rgba(41,68,82,.16)}
+.ptw-stat{border:0;border-right:1px solid rgba(153,185,201,.13);border-bottom:1px solid rgba(153,185,201,.15);border-radius:0;background:transparent;min-height:155px;padding:21px 23px;gap:8px}
+.ptw-stat:nth-child(3n){border-right:0}
+.ptw-stat-mark{height:auto;font-size:18px;color:#e9b967}
+.ptw-stat span{font-size:17px;font-weight:800;color:#e9ba75}
+.ptw-stat strong{font-size:20px;color:#f3f6f9;letter-spacing:-.025em}
+.ptw-stat small{font-size:12px;color:#a9bfcb}
+.ptw-stat-help summary{color:#e4b976;font-size:12px}
+.ptw-stat-help p{color:#b8cbd5}
+.ptw-chart-panel{margin-top:64px;margin-bottom:68px}
+.ptw-section-head{margin-bottom:19px}
+.ptw-section-head h2,.ptw-section-head h3{font-size:clamp(23px,2.6vw,30px);font-weight:850;letter-spacing:-.035em;margin:0;color:#f3f5f7}
+.ptw-section-head h3{font-size:23px;color:#e9bb79}
+.ptw-chart-intro,.ptw-activity-subtitle{color:#bac8d1;font-size:14px;line-height:1.6}
+.ptw-chart-readout strong{color:#f1bd6c}
+.ptw-chart svg{background:repeating-linear-gradient(to bottom,transparent 0 24%,rgba(141,169,181,.10) calc(24% + 1px),transparent calc(24% + 2px) 25%)}
+.ptw-range-tabs button,.ptw-filters button{background:rgba(35,55,68,.4);border:1px solid rgba(138,168,185,.2);color:#c7d2da;border-radius:7px}
+.ptw-range-tabs button.active,.ptw-filters button.active{background:rgba(226,173,88,.18);color:#f1bd6a;border:1px solid rgba(226,173,88,.5)}
+.ptw-understanding-heading{margin-bottom:28px;padding-top:25px;border-top:1px solid rgba(229,182,104,.2)}
+.ptw-understanding-heading .ptw-eyebrow{margin-bottom:9px}
+.ptw-transactions{margin-top:0}
+.ptw-tx-list{border:1px solid rgba(151,179,194,.19);border-radius:9px}
+.ptw-tx{background:rgba(42,66,80,.32);border-bottom:1px solid rgba(157,185,198,.17);padding:18px 17px}
+.ptw-tx:hover{background:rgba(60,88,103,.4)}
+.ptw-tx-hash strong{color:#b6d8e9}
+.ptw-tx-label strong,.ptw-tx-amount strong{font-size:14px}
+.ptw-more{border-color:rgba(225,173,93,.45);border-radius:8px}
+.ptw-footer{border-top:1px solid rgba(177,195,205,.12);margin-top:40px}
+@media(max-width:850px){.ptw-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ptw-stat:nth-child(3n){border-right:1px solid rgba(153,185,201,.13)}.ptw-stat:nth-child(2n){border-right:0}.ptw-balance-summary{grid-template-columns:1fr}.ptw-balance{border-right:0;border-bottom:1px solid rgba(159,185,199,.17)}}
+@media(max-width:580px){.ptw-shell{padding:22px 15px 55px}.ptw-heading{margin-bottom:32px}.ptw-heading h1{font-size:33px}.ptw-panel{margin-bottom:34px}.ptw-identity{align-items:flex-start}.ptw-snapshot-heading h2,.ptw-understanding-heading h2{font-size:27px}.ptw-balance,.ptw-understanding{padding:20px 15px}.ptw-stat{padding:16px 13px;min-height:145px}.ptw-stat span{font-size:14px}.ptw-stat strong{font-size:16px}.ptw-chart-panel{margin-top:42px;margin-bottom:46px}.ptw-tx{padding:14px 11px}.ptw-search{padding:8px 10px}}
