@@ -31,7 +31,7 @@ export default function BitcoinExplorerOverview(){
  return <div className="fresh-btc fresh-btc-mockup fresh-v3">
   <section className="fresh-journey" aria-label="Live Bitcoin confirmation timeline">
    <div className="fresh-section-head fresh-journey-heading">
-    <div><div className="fresh-kicker">TRANSACTION FLOW · CONFIRMATION ESTIMATES</div><p>Each gold hexagon shows an estimated confirmation-time band. Drag or scroll to explore confirmed blocks.</p></div>
+    <div><div className="fresh-kicker">ESTIMATED TRANSACTION CONFIRMATION TIMES</div><p>Each gold hexagon shows an estimated confirmation-time band. Drag or scroll to explore confirmed blocks.</p></div>
    </div>
    <BlockchainWebGL overview pending={btc?.pending} fee={projections[0]?.medianFee} projectedCount={projections[0]?.transactionCount} projections={projections} blocks={blocks}/>
   </section>
