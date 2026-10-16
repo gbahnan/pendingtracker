@@ -178,3 +178,57 @@ main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{margin-top:52px!important}
  .pt26-wallet-feature .pt26-wallet-dropdown summary{font-size:12px!important;padding:10px 8px!important}
  main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{margin-top:42px!important}
 }
+
+
+/* Final texture and finish sweep — homepage only. One uninterrupted atmospheric canvas. */
+main.pt-shell:has(> .pt-clarity){
+ background:
+ radial-gradient(ellipse 68% 27% at 5% 7%,rgba(201,142,65,.075),transparent 83%),
+ radial-gradient(ellipse 67% 29% at 97% 10%,rgba(46,134,215,.08),transparent 85%),
+ radial-gradient(ellipse 85% 32% at 52% 43%,rgba(52,88,109,.145),transparent 88%),
+ radial-gradient(ellipse 75% 26% at 49% 71%,rgba(35,69,91,.11),transparent 87%),
+ linear-gradient(180deg,#071521 0%,#0b1c2a 31%,#0d2030 49%,#0a1a28 73%,#071420 100%)!important;
+ background-attachment:scroll!important;
+}
+main.pt-shell:has(> .pt-clarity) > .pt26-hero,
+main.pt-shell:has(> .pt-clarity) > .pt26-live,
+main.pt-shell:has(> .pt-clarity) > .pt-clarity,
+main.pt-shell:has(> .pt-clarity) > .pt26-wallet-feature,
+main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{background-color:transparent!important;box-shadow:none}
+.pt26-hero-content h1 span,.pt-clarity-top h2 em,.pt26-wallet-feature-head h2 em{color:#eeb966!important}
+.pt26-live-title h2,.pt26-wallet-feature-head h2,.pt-faq-heading h2{color:#f1f5f9}
+.pt-clarity-raw,.pt-clarity-translation{
+ background:linear-gradient(140deg,rgba(29,49,64,.86),rgba(21,39,53,.87))!important;
+ border-color:rgba(155,183,201,.24)!important;
+ box-shadow:0 10px 30px rgba(0,0,0,.095)!important;
+ border-radius:13px!important;
+}
+.pt-clarity-raw{border-top:2px solid rgba(167,191,207,.39)!important}
+.pt-clarity-translation{border-top:2px solid rgba(233,185,110,.66)!important}
+.pt-clarity-raw-lines>div{border-bottom-color:rgba(170,194,208,.12)!important}
+.pt26-wallet-feature .pt26-wallet-follow{
+ background:linear-gradient(130deg,rgba(29,49,64,.72),rgba(22,40,54,.76))!important;
+ border:1px solid rgba(156,184,203,.19)!important;
+ border-radius:13px!important;
+}
+.pt26-panel{background:linear-gradient(155deg,rgba(9,23,35,.95),rgba(7,19,30,.96))!important}
+.pt26-panel.btc{border-color:rgba(233,185,110,.73)!important}
+.pt26-panel.eth{border-color:rgba(58,157,255,.72)!important}
+.pt26-panel .pt26-card-visual{background:transparent!important}
+.pt26-panel .pt26-feed-row:hover{background:rgba(126,170,198,.045)}
+.pt26-wallet-dropdown summary,.pt-clarity-education>summary{transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease}
+.pt26-wallet-dropdown[open] summary{box-shadow:0 0 0 2px rgba(131,177,204,.09)}
+.pt26-wallet-menu{z-index:30}
+.pt-faq-item summary{transition:background-color .18s ease}
+.pt-faq-item summary:hover{background:rgba(125,171,201,.045)}
+.pt-faq-answer{color:#b8cbd8}
+.pt26-wallet-feature-note,.pt-clarity-comparison-note{color:#9bb1c1!important}
+@media(max-width:700px){
+ main.pt-shell:has(> .pt-clarity){background:radial-gradient(ellipse 95% 19% at 2% 8%,rgba(201,142,65,.07),transparent 90%),radial-gradient(ellipse 95% 21% at 99% 12%,rgba(46,134,215,.07),transparent 90%),linear-gradient(180deg,#071521,#0b1c2a 38%,#0b1b29 70%,#071420)!important}
+ .pt26-wallet-feature .pt26-wallet-follow-actions{align-items:stretch}
+ .pt26-wallet-feature .pt26-wallet-dropdown summary{min-height:46px}
+ .pt26-wallet-feature .pt26-wallet-menu{max-width:calc(100vw - 38px)}
+ .pt26-wallet-feature .pt26-wallet-dropdown:first-child .pt26-wallet-menu{left:0;right:auto}
+ .pt26-wallet-feature .pt26-wallet-dropdown:last-child .pt26-wallet-menu{right:0;left:auto}
+}
+@media(prefers-reduced-motion:reduce){.pt26-wallet-dropdown summary,.pt-clarity-education>summary,.pt-faq-item summary{transition:none!important}}
