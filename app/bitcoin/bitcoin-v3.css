@@ -1818,3 +1818,12 @@ body:has(.pt-bitcoin-explorer-redesign) .pt-founder-footer>section{
  .fresh-v3>.fresh-journey{transform:none!important}
  .fresh-v3>.fresh-journey .fresh-journey-heading{padding-top:8px!important;margin-bottom:3px!important}
 }
+
+
+/* Restore the original elevated hexagon timeline position; keep its caption below the nav. */
+@media(min-width:701px){
+ .fresh-v3>.fresh-journey{transform:translateY(-24px)!important}
+ .fresh-v3>.fresh-journey .fresh-journey-heading{transform:translateY(24px)!important;margin-bottom:3px!important}
+ .fresh-v3>.fresh-hero{transform:translateY(-35px)!important}
+ .fresh-v3>.fresh-search{transform:translateY(-35px)!important}
+}
