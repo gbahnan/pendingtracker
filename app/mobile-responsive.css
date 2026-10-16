@@ -72,3 +72,23 @@
 @media (prefers-reduced-motion: reduce) {
   .motion-window { scroll-behavior:auto; }
 }
+
+/* Hexagon-first iPhone viewport: reveal more of the existing sequence.
+   Keep chronological DOM order, animations, and desktop geometry unchanged. */
+@media (max-width:767px) {
+  .motion-window, .pt-standard-tracker-flow {
+    width:100%; max-width:100%; margin-inline:auto;
+    scroll-padding-inline:8px; -webkit-overflow-scrolling:touch;
+  }
+  .motion-track { gap:clamp(2px, .8vw, 6px); }
+  .motion-window .motion-cell { flex-shrink:0; }
+  .pt26-panel .pt26-card-visual { grid-template-columns:minmax(0,1fr) minmax(82px,27%); gap:4px; }
+  .pt26-panel .pt26-scene { transform:scale(1)!important; height:160px; }
+  .pt26-panel .pt26-side-stats { padding-left:5px; gap:8px; }
+  .pt26-panel .pt26-scene .pt26-hero-graphic { max-width:100%; }
+}
+@media (max-width:390px) {
+  .pt26-panel .pt26-card-visual { grid-template-columns:minmax(0,1fr) 82px; gap:2px; }
+  .pt26-panel .pt26-scene { height:148px; transform:scale(1)!important; }
+  .pt26-panel .pt26-side-stats { padding-left:3px; }
+}
