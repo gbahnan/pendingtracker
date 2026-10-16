@@ -1779,3 +1779,28 @@ body:has(.pt-bitcoin-explorer-redesign) .pt-founder-footer>section{
  border-color:transparent!important;
  box-shadow:none!important;
 }
+
+
+/* Small, understated explanation above the Bitcoin confirmation hexagons. */
+.fresh-v3>.fresh-journey .fresh-journey-heading{
+ display:block!important;
+ text-align:center!important;
+ margin:0 auto 7px!important;
+ padding:5px 12px 0!important;
+ position:relative;
+ z-index:2;
+}
+.fresh-v3>.fresh-journey .fresh-journey-heading .fresh-kicker{
+ display:block!important;
+ color:#d9ae71!important;
+ font-size:10px!important;
+ font-weight:650!important;
+ letter-spacing:.20em!important;
+ line-height:1.5!important;
+ text-transform:uppercase!important;
+}
+.fresh-v3>.fresh-journey .fresh-journey-heading p{display:none!important}
+@media(max-width:700px){
+ .fresh-v3>.fresh-journey .fresh-journey-heading{margin-bottom:5px!important;padding-top:4px!important}
+ .fresh-v3>.fresh-journey .fresh-journey-heading .fresh-kicker{font-size:9px!important;letter-spacing:.12em!important}
+}
