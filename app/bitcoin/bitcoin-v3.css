@@ -1884,3 +1884,24 @@ body:has(.pt-bitcoin-explorer-redesign) .pt-founder-footer>section{
    width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:150/102;
  }
 }
+
+/* Raise the iPhone Bitcoin timeline and hero together; desktop unaffected. */
+@media(max-width:700px){
+ .pt-bitcoin-explorer-redesign .fresh-v3{padding-top:0!important}
+ .pt-bitcoin-explorer-redesign .fresh-v3>.fresh-journey{
+   margin-top:-12px!important;margin-bottom:0!important;padding-bottom:0!important;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-v3>.fresh-journey .fresh-journey-heading{
+   padding-top:1px!important;margin-bottom:0!important;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-v3>.fresh-hero{
+   margin-top:-7px!important;padding-top:0!important;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-v3>.fresh-hero h1{
+   margin-top:2px!important;margin-bottom:4px!important;
+ }
+ .pt-bitcoin-explorer-redesign .fresh-v3>.fresh-hero p{margin-top:3px!important}
+ .pt-bitcoin-explorer-redesign .fresh-v3>.fresh-search{
+   margin-top:9px!important;margin-bottom:12px!important;
+ }
+}
