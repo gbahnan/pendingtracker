@@ -279,3 +279,32 @@ main.pt-shell:has(> .pt-clarity){
  .pt-clarity-raw,.pt-clarity-translation{border-radius:11px!important}
  .pt26-wallet-feature .pt26-wallet-follow{background:rgba(23,42,56,.49)!important}
 }
+
+
+/* iPhone homepage: comfortable touch targets and fluid cards without extra visual noise. */
+@media(max-width:700px){
+ main.pt-shell:has(> .pt-clarity){overflow-x:clip}
+ .pt26-hero-content{width:100%;max-width:100%;padding-left:14px!important;padding-right:14px!important}
+ .pt26-hero-content h1{font-size:clamp(29px,7.4vw,38px)!important;line-height:1.13!important}
+ .pt26-search{max-width:100%!important}
+ .pt26-search input{min-width:0!important;font-size:16px!important}
+ .pt26-chain-choice,.pt26-wallet-dropdown summary{min-height:44px}
+ .pt26-live{padding-left:12px!important;padding-right:12px!important}
+ .pt26-grid{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
+ .pt26-panel{min-width:0!important}
+ .pt26-panel .pt26-card-visual{min-width:0;grid-template-columns:minmax(0,1fr) minmax(105px,34%)!important}
+ .pt26-panel .pt26-scene{min-width:0}
+ .pt26-panel .pt26-side-stats{min-width:0}
+ .pt26-panel .pt26-feed-row{grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) minmax(0,.65fr) 12px!important;gap:5px!important}
+ .pt26-panel .pt26-feed-row .hash{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .pt-clarity-comparison{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ .pt-clarity-raw,.pt-clarity-translation{min-width:0!important;padding:16px!important}
+ .pt26-wallet-feature .pt26-wallet-follow{padding:12px 10px!important}
+ .pt26-wallet-feature .pt26-wallet-follow-actions{gap:9px!important}
+ .pt26-wallet-feature .pt26-wallet-dropdown{min-width:0}
+ .pt-faq-refresh{padding-left:12px!important;padding-right:12px!important}
+}
+@media(max-width:390px){
+ .pt26-panel .pt26-scene{transform:scale(.83)!important}
+ .pt26-panel .pt26-side-stats strong{font-size:14px!important}
+}
