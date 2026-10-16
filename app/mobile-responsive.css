@@ -30,3 +30,45 @@
   .fresh-btc { padding-left:10px; padding-right:10px; }
   .fresh-explore, .fresh-learn { padding-left:12px; padding-right:12px; }
 }
+
+/* iPhone refinement sweep — layout-only, no desktop or animation changes. */
+@media (max-width: 767px) {
+  html { -webkit-text-size-adjust:100%; scroll-padding-top:76px; }
+  body { overscroll-behavior-x:none; }
+  .container, main, section, article, .pt-shell, .fresh-btc, .eth-fresh { box-sizing:border-box; }
+  :where(.txr-card,.etr-card,.bex-panel,.fresh-data,.fresh-explainer,.pt26-panel,.pt-clarity-raw,.pt-clarity-translation) {
+    min-width:0; overflow-wrap:anywhere;
+  }
+  :where(.txr-card,.etr-card,.bex-panel,.fresh-data,.fresh-explainer) {
+    padding-left:clamp(10px,3.5vw,16px);
+    padding-right:clamp(10px,3.5vw,16px);
+  }
+  :where(.txr-card,.etr-card,.bex-panel,.fresh-data) :where(h1,h2,h3,p) {
+    max-width:100%; overflow-wrap:anywhere;
+  }
+  :where(.txr-card,.etr-card,.bex-panel,.fresh-data) :where(code,pre) {
+    max-width:100%; overflow-wrap:anywhere; white-space:pre-wrap;
+  }
+  .pt26-grid, .pt26-card-visual, .pt-clarity-comparison { min-width:0; }
+  .pt26-panel .pt26-scene { transform-origin:center center; }
+  .pt26-panel .pt26-feed-row { min-width:0; }
+  .pt26-panel .pt26-feed-row .hash { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .motion-window { max-width:100%; scrollbar-width:thin; scroll-behavior:smooth; overscroll-behavior-x:contain; }
+  .motion-track { min-width:max-content; }
+  .pt-standard-tracker-flow { overscroll-behavior-x:contain; scrollbar-width:thin; }
+  :where(button,[role="button"],input,select,textarea) { touch-action:manipulation; }
+  :where(input,textarea,select) { font-size:16px!important; }
+  :where(.pt26-search,.fresh-search,.pt26-wallet-feature) { max-width:100%; min-width:0; }
+  .pt26-hero { min-height:0; }
+  .pt-founder-footer { padding-bottom:max(20px,env(safe-area-inset-bottom)); }
+}
+@media (max-width: 390px) {
+  :where(.txr-card,.etr-card,.bex-panel,.fresh-data,.fresh-explainer) {
+    padding-left:10px; padding-right:10px;
+  }
+  .pt26-panel .pt26-card-visual { gap:8px; }
+  .pt26-panel .pt26-side-stats { min-width:0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-window { scroll-behavior:auto; }
+}
