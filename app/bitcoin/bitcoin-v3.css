@@ -1804,3 +1804,17 @@ body:has(.pt-bitcoin-explorer-redesign) .pt-founder-footer>section{
  .fresh-v3>.fresh-journey .fresh-journey-heading{margin-bottom:5px!important;padding-top:4px!important}
  .fresh-v3>.fresh-journey .fresh-journey-heading .fresh-kicker{font-size:9px!important;letter-spacing:.12em!important}
 }
+
+
+/* Keep the heading immediately above the hexagons and fully below the sticky navigation.
+   Move the timeline and its heading together, without changing hexagon sizing or spacing. */
+@media(min-width:701px){
+ .fresh-v3>.fresh-journey{transform:translateY(0)!important}
+ .fresh-v3>.fresh-journey .fresh-journey-heading{padding-top:9px!important;margin-bottom:3px!important}
+ .fresh-v3>.fresh-hero{transform:translateY(-11px)!important}
+ .fresh-v3>.fresh-search{transform:translateY(-11px)!important}
+}
+@media(max-width:700px){
+ .fresh-v3>.fresh-journey{transform:none!important}
+ .fresh-v3>.fresh-journey .fresh-journey-heading{padding-top:8px!important;margin-bottom:3px!important}
+}
