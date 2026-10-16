@@ -137,3 +137,44 @@ main.pt-shell:has(> .pt-clarity) > .pt-founder-footer{margin-top:0!important;pad
  .pt26-wallet-feature .pt26-wallet-follow{padding:17px!important}
 }
 @media(prefers-reduced-motion:reduce){main.pt-shell:has(> .pt-clarity) *{scroll-behavior:auto!important}}
+
+
+/* Final homepage refinement — cohesive comparison, balanced hero, streamlined wallet discovery. */
+@media(min-width:1050px){
+ .pt26-hero-content{max-width:900px!important}
+ .pt26-hero-content h1{font-size:clamp(35px,3.1vw,44px)!important;letter-spacing:-1.5px!important;line-height:1.16!important;max-width:900px!important;white-space:nowrap}
+ .pt26-hero-content p{max-width:770px!important}
+}
+@media(min-width:701px) and (max-width:1049px){.pt26-hero-content h1{font-size:clamp(32px,3.6vw,40px)!important}}
+/* Both panels share the same surface and lighting; only accent color distinguishes the explainer. */
+.pt-clarity-raw,.pt-clarity-translation{
+ background:radial-gradient(ellipse 75% 100% at 85% 0%,rgba(154,177,193,.045),transparent 80%),linear-gradient(145deg,rgba(27,46,61,.95),rgba(20,37,51,.94))!important;
+ border:1px solid rgba(158,185,203,.28)!important;
+ box-shadow:0 8px 26px rgba(0,0,0,.09)!important;
+}
+.pt-clarity-translation{border-top:2px solid rgba(233,185,110,.72)!important}
+.pt-clarity-raw{border-top:2px solid rgba(158,185,203,.42)!important}
+.pt-clarity-raw,.pt-clarity-translation{padding:23px 26px!important;min-height:234px!important}
+.pt-clarity-comparison h3{font-size:21px!important}
+.pt-clarity-comparison-note{margin-bottom:13px!important}
+main.pt-shell:has(> .pt-clarity) > .pt26-wallet-feature{margin-top:46px!important}
+.pt26-wallet-feature-head{margin-bottom:16px!important}
+.pt26-wallet-feature .pt26-wallet-follow{justify-content:center!important;padding:16px 20px!important;min-height:76px;box-shadow:none!important;background:linear-gradient(145deg,rgba(25,43,57,.75),rgba(20,37,51,.7))!important}
+.pt26-wallet-feature .pt26-wallet-follow-actions{width:100%;justify-content:center;gap:18px}
+.pt26-wallet-feature .pt26-wallet-dropdown{flex:0 1 245px}
+.pt26-wallet-feature .pt26-wallet-dropdown summary{justify-content:center;font-size:14px!important;padding:12px 18px!important;min-height:48px;border-color:rgba(160,190,211,.38)!important}
+.pt26-wallet-feature .pt26-wallet-dropdown.btc summary{border-color:rgba(233,185,110,.45)!important}
+.pt26-wallet-feature .pt26-wallet-dropdown.eth summary{border-color:rgba(58,157,255,.48)!important}
+.pt26-wallet-feature .pt26-wallet-dropdown summary:hover{background:rgba(44,68,84,.85)!important}
+.pt26-wallet-feature-note{margin-top:10px!important}
+main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{margin-top:52px!important}
+@media(max-width:700px){
+ .pt26-hero-content h1{white-space:normal!important;font-size:clamp(30px,7.3vw,39px)!important}
+ .pt-clarity-raw,.pt-clarity-translation{min-height:0!important;padding:19px!important}
+ main.pt-shell:has(> .pt-clarity) > .pt26-wallet-feature{margin-top:32px!important}
+ .pt26-wallet-feature .pt26-wallet-follow{padding:13px!important}
+ .pt26-wallet-feature .pt26-wallet-follow-actions{gap:10px;flex-wrap:wrap}
+ .pt26-wallet-feature .pt26-wallet-dropdown{flex:1 1 145px}
+ .pt26-wallet-feature .pt26-wallet-dropdown summary{font-size:12px!important;padding:10px 8px!important}
+ main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{margin-top:42px!important}
+}
