@@ -276,6 +276,7 @@ export default function Page() {
         <p>Track transactions, explore wallets, and understand Bitcoin and Ethereum without the technical jargon.</p>
         <form className="pt26-search" onSubmit={e=>{e.preventDefault();search()}}><span className="magnify" aria-hidden="true">⌕</span><input aria-label="Search transaction or address" placeholder="Search a Bitcoin or Ethereum transaction ID or wallet address..." value={query} onChange={e=>{setQuery(e.target.value);setError("");setAmbiguousHash("")}}/><button type="submit" aria-label="Search blockchain">→</button></form>
         <SearchGuidance query={query} chain="both"/>
+        <div className="pt26-example-link"><span>New here?</span> <a href={"/btc/"+(btc?.confirmedTransactions?.[0] || "865f6570a3dd491ed705f2980eb2b9f43a216eb5a85710995ae8a65a653f7")}>See a real Bitcoin transaction <span aria-hidden="true">↗</span></a></div>
         <div className="pt26-chain-select"><button type="button" className={"btc"+(network==="btc"?" active":"")} onClick={()=>setNetwork("btc")}>₿ &nbsp; Bitcoin</button><button type="button" className={"eth"+(network==="eth"?" active":"")} onClick={()=>setNetwork("eth")}>◆ &nbsp; Ethereum</button></div>
         {ambiguousHash?<div className="pt26-chain-choice">Choose the blockchain: <button onClick={()=>router.push("/btc/"+ambiguousHash)}>Bitcoin →</button><button onClick={()=>router.push("/eth/0x"+ambiguousHash)}>Ethereum →</button></div>:null}
         {error?<p className="pt26-search-error" role="alert">{error}</p>:null}
