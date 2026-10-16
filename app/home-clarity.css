@@ -232,3 +232,10 @@ main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{background-color:transparent!
  .pt26-wallet-feature .pt26-wallet-dropdown:last-child .pt26-wallet-menu{right:0;left:auto}
 }
 @media(prefers-reduced-motion:reduce){.pt26-wallet-dropdown summary,.pt-clarity-education>summary,.pt-faq-item summary{transition:none!important}}
+
+
+/* Quiet, one-click product demonstration directly beneath homepage search. */
+.pt26-example-link{display:flex;align-items:center;justify-content:center;gap:7px;margin:9px auto 1px;color:#9db2c3;font-size:12px;line-height:1.5}
+.pt26-example-link a{color:#e9b96e;text-decoration:none;font-weight:700;border-bottom:1px solid rgba(233,185,110,.38);transition:color .18s ease,border-color .18s ease}
+.pt26-example-link a:hover,.pt26-example-link a:focus-visible{color:#ffd38d;border-color:#ffd38d}
+@media(max-width:700px){.pt26-example-link{font-size:11px;gap:5px;flex-wrap:wrap;margin-top:9px}}
