@@ -356,6 +356,23 @@ export default function HexagonLab({embedded=false,transactionMode=false,tracked
  .lab-embedded .lab-caption small{font-size:8px}
  .lab-embedded .lab-tracked-marker{bottom:-22px}
 }
+
+/* Compact iPhone transaction-count captions: prevent adjacent labels colliding. */
+@media(max-width:700px){
+ .lab-embedded .lab-stage-slot .lab-caption{
+   left:0;width:100%;margin-top:4px;text-align:center;
+   line-height:1.18;white-space:normal;
+ }
+ .lab-embedded .lab-stage-slot .lab-tx-count{
+   display:flex;flex-direction:column;align-items:center;justify-content:center;
+   gap:1px;width:100%;font-size:10px;line-height:1.1;
+   white-space:normal;letter-spacing:0;
+ }
+ .lab-embedded .lab-stage-slot .lab-tx-count span{
+   display:block;font-size:8px;line-height:1.1;letter-spacing:0;
+   white-space:nowrap;
+ }
+}
  `}</style>
  </section>;
 }
