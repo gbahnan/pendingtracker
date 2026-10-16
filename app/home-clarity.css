@@ -90,3 +90,50 @@ main.pt-shell:has(> .pt-clarity) > .pt-founder-footer{margin-top:0!important;pad
 .pt26-wallet-feature-note{font-size:11px;color:#8ca4b6;margin:12px 0 0}
 @media(max-width:1160px){.pt26-wallet-feature{margin-left:22px;margin-right:22px}}
 @media(max-width:700px){.pt-clarity-comparison{grid-template-columns:1fr;gap:10px}.pt-clarity-raw,.pt-clarity-translation{padding:19px;min-height:0}.pt-clarity-comparison h3{font-size:19px}.pt-clarity-translation>p{font-size:13px}.pt-clarity-comparison-note{text-align:left}.pt26-wallet-feature{margin:37px 15px 30px}.pt26-wallet-feature .pt26-wallet-follow{padding:16px;align-items:flex-start}}
+
+
+/* Homepage-only finishing pass: continuous canvas, disciplined spacing and surfaces. */
+main.pt-shell:has(> .pt-clarity){
+ --home-canvas:#07131e;--home-surface:#142534;--home-gold:#e9b96e;--home-blue:#3a9dff;--home-ink:#f1f5f9;--home-muted:#afc2d1;
+ background:radial-gradient(ellipse 44% 22% at 7% 13%,rgba(215,151,57,.075),transparent 82%),radial-gradient(ellipse 46% 20% at 94% 16%,rgba(55,138,219,.075),transparent 82%),radial-gradient(ellipse 75% 35% at 51% 49%,rgba(38,66,86,.24),transparent 85%),linear-gradient(180deg,#06111b 0%,#0b1925 35%,#0b1a27 64%,#07131e 86%,#06111b 100%)!important;
+ background-color:#07131e!important;
+}
+main.pt-shell:has(> .pt-clarity) > .pt26-hero{background-color:transparent!important}
+main.pt-shell:has(> .pt-clarity) > .pt26-live{background:transparent!important;border:0!important;padding-top:27px!important;padding-bottom:0!important;margin-bottom:0!important}
+main.pt-shell:has(> .pt-clarity) > .pt-clarity{padding-top:68px!important;padding-bottom:0!important}
+main.pt-shell:has(> .pt-clarity) > .pt26-wallet-feature{margin-top:70px!important;margin-bottom:0!important}
+main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{margin-top:66px!important;margin-bottom:36px!important}
+main.pt-shell:has(> .pt-clarity) > .pt-founder-footer{margin-top:0!important;padding-top:38px!important;padding-bottom:32px!important;background:transparent!important}
+.pt26-live-title,.pt-clarity-top,.pt26-wallet-feature-head{margin-bottom:22px!important}
+.pt26-grid{gap:18px!important}
+.pt26-panel{box-shadow:0 12px 35px rgba(0,0,0,.13)!important}
+.pt26-panel .pt26-feed-row{border-color:rgba(158,183,201,.17)!important}
+.pt26-panel .pt26-explore{box-shadow:0 0 15px rgba(228,170,73,.15)}
+.pt26-panel.eth .pt26-explore{box-shadow:0 0 15px rgba(58,157,255,.13)}
+.pt-clarity-intro p,.pt26-wallet-feature-head p,.pt-faq-heading p{color:#afc2d1!important}
+.pt-clarity-comparison{gap:18px!important;margin-top:0!important}
+.pt-clarity-raw{background:linear-gradient(145deg,rgba(19,36,49,.92),rgba(15,29,41,.88));border-color:rgba(157,183,201,.22)}
+.pt-clarity-translation{background:radial-gradient(ellipse 65% 100% at 100% 0%,rgba(224,163,76,.105),transparent 82%),linear-gradient(145deg,rgba(36,56,71,.94),rgba(27,44,58,.93));border-color:rgba(233,185,110,.38)}
+.pt-clarity-education{margin-top:23px!important}
+.pt-clarity-education>summary{border-color:rgba(233,185,110,.66)!important}
+.pt-clarity-card{background:linear-gradient(145deg,rgba(25,42,54,.96),rgba(17,31,44,.94));border-color:rgba(233,185,110,.27);box-shadow:0 10px 26px rgba(0,0,0,.1)}
+.pt26-wallet-feature .pt26-wallet-follow{background:linear-gradient(110deg,rgba(29,48,62,.74),rgba(22,39,52,.65));border-color:rgba(167,190,205,.19);box-shadow:0 12px 29px rgba(0,0,0,.09)}
+.pt26-wallet-feature-head h2 em{color:#e9b96e}
+.pt26-wallet-dropdown summary{background:rgba(12,29,43,.88);border-color:rgba(144,174,196,.3)}
+.pt-faq-item{border-color:rgba(148,181,204,.22)!important}
+.pt-faq-safety{border-color:rgba(148,181,204,.19)!important}
+.pt26-hero-content p{color:#c2d1dd}
+.pt26-search{box-shadow:0 0 17px rgba(233,185,110,.2);border-color:#e9b96e}
+.pt26-search button{box-shadow:0 0 12px rgba(233,185,110,.35)!important}
+@media(max-width:700px){
+ main.pt-shell:has(> .pt-clarity) > .pt26-live{padding:23px 15px 0!important}
+ main.pt-shell:has(> .pt-clarity) > .pt-clarity{padding:47px 15px 0!important}
+ main.pt-shell:has(> .pt-clarity) > .pt26-wallet-feature{margin:48px 15px 0!important}
+ main.pt-shell:has(> .pt-clarity) > .pt-faq-refresh{padding:0 15px!important;margin:47px auto 25px!important}
+ main.pt-shell:has(> .pt-clarity) > .pt-founder-footer{padding-top:26px!important;padding-bottom:27px!important}
+ .pt26-live-title,.pt-clarity-top,.pt26-wallet-feature-head{margin-bottom:17px!important}
+ .pt26-grid{gap:13px!important}
+ .pt-clarity-comparison{gap:12px!important}
+ .pt26-wallet-feature .pt26-wallet-follow{padding:17px!important}
+}
+@media(prefers-reduced-motion:reduce){main.pt-shell:has(> .pt-clarity) *{scroll-behavior:auto!important}}
