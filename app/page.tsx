@@ -336,7 +336,7 @@ export default function Page() {
     </section>
 
     <section className="pt26-wallet-feature" aria-label="Explore public Bitcoin and Ethereum wallets"><div className="pt26-wallet-feature-head"><div className="pt26-wallet-feature-kicker">EXPLORE PUBLIC ADDRESSES</div><h2>Discover notable <em>blockchain wallets.</em></h2><p>Look inside public Bitcoin and Ethereum addresses to understand balances, incoming funds, and outgoing transactions.</p></div>      <div className="pt26-wallet-follow" aria-label="Explore notable blockchain wallets">
-        <div className="pt26-wallet-follow-copy"><strong>Explore Bitcoin &amp; Ethereum Wallets <span aria-hidden="true">↗</span></strong><span>Explore notable public addresses and their transaction histories. Select a network to see examples.</span></div>
+        
         <div className="pt26-wallet-follow-actions">
           <details className="pt26-wallet-dropdown btc"><summary><span>₿</span> Bitcoin wallets <b aria-hidden="true">⌄</b></summary>
             <div className="pt26-wallet-menu"><p>Large publicly tracked Bitcoin addresses</p>
