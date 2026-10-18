@@ -228,7 +228,8 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   ?spentOutputs+" of "+outspendRecords.length+" outputs from this transaction have since been spent in another transaction. An output being spent does not mean this original transaction failed."
   :null;
  const rbfData=result?.rbfHistory;
- const rbfNotice=rbfData&&typeof rbfData==="object"?"Mempool has replacement-by-fee history associated with this transaction. A wallet may have broadcast a newer transaction to replace an earlier version. Check the replacement history before assuming the original payment is lost.":null;
+ const hasRbfHistory=Array.isArray(rbfData)?rbfData.length>0:rbfData!=null&&typeof rbfData==="object"&&Object.keys(rbfData).length>0;
+ const rbfNotice=hasRbfHistory?"Mempool returned replacement-by-fee history for this transaction. Check the details before assuming an earlier payment is lost.":null;
  const feeHint=!observed?"Fee information unavailable":confirmed?"Already confirmed":feeRate==null||networkFee==null?"Network comparison unavailable":feeRate>=networkFee?"Competitive at current rates":"Below the current network guide";
  async function explain(){
   if(!result||aiLoading)return;
@@ -330,7 +331,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
         ]).map(row=><div key={row.name}><span><strong>{row.name}</strong><small>{row.note}</small></span><b>{row.value}</b></div>)}
        </div>}
        {(transactionTab==="inputs"||transactionTab==="outputs")&&<div className="txr-v2-address-list">
-        {(transactionTab==="inputs"?inputs:outputs).slice(0,understandingExpanded?1000:6).map((item,i)=>{const address=transactionTab==="inputs"?(item as typeof inputs[number]).prevout?.scriptpubkey_address:(item as typeof outputs[number]).scriptpubkey_address;const amount=transactionTab==="inputs"?(item as typeof inputs[number]).prevout?.value:(item as typeof outputs[number]).value;return <div className="txr-v2-address-row" key={i}><span><small>{transactionTab==="inputs"?"INPUT":"OUTPUT"} {i+1}</small>{address?<a href={"/btc/address/"+address}>{short(address)} ↗</a>:<strong>Address unavailable</strong>}</span><strong>{btc(amount)}</strong></div>})}
+        {(transactionTab==="inputs"?inputs:outputs).slice(0,understandingExpanded?1000:6).map((item,i)=>{const address=transactionTab==="inputs"?(item as typeof inputs[number]).prevout?.scriptpubkey_address:(item as typeof outputs[number]).scriptpubkey_address;const amount=transactionTab==="inputs"?(item as typeof inputs[number]).prevout?.value:(item as typeof outputs[number]).value;return <div className="txr-v2-address-row" key={i}><span><small>{transactionTab==="inputs"?"INPUT":"OUTPUT"} {i+1}</small>{address?<a href={"/btc/address/"+address}>{short(address)} ↗</a>:<strong>Address unavailable</strong>}</span><span><strong>{btc(amount)}</strong>{transactionTab==="outputs"&&outspendRecords[i]&&<small style={{display:"block",marginTop:4,opacity:.78}}>{outspendRecords[i].spent?"Spent in another transaction":"Not spent"}{outspendRecords[i].spent&&outspendRecords[i].txid&&<a style={{display:"block"}} href={"/btc/"+outspendRecords[i].txid}>View spending transaction ↗</a>}</small>}</span></div>})}
         {(transactionTab==="inputs"?inputs:outputs).length===0&&<p>No {transactionTab} data available.</p>}
        </div>}
        <button type="button" className="fresh-advanced-button" onClick={()=>setUnderstandingExpanded(v=>!v)} aria-expanded={understandingExpanded}>{understandingExpanded?"Hide more details":"⊕ Show more details"} <span>{understandingExpanded?"−":"＋"}</span></button>
