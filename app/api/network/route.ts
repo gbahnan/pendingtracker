@@ -1,3 +1,4 @@
+import { mempoolBaseUrl } from "@/lib/btc/providers/mempool";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -12,22 +13,23 @@ async function json(url: string) {
 export async function GET() {
   const alchemyRpc=async(method:string,params:unknown[])=>{const key=process.env.ALCHEMY_API_KEY;if(!key)return null;try{const r=await fetch("https://eth-mainnet.g.alchemy.com/v2/"+encodeURIComponent(key),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method,params}),signal:AbortSignal.timeout(6500),next:{revalidate:2}});if(!r.ok)return null;const d=await r.json();return d.error?null:d.result}catch{return null}};
   const [alchemyBlock,alchemyGas,alchemyPriority]=await Promise.all([alchemyRpc("eth_getBlockByNumber",["latest",false]),alchemyRpc("eth_gasPrice",[]),alchemyRpc("eth_maxPriorityFeePerGas",[])]);
+  const mempool = mempoolBaseUrl();
   const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks, recentTransactions, ethTransactions] = await Promise.allSettled([
-    json("https://mempool.space/api/v1/fees/recommended"),
-    json("https://mempool.space/api/mempool"),
-    fetch("https://mempool.space/api/blocks/tip/height", { next: { revalidate: 2 }, signal: AbortSignal.timeout(7000) }).then(async r => { if (!r.ok) throw new Error("Block height unavailable"); return Number(await r.text()); }),
+    json(mempool + "/api/v1/fees/recommended"),
+    json(mempool + "/api/mempool"),
+    fetch(mempool + "/api/blocks/tip/height", { next: { revalidate: 2 }, signal: AbortSignal.timeout(7000) }).then(async r => { if (!r.ok) throw new Error("Block height unavailable"); return Number(await r.text()); }),
     json("https://eth.blockscout.com/api/v2/stats"),
     json("https://eth.blockscout.com/api/v2/blocks?type=block"),
-    json("https://mempool.space/api/blocks"),
-    json("https://mempool.space/api/v1/fees/mempool-blocks"),
-    json("https://mempool.space/api/mempool/recent"),
+    json(mempool + "/api/blocks"),
+    json(mempool + "/api/v1/fees/mempool-blocks"),
+    json(mempool + "/api/mempool/recent"),
     json("https://eth.blockscout.com/api/v2/transactions?filter=validated"),
   ]);
 
   const get = (result: PromiseSettledResult<any>) => result.status === "fulfilled" ? result.value : null;
   const f = get(fees), p = get(pool), b = get(blocks), e = get(gas), eb = get(ethBlock), recent = get(recentBlocks), projected = get(projectedBlocks), txs = get(recentTransactions), etxs = get(ethTransactions);
   const tip = Array.isArray(recent) ? recent[0] : null;
-  const confirmedIds = typeof tip?.id === "string" && /^[a-f0-9]{64}$/i.test(tip.id) ? await json("https://mempool.space/api/block/" + tip.id + "/txids").catch(() => null) : null;
+  const confirmedIds = typeof tip?.id === "string" && /^[a-f0-9]{64}$/i.test(tip.id) ? await json(mempool + "/api/block/" + tip.id + "/txids").catch(() => null) : null;
   const tipTimestamp = Number(tip?.timestamp);
   const tipTxCount = Number(tip?.tx_count);
   const poolVsize = p?.vsize == null ? NaN : Number(p.vsize);
@@ -36,6 +38,7 @@ export async function GET() {
   const txCount = p?.count == null ? NaN : Number(p.count);
   const gasGwei = e?.gas_prices?.average == null ? NaN : Number(e.gas_prices.average);
   const congestion = !Number.isFinite(txCount) ? "Unavailable" : txCount > 100000 ? "Busy" : txCount > 25000 ? "Moderate" : "Light";
+  const feeGuidance = f?.fastestFee != null && f?.halfHourFee != null && f?.hourFee != null ? ` Estimated fee rates: next block ${f.fastestFee} sat/vB, about 30 minutes ${f.halfHourFee} sat/vB, about an hour ${f.hourFee} sat/vB. These are estimates, not guarantees.` : " Live fee estimates are currently unavailable.";
   const btc = {
     available: !!(f || p),
     pending: Number.isFinite(txCount) ? txCount : null,
@@ -64,11 +67,11 @@ export async function GET() {
       medianFee: block?.medianFee != null && Number.isFinite(Number(block.medianFee)) ? Math.round(Number(block.medianFee) * 10) / 10 : null,
       feeRange: Array.isArray(block?.feeRange) && block.feeRange.length > 0 ? [Math.min(...block.feeRange.map(Number).filter(Number.isFinite)), Math.max(...block.feeRange.map(Number).filter(Number.isFinite))] : null
     })) : [],
-    explanation: !p ? "Bitcoin network data is temporarily unavailable." : congestion === "Busy"
+    explanation: !p ? "Bitcoin mempool activity is temporarily unavailable." + feeGuidance : congestion === "Busy"
       ? "Bitcoin's waiting area is crowded. Transactions offering lower fees may wait longer."
       : congestion === "Moderate"
-      ? "Bitcoin has a noticeable backlog. Higher-fee transactions are generally prioritized by miners."
-      : "Bitcoin's waiting area is relatively light. Fees still matter, and confirmation times are never guaranteed."
+      ? "Bitcoin has a noticeable backlog. Higher-fee transactions are generally prioritized by miners." + feeGuidance
+      : "Bitcoin's waiting area is relatively light. Fees still matter, and confirmation times are never guaranteed." + feeGuidance
   };
   const alchemyGasGwei=typeof alchemyGas==="string"?Number(BigInt(alchemyGas))/1e9:null;
   const alchemyBaseGwei=typeof alchemyBlock?.baseFeePerGas==="string"?Number(BigInt(alchemyBlock.baseFeePerGas))/1e9:null;
@@ -83,7 +86,7 @@ export async function GET() {
     totalTransactions: e?.total_transactions ?? null,
     recentBlocks: Array.isArray(eb?.items) ? eb.items.slice(0, 6).map((block: any) => ({ height: block.height ?? null, hash: block.hash ?? null, timestamp: block.timestamp ?? null, transactionsCount: block.tx_count ?? block.transactions_count ?? null })) : [],
     recentTransactions: Array.isArray(etxs?.items) ? etxs.items.slice(0, 10).filter((tx: any) => /^0x[a-f0-9]{64}$/i.test(tx.hash ?? "")).map((tx: any) => ({ hash: tx.hash, status: tx.status ?? null, timestamp: tx.timestamp ?? null, block: tx.block ?? null })) : [],
-    explanation: !e ? "Ethereum network data is temporarily unavailable."
+    explanation: !(e||alchemyBlock) ? "Ethereum network data is temporarily unavailable."
       : "Ethereum gas is the cost of processing transactions. It changes with demand and the work a transaction requires. A transaction can also wait because of its fee settings or an earlier pending transaction from the same wallet."
   };
   return NextResponse.json({ btc, eth, updatedAt: new Date().toISOString(), sources: ["mempool.space", "Blockscout", ...(alchemyBlock||alchemyGas?["Alchemy"]:[])] }, {

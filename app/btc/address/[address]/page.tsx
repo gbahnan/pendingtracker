@@ -1,16 +1,17 @@
+import { mempoolBaseUrl } from "@/lib/btc/providers/mempool";
 import WalletDashboard from "./WalletDashboard";
 import "./wallet.css";
 
 export const metadata={title:"Bitcoin Wallet Explorer | Pending Tracker",description:"Explore any Bitcoin address, its balance, transactions and recent activity in plain English."};
-async function get(url:string){try{const r=await fetch(url,{next:{revalidate:45},signal:AbortSignal.timeout(9000)});return r.ok?await r.json():null}catch{return null}}
+async function get(url:string){try{const r=await fetch(url,{next:{revalidate:15},signal:AbortSignal.timeout(9000)});return r.ok?await r.json():null}catch{return null}}
 type Tx={txid:string;fee:number;status?:{confirmed:boolean;block_time?:number};vin?:{prevout?:{scriptpubkey_address?:string;value?:number}}[];vout?:{scriptpubkey_address?:string;value?:number}[]};
 export default async function BitcoinAddress({params}:{params:{address:string}}){
  const address=decodeURIComponent(params.address);
  const valid=/^(bc1[a-z0-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(address);
  const [info,txs,price]=valid?await Promise.all([
-  get("https://mempool.space/api/address/"+encodeURIComponent(address)),
-  get("https://mempool.space/api/address/"+encodeURIComponent(address)+"/txs"),
-  get("https://mempool.space/api/v1/prices")
+  get(mempoolBaseUrl()+"/api/address/"+encodeURIComponent(address)),
+  get(mempoolBaseUrl()+"/api/address/"+encodeURIComponent(address)+"/txs"),
+  get(mempoolBaseUrl()+"/api/v1/prices")
  ]):[null,null,null];
  const chain=info?.chain_stats??{},mem=info?.mempool_stats??{};
  const received=(chain.funded_txo_sum??0)+(mem.funded_txo_sum??0);

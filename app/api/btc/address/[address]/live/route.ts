@@ -1,3 +1,4 @@
+import {mempoolBaseUrl} from "@/lib/btc/providers/mempool";
 import {NextResponse} from "next/server";
 export const dynamic="force-dynamic";
 export const revalidate=0;
@@ -5,7 +6,7 @@ export async function GET(_request:Request,{params}:{params:{address:string}}){
  const address=params.address;
  if(!/^(bc1[a-z0-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(address))return NextResponse.json({error:"Invalid Bitcoin address"},{status:400});
  try{
-  const base="https://mempool.space/api/address/"+encodeURIComponent(address);
+  const base=mempoolBaseUrl()+"/api/address/"+encodeURIComponent(address);
   const [statsRes,txRes]=await Promise.all([fetch(base,{cache:"no-store",signal:AbortSignal.timeout(7000)}),fetch(base+"/txs/mempool",{cache:"no-store",signal:AbortSignal.timeout(7000)})]);
   if(!statsRes.ok||!txRes.ok)throw Error("Upstream unavailable");
   const stats=await statsRes.json(),txs=await txRes.json();
