@@ -279,6 +279,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
      </div>
      </div>
     </section>
+    {observed&&!confirmed&&<div style={{margin:"20px 0",padding:"18px 20px",border:"1px solid rgba(217,169,75,.28)",borderRadius:14,background:"rgba(217,169,75,.045)"}}><div style={{fontWeight:700,marginBottom:7}}>Need your transaction confirmed sooner?</div><p style={{margin:"0 0 12px",opacity:.83,fontSize:14,lineHeight:1.6}}>You can wait or check whether your wallet supports a fee increase. Mempool also offers a paid, third-party acceleration service for eligible transactions. Pricing and eligibility are determined by Mempool; faster confirmation is not guaranteed.</p><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",padding:"10px 16px",border:"1px solid rgba(217,169,75,.55)",borderRadius:9,color:"#e6bd69",fontWeight:650,textDecoration:"none"}}>Check acceleration on Mempool ↗</a><div style={{marginTop:8,fontSize:12,opacity:.65}}>Opens Mempool.space · Paid third-party service</div></div>}
     <footer className="txr-footer"><span>Transaction ID: <code>{short(txid)}</code> <button type="button" onClick={copy}>{copied?"✓ Copied":"Copy"}</button></span><a href={"https://mempool.space/tx/"+encodeURIComponent(txid)} target="_blank" rel="noopener noreferrer">Verify on Mempool.space ↗</a></footer>
    </>}
   </div><p className="txr-disclaimer">Live Bitcoin data refreshes automatically. Confirmation estimates are not guarantees. Never share a recovery phrase.</p>
