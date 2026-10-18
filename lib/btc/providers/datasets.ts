@@ -87,7 +87,13 @@ const validators: Record<string, RegExp> = {
   hash: /^[a-fA-F0-9]{64}$/,
   address: /^(?:[13][a-km-zA-HJ-NP-Z1-9]{25,34}|bc1[ac-hj-np-z02-9]{11,87})$/i,
   height: /^\d{1,8}$/,
-  index: /^\d{1,8}$/,\n  timestamp: /^\d{9,11}$/,\n  interval: /^(?:latest|24h|3d|1w|1m|3m|6m|1y|2y|3y)$/,\n  period: /^(?:24h|3d|1w|1m|3m|6m|1y|2y|3y)$/,\n  slug: /^[a-zA-Z0-9_-]{1,80}$/,\n  pubkey: /^[a-fA-F0-9]{66}$/,\n  channel: /^\\d{1,20}$/,
+  index: /^\d{1,8}$/,
+  timestamp: /^\d{9,11}$/,
+  interval: /^(?:latest|24h|3d|1w|1m|3m|6m|1y|2y|3y)$/,
+  period: /^(?:24h|3d|1w|1m|3m|6m|1y|2y|3y)$/,
+  slug: /^[a-zA-Z0-9_-]{1,80}$/,
+  pubkey: /^[a-fA-F0-9]{66}$/,
+  channel: /^\d{1,20}$/,
 };
 
 export async function fetchBitcoinDataset(
