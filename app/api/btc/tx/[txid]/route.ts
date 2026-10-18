@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getTxFirstSeen, getCpfpInfo, getRbfHistory, getTxOutspends, getRecommendedFees, getTx, getTxStatus } from "@/lib/btc/providers/mempool";
+import { getTxMerkleProof, getTxFirstSeen, getCpfpInfo, getRbfHistory, getTxOutspends, getRecommendedFees, getTx, getTxStatus } from "@/lib/btc/providers/mempool";
 import { computeFeerateSatVb, diagnoseBtcTx } from "@/lib/btc/diagnose";
 import { isLikelyTxid } from "@/lib/btc/validate";
 import { BtcMvpResult } from "@/lib/btc/types";
@@ -51,6 +51,7 @@ export async function GET(
     const rbfHistory = rbfRes.status === "fulfilled" ? rbfRes.value : null;
     const outspends = outspendsRes.status === "fulfilled" ? outspendsRes.value : null;
     const effectiveFeePerVsize = typeof cpfp?.effectiveFeePerVsize === "number" && Number.isFinite(cpfp.effectiveFeePerVsize) && cpfp.effectiveFeePerVsize >= 0 ? cpfp.effectiveFeePerVsize : null;
+    const merkleProof = status?.confirmed ? await getTxMerkleProof(txid) : null;
     const result: BtcMvpResult & { cpfp?: Record<string, unknown> | null; effectiveFeePerVsize?: number | null; rbfHistory?: unknown; outspends?: unknown } = {
       txid,
       tx,
@@ -62,6 +63,7 @@ export async function GET(
       rbfHistory,
       outspends,
       firstSeen: firstSeenRes.status === "fulfilled" ? firstSeenRes.value : null,
+      merkleProof,
       diagnosis,
       provider: "mempool.space",
       fetchedAtIso: new Date().toISOString(),
