@@ -68,6 +68,7 @@ export type BtcMvpResult = {
   cpfp?: Record<string, unknown> | null;
   rbfHistory?: unknown;
   firstSeen?: number | null;
+  merkleProof?: { block_height:number; merkle:string[]; pos:number } | null;
   outspends?: Array<{ spent: boolean; txid?: string; vin?: number }> | null;
   diagnosis: Diagnosis;
   provider: "mempool.space";
