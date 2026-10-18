@@ -42,7 +42,20 @@ export async function getTxStatus(txid: string): Promise<TxStatus> {
 }
 
 export async function getRecommendedFees(): Promise<FeeRecommendations> {
-  // Documented endpoint used by many projects and client libraries.
-  const url = `${mempoolBaseUrl()}/api/v1/fees/recommended`;
-  return fetchJson<FeeRecommendations>(url);
+  // Mempool derives precise recommendations from projected blocks and mempool minimums.
+  // Prefer their own calculated result instead of locally reconstructing fee thresholds.
+  // The precise endpoint may not be enabled on every Mempool-compatible instance.
+  try {
+    const precise = await fetchJson<FeeRecommendations>(`${mempoolBaseUrl()}/api/v1/fees/recommended/precise`);
+    if (precise && [precise.fastestFee, precise.halfHourFee, precise.hourFee, precise.economyFee, precise.minimumFee].every(v => typeof v === "number" && Number.isFinite(v) && v >= 0)) return precise;
+  } catch { /* Fall back to the broadly supported endpoint. */ }
+  return fetchJson<FeeRecommendations>(`${mempoolBaseUrl()}/api/v1/fees/recommended`);
+}
+
+/** Mempool CPFP cluster data is optional: never fail a transaction lookup if absent. */
+export async function getCpfpInfo(txid: string): Promise<Record<string, unknown> | null> {
+  try {
+    const data = await fetchJson<Record<string, unknown>>(`${mempoolBaseUrl()}/api/v1/cpfp/${txid}`);
+    return data && typeof data === "object" && !Array.isArray(data) ? data : null;
+  } catch { return null; }
 }
