@@ -12,6 +12,7 @@ export const bitcoinDatasets = {
   lightningChannelSearch: { path: "/api/v1/lightning/channels/search/{search}", input: "search" },
   lightningPenaltyClosures: { path: "/api/v1/lightning/penalties", input: "" },
   lightningChannelByShortId: { path: "/api/v1/lightning/channels/{shortId}", input: "shortId" },
+  lightningNodeSearch: { path: "/api/v1/lightning/nodes/search/{search}", input: "search" },
   lightningNodeFeeHistogram: { path: "/api/v1/lightning/nodes/{pubkey}/fees/histogram", input: "pubkey" },
   statistics2h: { path: "/api/v1/statistics/2h", input: "" },
   statistics24h: { path: "/api/v1/statistics/24h", input: "" },
