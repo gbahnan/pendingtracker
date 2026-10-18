@@ -44,7 +44,8 @@ export async function GET(
     }
 
     const feerateSatVb = computeFeerateSatVb(tx);
-    const diagnosis = diagnoseBtcTx({ txid, tx, status, fees, feerateSatVb });
+    const cpfpRate = cpfpRes.status === "fulfilled" && typeof cpfpRes.value?.effectiveFeePerVsize === "number" && Number.isFinite(cpfpRes.value.effectiveFeePerVsize) && cpfpRes.value.effectiveFeePerVsize >= 0 ? cpfpRes.value.effectiveFeePerVsize : null;
+    const diagnosis = diagnoseBtcTx({ txid, tx, status, fees, feerateSatVb: cpfpRate ?? feerateSatVb });
 
     const cpfp = cpfpRes.status === "fulfilled" ? cpfpRes.value : null;
     const rbfHistory = rbfRes.status === "fulfilled" ? rbfRes.value : null;
