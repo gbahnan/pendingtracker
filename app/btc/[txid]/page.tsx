@@ -102,6 +102,58 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   const id=setInterval(()=>{if(document.visibilityState==="visible")refresh();},10000);
   return()=>{clearInterval(id);document.removeEventListener("visibilitychange",onVisible);};
  },[refresh]);
+ // Subscribe to Mempool's live transaction and block events when the tab is visible.
+ // Polling remains the fallback if WebSockets are blocked or disconnected.
+ useEffect(()=>{
+  if(!valid||typeof window==="undefined")return;
+  let socket:WebSocket|null=null;
+  let stopped=false;
+  let reconnectTimer:ReturnType<typeof setTimeout>|null=null;
+  let refreshTimer:ReturnType<typeof setTimeout>|null=null;
+  let retries=0;
+  const scheduleRefresh=()=>{
+   if(document.visibilityState!=="visible"||refreshTimer)return;
+   refreshTimer=setTimeout(()=>{refreshTimer=null;refresh();},1200);
+  };
+  const connect=()=>{
+   if(stopped||document.visibilityState!=="visible"||typeof WebSocket==="undefined")return;
+   try{
+    socket=new WebSocket("wss://mempool.space/api/v1/ws");
+    socket.onopen=()=>{
+     retries=0;
+     socket?.send(JSON.stringify({action:"want",data:["blocks","mempool-blocks"]}));
+     socket?.send(JSON.stringify({"track-tx":txid}));
+    };
+    socket.onmessage=(event)=>{
+     try{
+      const data=JSON.parse(String(event.data));
+      if(data&&typeof data==="object"&&(data.block||data.blocks||data["mempool-blocks"]||data.txConfirmed||data.txPosition||data["tx-confirmed"]||data["tx-position"]||data["track-tx"]))scheduleRefresh();
+     }catch{/* Ignore non-JSON or unknown messages. */}
+    };
+    socket.onclose=()=>{
+     socket=null;
+     if(!stopped&&document.visibilityState==="visible"){
+      retries=Math.min(retries+1,6);
+      reconnectTimer=setTimeout(connect,Math.min(30000,1000*2**retries));
+     }
+    };
+    socket.onerror=()=>socket?.close();
+   }catch{/* Existing periodic refresh remains active. */}
+  };
+  const visibility=()=>{
+   if(document.visibilityState==="visible"){connect();scheduleRefresh();}
+   else{if(reconnectTimer)clearTimeout(reconnectTimer);socket?.close();socket=null;}
+  };
+  document.addEventListener("visibilitychange",visibility);
+  connect();
+  return()=>{
+   stopped=true;
+   document.removeEventListener("visibilitychange",visibility);
+   if(reconnectTimer)clearTimeout(reconnectTimer);
+   if(refreshTimer)clearTimeout(refreshTimer);
+   socket?.close();
+  };
+ },[txid,valid,refresh]);
  const tx=result?.tx as (NonNullable<BtcMvpResult["tx"]> & {vout?:Array<{value?:number;scriptpubkey_address?:string}>;vin?:Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}> ;size?:number;version?:number;locktime?:number})|null|undefined;
  const confirmed=Boolean(result?.status?.confirmed??tx?.status?.confirmed);
  const observed=Boolean(tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
