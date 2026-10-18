@@ -111,12 +111,13 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const packageFeeNotice=!confirmed&&observed&&result?.effectiveFeePerVsize!=null&&result?.feerateSatVb!=null&&Math.abs(result.effectiveFeePerVsize-result.feerateSatVb)>=0.01
   ?` Mempool also measures the effective fee of this transaction together with its related unconfirmed transactions: ${number(result.effectiveFeePerVsize)} sat/vB, compared with its own ${number(result.feerateSatVb)} sat/vB. This can change its confirmation priority.`:"";
  const blocks=overview?.btc?.projectedBlocks?.slice(0,5)??[];
- const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
- const firstMatch=matching[0]?.position;
- const selectedPosition=firstMatch??(feeRate!=null&&blocks[0]?.feeRange&&feeRate>blocks[0].feeRange[1]?1:null);
+ // Fee ranges of projected blocks can overlap. Use the earliest eligible block,
+ // and avoid presenting a false exact position when the rate is below all visible bands.
+ const eligible=feeRate==null?[]:blocks.filter(b=>b.feeRange&&Number.isFinite(b.feeRange[0])&&Number.isFinite(b.feeRange[1])&&feeRate>=b.feeRange[0]);
+ const selectedPosition=eligible[0]?.position??null;
  const selectedBand=blocks.find(b=>b.position===selectedPosition)?.feeRange;
  const trackedFraction=selectedBand&&feeRate!=null&&selectedBand[1]>selectedBand[0]?Math.max(0,Math.min(1,(feeRate-selectedBand[0])/(selectedBand[1]-selectedBand[0]))):0.5;
- const feeEstimate=!observed?"Not available":confirmed?"Already confirmed":selectedPosition?"Possible ~"+selectedPosition*10+" min*":"Not enough data";
+ const feeEstimate=!observed?"Not available":confirmed?"Already confirmed":selectedPosition?"Potentially within ~"+selectedPosition*10+" min*":"Not enough data";
  const blockHeight=result?.status?.block_height??tx?.status?.block_height;
  const confirmations=confirmed&&blockHeight!=null&&overview?.btc?.height!=null?Math.max(1,overview.btc.height-blockHeight+1):confirmed?1:0;
  const inputs: Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}>=(tx?.vin??[]) as Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}>;
@@ -140,7 +141,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   :confirmed
   ?"Your transaction has been included in a Bitcoin block and now has "+number(confirmations)+" confirmation"+(confirmations===1?"":"s")+". The Bitcoin network has recorded it, so you do not need to take any fee-related action. If you are waiting for a deposit, your exchange or wallet may require additional confirmations before making the funds available."
   :selectedPosition
-  ?"Your transaction has reached the Bitcoin network and is waiting to be included in a block. Based on its fee and current network activity, it may confirm in around "+selectedPosition*10+" minutes, but this is an estimate and can change. "+(networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee is below the current network guide, so it may take longer; you can wait or check whether your sending wallet offers a fee increase.":"You usually don't need to do anything right now—just wait for confirmation.")
+  ?"Your transaction has reached the Bitcoin network and is waiting to be included in a block. Based on current projected block fee ranges, it could confirm within roughly "+selectedPosition*10+" minutes, but this is an estimate and can change. "+(networkFee!=null&&feeRate!=null&&feeRate<networkFee?"Your fee is below the current network guide, so it may take longer; you can wait or check whether your sending wallet offers a fee increase.":"You usually don't need to do anything right now—just wait for confirmation.")
   :"Your transaction has reached the Bitcoin network and is waiting to be included in a block. Current network data does not provide a dependable confirmation time, and the wait may change as new transactions arrive. You can usually wait; if it takes unusually long, check your sending wallet's fee adjustment options.";
  const outspendRecords=result?.outspends??[];
  const spentOutputs=outspendRecords.filter(item=>item.spent).length;
