@@ -1,3 +1,4 @@
+import {mempoolBaseUrl} from "@/lib/btc/providers/mempool";
 import {NextResponse} from "next/server";
 export const dynamic="force-dynamic";
 export const maxDuration=60;
@@ -7,7 +8,7 @@ export async function GET(request:Request,{params}:{params:{address:string}}){
  if(!/^(bc1[a-z0-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(address))return NextResponse.json({error:"Invalid address"},{status:400});
  const u=new URL(request.url),days=Math.min(365,Math.max(1,Number(u.searchParams.get("days"))||30));
  const cutoff=Math.floor(Date.now()/1000)-days*86400;
- const base="https://mempool.space/api/address/"+encodeURIComponent(address);
+ const base=mempoolBaseUrl()+"/api/address/"+encodeURIComponent(address);
  try{
   const statsRes=await fetch(base,{next:{revalidate:20},signal:AbortSignal.timeout(7000)});
   if(!statsRes.ok)throw Error("Stats unavailable");
@@ -21,9 +22,10 @@ export async function GET(request:Request,{params}:{params:{address:string}}){
    if(Date.now()-started>21000)break;
    const url=base+"/txs/chain"+(cursor?"/"+cursor:"");
    const r=await fetch(url,{next:{revalidate:90},signal:AbortSignal.timeout(5500)});
-   if(!r.ok)break;
+   if(!r.ok)throw Error("History pagination unavailable");
    const batch:Tx[]=await r.json();
-   if(!Array.isArray(batch)||batch.length===0){complete=true;break}
+   if(!Array.isArray(batch))throw Error("Invalid history response");
+   if(batch.length===0){complete=true;break}
    for(const tx of batch){
     const time=tx.status?.block_time??0;
     if(!time)continue;
@@ -32,8 +34,7 @@ export async function GET(request:Request,{params}:{params:{address:string}}){
     const incoming=(tx.vout??[]).reduce((n,v)=>n+(v.scriptpubkey_address===address?(v.value??0):0),0);
     const outgoing=(tx.vin??[]).reduce((n,v)=>n+(v.prevout?.scriptpubkey_address===address?(v.prevout?.value??0):0),0);
     balance-=incoming-outgoing;
-    if(time<cutoff){reachedCutoff=true;break}
-   }
+    }
    if(reachedCutoff)break;
    cursor=batch[batch.length-1].txid;
    if(batch.length<25){complete=true;break}
