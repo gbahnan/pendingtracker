@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCpfpInfo, getRecommendedFees, getTx, getTxStatus } from "@/lib/btc/providers/mempool";
+import { getCpfpInfo, getRbfHistory, getRecommendedFees, getTx, getTxStatus } from "@/lib/btc/providers/mempool";
 import { computeFeerateSatVb, diagnoseBtcTx } from "@/lib/btc/diagnose";
 import { isLikelyTxid } from "@/lib/btc/validate";
 import { BtcMvpResult } from "@/lib/btc/types";
@@ -25,7 +25,7 @@ export async function GET(
 
   try {
     // Fetch independent upstream data concurrently to reduce lookup latency.
-    const [txRes, stRes, feeRes, cpfpRes] = await Promise.allSettled([getTx(txid), getTxStatus(txid), getRecommendedFees(), getCpfpInfo(txid)]);
+    const [txRes, stRes, feeRes, cpfpRes, rbfRes] = await Promise.allSettled([getTx(txid), getTxStatus(txid), getRecommendedFees(), getCpfpInfo(txid), getRbfHistory(txid)]);
     if (feeRes.status === "fulfilled") fees = feeRes.value;
 
     if (txRes.status === "fulfilled") tx = txRes.value;
@@ -47,8 +47,9 @@ export async function GET(
     const diagnosis = diagnoseBtcTx({ txid, tx, status, fees, feerateSatVb });
 
     const cpfp = cpfpRes.status === "fulfilled" ? cpfpRes.value : null;
+    const rbfHistory = rbfRes.status === "fulfilled" ? rbfRes.value : null;
     const effectiveFeePerVsize = typeof cpfp?.effectiveFeePerVsize === "number" && Number.isFinite(cpfp.effectiveFeePerVsize) && cpfp.effectiveFeePerVsize >= 0 ? cpfp.effectiveFeePerVsize : null;
-    const result: BtcMvpResult & { cpfp?: Record<string, unknown> | null; effectiveFeePerVsize?: number | null } = {
+    const result: BtcMvpResult & { cpfp?: Record<string, unknown> | null; effectiveFeePerVsize?: number | null; rbfHistory?: unknown } = {
       txid,
       tx,
       status,
@@ -56,6 +57,7 @@ export async function GET(
       feerateSatVb,
       cpfp,
       effectiveFeePerVsize,
+      rbfHistory,
       diagnosis,
       provider: "mempool.space",
       fetchedAtIso: new Date().toISOString(),
