@@ -105,7 +105,9 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  const tx=result?.tx as (NonNullable<BtcMvpResult["tx"]> & {vout?:Array<{value?:number;scriptpubkey_address?:string}>;vin?:Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}> ;size?:number;version?:number;locktime?:number})|null|undefined;
  const confirmed=Boolean(result?.status?.confirmed??tx?.status?.confirmed);
  const observed=Boolean(tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
- const feeRate=result?.feerateSatVb??null;
+ // Mempool calculates the package-aware effective fee rate (CPFP), when available.
+ // Prefer it for projected-block comparisons over the isolated transaction fee rate.
+ const feeRate=result?.effectiveFeePerVsize??result?.feerateSatVb??null;
  const blocks=overview?.btc?.projectedBlocks?.slice(0,5)??[];
  const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
  const firstMatch=matching[0]?.position;
