@@ -29,6 +29,8 @@ export const bitcoinDatasets = {
   lightningNodesIsp: { path: "/api/v1/lightning/nodes/isp/{isp}", input: "isp" },
   lightningNodesGroup: { path: "/api/v1/lightning/nodes/group/{group}", input: "group" },
 
+  bitcoinTreasuries: { path: "/api/v1/treasuries", input: "" },
+  publicWallet: { path: "/api/v1/wallet/{walletId}", input: "walletId" },
   backendInfo: { path: "/api/v1/backend-info", input: "" },
   feeEstimates: { path: "/api/v1/fee-estimates", input: "" },
   initData: { path: "/api/v1/init-data", input: "" },
@@ -148,6 +150,7 @@ const validators: Record<string, RegExp> = {
   slug: /^[a-zA-Z0-9_-]{1,80}$/,
   pubkey: /^[a-fA-F0-9]{66}$/,
   channel: /^\d{1,20}$/,
+  walletId: /^[a-zA-Z0-9_-]{1,100}$/,
   country: /^[a-zA-Z]{2}$/,
   isp: /^\d{1,12}$/,
   group: /^[a-zA-Z0-9_-]{1,60}$/,
