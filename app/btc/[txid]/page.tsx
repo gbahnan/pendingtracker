@@ -197,6 +197,13 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
    ?"This block included "+(confirmedBlock.transactionCount==null?"an unavailable number of":number(confirmedBlock.transactionCount))+" transactions. "+(confirmedBlock.ageMinutes==null?"":"It was mined approximately "+number(confirmedBlock.ageMinutes)+" minutes ago. ")+"Bitcoin miners collect transactions into blocks; confirmation does not reveal the identity of the sender or recipient."
    :"Your payment was included in Bitcoin block #"+number(blockHeight)+". Detailed block statistics may not be available in the latest-block feed for older transactions."
   :"Your transaction has not yet entered a confirmed block. Miners generally select transactions based on fees and other block-building considerations.";
+ const feeBumpGuidance=confirmed
+  ?"This transaction is confirmed. No acceleration is needed."
+  :!observed
+  ?"First confirm the sending wallet or exchange actually broadcast the transaction. An unbroadcast transaction cannot be accelerated on the Bitcoin network."
+  :rbf
+  ?"Your transaction signals replace-by-fee (RBF). If you control the sending wallet, look for a Speed Up or Increase Fee option. The replacement generally needs a higher fee and must follow network replacement rules. If you sent through an exchange, ask the exchange whether it supports fee bumping. Never share your recovery phrase."
+  :"This transaction does not explicitly signal RBF, but some nodes and wallets permit full-RBF replacements. If your wallet supports it, check its fee-bump options. Child-pays-for-parent (CPFP) may also help if you control a spendable output: a higher-fee child can incentivize miners to include both transactions. Neither method guarantees faster confirmation.";
  const explanation=[
  {title:"Where is my Bitcoin right now?",body:!observed?"We cannot currently see this transaction on the Bitcoin network. Verify that your wallet or exchange broadcast it.":confirmed?"Miners added it to block #"+number(blockHeight)+". It now has "+number(confirmations)+" confirmation(s).":"It has been broadcast and is waiting in Bitcoin's mempool, where unconfirmed payments wait to be selected by miners."},
  {title:"Is my transaction fee high enough?",body:feeRate==null?"We do not have a fee rate to compare.":"Your transaction offers "+rate(feeRate)+" and pays "+(tx?.fee==null?"an unavailable total fee":number(tx.fee)+" sats total")+". "+(networkFee==null?"The current network recommendation is unavailable.":feeRate>=networkFee?"That meets or exceeds the current roughly 30-minute fee guide of "+rate(networkFee)+".":"That is below the current roughly 30-minute fee guide of "+rate(networkFee)+", so other payments may get priority.")+" These are live comparisons, not guarantees."},
@@ -205,6 +212,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
  {title:"What do the inputs and outputs mean?",body:"This transaction uses "+number(inputs.length)+" earlier Bitcoin output(s) and creates "+number(outputs.length)+" new output(s). "+(outputTotal==null?"":"The new outputs total "+btc(outputTotal)+". ")+(outputs.length>=5?"This could be a batch payment, such as an exchange sending to several wallets. ":"One of the outputs may be change sent back to the sender. ")+"Addresses do not reveal who owns the wallets."},
  {title:"Does my transaction depend on another payment?",body:ancestryExplanation},
  {title:"What does the Bitcoin block tell me?",body:confirmedBlockDetails},
+ {title:"Can I speed up a stuck Bitcoin transaction?",body:feeBumpGuidance},
  {title:"What should I do next?",body:confirmed?"No fee action is needed. If an exchange still shows pending, check its required confirmation count.":!observed?"Check the transaction ID and broadcast status in the sending wallet or exchange. Never share your seed phrase.":rbf?"This transaction signals RBF (replace-by-fee). If you control the sending wallet and it supports fee bumping, you may be able to replace it with a higher-fee version.":"It does not signal opt-in RBF. Some wallets support CPFP (child-pays-for-parent), where spending an output with a higher fee may help. Check your wallet before taking action."}
  ];
  const summary=!observed
