@@ -11,7 +11,7 @@ export async function GET(request: Request, { params }: { params: { dataset: str
   }
   const url = new URL(request.url);
   const args: Record<string, string> = {};
-  for (const key of ["txid", "hash", "address", "height", "index", "timestamp", "interval", "period", "slug", "pubkey", "channel", "blockCount", "country", "isp", "group"]) {
+  for (const key of ["txid", "hash", "address", "height", "index", "timestamp", "interval", "period", "slug", "pubkey", "channel", "blockCount", "country", "isp", "group", "search", "shortId"]) {
     const value = url.searchParams.get(key);
     if (value !== null) args[key] = value;
   }
