@@ -24,11 +24,9 @@ export async function GET(
   let fees = null;
 
   try {
-    // Fees are useful even if tx isn't found.
-    fees = await getRecommendedFees().catch(() => null);
-
-    // Fetch tx and status in parallel; status endpoint is smaller.
-    const [txRes, stRes] = await Promise.allSettled([getTx(txid), getTxStatus(txid)]);
+    // Fetch independent upstream data concurrently to reduce lookup latency.
+    const [txRes, stRes, feeRes] = await Promise.allSettled([getTx(txid), getTxStatus(txid), getRecommendedFees()]);
+    if (feeRes.status === "fulfilled") fees = feeRes.value;
 
     if (txRes.status === "fulfilled") tx = txRes.value;
     if (stRes.status === "fulfilled") status = stRes.value;
@@ -59,7 +57,7 @@ export async function GET(
       fetchedAtIso: new Date().toISOString(),
     };
 
-    return NextResponse.json(result, { status: 200 });
+    return NextResponse.json(result, { status: 200, headers: { "Cache-Control": "public, s-maxage=5, stale-while-revalidate=10" } });
   } catch (err: any) {
     const msg = typeof err?.message === "string" ? err.message : "Unknown error";
     const result: BtcMvpResult = {
