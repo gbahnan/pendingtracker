@@ -9,6 +9,10 @@
 import { mempoolBaseUrl } from "./mempool";
 
 export const bitcoinDatasets = {
+  lightningChannelSearch: { path: "/api/v1/lightning/channels/search/{search}", input: "search" },
+  lightningPenaltyClosures: { path: "/api/v1/lightning/penalties", input: "" },
+  lightningChannelByShortId: { path: "/api/v1/lightning/channels/{shortId}", input: "shortId" },
+  lightningNodeFeeHistogram: { path: "/api/v1/lightning/nodes/{pubkey}/fees/histogram", input: "pubkey" },
   statistics2h: { path: "/api/v1/statistics/2h", input: "" },
   statistics24h: { path: "/api/v1/statistics/24h", input: "" },
   statistics1w: { path: "/api/v1/statistics/1w", input: "" },
@@ -24,7 +28,7 @@ export const bitcoinDatasets = {
   lightningNodesCountry: { path: "/api/v1/lightning/nodes/country/{country}", input: "country" },
   lightningNodesIsp: { path: "/api/v1/lightning/nodes/isp/{isp}", input: "isp" },
   lightningNodesGroup: { path: "/api/v1/lightning/nodes/group/{group}", input: "group" },
-  lightningNodeFeeHistogram: { path: "/api/v1/lightning/nodes/{pubkey}/fees/histogram", input: "pubkey" },
+
   backendInfo: { path: "/api/v1/backend-info", input: "" },
   feeEstimates: { path: "/api/v1/fee-estimates", input: "" },
   initData: { path: "/api/v1/init-data", input: "" },
@@ -154,6 +158,8 @@ const validators: Record<string, RegExp> = {
   country: /^[a-zA-Z]{2}$/,
   isp: /^\d{1,12}$/,
   group: /^[a-zA-Z0-9_-]{1,60}$/,
+  search: /^[a-zA-Z0-9:_-]{1,80}$/,
+  shortId: /^[a-zA-Z0-9x:_-]{1,80}$/,
 };
 
 export async function fetchBitcoinDataset(
