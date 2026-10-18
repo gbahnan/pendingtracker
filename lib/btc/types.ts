@@ -64,6 +64,9 @@ export type BtcMvpResult = {
   status?: TxStatus | null;
   fees?: FeeRecommendations | null;
   feerateSatVb?: number | null;
+  effectiveFeePerVsize?: number | null;
+  cpfp?: Record<string, unknown> | null;
+  rbfHistory?: unknown;
   diagnosis: Diagnosis;
   provider: "mempool.space";
   fetchedAtIso: string;
