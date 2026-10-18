@@ -46,7 +46,7 @@ export async function getRecommendedFees(): Promise<FeeRecommendations> {
   // Prefer their own calculated result instead of locally reconstructing fee thresholds.
   // The precise endpoint may not be enabled on every Mempool-compatible instance.
   try {
-    const precise = await fetchJson<FeeRecommendations>(`${mempoolBaseUrl()}/api/v1/fees/recommended/precise`);
+    const precise = await fetchJson<FeeRecommendations>(`${mempoolBaseUrl()}/api/v1/fees/precise`);
     if (precise && [precise.fastestFee, precise.halfHourFee, precise.hourFee, precise.economyFee, precise.minimumFee].every(v => typeof v === "number" && Number.isFinite(v) && v >= 0)) return precise;
   } catch { /* Fall back to the broadly supported endpoint. */ }
   return fetchJson<FeeRecommendations>(`${mempoolBaseUrl()}/api/v1/fees/recommended`);
