@@ -179,6 +179,20 @@ export async function fetchBitcoinDataset(
     }
     path = path.replace(`{${name}}`, encodeURIComponent(value));
   }
+  // Bound expensive range endpoints before contacting the shared provider.
+  if (dataset === "blockBulk" || dataset === "blockBulkRange") {
+    const from = Number(parameters.from);
+    const to = dataset === "blockBulkRange" ? Number(parameters.to) : from;
+    if (to < from || to - from > 9) {
+      throw new BitcoinUpstreamError(400, "Block ranges must contain at most 10 blocks");
+    }
+  }
+  if (dataset === "blockTransactions" && Number(parameters.index) % 25 !== 0) {
+    throw new BitcoinUpstreamError(400, "Transaction index must be a multiple of 25");
+  }
+  if (dataset === "miningRewardStats" && (Number(parameters.blockCount) < 1 || Number(parameters.blockCount) > 144)) {
+    throw new BitcoinUpstreamError(400, "Reward statistics support 1-144 blocks");
+  }
   const response = await fetch(`${mempoolBaseUrl()}${path}`, {
     headers: { accept: "application/json, text/plain" },
     signal: AbortSignal.timeout(8000),

@@ -83,7 +83,8 @@ export async function getTxOutspends(txid: string): Promise<Array<{ spent: boole
 /** First-seen timestamp is best-effort: the provider may not retain it. */
 export async function getTxFirstSeen(txid: string): Promise<number | null> {
   try {
-    const value = await fetchJson<unknown>(`${mempoolBaseUrl()}/api/v1/tx/${txid}/first-seen`);
+    const times = await fetchJson<unknown>(`${mempoolBaseUrl()}/api/v1/transaction-times?txId%5B%5D=${encodeURIComponent(txid)}`);
+    const value = Array.isArray(times) && times.length === 1 ? times[0] : null;
     // Do not infer a timestamp from an undocumented or unrelated response.
     return typeof value === "number" && Number.isSafeInteger(value) && value > 1_000_000_000 ? value : null;
   } catch { return null; }
