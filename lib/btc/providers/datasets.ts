@@ -9,6 +9,24 @@
 import { mempoolBaseUrl } from "./mempool";
 
 export const bitcoinDatasets = {
+  backendInfo: { path: "/api/v1/backend-info", input: "" },
+  feeEstimates: { path: "/api/v1/fee-estimates", input: "" },
+  initData: { path: "/api/v1/init-data", input: "" },
+  blocksAtHeight: { path: "/api/v1/blocks/{height}", input: "height" },
+  blockTxSummary: { path: "/api/v1/block/{hash}/tx/{txid}/summary", input: "hash,txid" },
+  blockTxAudit: { path: "/api/v1/block/{hash}/tx/{txid}/audit", input: "hash,txid" },
+  staleTipsByHeight: { path: "/api/v1/stale-tips/{height}", input: "height" },
+  miningBlockAuditScoresByHeight: { path: "/api/v1/mining/blocks/audit/scores/{height}", input: "height" },
+  miningPoolBlocksByHeight: { path: "/api/v1/mining/pool/{slug}/blocks/{height}", input: "slug,height" },
+  miningDifficultyAdjustments: { path: "/api/v1/mining/difficulty-adjustments", input: "" },
+  lightningLatestStats: { path: "/api/v1/lightning/statistics/latest", input: "" },
+  // Lightning search requires a validated query parameter and is tracked separately.
+  accelerationHistoryAggregated: { path: "/api/v1/services/accelerator/accelerations/history/aggregated", input: "" },
+  accelerationStats: { path: "/api/v1/services/accelerator/accelerations/stats", input: "" },
+  accelerationTransaction: { path: "/api/v1/services/accelerator/accelerations/{txid}", input: "txid" },
+  // Binary block data requires a separate, size-limited handler.
+  blockTransactionsFirstPage: { path: "/api/block/{hash}/txs", input: "hash" },
+  // Unbounded txid lists are intentionally not exposed through the public proxy.
   addressConfirmedHistory: { path: "/api/address/{address}/txs/chain", input: "address" },
   addressValidation: { path: "/api/v1/validate-address/{address}", input: "address" },
   blockHeader: { path: "/api/block/{hash}/header", input: "hash" },
