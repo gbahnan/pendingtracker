@@ -67,6 +67,7 @@ export type BtcMvpResult = {
   effectiveFeePerVsize?: number | null;
   cpfp?: Record<string, unknown> | null;
   rbfHistory?: unknown;
+  firstSeen?: number | null;
   outspends?: Array<{ spent: boolean; txid?: string; vin?: number }> | null;
   diagnosis: Diagnosis;
   provider: "mempool.space";
