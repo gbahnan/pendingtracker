@@ -39,10 +39,22 @@ export async function GET() {
   const gasGwei = e?.gas_prices?.average == null ? NaN : Number(e.gas_prices.average);
   const congestion = !Number.isFinite(txCount) ? "Unavailable" : txCount > 100000 ? "Busy" : txCount > 25000 ? "Moderate" : "Light";
   const feeGuidance = f?.fastestFee != null && f?.halfHourFee != null && f?.hourFee != null ? ` Estimated fee rates: next block ${f.fastestFee} sat/vB, about 30 minutes ${f.halfHourFee} sat/vB, about an hour ${f.hourFee} sat/vB. These are estimates, not guarantees.` : " Live fee estimates are currently unavailable.";
+  // Compare current fees to recent confirmed block medians, not a fabricated historical average.
+  const recentFeeSamples=Array.isArray(recent)?recent.slice(0,12).map((block:any)=>Number(block?.extras?.medianFee)).filter((n:number)=>Number.isFinite(n)&&n>0):[];
+  const sortedFeeSamples=[...recentFeeSamples].sort((a:number,b:number)=>a-b);
+  const recentMedianFee=sortedFeeSamples.length?sortedFeeSamples[Math.floor(sortedFeeSamples.length/2)]:null;
+  const currentHalfHourFee=f?.halfHourFee!=null?Number(f.halfHourFee):null;
+  const feeContext=recentMedianFee==null||currentHalfHourFee==null||!Number.isFinite(currentHalfHourFee)
+    ?null
+    :currentHalfHourFee>recentMedianFee*1.5?"Current recommended fees are substantially above the median fee rate in recently confirmed blocks."
+    :currentHalfHourFee<recentMedianFee*0.7?"Current recommended fees are below the median fee rate in recently confirmed blocks."
+    :"Current recommended fees are in a similar range to the median fee rate in recently confirmed blocks.";
   const btc = {
     available: !!(f || p),
     pending: Number.isFinite(txCount) ? txCount : null,
     congestion,
+    recentMedianFee,
+    feeContext,
     fastestFee: f?.fastestFee != null && Number.isFinite(Number(f.fastestFee)) ? Number(f.fastestFee) : null,
     hourFee: f?.hourFee != null && Number.isFinite(Number(f.hourFee)) ? Number(f.hourFee) : null,
     halfHourFee: f?.halfHourFee != null && Number.isFinite(Number(f.halfHourFee)) ? Number(f.halfHourFee) : null,
