@@ -59,3 +59,9 @@ export async function getCpfpInfo(txid: string): Promise<Record<string, unknown>
     return data && typeof data === "object" && !Array.isArray(data) ? data : null;
   } catch { return null; }
 }
+
+/** Mempool retains replacement history for RBF transactions when available. */
+export async function getRbfHistory(txid: string): Promise<unknown | null> {
+  try { return await fetchJson<unknown>(`${mempoolBaseUrl()}/api/v1/tx/${txid}/rbf`); }
+  catch { return null; }
+}
