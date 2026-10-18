@@ -9,6 +9,22 @@
 import { mempoolBaseUrl } from "./mempool";
 
 export const bitcoinDatasets = {
+  statistics2h: { path: "/api/v1/statistics/2h", input: "" },
+  statistics24h: { path: "/api/v1/statistics/24h", input: "" },
+  statistics1w: { path: "/api/v1/statistics/1w", input: "" },
+  statistics1m: { path: "/api/v1/statistics/1m", input: "" },
+  statistics3m: { path: "/api/v1/statistics/3m", input: "" },
+  statistics6m: { path: "/api/v1/statistics/6m", input: "" },
+  statistics1y: { path: "/api/v1/statistics/1y", input: "" },
+  statistics2y: { path: "/api/v1/statistics/2y", input: "" },
+  statistics3y: { path: "/api/v1/statistics/3y", input: "" },
+  statistics4y: { path: "/api/v1/statistics/4y", input: "" },
+  statisticsAll: { path: "/api/v1/statistics/all", input: "" },
+  lightningNodesWorld: { path: "/api/v1/lightning/nodes/world", input: "" },
+  lightningNodesCountry: { path: "/api/v1/lightning/nodes/country/{country}", input: "country" },
+  lightningNodesIsp: { path: "/api/v1/lightning/nodes/isp/{isp}", input: "isp" },
+  lightningNodesGroup: { path: "/api/v1/lightning/nodes/group/{group}", input: "group" },
+  lightningNodeFeeHistogram: { path: "/api/v1/lightning/nodes/{pubkey}/fees/histogram", input: "pubkey" },
   backendInfo: { path: "/api/v1/backend-info", input: "" },
   feeEstimates: { path: "/api/v1/fee-estimates", input: "" },
   initData: { path: "/api/v1/init-data", input: "" },
@@ -135,6 +151,9 @@ const validators: Record<string, RegExp> = {
   slug: /^[a-zA-Z0-9_-]{1,80}$/,
   pubkey: /^[a-fA-F0-9]{66}$/,
   channel: /^\d{1,20}$/,
+  country: /^[a-zA-Z]{2}$/,
+  isp: /^\d{1,12}$/,
+  group: /^[a-zA-Z0-9_-]{1,60}$/,
 };
 
 export async function fetchBitcoinDataset(
