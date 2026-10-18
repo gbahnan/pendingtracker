@@ -1,4 +1,4 @@
-import { mempoolBaseUrl } from "@/lib/btc/providers/mempool";
+import { getRecommendedFees, mempoolBaseUrl } from "@/lib/btc/providers/mempool";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -15,7 +15,7 @@ export async function GET() {
   const [alchemyBlock,alchemyGas,alchemyPriority]=await Promise.all([alchemyRpc("eth_getBlockByNumber",["latest",false]),alchemyRpc("eth_gasPrice",[]),alchemyRpc("eth_maxPriorityFeePerGas",[])]);
   const mempool = mempoolBaseUrl();
   const [fees, pool, blocks, gas, ethBlock, recentBlocks, projectedBlocks, recentTransactions, ethTransactions] = await Promise.allSettled([
-    json(mempool + "/api/v1/fees/recommended"),
+    getRecommendedFees(),
     json(mempool + "/api/mempool"),
     fetch(mempool + "/api/blocks/tip/height", { next: { revalidate: 2 }, signal: AbortSignal.timeout(7000) }).then(async r => { if (!r.ok) throw new Error("Block height unavailable"); return Number(await r.text()); }),
     json("https://eth.blockscout.com/api/v2/stats"),

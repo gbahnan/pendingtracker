@@ -93,11 +93,23 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   }catch(e){setError(e instanceof Error?e.message:"Live network data is unavailable.");}
   finally{setLoading(false);}
  },[txid,valid]);
- useEffect(()=>{refresh();const id=setInterval(refresh,1000);return()=>clearInterval(id);},[refresh]);
+ useEffect(()=>{
+  refresh();
+  // Avoid hammering Mempool and our combined Bitcoin/Ethereum network endpoint every second.
+  // Resume immediately when the visitor returns to the tab.
+  const onVisible=()=>{if(document.visibilityState==="visible")refresh();};
+  document.addEventListener("visibilitychange",onVisible);
+  const id=setInterval(()=>{if(document.visibilityState==="visible")refresh();},10000);
+  return()=>{clearInterval(id);document.removeEventListener("visibilitychange",onVisible);};
+ },[refresh]);
  const tx=result?.tx as (NonNullable<BtcMvpResult["tx"]> & {vout?:Array<{value?:number;scriptpubkey_address?:string}>;vin?:Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}> ;size?:number;version?:number;locktime?:number})|null|undefined;
  const confirmed=Boolean(result?.status?.confirmed??tx?.status?.confirmed);
  const observed=Boolean(tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
- const feeRate=result?.feerateSatVb??null;
+ // Mempool calculates the package-aware effective fee rate (CPFP), when available.
+ // Prefer it for projected-block comparisons over the isolated transaction fee rate.
+ const feeRate=result?.effectiveFeePerVsize??result?.feerateSatVb??null;
+ const packageFeeNotice=!confirmed&&observed&&result?.effectiveFeePerVsize!=null&&result?.feerateSatVb!=null&&Math.abs(result.effectiveFeePerVsize-result.feerateSatVb)>=0.01
+  ?` Mempool also measures the effective fee of this transaction together with its related unconfirmed transactions: ${number(result.effectiveFeePerVsize)} sat/vB, compared with its own ${number(result.feerateSatVb)} sat/vB. This can change its confirmation priority.`:"";
  const blocks=overview?.btc?.projectedBlocks?.slice(0,5)??[];
  const matching=feeRate==null?[]:blocks.filter(b=>b.feeRange&&feeRate>=b.feeRange[0]&&feeRate<=b.feeRange[1]);
  const firstMatch=matching[0]?.position;
@@ -166,7 +178,7 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
     </section>
     <section className="txr-snapshot-v2" aria-label="Your transaction snapshot">
      <div className="txr-new-heading"><h2>Transaction <em>Snapshot</em></h2><div className="txr-id txr-new-hash"><span className="txr-hash-label">Your Transaction ID:</span><code title={txid}>{txid}</code></div><div className="txr-v2-status"><strong>{confirmed?"✓ Confirmed":observed?"⬡ Pending":"? Not found"}</strong></div></div>
-      <div className="txr-new-content"><div className="txr-new-summary"><div className="txr-new-summary-mark">✦</div><div className="txr-new-summary-copy"><span className="txr-v2-kicker">PENDING TRACKER EXPLAINS · TRANSACTION SUMMARY</span><p>{summary}</p></div><div className="txr-new-summary-eta"><small>{confirmed?"Confirmations":observed?"Estimated confirmation":"Transaction status"}</small><strong>{confirmed?number(confirmations):observed?feeEstimate:"Not found"}</strong><span>{confirmed?"Recorded on Bitcoin":observed?"Estimate, not guaranteed":"Not yet observed"}</span></div></div>
+      <div className="txr-new-content"><div className="txr-new-summary"><div className="txr-new-summary-mark">✦</div><div className="txr-new-summary-copy"><span className="txr-v2-kicker">PENDING TRACKER EXPLAINS · TRANSACTION SUMMARY</span><p>{summary}{packageFeeNotice}</p></div><div className="txr-new-summary-eta"><small>{confirmed?"Confirmations":observed?"Estimated confirmation":"Transaction status"}</small><strong>{confirmed?number(confirmations):observed?feeEstimate:"Not found"}</strong><span>{confirmed?"Recorded on Bitcoin":observed?"Estimate, not guaranteed":"Not yet observed"}</span></div></div>
      <div className="txr-new-metrics">
       {[
        {id:"status",icon:"⬡",label:"Transaction Status",value:confirmed?"Confirmed":observed?"Pending":"Not found",sub:confirmed?number(confirmations)+" confirmation(s)":observed?"Waiting for confirmation":"Not currently visible on network",help:confirmed?"Your transaction has been confirmed in Bitcoin block #"+number(blockHeight)+". It is now recorded on the blockchain. It currently has "+number(confirmations)+" confirmation(s), and each new block can add another. Some wallets and exchanges wait for additional confirmations before crediting funds.":observed?"Your transaction has been broadcast to the Bitcoin network and is currently unconfirmed. It is visible to our network data source and waiting in the mempool to be selected for a block. Miners generally prioritize transactions offering competitive fees, so the wait can vary with network activity. There is usually nothing you need to do right now. If it takes longer than expected, your sending wallet may support increasing the fee.":"We cannot currently find this transaction in our Bitcoin network data. It may not have been broadcast yet, may no longer be visible to the data source, or the transaction ID may be incorrect. Check the ID and your sending wallet before assuming it has been sent.",color:"gold"},

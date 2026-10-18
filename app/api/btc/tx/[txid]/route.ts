@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRecommendedFees, getTx, getTxStatus } from "@/lib/btc/providers/mempool";
+import { getCpfpInfo, getRbfHistory, getTxOutspends, getRecommendedFees, getTx, getTxStatus } from "@/lib/btc/providers/mempool";
 import { computeFeerateSatVb, diagnoseBtcTx } from "@/lib/btc/diagnose";
 import { isLikelyTxid } from "@/lib/btc/validate";
 import { BtcMvpResult } from "@/lib/btc/types";
@@ -25,7 +25,7 @@ export async function GET(
 
   try {
     // Fetch independent upstream data concurrently to reduce lookup latency.
-    const [txRes, stRes, feeRes] = await Promise.allSettled([getTx(txid), getTxStatus(txid), getRecommendedFees()]);
+    const [txRes, stRes, feeRes, cpfpRes, rbfRes, outspendsRes] = await Promise.allSettled([getTx(txid), getTxStatus(txid), getRecommendedFees(), getCpfpInfo(txid), getRbfHistory(txid), getTxOutspends(txid)]);
     if (feeRes.status === "fulfilled") fees = feeRes.value;
 
     if (txRes.status === "fulfilled") tx = txRes.value;
@@ -44,14 +44,23 @@ export async function GET(
     }
 
     const feerateSatVb = computeFeerateSatVb(tx);
-    const diagnosis = diagnoseBtcTx({ txid, tx, status, fees, feerateSatVb });
+    const cpfpRate = cpfpRes.status === "fulfilled" && typeof cpfpRes.value?.effectiveFeePerVsize === "number" && Number.isFinite(cpfpRes.value.effectiveFeePerVsize) && cpfpRes.value.effectiveFeePerVsize >= 0 ? cpfpRes.value.effectiveFeePerVsize : null;
+    const diagnosis = diagnoseBtcTx({ txid, tx, status, fees, feerateSatVb: cpfpRate ?? feerateSatVb });
 
-    const result: BtcMvpResult = {
+    const cpfp = cpfpRes.status === "fulfilled" ? cpfpRes.value : null;
+    const rbfHistory = rbfRes.status === "fulfilled" ? rbfRes.value : null;
+    const outspends = outspendsRes.status === "fulfilled" ? outspendsRes.value : null;
+    const effectiveFeePerVsize = typeof cpfp?.effectiveFeePerVsize === "number" && Number.isFinite(cpfp.effectiveFeePerVsize) && cpfp.effectiveFeePerVsize >= 0 ? cpfp.effectiveFeePerVsize : null;
+    const result: BtcMvpResult & { cpfp?: Record<string, unknown> | null; effectiveFeePerVsize?: number | null; rbfHistory?: unknown; outspends?: unknown } = {
       txid,
       tx,
       status,
       fees,
       feerateSatVb,
+      cpfp,
+      effectiveFeePerVsize,
+      rbfHistory,
+      outspends,
       diagnosis,
       provider: "mempool.space",
       fetchedAtIso: new Date().toISOString(),
