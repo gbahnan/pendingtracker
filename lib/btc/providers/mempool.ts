@@ -65,3 +65,17 @@ export async function getRbfHistory(txid: string): Promise<unknown | null> {
   try { return await fetchJson<unknown>(`${mempoolBaseUrl()}/api/v1/tx/${txid}/rbf`); }
   catch { return null; }
 }
+
+/** Use Mempool address validation instead of relying only on regex shape checks. */
+export async function validateBtcAddress(address: string): Promise<{ isvalid?: boolean; isValid?: boolean; address?: string } | null> {
+  try { return await fetchJson<{ isvalid?: boolean; isValid?: boolean; address?: string }>(`${mempoolBaseUrl()}/api/v1/validate-address/${encodeURIComponent(address)}`); }
+  catch { return null; }
+}
+
+/** Check whether a transaction output has already been spent. */
+export async function getTxOutspends(txid: string): Promise<Array<{ spent: boolean; txid?: string; vin?: number }> | null> {
+  try {
+    const result = await fetchJson<Array<{ spent: boolean; txid?: string; vin?: number }>>(`${mempoolBaseUrl()}/api/tx/${txid}/outspends`);
+    return Array.isArray(result) ? result : null;
+  } catch { return null; }
+}
