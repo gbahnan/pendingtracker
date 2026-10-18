@@ -93,7 +93,15 @@ export default function BtcTxPage({params}:{params:{txid:string}}){
   }catch(e){setError(e instanceof Error?e.message:"Live network data is unavailable.");}
   finally{setLoading(false);}
  },[txid,valid]);
- useEffect(()=>{refresh();const id=setInterval(refresh,1000);return()=>clearInterval(id);},[refresh]);
+ useEffect(()=>{
+  refresh();
+  // Avoid hammering Mempool and our combined Bitcoin/Ethereum network endpoint every second.
+  // Resume immediately when the visitor returns to the tab.
+  const onVisible=()=>{if(document.visibilityState==="visible")refresh();};
+  document.addEventListener("visibilitychange",onVisible);
+  const id=setInterval(()=>{if(document.visibilityState==="visible")refresh();},10000);
+  return()=>{clearInterval(id);document.removeEventListener("visibilitychange",onVisible);};
+ },[refresh]);
  const tx=result?.tx as (NonNullable<BtcMvpResult["tx"]> & {vout?:Array<{value?:number;scriptpubkey_address?:string}>;vin?:Array<{txid?:string;sequence?:number;prevout?:{value?:number;scriptpubkey_address?:string}}> ;size?:number;version?:number;locktime?:number})|null|undefined;
  const confirmed=Boolean(result?.status?.confirmed??tx?.status?.confirmed);
  const observed=Boolean(tx||result?.status)&&result?.diagnosis?.code!=="NOT_SEEN";
