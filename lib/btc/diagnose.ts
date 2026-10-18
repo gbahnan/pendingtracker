@@ -18,8 +18,8 @@ export function txSignalsRbf(tx: MempoolTx | null | undefined): boolean | null {
 
 export function computeVsize(tx: MempoolTx | null | undefined): number | null {
   if (!tx) return null;
-  if (typeof tx.vsize === "number") return tx.vsize;
-  if (typeof tx.weight === "number") return Math.ceil(tx.weight / 4);
+  if (typeof tx.vsize === "number" && Number.isFinite(tx.vsize) && tx.vsize > 0) return tx.vsize;
+  if (typeof tx.weight === "number" && Number.isFinite(tx.weight) && tx.weight > 0) return Math.ceil(tx.weight / 4);
   return null;
 }
 
@@ -27,8 +27,8 @@ export function computeFeerateSatVb(tx: MempoolTx | null | undefined): number | 
   if (!tx) return null;
   const fee = typeof tx.fee === "number" ? tx.fee : null;
   const vsize = computeVsize(tx);
-  if (!fee || !vsize) return null;
-  return Math.round((fee / vsize) * 10) / 10; // 0.1 sat/vB precision
+  if (fee === null || !Number.isFinite(fee) || fee < 0 || !vsize) return null;
+  return Math.round((fee / vsize) * 100) / 100; // 0.01 sat/vB precision; retain sub-1 sat/vB rates
 }
 
 function etaFromClass(cls: "fastest" | "halfHour" | "hour" | "economy" | "min"): { minMinutes: number; maxMinutes: number; note?: string } {
