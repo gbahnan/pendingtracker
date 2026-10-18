@@ -18,6 +18,7 @@ global.fetch=async (url)=>{calls.push(String(url));return new Response('[1720000
  }
  global.fetch=async()=>{throw Error('offline')};
  assert.equal(await getTxFirstSeen(txid),null);
+ process.env.MEMPOOL_BASE_URL="https://example.test";
  let contacted=false;
  global.fetch=async()=>{contacted=true;return new Response('{}')};
  for(const [key,args] of [['blockBulkRange',{from:'10',to:'20'}],['blockBulkRange',{from:'10',to:'9'}],['blockTransactions',{hash:txid,index:'1'}],['miningRewardStats',{blockCount:'0'}],['transaction',{txid:'../private'}]]) {
@@ -26,5 +27,11 @@ global.fetch=async (url)=>{calls.push(String(url));return new Response('[1720000
  assert.equal(contacted,false,'invalid parameters must not contact provider');
  await fetchBitcoinDataset('blockBulkRange',{from:'10',to:'19'});
  assert.equal(contacted,true);
+ delete process.env.MEMPOOL_BASE_URL;
+ await assert.rejects(fetchBitcoinDataset('blockBulk',{from:'10'}),e=>e.status===404);
+ global.fetch=async()=>new Response(null,{status:204});
+ assert.equal(await fetchBitcoinDataset('transactionCached',{txid}),null);
+ global.fetch=async()=>new Response('<html>error</html>',{headers:{'content-type':'text/html'}});
+ await assert.rejects(fetchBitcoinDataset('recommendedFees'),e=>e.status===502);
  console.log('PASS: first-seen parsing/fallback and catalog input bounds');
 })().catch(e=>{console.error(e);process.exitCode=1});

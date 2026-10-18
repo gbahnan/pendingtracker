@@ -1,0 +1,178 @@
+{
+  "checkedAt": "2026-10-18T19:45:44.624Z",
+  "base": "https://mempool.space",
+  "catalogCount": 117,
+  "probedCount": 5,
+  "limits": {
+    "concurrency": 2,
+    "timeoutSeconds": 18,
+    "maxResponseBytes": 2000000
+  },
+  "fixtures": {
+    "hash": "000000000000000000005143d54d5bd0fe58abefc83c45cdea3c7242c15861e9",
+    "height": "972046",
+    "txid": "20bcad2981b9d9b949e63d524723ca00589c3b39974ae4a19b65bc42a5709ad7",
+    "address": "bc1qkwrjvr5fuhdhstsz6p6nq6ekg8ef0cumanqg5k",
+    "scripthash": "aaf556961e781aff327a51bc981c379177383f46246a0af2d98b81cee82f0c04",
+    "from": "972046",
+    "to": "972046",
+    "index": "0",
+    "timestamp": "1792351843",
+    "blockCount": "1",
+    "interval": "1m",
+    "period": "1m",
+    "slug": "foundryusa",
+    "country": "US",
+    "isp": "13335",
+    "group": "mempool",
+    "prefix": "bc1qkwrj",
+    "walletId": "3350",
+    "search": "ACINQ",
+    "shortId": "892785849701564416",
+    "pubkey": "03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f"
+  },
+  "limitations": [
+    "HTTP and observed schema checks only; successful responses do not prove semantic correctness or UI integration.",
+    "404 may mean missing fixture data, disabled upstream feature, or unsupported route; consult backend source.",
+    "No transaction broadcast, acceleration purchase, credentials, or other write requests."
+  ],
+  "summary": {
+    "http-success": 5
+  },
+  "results": [
+    {
+      "name": "lightningChannelByShortId",
+      "path": "/api/v1/lightning/channels/{shortId}",
+      "input": "shortId",
+      "resolvedPath": "/api/v1/lightning/channels/892785849701564416",
+      "status": 200,
+      "ms": 3437,
+      "bytes": 1218,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "id",
+          "short_id",
+          "capacity",
+          "transaction_id",
+          "transaction_vout",
+          "closing_transaction_id",
+          "closing_fee",
+          "closing_reason",
+          "closing_date",
+          "updated_at",
+          "created",
+          "status",
+          "funding_ratio",
+          "closed_by",
+          "single_funded",
+          "node_left",
+          "node_right"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "publicWallet",
+      "path": "/api/v1/wallet/{walletId}",
+      "input": "walletId",
+      "resolvedPath": "/api/v1/wallet/3350",
+      "status": 200,
+      "ms": 3993,
+      "bytes": 141124,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "bc1qphu6967s7dpgg3szr28tfkfq0ye9g00hsfellmefnhg9nk55h4vsg6kaw5",
+          "bc1qrqyhyefp3982f6eadmyxejq6mrs0qz8w3fzue268hcpf2a8l3alsg8u3j8",
+          "bc1qz459znml7ex8d7vcz5vxwy83z48jdvs2324ft6m3j3ypd66z26vsdh0dpg",
+          "bc1q0p8v6xylqcpny0crkvp5mjtqpa9rddfzms9jy0vx0wedhrggzt9qrdydtt",
+          "bc1q4j6dkuh2rxwedsk2qgjxl94h8mj9t268zxd6mw",
+          "bc1qytpv29ddhhfufu2jha3vzw4sn5njpu2dqqrnp2",
+          "bc1qhg7znljnvsp3ccyxycu7gx7lnqg6wrlh3tpxmm",
+          "bc1qapcsf56uhy8a78gt72wp203hhtmf93eye7p7k8",
+          "bc1qh8wswh80344n7k9x96ujhgka534l0gsndpxxel",
+          "bc1qfnyjgneu98mfxhr4yz7vgvpkqrnsfcje08uy9j",
+          "bc1qlwr3xjlslta3sp7n6j40ynrlpdjamlwtca8qx7",
+          "bc1qdc2nrtzsmpfmtgdwe8f90kfp4th4s6tx0e3mss",
+          "bc1qw3d0pwfxf6m4gt04sr7fknwwq762lgxmvth3fa",
+          "bc1q2e8luurva48geu02g4u97krvgv2r632n2vu980",
+          "bc1qntvsxd9xa2jdvvl6jqw9wzrwys8e097f8v7rnc",
+          "bc1qt3gky24w7tutse8dydsgkv9x6e8584fhu2zc6v",
+          "bc1qmv7x70shrpe4gr2vtl9rp8tnhezzspd7tz8tt4",
+          "bc1qg5wex0ynn3y2puey290j7j0vd6jghyelk2nn72",
+          "bc1qlw3ppdnltww28h0kqw2ltenx8encvc3v2z6jl5",
+          "bc1q5tjpv0d5uc0fe4x8angt823vh06mmw3txvxhpc",
+          "bc1qkdlewv38gcptv4kduf3hq3v4rzpk0gd52lvr9x",
+          "bc1q0s0njalvd0yuh97drw7czzeeuj9psqkm7rap0l",
+          "bc1q80dnga4z20xz9x3y0hyjskvavk4ph8s3734e7t",
+          "bc1q2nannqfuhv8xg43t4smlnjsecawqwwz2da32u0"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationHistoryAggregated",
+      "path": "/api/v1/services/accelerator/accelerations/history/aggregated?timeframe=1m",
+      "input": "",
+      "resolvedPath": "/api/v1/services/accelerator/accelerations/history/aggregated?timeframe=1m",
+      "status": 200,
+      "ms": 3743,
+      "bytes": 12806,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 180,
+        "firstKeys": [
+          "count",
+          "avgHeight",
+          "timestamp",
+          "sumBidBoost"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "historicalPrice",
+      "path": "/api/v1/historical-price?timestamp={timestamp}&currency=USD",
+      "input": "timestamp",
+      "resolvedPath": "/api/v1/historical-price?timestamp=1792351843&currency=USD",
+      "status": 200,
+      "ms": 3258,
+      "bytes": 148,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "prices",
+          "exchangeRates"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "addressTransactionSummary",
+      "path": "/api/address/{address}/txs/summary",
+      "input": "address",
+      "resolvedPath": "/api/address/bc1qkwrjvr5fuhdhstsz6p6nq6ekg8ef0cumanqg5k/txs/summary",
+      "status": 200,
+      "ms": 3335,
+      "bytes": 143,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 1,
+        "firstKeys": [
+          "txid",
+          "height",
+          "value",
+          "time",
+          "tx_position"
+        ]
+      },
+      "classification": "http-success"
+    }
+  ]
+}

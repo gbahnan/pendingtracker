@@ -50,7 +50,7 @@ export const bitcoinDatasets = {
   miningDifficultyAdjustments: { path: "/api/v1/mining/difficulty-adjustments", input: "" },
   lightningLatestStats: { path: "/api/v1/lightning/statistics/latest", input: "" },
   // Lightning search requires a validated query parameter and is tracked separately.
-  accelerationHistoryAggregated: { path: "/api/v1/services/accelerator/accelerations/history/aggregated", input: "" },
+  accelerationHistoryAggregated: { path: "/api/v1/services/accelerator/accelerations/history/aggregated?timeframe=1m", input: "" },
   accelerationStats: { path: "/api/v1/services/accelerator/accelerations/stats", input: "" },
   accelerationTransaction: { path: "/api/v1/services/accelerator/accelerations/{txid}", input: "txid" },
   // Binary block data requires a separate, size-limited handler.
@@ -94,7 +94,7 @@ export const bitcoinDatasets = {
   miningBlockAuditScores: { path: "/api/v1/mining/blocks/audit/scores", input: "" },
   miningBlockAuditScore: { path: "/api/v1/mining/blocks/audit/score/{hash}", input: "hash" },
   miningBlockAudit: { path: "/api/v1/mining/blocks/audit/{hash}", input: "hash" },
-  historicalPrice: { path: "/api/v1/historical-price", input: "" },
+  historicalPrice: { path: "/api/v1/historical-price?timestamp={timestamp}&currency=USD", input: "timestamp" },
   accelerationTotals: { path: "/api/v1/accelerations/total", input: "" },
   accelerationActive: { path: "/api/v1/accelerations", input: "" },
   accelerationPool: { path: "/api/v1/accelerations/pool/{slug}", input: "slug" },
@@ -105,7 +105,7 @@ export const bitcoinDatasets = {
   chainTips: { path: "/api/v1/chain-tips", input: "" },
   staleTips: { path: "/api/v1/stale-tips", input: "" },
   blockBulk: { path: "/api/v1/blocks-bulk/{from}", input: "from" },
-  addressTransactionSummary: { path: "/api/v1/address/{address}/txs/summary", input: "address" },
+  addressTransactionSummary: { path: "/api/address/{address}/txs/summary", input: "address" },
   transactionCached: { path: "/api/v1/tx/{txid}/cached", input: "txid" },
   transaction: { path: "/api/tx/{txid}", input: "txid" },
   transactionStatus: { path: "/api/tx/{txid}/status", input: "txid" },
@@ -162,7 +162,7 @@ const validators: Record<string, RegExp> = {
   isp: /^\d{1,12}$/,
   group: /^[a-zA-Z0-9_-]{1,60}$/,
   search: /^[a-zA-Z0-9:_-]{1,80}$/,
-  shortId: /^[a-zA-Z0-9x:_-]{1,80}$/,
+  shortId: /^\d{1,20}$/,
 };
 
 export async function fetchBitcoinDataset(
@@ -171,6 +171,10 @@ export async function fetchBitcoinDataset(
 ): Promise<unknown> {
   const spec = bitcoinDatasets[dataset];
   if (!spec) throw new BitcoinUpstreamError(400, "Unknown Bitcoin dataset");
+  if (mempoolBaseUrl() === "https://mempool.space" &&
+      (["blockBulk", "blockBulkRange", "miningBlocksFeeRatesPrecise"] as string[]).includes(dataset)) {
+    throw new BitcoinUpstreamError(404, "Dataset is not enabled on the public Bitcoin provider");
+  }
   let path: string = spec.path;
   for (const name of spec.input.split(",").filter(Boolean)) {
     const value = parameters[name] ?? "";
@@ -203,6 +207,10 @@ export async function fetchBitcoinDataset(
       response.status === 404 ? 404 : 502,
       response.status === 404 ? "Data unavailable from Bitcoin provider" : "Bitcoin provider temporarily unavailable",
     );
+  }
+  if (response.status === 204) return null;
+  if (response.headers.get("content-type")?.includes("text/html")) {
+    throw new BitcoinUpstreamError(502, "Unexpected Bitcoin provider response");
   }
   const raw = await response.text();
   if (raw.length > 2_000_000) throw new BitcoinUpstreamError(502, "Upstream response too large");

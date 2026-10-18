@@ -1,0 +1,2563 @@
+{
+  "checkedAt": "2026-10-18T19:45:11.168Z",
+  "base": "https://mempool.space",
+  "catalogCount": 117,
+  "limits": {
+    "concurrency": 2,
+    "timeoutSeconds": 18,
+    "maxResponseBytes": 2000000
+  },
+  "fixtures": {
+    "hash": "00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992",
+    "height": "972044",
+    "txid": "f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d",
+    "address": "35mxL2847s73QF4qUKwxvjFoBeK7Ja8BSA",
+    "scripthash": "dd3c668a90117c7780ec4054cc9a120b7476b311fa3b74f9600bfad243d396bc",
+    "from": "972044",
+    "to": "972044",
+    "index": "0",
+    "timestamp": "1792351215",
+    "blockCount": "1",
+    "interval": "1m",
+    "period": "1m",
+    "slug": "foundryusa",
+    "country": "US",
+    "isp": "13335",
+    "group": "mempool",
+    "prefix": "35mxL284",
+    "walletId": "wbtc",
+    "search": "ACINQ",
+    "shortId": "800000x1x0",
+    "pubkey": "03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f"
+  },
+  "limitations": [
+    "HTTP and observed schema checks only; successful responses do not prove semantic correctness or UI integration.",
+    "404 may mean missing fixture data, disabled upstream feature, or unsupported route; consult backend source.",
+    "No transaction broadcast, acceleration purchase, credentials, or other write requests."
+  ],
+  "summary": {
+    "http-success": 106,
+    "not-found": 7,
+    "size-limit": 3,
+    "http-error": 1
+  },
+  "results": [
+    {
+      "name": "lightningChannelSearch",
+      "path": "/api/v1/lightning/channels/search/{search}",
+      "input": "search",
+      "resolvedPath": "/api/v1/lightning/channels/search/800000",
+      "status": 200,
+      "ms": 2968,
+      "bytes": 85,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1,
+        "firstKeys": [
+          "id",
+          "short_id",
+          "capacity",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningPenaltyClosures",
+      "path": "/api/v1/lightning/penalties",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/penalties",
+      "status": 200,
+      "ms": 2947,
+      "bytes": 254299,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 189,
+        "firstKeys": [
+          "alias_left",
+          "alias_right",
+          "id",
+          "short_id",
+          "capacity",
+          "transaction_id",
+          "transaction_vout",
+          "updated_at",
+          "created",
+          "status",
+          "closing_transaction_id",
+          "closing_date",
+          "closing_reason",
+          "node1_public_key",
+          "node1_base_fee_mtokens",
+          "node1_cltv_delta"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningChannelByShortId",
+      "path": "/api/v1/lightning/channels/{shortId}",
+      "input": "shortId",
+      "resolvedPath": "/api/v1/lightning/channels/800000x1x0",
+      "status": 404,
+      "ms": 3373,
+      "bytes": 17,
+      "contentType": "text/html; charset=utf-8",
+      "kind": "text",
+      "classification": "not-found",
+      "error": "Channel not found"
+    },
+    {
+      "name": "lightningNodeSearch",
+      "path": "/api/v1/lightning/nodes/search/{search}",
+      "input": "search",
+      "resolvedPath": "/api/v1/lightning/nodes/search/ACINQ",
+      "status": 200,
+      "ms": 3619,
+      "bytes": 294,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 2,
+        "firstKeys": [
+          "public_key",
+          "alias",
+          "capacity",
+          "channels",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodeFeeHistogram",
+      "path": "/api/v1/lightning/nodes/{pubkey}/fees/histogram",
+      "input": "pubkey",
+      "resolvedPath": "/api/v1/lightning/nodes/03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f/fees/histogram",
+      "status": 200,
+      "ms": 3360,
+      "bytes": 2698,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "incoming",
+          "outgoing"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics2h",
+      "path": "/api/v1/statistics/2h",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/2h",
+      "status": 200,
+      "ms": 2912,
+      "bytes": 35973,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 137,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "mempool_byte_weight",
+          "total_fee",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics24h",
+      "path": "/api/v1/statistics/24h",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/24h",
+      "status": 200,
+      "ms": 3747,
+      "bytes": 435027,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1655,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "mempool_byte_weight",
+          "total_fee",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics1w",
+      "path": "/api/v1/statistics/1w",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/1w",
+      "status": 200,
+      "ms": 3426,
+      "bytes": 616738,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 2016,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics1m",
+      "path": "/api/v1/statistics/1m",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/1m",
+      "status": 200,
+      "ms": 3325,
+      "bytes": 629273,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1441,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics3m",
+      "path": "/api/v1/statistics/3m",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/3m",
+      "status": 200,
+      "ms": 3086,
+      "bytes": 566349,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1105,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics6m",
+      "path": "/api/v1/statistics/6m",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/6m",
+      "status": 200,
+      "ms": 4357,
+      "bytes": 770000,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1465,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics1y",
+      "path": "/api/v1/statistics/1y",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/1y",
+      "status": 200,
+      "ms": 3910,
+      "bytes": 279606,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1096,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics2y",
+      "path": "/api/v1/statistics/2y",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/2y",
+      "status": 200,
+      "ms": 3198,
+      "bytes": 556514,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 2191,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics3y",
+      "path": "/api/v1/statistics/3y",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/3y",
+      "status": 200,
+      "ms": 2869,
+      "bytes": 590534,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 2192,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statistics4y",
+      "path": "/api/v1/statistics/4y",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/4y",
+      "status": 200,
+      "ms": 3074,
+      "bytes": 790705,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 2923,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "statisticsAll",
+      "path": "/api/v1/statistics/all",
+      "input": "",
+      "resolvedPath": "/api/v1/statistics/all",
+      "status": 200,
+      "ms": 3207,
+      "bytes": 1925907,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 7183,
+        "firstKeys": [
+          "added",
+          "count",
+          "vbytes_per_second",
+          "min_fee",
+          "vsizes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodesWorld",
+      "path": "/api/v1/lightning/nodes/world",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/nodes/world",
+      "status": 200,
+      "ms": 3824,
+      "bytes": 1600745,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "maxLiquidity",
+          "maxChannels",
+          "nodes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodesCountry",
+      "path": "/api/v1/lightning/nodes/country/{country}",
+      "input": "country",
+      "resolvedPath": "/api/v1/lightning/nodes/country/US",
+      "status": 0,
+      "ms": 3404,
+      "classification": "size-limit",
+      "error": "Command failed: curl --silent --show-error --location --max-time 18 --max-filesize 2000000 --write-out \n%{http_code}\n%{content_type} https://mempool.space/api/v1/lightning/nodes/country/US\ncurl: (63) Maximum file size exceeded\n"
+    },
+    {
+      "name": "lightningNodesIsp",
+      "path": "/api/v1/lightning/nodes/isp/{isp}",
+      "input": "isp",
+      "resolvedPath": "/api/v1/lightning/nodes/isp/13335",
+      "status": 200,
+      "ms": 3756,
+      "bytes": 10975,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "isp",
+          "nodes"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodesGroup",
+      "path": "/api/v1/lightning/nodes/group/{group}",
+      "input": "group",
+      "resolvedPath": "/api/v1/lightning/nodes/group/mempool",
+      "status": 200,
+      "ms": 2864,
+      "bytes": 52463,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 24,
+        "firstKeys": [
+          "public_key",
+          "alias",
+          "first_seen",
+          "updated_at",
+          "color",
+          "sockets",
+          "as_number",
+          "city_id",
+          "country_id",
+          "subdivision_id",
+          "longitude",
+          "latitude",
+          "iso_code",
+          "as_organization",
+          "city",
+          "country"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "addressPrefix",
+      "path": "/api/address-prefix/{prefix}",
+      "input": "prefix",
+      "resolvedPath": "/api/address-prefix/35mxL284",
+      "status": 200,
+      "ms": 2803,
+      "bytes": 38,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 1
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "scripthashInfo",
+      "path": "/api/scripthash/{scripthash}",
+      "input": "scripthash",
+      "resolvedPath": "/api/scripthash/dd3c668a90117c7780ec4054cc9a120b7476b311fa3b74f9600bfad243d396bc",
+      "status": 200,
+      "ms": 2145,
+      "bytes": 314,
+      "contentType": "application/json",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "chain_stats",
+          "mempool_stats",
+          "scripthash"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "scripthashTransactions",
+      "path": "/api/scripthash/{scripthash}/txs",
+      "input": "scripthash",
+      "resolvedPath": "/api/scripthash/dd3c668a90117c7780ec4054cc9a120b7476b311fa3b74f9600bfad243d396bc/txs",
+      "status": 200,
+      "ms": 3468,
+      "bytes": 755972,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 15,
+        "firstKeys": [
+          "txid",
+          "version",
+          "locktime",
+          "vin",
+          "vout",
+          "size",
+          "weight",
+          "sigops",
+          "fee",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "scripthashTransactionSummary",
+      "path": "/api/scripthash/{scripthash}/txs/summary",
+      "input": "scripthash",
+      "resolvedPath": "/api/scripthash/dd3c668a90117c7780ec4054cc9a120b7476b311fa3b74f9600bfad243d396bc/txs/summary",
+      "status": 200,
+      "ms": 2898,
+      "bytes": 2159,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 15,
+        "firstKeys": [
+          "txid",
+          "height",
+          "value",
+          "time",
+          "tx_position"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "scripthashUtxos",
+      "path": "/api/scripthash/{scripthash}/utxo",
+      "input": "scripthash",
+      "resolvedPath": "/api/scripthash/dd3c668a90117c7780ec4054cc9a120b7476b311fa3b74f9600bfad243d396bc/utxo",
+      "status": 200,
+      "ms": 3537,
+      "bytes": 257,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 1,
+        "firstKeys": [
+          "txid",
+          "vout",
+          "status",
+          "value"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockBulkRange",
+      "path": "/api/v1/blocks-bulk/{from}/{to}",
+      "input": "from,to",
+      "resolvedPath": "/api/v1/blocks-bulk/972044/972044",
+      "status": 404,
+      "ms": 3010,
+      "bytes": 109,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "error"
+        ]
+      },
+      "classification": "not-found",
+      "error": "{\"error\":\"This API is disabled. Set config.MEMPOOL.MAX_BLOCKS_BULK_QUERY to a positive number to enable it.\"}"
+    },
+    {
+      "name": "bitcoinTreasuries",
+      "path": "/api/v1/treasuries",
+      "input": "",
+      "resolvedPath": "/api/v1/treasuries",
+      "status": 200,
+      "ms": 4842,
+      "bytes": 24778,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 4,
+        "firstKeys": [
+          "id",
+          "name",
+          "wallet",
+          "enterprise",
+          "balances",
+          "verifiedAddresses"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "publicWallet",
+      "path": "/api/v1/wallet/{walletId}",
+      "input": "walletId",
+      "resolvedPath": "/api/v1/wallet/wbtc",
+      "status": 404,
+      "ms": 4558,
+      "bytes": 14,
+      "contentType": "text/html; charset=utf-8",
+      "kind": "text",
+      "classification": "not-found",
+      "error": "No such wallet"
+    },
+    {
+      "name": "backendInfo",
+      "path": "/api/v1/backend-info",
+      "input": "",
+      "resolvedPath": "/api/v1/backend-info",
+      "status": 200,
+      "ms": 2732,
+      "bytes": 199,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "hostname",
+          "version",
+          "gitCommit",
+          "lightning",
+          "backend",
+          "coreVersion",
+          "osVersion"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "feeEstimates",
+      "path": "/api/v1/fee-estimates",
+      "input": "",
+      "resolvedPath": "/api/v1/fee-estimates",
+      "status": 203,
+      "ms": 2517,
+      "bytes": 288,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "initData",
+      "path": "/api/v1/init-data",
+      "input": "",
+      "resolvedPath": "/api/v1/init-data",
+      "status": 200,
+      "ms": 3082,
+      "bytes": 21638,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "mempoolInfo",
+          "vBytesPerSecond",
+          "mempool-blocks",
+          "transactions",
+          "loadingIndicators",
+          "fees",
+          "rbfSummary",
+          "conversions",
+          "da",
+          "blocks",
+          "backend",
+          "backendInfo"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blocksAtHeight",
+      "path": "/api/v1/blocks/{height}",
+      "input": "height",
+      "resolvedPath": "/api/v1/blocks/972044",
+      "status": 200,
+      "ms": 3144,
+      "bytes": 31739,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 15,
+        "firstKeys": [
+          "id",
+          "height",
+          "version",
+          "timestamp",
+          "bits",
+          "nonce",
+          "difficulty",
+          "merkle_root",
+          "tx_count",
+          "size",
+          "weight",
+          "previousblockhash",
+          "mediantime",
+          "stale",
+          "extras"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockTxSummary",
+      "path": "/api/v1/block/{hash}/tx/{txid}/summary",
+      "input": "hash,txid",
+      "resolvedPath": "/api/v1/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/summary",
+      "status": 200,
+      "ms": 3176,
+      "bytes": 169,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "txid",
+          "fee",
+          "vsize",
+          "value",
+          "rate",
+          "time",
+          "flags"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockTxAudit",
+      "path": "/api/v1/block/{hash}/tx/{txid}/audit",
+      "input": "hash,txid",
+      "resolvedPath": "/api/v1/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/audit",
+      "status": 200,
+      "ms": 3015,
+      "bytes": 123,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "seen",
+          "expected",
+          "added",
+          "prioritized",
+          "conflict",
+          "accelerated",
+          "firstSeen"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "staleTipsByHeight",
+      "path": "/api/v1/stale-tips/{height}",
+      "input": "height",
+      "resolvedPath": "/api/v1/stale-tips/972044",
+      "status": 200,
+      "ms": 3652,
+      "bytes": 115521,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 25,
+        "firstKeys": [
+          "height",
+          "hash",
+          "branchlen",
+          "status",
+          "stale",
+          "canonical"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlockAuditScoresByHeight",
+      "path": "/api/v1/mining/blocks/audit/scores/{height}",
+      "input": "height",
+      "resolvedPath": "/api/v1/mining/blocks/audit/scores/972044",
+      "status": 200,
+      "ms": 3560,
+      "bytes": 2240,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 16,
+        "firstKeys": [
+          "hash",
+          "matchRate",
+          "expectedFees",
+          "expectedWeight"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningPoolBlocksByHeight",
+      "path": "/api/v1/mining/pool/{slug}/blocks/{height}",
+      "input": "slug,height",
+      "resolvedPath": "/api/v1/mining/pool/foundryusa/blocks/972044",
+      "status": 200,
+      "ms": 3211,
+      "bytes": 179224,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 100,
+        "firstKeys": [
+          "id",
+          "height",
+          "version",
+          "timestamp",
+          "bits",
+          "nonce",
+          "difficulty",
+          "merkle_root",
+          "tx_count",
+          "size",
+          "weight",
+          "previousblockhash",
+          "mediantime",
+          "stale",
+          "extras"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningDifficultyAdjustments",
+      "path": "/api/v1/mining/difficulty-adjustments",
+      "input": "",
+      "resolvedPath": "/api/v1/mining/difficulty-adjustments",
+      "status": 200,
+      "ms": 3061,
+      "bytes": 21630,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 468,
+        "firstKeys": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningLatestStats",
+      "path": "/api/v1/lightning/statistics/latest",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/statistics/latest",
+      "status": 200,
+      "ms": 3544,
+      "bytes": 359,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "latest"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationHistoryAggregated",
+      "path": "/api/v1/services/accelerator/accelerations/history/aggregated",
+      "input": "",
+      "resolvedPath": "/api/v1/services/accelerator/accelerations/history/aggregated",
+      "status": 400,
+      "ms": 3927,
+      "bytes": 35,
+      "contentType": "text/html; charset=utf-8",
+      "kind": "text",
+      "classification": "http-error",
+      "error": "Invalid request, missing parameters"
+    },
+    {
+      "name": "accelerationStats",
+      "path": "/api/v1/services/accelerator/accelerations/stats",
+      "input": "",
+      "resolvedPath": "/api/v1/services/accelerator/accelerations/stats",
+      "status": 200,
+      "ms": 7062,
+      "bytes": 117,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "totalRequested",
+          "totalAccepted",
+          "totalCompleted",
+          "totalBidBoost",
+          "totalVsize"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationTransaction",
+      "path": "/api/v1/services/accelerator/accelerations/{txid}",
+      "input": "txid",
+      "resolvedPath": "/api/v1/services/accelerator/accelerations/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d",
+      "status": 404,
+      "ms": 6618,
+      "bytes": 0,
+      "contentType": "",
+      "kind": "text",
+      "classification": "not-found",
+      "error": ""
+    },
+    {
+      "name": "blockTransactionsFirstPage",
+      "path": "/api/block/{hash}/txs",
+      "input": "hash",
+      "resolvedPath": "/api/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/txs",
+      "status": 200,
+      "ms": 3141,
+      "bytes": 77929,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 25,
+        "firstKeys": [
+          "txid",
+          "version",
+          "locktime",
+          "vin",
+          "vout",
+          "size",
+          "weight",
+          "sigops",
+          "fee",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "addressValidation",
+      "path": "/api/v1/validate-address/{address}",
+      "input": "address",
+      "resolvedPath": "/api/v1/validate-address/35mxL2847s73QF4qUKwxvjFoBeK7Ja8BSA",
+      "status": 200,
+      "ms": 3049,
+      "bytes": 161,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "isvalid",
+          "address",
+          "scriptPubKey",
+          "isscript",
+          "iswitness"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockHeader",
+      "path": "/api/block/{hash}/header",
+      "input": "hash",
+      "resolvedPath": "/api/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/header",
+      "status": 200,
+      "ms": 2813,
+      "bytes": 160,
+      "contentType": "text/plain",
+      "kind": "text",
+      "classification": "http-success"
+    },
+    {
+      "name": "blockTransactionIds",
+      "path": "/api/block/{hash}/txids",
+      "input": "hash",
+      "resolvedPath": "/api/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/txids",
+      "status": 200,
+      "ms": 2937,
+      "bytes": 104655,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 1562
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockV1",
+      "path": "/api/v1/block/{hash}",
+      "input": "hash",
+      "resolvedPath": "/api/v1/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992",
+      "status": 200,
+      "ms": 4481,
+      "bytes": 1836,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "id",
+          "height",
+          "version",
+          "timestamp",
+          "bits",
+          "nonce",
+          "difficulty",
+          "merkle_root",
+          "tx_count",
+          "size",
+          "weight",
+          "previousblockhash",
+          "mediantime",
+          "stale",
+          "extras"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "latestBlocksV1",
+      "path": "/api/v1/blocks",
+      "input": "",
+      "resolvedPath": "/api/v1/blocks",
+      "status": 200,
+      "ms": 4365,
+      "bytes": 31930,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 15,
+        "firstKeys": [
+          "id",
+          "height",
+          "version",
+          "timestamp",
+          "bits",
+          "nonce",
+          "difficulty",
+          "merkle_root",
+          "tx_count",
+          "size",
+          "weight",
+          "previousblockhash",
+          "mediantime",
+          "stale",
+          "extras"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockByTimestamp",
+      "path": "/api/v1/mining/blocks/timestamp/{timestamp}",
+      "input": "timestamp",
+      "resolvedPath": "/api/v1/mining/blocks/timestamp/1792351215",
+      "status": 200,
+      "ms": 3340,
+      "bytes": 130,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "height",
+          "hash",
+          "timestamp"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "transactionRbfReplacements",
+      "path": "/api/v1/replacements",
+      "input": "",
+      "resolvedPath": "/api/v1/replacements",
+      "status": 200,
+      "ms": 3388,
+      "bytes": 16140,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 25,
+        "firstKeys": [
+          "tx",
+          "time",
+          "fullRbf",
+          "replaces"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "fullRbfReplacements",
+      "path": "/api/v1/fullrbf/replacements",
+      "input": "",
+      "resolvedPath": "/api/v1/fullrbf/replacements",
+      "status": 200,
+      "ms": 3065,
+      "bytes": 15112,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 25,
+        "firstKeys": [
+          "tx",
+          "time",
+          "fullRbf",
+          "replaces",
+          "mined"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "preciseFees",
+      "path": "/api/v1/fees/precise",
+      "input": "",
+      "resolvedPath": "/api/v1/fees/precise",
+      "status": 200,
+      "ms": 2992,
+      "bytes": 86,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "fastestFee",
+          "halfHourFee",
+          "hourFee",
+          "economyFee",
+          "minimumFee"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "price",
+      "path": "/api/v1/prices",
+      "input": "",
+      "resolvedPath": "/api/v1/prices",
+      "status": 200,
+      "ms": 4071,
+      "bytes": 108,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "time",
+          "USD",
+          "EUR",
+          "GBP",
+          "CAD",
+          "CHF",
+          "AUD",
+          "JPY"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningDifficultyHistory",
+      "path": "/api/v1/mining/difficulty-adjustments/{interval}",
+      "input": "interval",
+      "resolvedPath": "/api/v1/mining/difficulty-adjustments/1m",
+      "status": 200,
+      "ms": 4142,
+      "bytes": 140,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 3,
+        "firstKeys": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningPoolDetails",
+      "path": "/api/v1/mining/pool/{slug}",
+      "input": "slug",
+      "resolvedPath": "/api/v1/mining/pool/foundryusa",
+      "status": 200,
+      "ms": 4985,
+      "bytes": 670,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "pool",
+          "blockCount",
+          "blockShare",
+          "estimatedHashrate",
+          "reportedHashrate",
+          "avgBlockHealth",
+          "totalReward"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningPoolHashrate",
+      "path": "/api/v1/mining/pool/{slug}/hashrate",
+      "input": "slug",
+      "resolvedPath": "/api/v1/mining/pool/foundryusa/hashrate",
+      "status": 200,
+      "ms": 4754,
+      "bytes": 31665,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 309,
+        "firstKeys": [
+          "timestamp",
+          "avgHashrate",
+          "share",
+          "poolName"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningPoolBlocks",
+      "path": "/api/v1/mining/pool/{slug}/blocks",
+      "input": "slug",
+      "resolvedPath": "/api/v1/mining/pool/foundryusa/blocks",
+      "status": 200,
+      "ms": 3248,
+      "bytes": 179254,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 100,
+        "firstKeys": [
+          "id",
+          "height",
+          "version",
+          "timestamp",
+          "bits",
+          "nonce",
+          "difficulty",
+          "merkle_root",
+          "tx_count",
+          "size",
+          "weight",
+          "previousblockhash",
+          "mediantime",
+          "stale",
+          "extras"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningPoolsHashrate",
+      "path": "/api/v1/mining/hashrate/pools/{period}",
+      "input": "period",
+      "resolvedPath": "/api/v1/mining/hashrate/pools/1m",
+      "status": 200,
+      "ms": 3092,
+      "bytes": 6288,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 63,
+        "firstKeys": [
+          "timestamp",
+          "avgHashrate",
+          "share",
+          "poolName"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlocksFees",
+      "path": "/api/v1/mining/blocks/fees/{period}",
+      "input": "period",
+      "resolvedPath": "/api/v1/mining/blocks/fees/1m",
+      "status": 200,
+      "ms": 2950,
+      "bytes": 101908,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1379,
+        "firstKeys": [
+          "avgHeight",
+          "timestamp",
+          "avgFees",
+          "USD"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlocksRewards",
+      "path": "/api/v1/mining/blocks/rewards/{period}",
+      "input": "period",
+      "resolvedPath": "/api/v1/mining/blocks/rewards/1m",
+      "status": 200,
+      "ms": 3059,
+      "bytes": 108942,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1379,
+        "firstKeys": [
+          "avgHeight",
+          "timestamp",
+          "avgRewards",
+          "USD"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlocksFeeRates",
+      "path": "/api/v1/mining/blocks/fee-rates/{period}",
+      "input": "period",
+      "resolvedPath": "/api/v1/mining/blocks/fee-rates/1m",
+      "status": 200,
+      "ms": 3303,
+      "bytes": 198497,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1379,
+        "firstKeys": [
+          "avgHeight",
+          "timestamp",
+          "avgFee_0",
+          "avgFee_10",
+          "avgFee_25",
+          "avgFee_50",
+          "avgFee_75",
+          "avgFee_90",
+          "avgFee_100"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlocksSizesWeights",
+      "path": "/api/v1/mining/blocks/sizes-weights/{period}",
+      "input": "period",
+      "resolvedPath": "/api/v1/mining/blocks/sizes-weights/1m",
+      "status": 200,
+      "ms": 3245,
+      "bytes": 173774,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "sizes",
+          "weights"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNetworkStats",
+      "path": "/api/v1/lightning/statistics/{interval}",
+      "input": "interval",
+      "resolvedPath": "/api/v1/lightning/statistics/1m",
+      "status": 200,
+      "ms": 3746,
+      "bytes": 2,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 0
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningCountryStats",
+      "path": "/api/v1/lightning/nodes/countries",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/nodes/countries",
+      "status": 200,
+      "ms": 3733,
+      "bytes": 24064,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 108,
+        "firstKeys": [
+          "name",
+          "iso",
+          "count",
+          "share",
+          "capacity"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningIspRankings",
+      "path": "/api/v1/lightning/nodes/isp-ranking",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/nodes/isp-ranking",
+      "status": 200,
+      "ms": 4355,
+      "bytes": 20534,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "clearnetCapacity",
+          "torCapacity",
+          "unknownCapacity",
+          "ispRanking"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodeRankings",
+      "path": "/api/v1/lightning/nodes/rankings",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/nodes/rankings",
+      "status": 200,
+      "ms": 4116,
+      "bytes": 3952,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "topByCapacity",
+          "topByChannels"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodeLiquidityRankings",
+      "path": "/api/v1/lightning/nodes/rankings/liquidity",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/nodes/rankings/liquidity",
+      "status": 200,
+      "ms": 3639,
+      "bytes": 55348,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 100,
+        "firstKeys": [
+          "publicKey",
+          "alias",
+          "capacity",
+          "channels",
+          "firstSeen",
+          "updatedAt",
+          "city",
+          "country",
+          "iso_code",
+          "subdivision"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodeConnectivityRankings",
+      "path": "/api/v1/lightning/nodes/rankings/connectivity",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/nodes/rankings/connectivity",
+      "status": 200,
+      "ms": 3550,
+      "bytes": 58043,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 100,
+        "firstKeys": [
+          "publicKey",
+          "alias",
+          "channels",
+          "capacity",
+          "firstSeen",
+          "updatedAt",
+          "city",
+          "country",
+          "iso_code",
+          "subdivision"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodeAgeRankings",
+      "path": "/api/v1/lightning/nodes/rankings/age",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/nodes/rankings/age",
+      "status": 200,
+      "ms": 3282,
+      "bytes": 54941,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 100,
+        "firstKeys": [
+          "publicKey",
+          "alias",
+          "channels",
+          "capacity",
+          "firstSeen",
+          "updatedAt",
+          "city",
+          "country",
+          "iso_code",
+          "subdivision"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNode",
+      "path": "/api/v1/lightning/nodes/{pubkey}",
+      "input": "pubkey",
+      "resolvedPath": "/api/v1/lightning/nodes/03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f",
+      "status": 200,
+      "ms": 3569,
+      "bytes": 2181,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "public_key",
+          "alias",
+          "first_seen",
+          "updated_at",
+          "color",
+          "sockets",
+          "as_number",
+          "city_id",
+          "country_id",
+          "subdivision_id",
+          "longitude",
+          "latitude",
+          "iso_code",
+          "as_organization",
+          "city",
+          "country",
+          "subdivision",
+          "features",
+          "featuresBits",
+          "active_channel_count",
+          "capacity",
+          "opened_channel_count",
+          "closed_channel_count",
+          "custom_records"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningNodeHistory",
+      "path": "/api/v1/lightning/nodes/{pubkey}/statistics",
+      "input": "pubkey",
+      "resolvedPath": "/api/v1/lightning/nodes/03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f/statistics",
+      "status": 200,
+      "ms": 4065,
+      "bytes": 118722,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 2003,
+        "firstKeys": [
+          "added",
+          "capacity",
+          "channels"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "lightningGeodata",
+      "path": "/api/v1/lightning/channels-geo",
+      "input": "",
+      "resolvedPath": "/api/v1/lightning/channels-geo",
+      "status": 0,
+      "ms": 4282,
+      "classification": "size-limit",
+      "error": "Command failed: curl --silent --show-error --location --max-time 18 --max-filesize 2000000 --write-out \n%{http_code}\n%{content_type} https://mempool.space/api/v1/lightning/channels-geo\ncurl: (63) Maximum file size exceeded\n"
+    },
+    {
+      "name": "accelerationPending",
+      "path": "/api/v1/services/accelerator/accelerations",
+      "input": "",
+      "resolvedPath": "/api/v1/services/accelerator/accelerations",
+      "status": 200,
+      "ms": 4379,
+      "bytes": 2,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 0
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationHistory",
+      "path": "/api/v1/services/accelerator/accelerations/history",
+      "input": "",
+      "resolvedPath": "/api/v1/services/accelerator/accelerations/history",
+      "status": 200,
+      "ms": 4089,
+      "bytes": 6344,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 15,
+        "firstKeys": [
+          "txid",
+          "status",
+          "added",
+          "lastUpdated",
+          "effectiveFee",
+          "effectiveVsize",
+          "feeDelta",
+          "blockHash",
+          "blockHeight",
+          "bidBoost",
+          "boostVersion",
+          "pools",
+          "minedByPoolUniqueId",
+          "canceled"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningPoolList",
+      "path": "/api/v1/mining/pools",
+      "input": "",
+      "resolvedPath": "/api/v1/mining/pools",
+      "status": 200,
+      "ms": 3689,
+      "bytes": 9406,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 172,
+        "firstKeys": [
+          "name",
+          "slug",
+          "unique_id"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningRewardStats",
+      "path": "/api/v1/mining/reward-stats/{blockCount}",
+      "input": "blockCount",
+      "resolvedPath": "/api/v1/mining/reward-stats/1",
+      "status": 200,
+      "ms": 3446,
+      "bytes": 102,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "startBlock",
+          "endBlock",
+          "totalReward",
+          "totalFee",
+          "totalTx"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlocksFeeRatesPrecise",
+      "path": "/api/v1/mining/blocks/fee-rates/{period}/precise",
+      "input": "period",
+      "resolvedPath": "/api/v1/mining/blocks/fee-rates/1m/precise",
+      "status": 404,
+      "ms": 3253,
+      "bytes": 180,
+      "contentType": "text/html; charset=utf-8",
+      "kind": "html",
+      "classification": "not-found",
+      "error": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/v1/mining/blocks/fee-rates/1m/precise</pre>\n</body>\n</html>\n"
+    },
+    {
+      "name": "miningBlocksPredictions",
+      "path": "/api/v1/mining/blocks/predictions/{period}",
+      "input": "period",
+      "resolvedPath": "/api/v1/mining/blocks/predictions/1m",
+      "status": 200,
+      "ms": 3458,
+      "bytes": 35381,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1379,
+        "firstKeys": [
+          "0",
+          "1",
+          "2"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlockAuditScores",
+      "path": "/api/v1/mining/blocks/audit/scores",
+      "input": "",
+      "resolvedPath": "/api/v1/mining/blocks/audit/scores",
+      "status": 200,
+      "ms": 3584,
+      "bytes": 2240,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 16,
+        "firstKeys": [
+          "hash",
+          "matchRate",
+          "expectedFees",
+          "expectedWeight"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlockAuditScore",
+      "path": "/api/v1/mining/blocks/audit/score/{hash}",
+      "input": "hash",
+      "resolvedPath": "/api/v1/mining/blocks/audit/score/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992",
+      "status": 200,
+      "ms": 3568,
+      "bytes": 138,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "hash",
+          "matchRate",
+          "expectedFees",
+          "expectedWeight"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningBlockAudit",
+      "path": "/api/v1/mining/blocks/audit/{hash}",
+      "input": "hash",
+      "resolvedPath": "/api/v1/mining/blocks/audit/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992",
+      "status": 200,
+      "ms": 3683,
+      "bytes": 357805,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "version",
+          "templateAlgorithm",
+          "height",
+          "id",
+          "timestamp",
+          "template",
+          "unseenTxs",
+          "missingTxs",
+          "addedTxs",
+          "prioritizedTxs",
+          "freshTxs",
+          "sigopTxs",
+          "fullrbfTxs",
+          "acceleratedTxs",
+          "matchRate",
+          "expectedFees",
+          "expectedWeight"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "historicalPrice",
+      "path": "/api/v1/historical-price",
+      "input": "",
+      "resolvedPath": "/api/v1/historical-price",
+      "status": 0,
+      "ms": 3360,
+      "classification": "size-limit",
+      "error": "Command failed: curl --silent --show-error --location --max-time 18 --max-filesize 2000000 --write-out \n%{http_code}\n%{content_type} https://mempool.space/api/v1/historical-price\ncurl: (63) Maximum file size exceeded\n"
+    },
+    {
+      "name": "accelerationTotals",
+      "path": "/api/v1/accelerations/total",
+      "input": "",
+      "resolvedPath": "/api/v1/accelerations/total",
+      "status": 200,
+      "ms": 2971,
+      "bytes": 34,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "cost",
+          "count"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationActive",
+      "path": "/api/v1/accelerations",
+      "input": "",
+      "resolvedPath": "/api/v1/accelerations",
+      "status": 200,
+      "ms": 2906,
+      "bytes": 2,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 0
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationPool",
+      "path": "/api/v1/accelerations/pool/{slug}",
+      "input": "slug",
+      "resolvedPath": "/api/v1/accelerations/pool/foundryusa",
+      "status": 200,
+      "ms": 6627,
+      "bytes": 39036,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 157,
+        "firstKeys": [
+          "txid",
+          "height",
+          "added",
+          "pool",
+          "effective_vsize",
+          "effective_fee",
+          "boost_rate",
+          "boost_cost"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationBlock",
+      "path": "/api/v1/accelerations/block/{height}",
+      "input": "height",
+      "resolvedPath": "/api/v1/accelerations/block/972044",
+      "status": 200,
+      "ms": 6606,
+      "bytes": 2,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 0
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "accelerationRecent",
+      "path": "/api/v1/accelerations/recent/{period}",
+      "input": "period",
+      "resolvedPath": "/api/v1/accelerations/recent/1m",
+      "status": 200,
+      "ms": 4223,
+      "bytes": 102631,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 421,
+        "firstKeys": [
+          "txid",
+          "height",
+          "added",
+          "pool",
+          "effective_vsize",
+          "effective_fee",
+          "boost_rate",
+          "boost_cost"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockSummary",
+      "path": "/api/v1/block/{hash}/summary",
+      "input": "hash",
+      "resolvedPath": "/api/v1/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/summary",
+      "status": 200,
+      "ms": 4535,
+      "bytes": 261477,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 1562,
+        "firstKeys": [
+          "txid",
+          "fee",
+          "vsize",
+          "value",
+          "rate",
+          "flags"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockAuditSummary",
+      "path": "/api/v1/block/{hash}/audit-summary",
+      "input": "hash",
+      "resolvedPath": "/api/v1/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/audit-summary",
+      "status": 200,
+      "ms": 3362,
+      "bytes": 357805,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "version",
+          "templateAlgorithm",
+          "height",
+          "id",
+          "timestamp",
+          "template",
+          "unseenTxs",
+          "missingTxs",
+          "addedTxs",
+          "prioritizedTxs",
+          "freshTxs",
+          "sigopTxs",
+          "fullrbfTxs",
+          "acceleratedTxs",
+          "matchRate",
+          "expectedFees",
+          "expectedWeight"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "chainTips",
+      "path": "/api/v1/chain-tips",
+      "input": "",
+      "resolvedPath": "/api/v1/chain-tips",
+      "status": 200,
+      "ms": 4127,
+      "bytes": 8546,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 66,
+        "firstKeys": [
+          "height",
+          "hash",
+          "branchlen",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "staleTips",
+      "path": "/api/v1/stale-tips",
+      "input": "",
+      "resolvedPath": "/api/v1/stale-tips",
+      "status": 200,
+      "ms": 4275,
+      "bytes": 115914,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 25,
+        "firstKeys": [
+          "height",
+          "hash",
+          "branchlen",
+          "status",
+          "stale",
+          "canonical"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockBulk",
+      "path": "/api/v1/blocks-bulk/{from}",
+      "input": "from",
+      "resolvedPath": "/api/v1/blocks-bulk/972044",
+      "status": 404,
+      "ms": 3119,
+      "bytes": 109,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "error"
+        ]
+      },
+      "classification": "not-found",
+      "error": "{\"error\":\"This API is disabled. Set config.MEMPOOL.MAX_BLOCKS_BULK_QUERY to a positive number to enable it.\"}"
+    },
+    {
+      "name": "addressTransactionSummary",
+      "path": "/api/v1/address/{address}/txs/summary",
+      "input": "address",
+      "resolvedPath": "/api/v1/address/35mxL2847s73QF4qUKwxvjFoBeK7Ja8BSA/txs/summary",
+      "status": 404,
+      "ms": 2870,
+      "bytes": 200,
+      "contentType": "text/html; charset=utf-8",
+      "kind": "html",
+      "classification": "not-found",
+      "error": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/v1/address/35mxL2847s73QF4qUKwxvjFoBeK7Ja8BSA/txs/summary</pre>\n</body>\n</html>\n"
+    },
+    {
+      "name": "transactionCached",
+      "path": "/api/v1/tx/{txid}/cached",
+      "input": "txid",
+      "resolvedPath": "/api/v1/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/cached",
+      "status": 204,
+      "ms": 2937,
+      "bytes": 0,
+      "contentType": "",
+      "kind": "text",
+      "classification": "http-success"
+    },
+    {
+      "name": "transaction",
+      "path": "/api/tx/{txid}",
+      "input": "txid",
+      "resolvedPath": "/api/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d",
+      "status": 200,
+      "ms": 3423,
+      "bytes": 1515,
+      "contentType": "application/json",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "txid",
+          "version",
+          "locktime",
+          "vin",
+          "vout",
+          "size",
+          "weight",
+          "sigops",
+          "fee",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "transactionStatus",
+      "path": "/api/tx/{txid}/status",
+      "input": "txid",
+      "resolvedPath": "/api/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/status",
+      "status": 200,
+      "ms": 3286,
+      "bytes": 144,
+      "contentType": "application/json",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "confirmed",
+          "block_height",
+          "block_hash",
+          "block_time"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "transactionHex",
+      "path": "/api/tx/{txid}/hex",
+      "input": "txid",
+      "resolvedPath": "/api/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/hex",
+      "status": 200,
+      "ms": 4095,
+      "bytes": 446,
+      "contentType": "text/plain",
+      "kind": "text",
+      "classification": "http-success"
+    },
+    {
+      "name": "transactionOutspends",
+      "path": "/api/tx/{txid}/outspends",
+      "input": "txid",
+      "resolvedPath": "/api/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/outspends",
+      "status": 200,
+      "ms": 4056,
+      "bytes": 504,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 2,
+        "firstKeys": [
+          "spent",
+          "txid",
+          "vin",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "transactionMerkleProof",
+      "path": "/api/tx/{txid}/merkle-proof",
+      "input": "txid",
+      "resolvedPath": "/api/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/merkle-proof",
+      "status": 200,
+      "ms": 3377,
+      "bytes": 779,
+      "contentType": "application/json",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "block_height",
+          "merkle",
+          "pos"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "transactionCpfp",
+      "path": "/api/v1/cpfp/{txid}",
+      "input": "txid",
+      "resolvedPath": "/api/v1/cpfp/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d",
+      "status": 200,
+      "ms": 3277,
+      "bytes": 16,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "ancestors"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "transactionRbf",
+      "path": "/api/v1/tx/{txid}/rbf",
+      "input": "txid",
+      "resolvedPath": "/api/v1/tx/f8d6451945154e45d69e00491d6059da511a70cad423578d7394a06d15ede96d/rbf",
+      "status": 200,
+      "ms": 3814,
+      "bytes": 37,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "replacements",
+          "replaces"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "address",
+      "path": "/api/address/{address}",
+      "input": "address",
+      "resolvedPath": "/api/address/35mxL2847s73QF4qUKwxvjFoBeK7Ja8BSA",
+      "status": 200,
+      "ms": 3868,
+      "bytes": 281,
+      "contentType": "application/json",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "address",
+          "chain_stats",
+          "mempool_stats"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "addressTransactions",
+      "path": "/api/address/{address}/txs",
+      "input": "address",
+      "resolvedPath": "/api/address/35mxL2847s73QF4qUKwxvjFoBeK7Ja8BSA/txs",
+      "status": 200,
+      "ms": 3883,
+      "bytes": 755972,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 15,
+        "firstKeys": [
+          "txid",
+          "version",
+          "locktime",
+          "vin",
+          "vout",
+          "size",
+          "weight",
+          "sigops",
+          "fee",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "addressUtxos",
+      "path": "/api/address/{address}/utxo",
+      "input": "address",
+      "resolvedPath": "/api/address/35mxL2847s73QF4qUKwxvjFoBeK7Ja8BSA/utxo",
+      "status": 200,
+      "ms": 2996,
+      "bytes": 257,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 1,
+        "firstKeys": [
+          "txid",
+          "vout",
+          "status",
+          "value"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "block",
+      "path": "/api/block/{hash}",
+      "input": "hash",
+      "resolvedPath": "/api/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992",
+      "status": 200,
+      "ms": 3772,
+      "bytes": 439,
+      "contentType": "application/json",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "id",
+          "height",
+          "version",
+          "timestamp",
+          "tx_count",
+          "size",
+          "weight",
+          "merkle_root",
+          "previousblockhash",
+          "mediantime",
+          "nonce",
+          "bits",
+          "difficulty"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockTransactions",
+      "path": "/api/block/{hash}/txs/{index}",
+      "input": "hash,index",
+      "resolvedPath": "/api/block/00000000000000000000c6c7ea61079e3ff66b8923dcb9c90515741f8d740992/txs/0",
+      "status": 200,
+      "ms": 3176,
+      "bytes": 77929,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 25,
+        "firstKeys": [
+          "txid",
+          "version",
+          "locktime",
+          "vin",
+          "vout",
+          "size",
+          "weight",
+          "sigops",
+          "fee",
+          "status"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "blockHashByHeight",
+      "path": "/api/block-height/{height}",
+      "input": "height",
+      "resolvedPath": "/api/block-height/972044",
+      "status": 200,
+      "ms": 3655,
+      "bytes": 64,
+      "contentType": "text/plain",
+      "kind": "text",
+      "classification": "http-success"
+    },
+    {
+      "name": "latestBlocks",
+      "path": "/api/blocks",
+      "input": "",
+      "resolvedPath": "/api/blocks",
+      "status": 200,
+      "ms": 3416,
+      "bytes": 4408,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 10,
+        "firstKeys": [
+          "id",
+          "height",
+          "version",
+          "timestamp",
+          "tx_count",
+          "size",
+          "weight",
+          "merkle_root",
+          "previousblockhash",
+          "mediantime",
+          "nonce",
+          "bits",
+          "difficulty"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "chainTipHeight",
+      "path": "/api/blocks/tip/height",
+      "input": "",
+      "resolvedPath": "/api/blocks/tip/height",
+      "status": 200,
+      "ms": 3519,
+      "bytes": 6,
+      "contentType": "text/plain",
+      "kind": "number",
+      "classification": "http-success"
+    },
+    {
+      "name": "chainTipHash",
+      "path": "/api/blocks/tip/hash",
+      "input": "",
+      "resolvedPath": "/api/blocks/tip/hash",
+      "status": 200,
+      "ms": 3521,
+      "bytes": 64,
+      "contentType": "text/plain",
+      "kind": "text",
+      "classification": "http-success"
+    },
+    {
+      "name": "mempoolStats",
+      "path": "/api/mempool",
+      "input": "",
+      "resolvedPath": "/api/mempool",
+      "status": 200,
+      "ms": 3157,
+      "bytes": 2015,
+      "contentType": "application/json",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "count",
+          "vsize",
+          "total_fee",
+          "fee_histogram"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "mempoolRecent",
+      "path": "/api/mempool/recent",
+      "input": "",
+      "resolvedPath": "/api/mempool/recent",
+      "status": 200,
+      "ms": 3157,
+      "bytes": 1122,
+      "contentType": "application/json",
+      "kind": "array",
+      "shape": {
+        "length": 10,
+        "firstKeys": [
+          "txid",
+          "fee",
+          "vsize",
+          "value"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "recommendedFees",
+      "path": "/api/v1/fees/recommended",
+      "input": "",
+      "resolvedPath": "/api/v1/fees/recommended",
+      "status": 200,
+      "ms": 3250,
+      "bytes": 74,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "fastestFee",
+          "halfHourFee",
+          "hourFee",
+          "economyFee",
+          "minimumFee"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "projectedBlocks",
+      "path": "/api/v1/fees/mempool-blocks",
+      "input": "",
+      "resolvedPath": "/api/v1/fees/mempool-blocks",
+      "status": 200,
+      "ms": 3258,
+      "bytes": 2138,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "array",
+      "shape": {
+        "length": 8,
+        "firstKeys": [
+          "blockSize",
+          "blockVSize",
+          "nTx",
+          "totalFees",
+          "medianFee",
+          "feeRange"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "difficultyAdjustment",
+      "path": "/api/v1/difficulty-adjustment",
+      "input": "",
+      "resolvedPath": "/api/v1/difficulty-adjustment",
+      "status": 200,
+      "ms": 6150,
+      "bytes": 339,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "progressPercent",
+          "difficultyChange",
+          "estimatedRetargetDate",
+          "remainingBlocks",
+          "remainingTime",
+          "previousRetarget",
+          "previousTime",
+          "nextRetargetHeight",
+          "timeAvg",
+          "adjustedTimeAvg",
+          "timeOffset",
+          "expectedBlocks"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "hashrate",
+      "path": "/api/v1/mining/hashrate/1m",
+      "input": "",
+      "resolvedPath": "/api/v1/mining/hashrate/1m",
+      "status": 200,
+      "ms": 6053,
+      "bytes": 2230,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "hashrates",
+          "difficulty",
+          "currentHashrate",
+          "currentDifficulty"
+        ]
+      },
+      "classification": "http-success"
+    },
+    {
+      "name": "miningPools",
+      "path": "/api/v1/mining/pools/1w",
+      "input": "",
+      "resolvedPath": "/api/v1/mining/pools/1w",
+      "status": 200,
+      "ms": 4500,
+      "bytes": 3268,
+      "contentType": "application/json; charset=utf-8",
+      "kind": "object",
+      "shape": {
+        "keys": [
+          "pools",
+          "blockCount",
+          "lastEstimatedHashrate",
+          "lastEstimatedHashrate3d",
+          "lastEstimatedHashrate1w"
+        ]
+      },
+      "classification": "http-success"
+    }
+  ]
+}
