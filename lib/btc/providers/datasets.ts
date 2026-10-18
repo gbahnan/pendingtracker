@@ -35,10 +35,7 @@ export const bitcoinDatasets = {
   scripthashTransactions: { path: "/api/scripthash/{scripthash}/txs", input: "scripthash" },
   scripthashTransactionSummary: { path: "/api/scripthash/{scripthash}/txs/summary", input: "scripthash" },
   scripthashUtxos: { path: "/api/scripthash/{scripthash}/utxo", input: "scripthash" },
-  miningPoolBlocksAtHeight: { path: "/api/v1/mining/pool/{slug}/blocks/{height}", input: "slug,height" },
-  miningAuditScoresAtHeight: { path: "/api/v1/mining/blocks/audit/scores/{height}", input: "height" },
   blockBulkRange: { path: "/api/v1/blocks-bulk/{from}/{to}", input: "from,to" },
-  staleTipsAtHeight: { path: "/api/v1/stale-tips/{height}", input: "height" },
   bitcoinTreasuries: { path: "/api/v1/treasuries", input: "" },
   publicWallet: { path: "/api/v1/wallet/{walletId}", input: "walletId" },
   backendInfo: { path: "/api/v1/backend-info", input: "" },
@@ -136,7 +133,6 @@ export const bitcoinDatasets = {
   difficultyAdjustment: { path: "/api/v1/difficulty-adjustment", input: "" },
   hashrate: { path: "/api/v1/mining/hashrate/1m", input: "" },
   miningPools: { path: "/api/v1/mining/pools/1w", input: "" },
-  recentBlocks: { path: "/api/v1/blocks", input: "" },
 } as const;
 
 export type BitcoinDataset = keyof typeof bitcoinDatasets;
