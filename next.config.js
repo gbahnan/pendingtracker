@@ -3,8 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
     return [
-      { source: '/mempool', destination: 'https://pendingtracker-angular-test-pending-tracker.vercel.app/mempool/' },
-      { source: '/mempool/:path*', destination: 'https://pendingtracker-angular-test-pending-tracker.vercel.app/mempool/:path*' },
+      { source: '/mempool', destination: 'https://explorer.pendingtracker.com/mempool/' },
+      { source: '/mempool/:path*', destination: 'https://explorer.pendingtracker.com/mempool/:path*' },
     ];
   },
 };
