@@ -2,9 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
+    const explorer = 'https://explorer.pendingtracker.com';
     return [
-      { source: '/mempool', destination: 'https://explorer.pendingtracker.com/mempool/' },
-      { source: '/mempool/:path*', destination: 'https://explorer.pendingtracker.com/mempool/:path*' },
+      // Explicit API rules prevent wildcard paths being forwarded with a literal '*'.
+      { source: '/mempool/api/:path*', destination: explorer + '/mempool/api/:path*' },
+      { source: '/mempool/resources/:path*', destination: explorer + '/mempool/resources/:path*' },
+      { source: '/mempool', destination: explorer + '/mempool/' },
+      { source: '/mempool/:path*', destination: explorer + '/mempool/:path*' },
     ];
   },
 };
