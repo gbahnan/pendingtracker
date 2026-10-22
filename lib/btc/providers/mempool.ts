@@ -79,3 +79,23 @@ export async function getTxOutspends(txid: string): Promise<Array<{ spent: boole
     return Array.isArray(result) ? result : null;
   } catch { return null; }
 }
+
+/** First-seen timestamp is best-effort: the provider may not retain it. */
+export async function getTxFirstSeen(txid: string): Promise<number | null> {
+  try {
+    const value = await fetchJson<unknown>(`${mempoolBaseUrl()}/api/v1/tx/${txid}/first-seen`);
+    // Do not infer a timestamp from an undocumented or unrelated response.
+    return typeof value === "number" && Number.isSafeInteger(value) && value > 1_000_000_000 ? value : null;
+  } catch { return null; }
+}
+
+/** Merkle proof is available only for confirmed transactions. */
+export async function getTxMerkleProof(txid: string): Promise<{block_height:number;merkle:string[];pos:number}|null> {
+  try {
+    const proof=await fetchJson<unknown>(`${mempoolBaseUrl()}/api/tx/${txid}/merkle-proof`);
+    if(!proof||typeof proof!=="object"||Array.isArray(proof))return null;
+    const p=proof as Record<string,unknown>;
+    if(!Number.isSafeInteger(p.block_height)||!Number.isSafeInteger(p.pos)||!Array.isArray(p.merkle)||!p.merkle.every(x=>typeof x==="string"&&/^[0-9a-f]{64}$/i.test(x)))return null;
+    return {block_height:p.block_height as number,pos:p.pos as number,merkle:p.merkle as string[]};
+  } catch {return null;}
+}
